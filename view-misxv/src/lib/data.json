@@ -1,0 +1,70 @@
+{
+  "quinceañera": {
+    "nombre": "Briana Natali",
+    "titulo": "Mis XV"
+  },
+  "familia": {
+    "padres": {
+      "nombre": "Oliva Amador Zarco & José Luis Montes González"
+    },
+    "padrinos": {
+      "nombre": "Angela Montes González & Héctor Armenta Olmos"
+    }
+  },
+  "evento": {
+    "fecha": "28 Marzo, 2026",
+    "ceremonia": {
+      "hora": "2:00 PM",
+      "lugar": "Parroquia de Nuestra Señora del Refugio",
+      "direccion": "Omitlán de Juárez, Hgo."
+    },
+    "recepcion": {
+      "hora": "3:30 PM",
+      "lugar": "Auditorio de Omitlán de Juárez",
+      "direccion": "Omitlán de Juárez, Hidalgo, Centro, C.P. 43560",
+      "tipo": "Civil & Fiesta"
+    }
+  },
+  "detalles": {
+    "codigo_vestimenta": "Formal",
+    "regalos": "Lluvia de Sobres"
+  },
+  "mensaje": {
+    "citatorio": "Los invitamos cordialmente a celebrar",
+    "agradecimiento": "Hace XV años Dios me regaló la vida y una gran familia, por este motivo, hoy me siento muy afortunada y feliz de tener unos padres maravillosa y, junto a ellos, poder celebrar este mágico día para mi.",
+    "despedida": "Gracias por acompañarnos"
+  },
+  "galeria": [
+    {
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuB3403EQGs3UxVbcTWrRIYyaNo3Rz53bMm8hijtn-NIJGIkdv02372Oy8tkuXYaw5FWG6rolL-u3-uNMHAuog1wNEFL7AVIz8WYLK27ZsOBifoWPBWqEfQJclEQ0YtJKNiiEuiO3iIda7cR5DvvOAozHujpfjln2j1gweTMGc2Ifoj3rlD8gCLxs10WpItTlm1q1bcva3a6kSmt3S9XjSCc209Tr65ajayuMzwR9w8DBxYu01lvYb8q4HN0cXM-JRenko2l9jd8CCWG",
+      "alt": "Quinceañera Portrait 1"
+    },
+    {
+      "url": "https://lh3.googleusercontent.com/a6AXuDida-public/ABmp_XwMQ8DQY2q1CcPcn5SYaNznzhvLnQqMhuW6zbjv-s3ENjFaGuW6hYdUyM3bWIgV4dYuPJ9K7P7dfig7k0fGYp1zYrEago0OQ3ZHIaQMssR-qDvNUZu_mbOqzGKKkTtVL4Tpv4Pn3z_BuMXJWBaswO3e3lMtinWcSm34r-RwocFjlpr8_QP_DvaaFV7LAG2cbaFLd04G4ffNgP2Wv90wbvsTbxFYV7YDY-ApsPAhBHhGXgkJgVdlsgZ9UkRWd0mopgslzQ_ZR87",
+      "alt": "Quinceañera Details"
+    },
+    {
+      "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuARPlCJqOdujvedNYOT-uQNXfsZ9NXJcDQhvZta_TnI0zfU5gBTj_3irczIixo67_u6fAu7K4CjRMzfuwGm_NR6ijBMBWnVQMAmpogg0rG95sgne4a-ua5vGT30QsGRnz2MYS9T-WkSAqH6gek28P54zH13PAEzdcnxNnDrak0vJkqzoh9yS_3sE4QbuI99xWLuLcllpGOTCCS-TOorjFPi6NANCJ54o_Nv4VqC-VQuueDYrK6nppw8czCs8JSPTFkxEzJLAI5R2CrE",
+      "alt": "Quinceañera Portrait 2"
+    }
+  ],
+  "decoracion": {
+    "flores": [
+      {
+        "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuBLTGeJuK7e4lNGgKBymOb2De3idMEeNxXvfCDDWte_0Xp3vFHxYTrDVAC51_2lVJ5QYdnEFaYL__pgrZRIgr0hhmuZklw7gpM4BvyKDRkDWlh3sslbml4EFg-pXDApgDzDosn7SIcv0iyb6qm9rNFFfGqBTOVaSlnsNj2PqzOApHufxLnyBU_1oZQ2cCpXXTrW81C2MkC4KmeHOplW0-Q1Es37VBDHKlDEuIAHAajWWZf2n0QmjJHcP7JgEeEVqxr1E837Z3vnnxSB",
+        "posicion": "top-left",
+        "rotacion": "-12deg"
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDV0SSNdPn9UVZ7N7HgOAKyfJiBqFxEUGrijlt7akcLu5XJsHmkYh-b97b6hB2JkorXawl8lNr1b-fh0JC6UnaOoumqQA16db3g7mcZ2HsqPq50kmYtGASQgZg_3iJuwv1FJPrnxcDZij8OBcxAscgtXJ_fSTmJHQwNGc36ZZp_FdSU5wVBc9HGFyOaIO0xPv3OFYGXB859foiOQ72pqeZgqMxT90OJPTHA1ETjI7o_v5ORF_Ss5MvjQsz1BnFq3yamoPJuTvci1lGG",
+        "posicion": "top-right",
+        "rotacion": "45deg"
+      },
+      {
+        "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDrq_NXyAwwFjFU2NqTsWDQ14pHgqAspd2jbHdAhU_1KL18OHBhbW6D2Axouuqy5G3p9tik_J7ouw9vTmtPl3s7oN59HEC0mIndPaxjE899a34vqkqlN7SfK5d9xR5FcRfLyNYLwKJ3ZuuP_hKITG6JJAFNd10F8xs4MG6C5LuRlJQojBaC2T2A-2UMvOIh4PaKXMB-4RXan7pDBhgSW2fn8q66ZOsZNrtbG7JsU6ulTTpOquEeQOllqOwoBKYpAPjCoY7lOZCLwF_4",
+        "posicion": "bottom-right",
+        "rotacion": "-12deg"
+      }
+    ]
+  }
+}
