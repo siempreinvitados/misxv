@@ -59,17 +59,17 @@
 	<div class="absolute inset-0 bg-sparkle"></div>
 </div>
 
-<main class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 flex flex-col gap-10 sm:gap-16">
+<main class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-6 sm:gap-8">
 	<!-- Sección principal -->
 	<section class="text-center relative px-2">
 		<p class="font-serif italic text-base sm:text-lg md:text-xl text-purple-800 mb-2">
 			{data.mensaje.citatorio}
 		</p>
 		<h1 class="font-script text-5xl sm:text-7xl md:text-9xl silver-text mb-2 sm:mb-4 leading-tight">
-			{data.quinceañera.titulo}
+			{data.festejado.titulo}
 		</h1>
 		<h2 class="font-script text-4xl sm:text-5xl md:text-7xl text-primary drop-shadow-md mb-6 sm:mb-8">
-			{data.quinceañera.nombre}
+			{data.festejado.nombre}
 		</h2>
 	</section>
 
@@ -91,7 +91,7 @@
 	</section>
 
 	<!-- Mensaje de agradecimiento -->
-	<section class="glass-panel bg-white/60 rounded-3xl p-6 sm:p-8 md:p-10 text-center shadow-glass mt-6 sm:mt-8 mx-auto w-full max-w-2xl">
+	<section class="glass-panel bg-white/60 rounded-3xl p-6 sm:p-8 md:p-10 text-center shadow-glass mx-auto w-full max-w-2xl">
 		<span class="text-4xl sm:text-5xl text-primary/30 font-serif leading-none">"</span>
 		<p class="font-serif italic text-base sm:text-xl md:text-2xl text-gray-700 max-w-2xl mx-auto leading-relaxed mt-4">
 			{data.mensaje.agradecimiento}
@@ -101,7 +101,7 @@
 
 	<!-- Contador -->
 	<section class="text-center px-2">
-		<div class="glass-panel bg-white/80 rounded-2xl p-4 sm:p-6 md:p-8 max-w-md sm:max-w-2xl mx-auto shadow-glass mt-6 sm:mt-10">
+		<div class="glass-panel bg-white/80 rounded-2xl p-4 sm:p-6 md:p-8 max-w-md sm:max-w-2xl mx-auto shadow-glass">
 			<h3 class="uppercase tracking-widest text-xs sm:text-sm font-bold text-gray-500 mb-4 sm:mb-6 border-b border-gray-300 pb-2">Faltan</h3>
 			<div class="grid grid-cols-4 gap-1 sm:gap-2 md:gap-4 text-center">
 				<div class="flex flex-col items-center">
@@ -133,7 +133,7 @@
 	</section>
 
 	<!-- Eventos -->
-	<section class="grid md:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto w-full">
+	<section class="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto w-full">
 		<!-- Ceremonia -->
 		<article class="glass-panel bg-white/80 rounded-2xl overflow-hidden shadow-glass hover:shadow-glow transition-shadow duration-300 flex flex-col md:flex-row h-full mx-auto w-full">
 			<!-- Imagen -->
@@ -161,7 +161,8 @@
 					</p>
 					<a 
 						class="inline-flex items-center justify-center gap-1 px-2 sm:px-3 py-1 bg-primary hover:bg-purple-700 text-white rounded-full transition-colors w-full shadow-lg text-[10px] sm:text-xs"
-						href="#"
+						href="{data.evento.ceremonia.enlace_mapa}" 
+						target="_blank"
 					>
 						<Icon icon="material-symbols:location-on" class="text-[8px]" />
 						Ver Ubicación
@@ -197,7 +198,8 @@
 					</p>
 					<a 
 						class="inline-flex items-center justify-center gap-1 px-2 sm:px-3 py-1 bg-gray-800 hover:bg-gray-900 text-white rounded-full transition-colors w-full shadow-lg text-[10px] sm:text-xs"
-						href="#"
+						href="{data.evento.recepcion.enlace_mapa}"
+						target="_blank"
 					>
 						<Icon icon="material-symbols:location-on" class="text-[8px]" />
 						Ver Ubicación
@@ -208,7 +210,7 @@
 	</section>
 
 	<!-- Detalles -->
-	<section class="glass-panel bg-white/80 rounded-2xl p-4 sm:p-6 flex flex-col md:flex-row justify-around items-center gap-4 sm:gap-6 text-center max-w-3xl mx-auto w-full">
+	<section class="glass-panel bg-white/80 rounded-2xl p-4 sm:p-6 flex flex-col md:flex-row justify-around items-center gap-4 text-center max-w-3xl mx-auto w-full">
 		<div class="flex flex-col items-center">
 			<Icon icon="material-symbols:checkroom" class="text-3xl sm:text-4xl text-primary mb-1 sm:mb-2" />
 			<h4 class="font-bold uppercase text-xs sm:text-sm tracking-widest mb-1">Código de Vestimenta</h4>
@@ -225,9 +227,9 @@
 	<!-- Galería -->
 	<section class="max-w-3xl mx-auto w-full">
 		<h3 class="font-script text-4xl sm:text-5xl text-center text-primary mb-6 sm:mb-8 drop-shadow-sm">Galería</h3>
-		<div class="grid grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+		<div class="grid grid-cols-2 md:grid-cols-3 gap-3">
 			{#each data.galeria as imagen, i}
-				<div class="aspect-[3/4] rounded-2xl overflow-hidden shadow-lg group {i === 1 ? 'md:mt-8' : ''}">
+				<div class="aspect-[3/4] rounded-2xl overflow-hidden shadow-lg group">
 					<img 
 						alt={imagen.alt}
 						class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
