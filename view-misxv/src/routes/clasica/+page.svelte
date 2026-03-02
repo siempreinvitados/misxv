@@ -11,7 +11,6 @@
 	import img2 from '$lib/assets/imgs/img2.jpeg';
 	import img3 from '$lib/assets/imgs/img3.jpeg';
 	import img4 from '$lib/assets/imgs/img4.jpeg';
-	import music from '$lib/assets/music.mp3';
 
 	// Estado del contador
 	let days = $state('00');
@@ -20,9 +19,7 @@
 	let seconds = $state('00');
 	let pulsingImage = $state<number | null>(null);
 	let isAnimating = $state(false);
-	let isPlaying = $state(false);
-	let audioElement: HTMLAudioElement;
-	let musicAsked = $state(false);
+	let showContactModal = $state(false);
 
 	onMount(() => {
 		// Configurar contador
@@ -95,35 +92,6 @@
 		
 		animateSequence();
 	}
-
-	function handleMusicAnswer(answer: boolean) {
-		musicAsked = true;
-		if (answer && audioElement) {
-			audioElement.play();
-			isPlaying = true;
-		} else {
-			isPlaying = false;
-		}
-	}
-
-	function toggleMusicFromButton() {
-		if (!audioElement) {
-			// First time clicking play after saying No
-			if (!musicAsked) {
-				musicAsked = true;
-			}
-			audioElement?.play();
-			isPlaying = true;
-			return;
-		}
-		
-		if (isPlaying) {
-			audioElement.pause();
-		} else {
-			audioElement.play();
-		}
-		isPlaying = !isPlaying;
-	}
 </script>
 
 <svelte:head>
@@ -139,51 +107,6 @@
 	<Icon icon="material-symbols:swap-horiz" class="text-lg" />
 	<span class="text-sm">{$page.url.pathname === '/clasica' ? 'Tarjeta' : 'Vista Clásica'}</span>
 </button>
-
-<!-- Audio element -->
-<audio bind:this={audioElement} src={music} loop></audio>
-
-<!-- Botón flotante para música -->
-{#if !musicAsked}
-	<!-- Rectángulo con pregunta y botones Sí/No -->
-	<div class="fixed bottom-4 right-4 z-50 bg-purple-100/90 backdrop-blur-sm rounded-xl shadow-lg p-2 border border-purple-300 animate__animated animate__tada animate__infinite">
-		<p class="text-xs text-purple-700 font-medium mb-1.5 text-center">¿Reproducir música?</p>
-		<div class="flex gap-1.5 justify-center">
-			<button
-				onclick={() => handleMusicAnswer(true)}
-				class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold rounded-full transition-all duration-300"
-			>
-				Sí
-			</button>
-			<button
-				onclick={() => handleMusicAnswer(false)}
-				class="px-3 py-1 bg-gray-400 hover:bg-gray-500 text-white text-xs font-semibold rounded-full transition-all duration-300"
-			>
-				No
-			</button>
-		</div>
-	</div>
-{:else if isPlaying}
-	<!-- Reproduciendo: triángulo + título de canción + artista -->
-	<button
-		onclick={toggleMusicFromButton}
-		class="opacity-50 fixed bottom-4 right-4 z-50 bg-purple-600 hover:bg-purple-700 backdrop-blur-sm rounded-xl shadow-lg px-4 py-2 flex items-center gap-2 transition-all duration-300 hover:scale-105"
-	>
-		<Icon icon="material-symbols:pause-rounded" class="text-white text-xl" />
-		<div class="flex flex-col items-start">
-			<p class="text-white text-sm font-medium">Say Yes To Haven</p>
-			<p class="text-white/70 text-xs">Lana del Rey</p>
-		</div>
-	</button>
-{:else}
-	<!-- Pausado: solo icono de reproducir -->
-	<button
-		onclick={toggleMusicFromButton}
-		class="opacity-50 fixed bottom-4 right-4 z-50 bg-purple-600 hover:bg-purple-700 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110"
-	>
-		<Icon icon="material-symbols:play-arrow-rounded" class="text-2xl" />
-	</button>
-{/if}
 
 <img 
 	src={flores} 
@@ -424,5 +347,53 @@
 	<footer class="mt-12 text-center pb-8">
 		<p class="font-script text-2xl sm:text-3xl md:text-4xl text-primary">{data.mensaje.despedida}</p>
 	</footer>
+
+	<!-- Enlace de contacto -->
+	<div class="text-center pb-8">
+		<button
+			onclick={() => showContactModal = true}
+			class="text-purple-600 text-sm hover:text-purple-800 underline"
+		>
+			¿Te gustó la invitación? Contáctanos
+		</button>
+	</div>
+
+	<!-- Modal de contacto -->
+	{#if showContactModal}
+		<div 
+			class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+			onclick={() => showContactModal = false}
+			onkeydown={(e) => e.key === 'Escape' && (showContactModal = false)}
+			role="presentation"
+			tabindex="-1"
+		>
+			<div 
+				class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl animate__animated animate__zoomIn"
+				onclick={(e) => e.stopPropagation()}
+				role="dialog"
+				aria-modal="true"
+				tabindex="0"
+			>
+				<p class="text-center text-lg text-purple-800 font-semibold mb-4">
+					¿Te gustó la invitación? Contáctanos
+				</p>
+				<a
+					href="https://wa.me/5217712345678?text=Hola%20me%20ayudas%20a%20crear%20una%20invitaci%C3%B3n%20para%20mi%20evento"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="flex items-center justify-center gap-2 w-full py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-all duration-300"
+				>
+					<Icon icon="fa-brands:whatsapp" class="text-2xl" />
+					Escríbenos por WhatsApp
+				</a>
+				<button
+					onclick={() => showContactModal = false}
+					class="mt-3 w-full py-2 text-gray-500 hover:text-gray-700 text-sm underline"
+				>
+					Cerrar
+				</button>
+			</div>
+		</div>
+	{/if}
 </main>
 

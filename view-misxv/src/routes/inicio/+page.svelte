@@ -5,6 +5,7 @@
 	import { browser } from '$app/environment';
 	import scrollIcon from '$lib/assets/imgs/scroll_icon.png';
 	import cardIcon from '$lib/assets/imgs/card_icon.png';
+	import Icon from '@iconify/svelte';
 
 	let showTxt1 = $state(false);
 	let showTxt2 = $state(false);
@@ -19,6 +20,8 @@
 	let selectedOption = $state('');
 	let scrollAnimating = $state(false);
 	let cardAnimating = $state(false);
+	let showContactModal = $state(false);
+	let autoRedirectTimer: ReturnType<typeof setTimeout> | null = null;
 
 	onMount(() => {
 		// Verificar si ya hay una selección guardada
@@ -83,11 +86,32 @@
 		// Mostrar formulario al final
 		setTimeout(() => {
 			showForm = true;
+			
+			// Iniciar contador de 30 segundos para redirección automática
+			autoRedirectTimer = setTimeout(() => {
+				localStorage.setItem('invitation_selection', 'clasico');
+				goto('/clasica');
+			}, 30000);
 		}, 12000);
+
+		// Limpiar timer al desmontar el componente
+		return () => {
+			if (autoRedirectTimer) {
+				clearTimeout(autoRedirectTimer);
+				autoRedirectTimer = null;
+			}
+		};
 	});
 
 	function selectOption(option: string) {
 		selectedOption = option;
+		
+		// Detener y liberar el timer de redirección automática
+		if (autoRedirectTimer) {
+			clearTimeout(autoRedirectTimer);
+			autoRedirectTimer = null;
+		}
+		
 		// Guardar selección en localStorage
 		if (browser) {
 			localStorage.setItem('invitation_selection', option);
@@ -212,7 +236,7 @@
 				</p>
 			{:else if selectedOption === 'tarjeta'}
 				<p class="text-center text-lg md:text-xl text-gray-600 mb-6 animate__animated animate__fadeIn">
-					Explora un resumen en una tarjeta interactiva.<br/>Toca o haz clic para voltearla y ver más información.
+					Explora un resumen en una tarjeta interactiva.<br/>Toca o haz clic para girarla y ver más información.
 				</p>
 			{/if}
 			
@@ -224,6 +248,52 @@
 					Ver Invitación
 				</button>
 			{/if}
+		</div>
+	{/if}
+
+	<!-- Enlace de contacto -->
+	<button
+		onclick={() => showContactModal = true}
+		class="fixed bottom-4 left-4 z-50 text-purple-600 text-sm hover:text-purple-800 underline"
+	>
+		¿Te gustó la invitación? Contáctanos
+	</button>
+
+	<!-- Modal de contacto -->
+	{#if showContactModal}
+		<div 
+			class="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+			onclick={() => showContactModal = false}
+			onkeydown={(e) => e.key === 'Escape' && (showContactModal = false)}
+			role="presentation"
+			tabindex="-1"
+		>
+			<div 
+				class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl animate__animated animate__zoomIn"
+				onclick={(e) => e.stopPropagation()}
+				role="dialog"
+				aria-modal="true"
+				tabindex="0"
+			>
+				<p class="text-center text-lg text-purple-800 font-semibold mb-4">
+					¿Te gustó la invitación? Contáctanos
+				</p>
+				<a
+					href="https://wa.me/5217712345678?text=Hola%20me%20ayudas%20a%20crear%20una%20invitaci%C3%B3n%20para%20mi%20evento"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="flex items-center justify-center gap-2 w-full py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-all duration-300"
+				>
+					<Icon icon="fa-brands:whatsapp" class="text-2xl" />
+					Escríbenos por WhatsApp
+				</a>
+				<button
+					onclick={() => showContactModal = false}
+					class="mt-3 w-full py-2 text-gray-500 hover:text-gray-700 text-sm underline"
+				>
+					Cerrar
+				</button>
+			</div>
 		</div>
 	{/if}
 </div>
