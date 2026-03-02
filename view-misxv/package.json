@@ -5,6 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
+		"local": "vite dev --host",
 		"build": "vite build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
@@ -36,6 +37,8 @@
 		"vite": "^7.3.1"
 	},
 	"dependencies": {
-		"@iconify/svelte": "^5.2.1"
+		"@iconify/svelte": "^5.2.1",
+		"animate.css": "^4.1.1",
+		"vanilla-tilt": "^1.8.1"
 	}
 }
