@@ -297,7 +297,7 @@
 					¿Te gustó la invitación? Contactame
 				</p>
 				<a
-					href="https://wa.me/5217712345678?text=Hola%20me%20ayudas%20a%20crear%20una%20invitaci%C3%B3n%20para%20mi%20evento"
+					href="https://wa.me/5215658936778?text=Hola%20me%20ayudas%20a%20crear%20una%20invitaci%C3%B3n%20para%20mi%20evento"
 					target="_blank"
 					rel="noopener noreferrer"
 					class="flex items-center justify-center gap-2 w-full py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-xl transition-all duration-300"
