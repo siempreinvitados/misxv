@@ -3,6 +3,7 @@
 	import './layout.css';
 	import favicon from '$lib/assets/xv.ico';
 	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import Icon from '@iconify/svelte';
@@ -26,9 +27,12 @@
 			viewPreferenceStore.reset(); // Also reset our store
 		}
 		
-		const validPaths = ['/clasica', '/tarjeta', '/inicio'];
-		if (!validPaths.includes($page.url.pathname)) {
-			goto('/inicio');
+		const validPaths = ['/clasica', '/tarjeta', '/inicio'].map(p => base + p);
+		const pathname = $page.url.pathname;
+		
+		// Also handle trailing slash
+		if (!validPaths.includes(pathname) && !validPaths.includes(pathname.replace(/\/$/, ''))) {
+			goto(base + '/inicio');
 		}
 		
 		// Incrementar visitas en Firebase (solo la primera vez, en background)
@@ -142,7 +146,7 @@
 {/if}
 
 <!-- Floating Question Mark Button (shows after 'Seguir viendo') -->
-{#if $viewPreferenceStore.showFloatingButton && !showPreferenceModal && $page.url.pathname !== '/inicio'}
+{#if $viewPreferenceStore.showFloatingButton && !showPreferenceModal && $page.url.pathname !== base + '/inicio'}
 	<button
 		onclick={openModal}
 		class="fixed top-20 right-4 z-50 bg-white/70 backdrop-blur-md hover:bg-white/90 text-purple-600 rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 border border-purple-200"

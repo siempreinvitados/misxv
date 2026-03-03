@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import Icon from '@iconify/svelte';
 	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import flores from '$lib/assets/imgs/flores.png';
 	import iglesia from '$lib/assets/imgs/iglesia.png';
@@ -55,10 +56,10 @@
 		// Increment view count before navigating
 		viewPreferenceStore.incrementViewCount();
 		
-		if ($page.url.pathname === '/clasica') {
-			goto('/tarjeta');
+		if ($page.url.pathname === base + '/clasica') {
+			goto(base + '/tarjeta');
 		} else {
-			goto('/clasica');
+			goto(base + '/clasica');
 		}
 	}
 
@@ -122,7 +123,7 @@
 	class="fixed top-4 right-4 z-50 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-full shadow-lg px-4 py-2 flex items-center gap-2 transition-all duration-300 hover:scale-105 opacity-60 hover:opacity-100"
 >
 	<Icon icon="material-symbols:swap-horiz" class="text-lg" />
-	<span class="text-sm">{$page.url.pathname === '/clasica' ? 'Tarjeta' : 'Vista Clásica'}</span>
+	<span class="text-sm">{$page.url.pathname === base + '/clasica' ? 'Tarjeta' : 'Vista Clásica'}</span>
 </button>
 
 <img 

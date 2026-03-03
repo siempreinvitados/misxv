@@ -2,6 +2,7 @@
 	import data from '$lib/data.json';
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
+	import { base } from '$app/paths';
 	import { browser } from '$app/environment';
 	import scrollIcon from '$lib/assets/imgs/scroll_icon.png';
 	import cardIcon from '$lib/assets/imgs/card_icon.png';
@@ -30,10 +31,10 @@
 			const savedSelection = localStorage.getItem('invitation_selection');
 			if (savedSelection) {
 				if (savedSelection === 'clasico') {
-					goto('/clasica');
+					goto(base + '/clasica');
 					return;
 				} else if (savedSelection === 'tarjeta') {
-					goto('/tarjeta');
+					goto(base + '/tarjeta');
 					return;
 				}
 			}
@@ -91,7 +92,7 @@
 			// Iniciar contador de 30 segundos para redirección automática
 			autoRedirectTimer = setTimeout(() => {
 				localStorage.setItem('invitation_selection', 'clasico');
-				goto('/clasica');
+				goto(base + '/clasica');
 			}, 30000);
 		}, 12000);
 
@@ -145,9 +146,9 @@
 		}
 		
 		if (selectedOption === 'clasico') {
-			goto('/clasica');
+			goto(base + '/clasica');
 		} else if (selectedOption === 'tarjeta') {
-			goto('/tarjeta');
+			goto(base + '/tarjeta');
 		}
 	}
 </script>

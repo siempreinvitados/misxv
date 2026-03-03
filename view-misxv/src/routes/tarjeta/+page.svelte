@@ -11,6 +11,7 @@
 	import { onMount } from 'svelte';
 	import { tick } from 'svelte';
 	import { page } from '$app/stores';
+	import { base } from '$app/paths';
 	import { goto } from '$app/navigation';
 	import VanillaTilt from 'vanilla-tilt';
 	import { viewPreferenceStore } from '$lib/stores/viewPreferenceStore';
@@ -162,10 +163,10 @@
 		// Increment view count before navigating
 		viewPreferenceStore.incrementViewCount();
 		
-		if ($page.url.pathname === '/tarjeta') {
-			goto('/clasica');
+		if ($page.url.pathname === base + '/tarjeta') {
+			goto(base + '/clasica');
 		} else {
-			goto('/tarjeta');
+			goto(base + '/tarjeta');
 		}
 	}
 
@@ -201,7 +202,7 @@
 		class="fixed top-4 right-4 z-50 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-full shadow-lg px-4 py-2 flex items-center gap-2 transition-all duration-300 hover:scale-105 opacity-60 hover:opacity-100"
 	>
 		<Icon icon="material-symbols:swap-horiz" class="text-lg" />
-		<span class="text-sm">{$page.url.pathname === '/tarjeta' ? 'Vista Clásica' : 'Tarjeta'}</span>
+		<span class="text-sm">{$page.url.pathname === base + '/tarjeta' ? 'Vista Clásica' : 'Tarjeta'}</span>
 	</button>
 	<!-- Panel de debug VanillaTilt -->
 	{#if isBrowser && showDebug}
