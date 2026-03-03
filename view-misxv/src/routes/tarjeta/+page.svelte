@@ -14,6 +14,7 @@
 	import { goto } from '$app/navigation';
 	import VanillaTilt from 'vanilla-tilt';
 	import { viewPreferenceStore } from '$lib/stores/viewPreferenceStore';
+	import music from '$lib/assets/music.mp3';
 
 	let isFlipped = $state(false);
 	let tiltElement: HTMLDivElement;
@@ -31,6 +32,8 @@
 
 	let contentElement: HTMLDivElement;
 	let containerElement: HTMLDivElement;
+	let isPlaying = $state(false);
+	let audio: HTMLAudioElement;
 
 	// Función para guardar en calendario
 	function saveToCalendar() {
@@ -165,6 +168,16 @@
 			goto('/tarjeta');
 		}
 	}
+
+	function toggleMusic() {
+		if (!audio) return;
+		if (isPlaying) {
+			audio.pause();
+		} else {
+			audio.play();
+		}
+		isPlaying = !isPlaying;
+	}
 </script>
 
 <svelte:head>
@@ -172,8 +185,16 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 </svelte:head>
 
-<!-- Fondo -->
-<div class="min-h-screen bg-[#FDF4FF] flex flex-col items-center justify-center p-2 sm:p-4">
+<!-- Fondo con estrellas cayendo -->
+<div class="min-h-screen bg-[#FDF4FF] flex flex-col items-center justify-center p-2 sm:p-4 relative overflow-hidden">
+	<!-- Estrellas cayendo -->
+	<div class="stars-container absolute inset-0 pointer-events-none overflow-hidden">
+		{#each Array(25) as _, i}
+			<div class="star absolute" style="left: {Math.random() * 100}%; animation-delay: {Math.random() * 5}s; animation-duration: {4 + Math.random() * 3}s;">
+				<Icon icon="mdi:star" class="text-[12px] sm:text-[16px] md:text-[20px]" />
+			</div>
+		{/each}
+	</div>
 	<!-- Chip flotante para navegar -->
 	<button
 		onclick={navigateToOtherPage}
@@ -316,6 +337,35 @@
 						</p>
 					</div>
 
+					<!-- Mensaje de agradecimiento -->
+					<div class="mb-2 w-full">
+						
+						<p
+							class="font-serif italic text-xs sm:text-sm md:text-[0.7rem] lg:text-[0.7rem] text-gray-700 mt-4 mb-4 leading-relaxed px-1"
+						>
+							{data.mensaje.agradecimiento}
+						</p>
+					</div>
+
+						<!-- Reproductor de Música -->
+	<section class="flex flex-col items-center py-4">
+		<h3 class="font-script text-3xl sm:text-4xl text-center text-primary mb-4 drop-shadow-sm">Escucha mi canción favorita</h3>
+		<div class="bg-white/70 rounded-full px-4 py-2 shadow-sm flex items-center gap-3 w-full max-w-sm">
+			<button
+				onclick={toggleMusic}
+				class="w-10 h-10 rounded-full bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center transition-colors flex-shrink-0"
+			>
+				<Icon icon={isPlaying ? 'material-symbols:pause' : 'material-symbols:play-arrow'} class="text-xl" />
+			</button>
+			<div class="flex-1 min-w-0">
+				<p class="text-sm font-semibold text-purple-800 truncate">Say Yes To Heaven</p>
+				<p class="text-xs text-gray-500 truncate">Lana Del Rey</p>
+			</div>
+			<Icon icon="material-symbols:music-note" class="text-purple-400 text-xl flex-shrink-0 {isPlaying ? 'animate__animated animate__swing animate__infinite' : ''}" />
+		</div>
+		<audio bind:this={audio} src={music} loop onplay={() => isPlaying = true} onpause={() => isPlaying = false}></audio>
+	</section>
+
 					<!-- Contador -->
 					<div class="mb-1">
 						<p class="uppercase tracking-widest text-[8px] sm:text-[9px] md:text-xs font-bold text-gray-500 mb-0.5">
@@ -356,6 +406,67 @@
 						</div>
 					</div>
 
+					<!-- Mini Calendario Marzo 2026 -->
+	<section class="flex justify-center py-2">
+		<div class="bg-white/70 rounded-xl p-3 sm:p-4 shadow-sm w-full max-w-sm sm:max-w-md">
+			<h4 class="text-center font-semibold text-purple-700 text-sm sm:text-base mb-2">Marzo 2026</h4>
+			<div class="grid grid-cols-7 gap-1 sm:gap-2 text-center text-[10px] sm:text-xs">
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">D</span>
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">L</span>
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">M</span>
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">M</span>
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">J</span>
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">V</span>
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">S</span>
+				
+				<!-- Semana 1 -->
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">1</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">2</span>
+				<span class="text-purple-600 font-bold border-2 border-purple-400 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto">3</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">4</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">5</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">6</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">7</span>
+				
+				<!-- Semana 2 -->
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">8</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">9</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">10</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">11</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">12</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">13</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">14</span>
+				
+				<!-- Semana 3 -->
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">15</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">16</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">17</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">18</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">19</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">20</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">21</span>
+				
+				<!-- Semana 4 -->
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">22</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">23</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">24</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">25</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">26</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">27</span>
+				<span class="text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto animate__animated animate__heartBeat animate__infinite" >28</span>
+				
+				<!-- Semana 5 -->
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">29</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">30</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">31</span>
+				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
+				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
+				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
+				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
+			</div>
+		</div>
+	</section>
+
 				<!-- Botón Guardar Fecha -->
 				<div class="flex-shrink-0 z-10 mt-4">
 					<button
@@ -366,16 +477,6 @@
 						Guarda la fecha
 					</button>
 				</div>
-
-					<!-- Mensaje de agradecimiento -->
-					<div class="mb-2 w-full">
-						
-						<p
-							class="font-serif italic text-xs sm:text-sm md:text-[0.7rem] lg:text-[0.7rem] text-gray-700 mt-4 mb-4 leading-relaxed px-1"
-						>
-							{data.mensaje.agradecimiento}
-						</p>
-					</div>
 
 					<!-- división -->
 					<div
@@ -612,5 +713,53 @@
 
 	.card-back ::-webkit-scrollbar-thumb:hover {
 		background-color: rgba(147, 112, 219, 0.2);
+	}
+
+	/* Estrellas cayendo */
+	.stars-container {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		pointer-events: none;
+	}
+
+	.star {
+		top: -20px;
+		width: 20px;
+		height: 20px;
+		color: #e9d5ff;
+		filter: drop-shadow(0 0 4px #c084fc) drop-shadow(0 0 8px #a855f7);
+		animation: fall linear infinite;
+		opacity: 0.85;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.star:nth-child(even) {
+		color: #f5d0fe;
+		filter: drop-shadow(0 0 5px #d8b4fe) drop-shadow(0 0 10px #c084fc);
+	}
+
+	.star:nth-child(3n) {
+		color: #ffffff;
+		filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 12px #e9d5ff);
+	}
+
+	@keyframes fall {
+		0% {
+			transform: translateY(-10px) rotate(0deg);
+			opacity: 0;
+		}
+		10% {
+			opacity: 1;
+		}
+		90% {
+			opacity: 1;
+		}
+		100% {
+			transform: translateY(100vh) rotate(360deg);
+			opacity: 0;
+		}
 	}
 </style>

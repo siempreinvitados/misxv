@@ -12,6 +12,7 @@
 	import img3 from '$lib/assets/imgs/img3.jpeg';
 	import img4 from '$lib/assets/imgs/img4.jpeg';
 	import { viewPreferenceStore } from '$lib/stores/viewPreferenceStore';
+	import music from '$lib/assets/music.mp3';
 
 	// Estado del contador
 	let days = $state('00');
@@ -21,6 +22,8 @@
 	let pulsingImage = $state<number | null>(null);
 	let isAnimating = $state(false);
 	let showContactModal = $state(false);
+	let isPlaying = $state(false);
+	let audio: HTMLAudioElement;
 
 	onMount(() => {
 		// Configurar contador
@@ -96,6 +99,16 @@
 		
 		animateSequence();
 	}
+
+	function toggleMusic() {
+		if (!audio) return;
+		if (isPlaying) {
+			audio.pause();
+		} else {
+			audio.play();
+		}
+		isPlaying = !isPlaying;
+	}
 </script>
 
 <svelte:head>
@@ -123,13 +136,72 @@
 	class="fixed -top-20 -right-18 w-52 sm:w-64 md:w-72 h-auto z-10 opacity-80 pointer-events-none transform scale-x-[-1] rotate-[30deg] hidden md:block"
 />
 
-<!-- Fondo con blobs animados -->
+<!-- Fondo con estrellas cayendo -->
 <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden bg-[#FDF4FF]">
 	<div class="absolute -top-20 -left-20 w-96 h-96 bg-purple-200 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob"></div>
 	<div class="absolute top-1/3 -right-20 w-96 h-96 bg-pink-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-2000"></div>
 	<div class="absolute -bottom-20 left-1/3 w-96 h-96 bg-indigo-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob animation-delay-4000"></div>
 	<div class="absolute inset-0 bg-sparkle"></div>
+	
+	<!-- Estrellas cayendo -->
+	<div class="stars-container">
+		{#each Array(25) as _, i}
+			<div class="star" style="left: {Math.random() * 100}%; animation-delay: {Math.random() * 5}s; animation-duration: {4 + Math.random() * 3}s;">
+				<Icon icon="mdi:star" class="text-[12px] sm:text-[16px] md:text-[20px]" />
+			</div>
+		{/each}
+	</div>
 </div>
+
+<style>
+	.stars-container {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		pointer-events: none;
+	}
+	
+	.star {
+		position: absolute;
+		top: -20px;
+		width: 20px;
+		height: 20px;
+		color: #e9d5ff;
+		filter: drop-shadow(0 0 4px #c084fc) drop-shadow(0 0 8px #a855f7);
+		animation: fall linear infinite;
+		opacity: 0.85;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.star:nth-child(even) {
+		color: #f5d0fe;
+		filter: drop-shadow(0 0 5px #d8b4fe) drop-shadow(0 0 10px #c084fc);
+	}
+	
+	.star:nth-child(3n) {
+		color: #ffffff;
+		filter: drop-shadow(0 0 6px #ffffff) drop-shadow(0 0 12px #e9d5ff);
+	}
+	
+	@keyframes fall {
+		0% {
+			transform: translateY(-10px) rotate(0deg);
+			opacity: 0;
+		}
+		10% {
+			opacity: 1;
+		}
+		90% {
+			opacity: 1;
+		}
+		100% {
+			transform: translateY(100vh) rotate(360deg);
+			opacity: 0;
+		}
+	}
+</style>
 
 <main class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-6 sm:gap-8">
 	<!-- Sección principal -->
@@ -148,8 +220,7 @@
 	</section>
 
 	<!-- Padres y Padrinos -->
-	<section class="glass-panel bg-white/80 rounded-3xl p-6 sm:p-8 md:p-12 text-center shadow-glass relative overflow-hidden mx-auto w-full max-w-3xl animate__animated animate__slideInRight">
-		<div class="absolute top-2 left-2 right-2 bottom-2 border border-white/50 rounded-2xl pointer-events-none"></div>
+	<section class="text-center relative mx-auto w-full max-w-3xl animate__animated animate__slideInRight py-8 border-t border-b border-purple-200 bg-white/30">
 		<div class="mb-6 sm:mb-10">
 			<h3 class="font-script text-3xl sm:text-4xl text-primary mb-2 sm:mb-4">Mis Papás</h3>
 			<p class="font-serif text-lg sm:text-xl md:text-2xl text-gray-700 px-2">
@@ -164,18 +235,141 @@
 		</div>
 	</section>
 
+	<!-- Separador -->
+	<div class="flex items-center justify-center gap-4 py-4">
+		<div class="h-px bg-purple-300 w-16"></div>
+		<Icon icon="material-symbols:flower-2" class="text-purple-400 text-xl" />
+		<div class="h-px bg-purple-300 w-16"></div>
+	</div>
+
 	<!-- Mensaje de agradecimiento -->
-	<section class="glass-panel bg-white/60 rounded-3xl p-6 sm:p-8 md:p-10 text-center shadow-glass mx-auto w-full max-w-2xl animate__animated animate__slideInLeft">
-		
+	<section class="text-center mx-auto w-full max-w-2xl animate__animated animate__slideInLeft py-6">
 		<p class="font-serif italic text-base sm:text-xl md:text-2xl text-gray-700 max-w-2xl mx-auto leading-relaxed mt-4">
 			{data.mensaje.agradecimiento}
 		</p>
-		
 	</section>
 
+	<!-- Separador -->
+	<div class="flex items-center justify-center gap-4 py-4">
+		<div class="h-px bg-purple-300 w-16"></div>
+		<Icon icon="material-symbols:flower-2" class="text-purple-400 text-xl" />
+		<div class="h-px bg-purple-300 w-16"></div>
+	</div>
+
+	<!-- Reproductor de Música -->
+	<section class="flex flex-col items-center py-4">
+		<h3 class="font-script text-3xl sm:text-4xl text-center text-primary mb-4 drop-shadow-sm">Escucha mi canción favorita</h3>
+		<div class="bg-white/70 rounded-full px-4 py-2 shadow-sm flex items-center gap-3 w-full max-w-sm">
+			<button
+				onclick={toggleMusic}
+				class="w-10 h-10 rounded-full bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center transition-colors flex-shrink-0"
+			>
+				<Icon icon={isPlaying ? 'material-symbols:pause' : 'material-symbols:play-arrow'} class="text-xl" />
+			</button>
+			<div class="flex-1 min-w-0">
+				<p class="text-sm font-semibold text-purple-800 truncate">Say Yes To Heaven</p>
+				<p class="text-xs text-gray-500 truncate">Lana Del Rey</p>
+			</div>
+			<Icon icon="material-symbols:music-note" class="text-purple-400 text-xl flex-shrink-0 {isPlaying ? 'animate__animated animate__swing animate__infinite' : ''}" />
+		</div>
+		<audio bind:this={audio} src={music} loop onplay={() => isPlaying = true} onpause={() => isPlaying = false}></audio>
+	</section>
+
+	
+
+	<!-- Separador floral -->
+	<div class="flex items-center justify-center gap-4 py-4">
+		<div class="h-px bg-purple-300 w-16"></div>
+		<Icon icon="material-symbols:flower-2" class="text-purple-400 text-xl" />
+		<div class="h-px bg-purple-300 w-16"></div>
+	</div>
+
+	<section class="space-y-8 max-w-4xl mx-auto w-full py-6">
+		<!-- Ceremonia -->
+		<article class="bg-white/60 rounded-2xl overflow-hidden flex flex-col md:flex-row h-full mx-auto w-full animate__animated animate__slideInLeft">
+			<!-- Imagen -->
+			<div class="w-full md:w-1/2 h-28 sm:h-32 md:h-full min-h-[160px] md:min-h-[280px] order-first md:order-none">
+				<img 
+					src={iglesia} 
+					alt="Iglesia" 
+					class="w-full h-full object-cover object-center"
+				/>
+			</div>
+			<!-- Información -->
+			<div class="flex-1 p-2 sm:p-4 text-center flex flex-col items-center">
+				<div class="w-8 sm:w-10 h-8 sm:h-10 bg-primary/10 rounded-full flex items-center justify-center mb-1 sm:mb-2 text-primary">
+					<Icon icon="material-symbols:church" class="text-lg sm:text-xl" />
+				</div>
+				<h3 class="font-script text-xl sm:text-2xl text-primary mb-1">Ceremonia Religiosa</h3>
+				<p class="text-[10px] uppercase tracking-wide text-gray-500 mb-1">
+					{data.evento.ceremonia.hora}
+				</p>
+				<p class="font-serif italic text-xs sm:text-sm mb-1 px-1">{data.evento.ceremonia.lugar}</p>
+				<p class="text-[10px] sm:text-xs text-gray-600 mb-1 sm:mb-2 px-1">{data.evento.ceremonia.direccion}</p>
+				<div class="mt-auto w-full px-1 sm:px-0">
+					<p class="font-bold text-sm sm:text-base text-gray-800 mb-1 sm:mb-2 border-t border-b border-primary/20 py-1 inline-block w-full">
+						{data.evento.fecha}
+					</p>
+					<a 
+						class="inline-flex items-center justify-center gap-1 px-4 sm:px-6 py-2 bg-primary hover:bg-purple-700 text-white rounded-full transition-colors w-full shadow-lg text-sm sm:text-base"
+						href="{data.evento.ceremonia.enlace_mapa}" 
+						target="_blank"
+					>
+						<Icon icon="material-symbols:location-on" class="text-base" />
+						Ver Ubicación
+					</a>
+				</div>
+			</div>
+		</article>
+
+		<!-- Recepción -->
+		<article class="bg-white/60 rounded-2xl overflow-hidden flex flex-col md:flex-row-reverse h-full mx-auto w-full animate__animated animate__slideInRight">
+			<!-- Imagen -->
+			<div class="w-full md:w-1/2 h-28 sm:h-32 md:h-full min-h-[160px] md:min-h-[280px] order-first md:order-none">
+				<img 
+					src={salon} 
+					alt="Salón" 
+					class="w-full h-full object-cover object-center"
+				/>
+			</div>
+			<!-- Información -->
+			<div class="flex-1 p-2 sm:p-4 text-center flex flex-col items-center">
+				<div class="w-8 sm:w-10 h-8 sm:h-10 bg-primary/10 rounded-full flex items-center justify-center mb-1 sm:mb-2 text-primary">
+					<Icon icon="material-symbols:celebration" class="text-lg sm:text-xl" />
+				</div>
+				<h3 class="font-script text-xl sm:text-2xl text-primary mb-1">Recepción</h3>
+				<p class="text-[10px] uppercase tracking-wide text-gray-500 mb-1">
+					{data.evento.recepcion.hora}
+				</p>
+				<p class="font-serif italic text-xs sm:text-sm mb-1 px-1">{data.evento.recepcion.lugar}</p>
+				<p class="text-[10px] sm:text-xs text-gray-600 mb-1 sm:mb-2 px-1">{data.evento.recepcion.direccion}</p>
+				<div class="mt-auto w-full px-1 sm:px-0">
+					<p class="font-bold text-sm sm:text-base text-gray-800 mb-1 sm:mb-2 border-t border-b border-primary/20 py-1 inline-block w-full">
+						{data.evento.recepcion.tipo}
+					</p>
+					<a 
+						class="inline-flex items-center justify-center gap-1 px-4 sm:px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-full transition-colors w-full shadow-lg text-sm sm:text-base"
+						href="{data.evento.recepcion.enlace_mapa}"
+						target="_blank"
+					>
+						<Icon icon="material-symbols:location-on" class="text-base" />
+						Ver Ubicación
+					</a>
+				</div>
+			</div>
+		</article>
+	</section>
+
+	<!-- Separador -->
+	<div class="flex items-center justify-center gap-4 py-4">
+		<div class="h-px bg-purple-300 w-16"></div>
+		<Icon icon="material-symbols:flower-2" class="text-purple-400 text-xl" />
+		<div class="h-px bg-purple-300 w-16"></div>
+	</div>
+
 	<!-- Contador -->
-	<section class="text-center px-2 animate__animated animate__fadeInDown">
-		<div class="glass-panel bg-white/80 rounded-2xl p-4 sm:p-6 md:p-8 max-w-md sm:max-w-2xl mx-auto shadow-glass">
+	<section class="text-center px-2 animate__animated animate__fadeInDown py-4">
+		<div class="bg-white/60 rounded-2xl p-4 sm:p-6 md:p-8 max-w-md sm:max-w-2xl mx-auto">
 			<h3 class="uppercase tracking-widest text-xs sm:text-sm font-bold text-gray-500 mb-4 sm:mb-6 border-b border-gray-300 pb-2">Faltan</h3>
 			<div class="grid grid-cols-4 gap-1 sm:gap-2 md:gap-4 text-center">
 				<div class="flex flex-col items-center">
@@ -206,8 +400,69 @@
 		</div>
 	</section>
 
-		<!-- Botón Guardar Fecha -->
-	<div class="text-center mt-4 mb-4">
+	<!-- Mini Calendario Marzo 2026 -->
+	<section class="flex justify-center py-2">
+		<div class="bg-white/70 rounded-xl p-3 sm:p-4 shadow-sm w-full max-w-sm sm:max-w-md">
+			<h4 class="text-center font-semibold text-purple-700 text-sm sm:text-base mb-2">Marzo 2026</h4>
+			<div class="grid grid-cols-7 gap-1 sm:gap-2 text-center text-[10px] sm:text-xs">
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">D</span>
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">L</span>
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">M</span>
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">M</span>
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">J</span>
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">V</span>
+				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">S</span>
+				
+				<!-- Semana 1 -->
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">1</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">2</span>
+				<span class="text-purple-600 font-bold border-2 border-purple-400 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto">3</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">4</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">5</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">6</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">7</span>
+				
+				<!-- Semana 2 -->
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">8</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">9</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">10</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">11</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">12</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">13</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">14</span>
+				
+				<!-- Semana 3 -->
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">15</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">16</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">17</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">18</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">19</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">20</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">21</span>
+				
+				<!-- Semana 4 -->
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">22</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">23</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">24</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">25</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">26</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">27</span>
+				<span class="text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto animate__animated animate__heartBeat animate__infinite" >28</span>
+				
+				<!-- Semana 5 -->
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">29</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">30</span>
+				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">31</span>
+				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
+				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
+				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
+				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
+			</div>
+		</div>
+	</section>
+
+	<!-- Botón Guardar Fecha -->
+	<div class="text-center mt-2 mb-4">
 		<button
 			onclick={saveToCalendar}
 			class="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-full shadow-lg transition-all duration-300 hover:scale-105 text-base sm:text-lg"
@@ -217,82 +472,12 @@
 		</button>
 	</div>
 
-	<!-- Eventos -->
-	<section class="grid md:grid-cols-2 gap-4 max-w-4xl mx-auto w-full">
-		<!-- Ceremonia -->
-		<article class="glass-panel bg-white/80 rounded-2xl overflow-hidden shadow-glass hover:shadow-glow transition-shadow duration-300 flex flex-col md:flex-row h-full mx-auto w-full animate__animated animate__slideInLeft">
-			<!-- Imagen -->
-			<div class="w-full md:w-1/2 h-28 sm:h-32 md:h-full min-h-[160px] md:min-h-[280px] order-first md:order-none">
-				<img 
-					src={iglesia} 
-					alt="Iglesia" 
-					class="w-full h-full object-cover object-center"
-				/>
-			</div>
-			<!-- Información -->
-			<div class="flex-1 p-2 sm:p-4 text-center flex flex-col items-center">
-				<div class="w-8 sm:w-10 h-8 sm:h-10 bg-primary/10 rounded-full flex items-center justify-center mb-1 sm:mb-2 text-primary">
-					<Icon icon="material-symbols:church" class="text-lg sm:text-xl" />
-				</div>
-				<h3 class="font-script text-xl sm:text-2xl text-primary mb-1">Ceremonia Religiosa</h3>
-				<p class="text-[10px] uppercase tracking-wide text-gray-500 mb-1">
-					{data.evento.ceremonia.hora}
-				</p>
-				<p class="font-serif italic text-xs sm:text-sm mb-1 px-1">{data.evento.ceremonia.lugar}</p>
-				<p class="text-[10px] sm:text-xs text-gray-600 mb-1 sm:mb-2 px-1">{data.evento.ceremonia.direccion}</p>
-				<div class="mt-auto w-full px-1 sm:px-0">
-					<p class="font-bold text-sm sm:text-base text-gray-800 mb-1 sm:mb-2 border-t border-b border-primary/20 py-1 inline-block w-full">
-						{data.evento.fecha}
-					</p>
-					<a 
-						class="inline-flex items-center justify-center gap-1 px-2 sm:px-3 py-1 bg-primary hover:bg-purple-700 text-white rounded-full transition-colors w-full shadow-lg text-[10px] sm:text-xs"
-						href="{data.evento.ceremonia.enlace_mapa}" 
-						target="_blank"
-					>
-						<Icon icon="material-symbols:location-on" class="text-[8px]" />
-						Ver Ubicación
-					</a>
-				</div>
-			</div>
-		</article>
-
-		<!-- Recepción -->
-		<article class="glass-panel bg-white/80 rounded-2xl overflow-hidden shadow-glass hover:shadow-glow transition-shadow duration-300 flex flex-col md:flex-row-reverse h-full mx-auto w-full animate__animated animate__slideInRight">
-			<!-- Imagen -->
-			<div class="w-full md:w-1/2 h-28 sm:h-32 md:h-full min-h-[160px] md:min-h-[280px] order-first md:order-none">
-				<img 
-					src={salon} 
-					alt="Salón" 
-					class="w-full h-full object-cover object-center"
-				/>
-			</div>
-			<!-- Información -->
-			<div class="flex-1 p-2 sm:p-4 text-center flex flex-col items-center">
-				<div class="w-8 sm:w-10 h-8 sm:h-10 bg-primary/10 rounded-full flex items-center justify-center mb-1 sm:mb-2 text-primary">
-					<Icon icon="material-symbols:celebration" class="text-lg sm:text-xl" />
-				</div>
-				<h3 class="font-script text-xl sm:text-2xl text-primary mb-1">Recepción</h3>
-				<p class="text-[10px] uppercase tracking-wide text-gray-500 mb-1">
-					{data.evento.recepcion.hora}
-				</p>
-				<p class="font-serif italic text-xs sm:text-sm mb-1 px-1">{data.evento.recepcion.lugar}</p>
-				<p class="text-[10px] sm:text-xs text-gray-600 mb-1 sm:mb-2 px-1">{data.evento.recepcion.direccion}</p>
-				<div class="mt-auto w-full px-1 sm:px-0">
-					<p class="font-bold text-sm sm:text-base text-gray-800 mb-1 sm:mb-2 border-t border-b border-primary/20 py-1 inline-block w-full">
-						{data.evento.recepcion.tipo}
-					</p>
-					<a 
-						class="inline-flex items-center justify-center gap-1 px-2 sm:px-3 py-1 bg-gray-800 hover:bg-gray-900 text-white rounded-full transition-colors w-full shadow-lg text-[10px] sm:text-xs"
-						href="{data.evento.recepcion.enlace_mapa}"
-						target="_blank"
-					>
-						<Icon icon="material-symbols:location-on" class="text-[8px]" />
-						Ver Ubicación
-					</a>
-				</div>
-			</div>
-		</article>
-	</section>
+	<!-- Separador floral -->
+	<div class="flex items-center justify-center gap-4 py-4">
+		<div class="h-px bg-purple-300 w-16"></div>
+		<Icon icon="material-symbols:flower-2" class="text-purple-400 text-xl" />
+		<div class="h-px bg-purple-300 w-16"></div>
+	</div>
 
 	<!-- Galería -->
 	<section class="py-10 overflow-hidden animate__animated animate__fadeInUp">
