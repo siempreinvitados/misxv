@@ -284,7 +284,10 @@
 		<div class="h-px bg-purple-300 w-16"></div>
 	</div>
 
-	<section class="space-y-8 max-w-4xl mx-auto w-full py-6">
+
+	<h3 class="font-script text-3xl sm:text-4xl text-center text-primary mb-4 drop-shadow-sm mt-6">Detalles del evento</h3>
+
+	<section class="space-y-8 max-w-4xl mx-auto w-full ">
 		<!-- Ceremonia -->
 		<article class="bg-white/60 rounded-2xl overflow-hidden flex flex-col md:flex-row h-full mx-auto w-full animate__animated animate__slideInLeft">
 			<!-- Imagen -->
@@ -344,9 +347,7 @@
 				<p class="font-serif italic text-xs sm:text-sm mb-1 px-1">{data.evento.recepcion.lugar}</p>
 				<p class="text-[10px] sm:text-xs text-gray-600 mb-1 sm:mb-2 px-1">{data.evento.recepcion.direccion}</p>
 				<div class="mt-auto w-full px-1 sm:px-0">
-					<p class="font-bold text-sm sm:text-base text-gray-800 mb-1 sm:mb-2 border-t border-b border-primary/20 py-1 inline-block w-full">
-						{data.evento.recepcion.tipo}
-					</p>
+					
 					<a 
 						class="inline-flex items-center justify-center gap-1 px-4 sm:px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-full transition-colors w-full shadow-lg text-sm sm:text-base"
 						href="{data.evento.recepcion.enlace_mapa}"
@@ -368,7 +369,10 @@
 	</div>
 
 	<!-- Contador -->
-	<section class="text-center px-2 animate__animated animate__fadeInDown py-4">
+
+	<h3 class="font-script text-3xl sm:text-4xl text-center text-primary mb-4 drop-shadow-sm mt-6">Cuenta regresiva</h3>
+
+	<section class="text-center px-2 animate__animated animate__fadeInDown">
 		<div class="bg-white/60 rounded-2xl p-4 sm:p-6 md:p-8 max-w-md sm:max-w-2xl mx-auto">
 			<h3 class="uppercase tracking-widest text-xs sm:text-sm font-bold text-gray-500 mb-4 sm:mb-6 border-b border-gray-300 pb-2">Faltan</h3>
 			<div class="grid grid-cols-4 gap-1 sm:gap-2 md:gap-4 text-center">
@@ -481,7 +485,7 @@
 
 	<!-- Galería -->
 	<section class="py-10 overflow-hidden animate__animated animate__fadeInUp">
-		<h3 class="font-script text-4xl sm:text-5xl text-center text-primary mb-8 sm:mb-10 drop-shadow-sm">Galería</h3>
+		<h3 class="font-script text-4xl sm:text-5xl text-center text-primary mb-8 sm:mb-10 drop-shadow-sm">Galería de fotos</h3>
 		<div class="fan-gallery flex justify-center items-center gap-4 md:gap-0">
 			<!-- Imagen 1 -->
 			<button 
@@ -543,7 +547,7 @@
 			onclick={() => showContactModal = true}
 			class="text-purple-600 text-sm hover:text-purple-800 underline"
 		>
-			¿Te gustó la invitación? Contáctanos
+			¿Te gustó la invitación? Contactame
 		</button>
 	</div>
 
@@ -564,7 +568,7 @@
 				tabindex="0"
 			>
 				<p class="text-center text-lg text-purple-800 font-semibold mb-4">
-					¿Te gustó la invitación? Contáctanos
+					¿Te gustó la invitación? Contactame
 				</p>
 				<a
 					href="https://wa.me/5217712345678?text=Hola%20me%20ayudas%20a%20crear%20una%20invitaci%C3%B3n%20para%20mi%20evento"

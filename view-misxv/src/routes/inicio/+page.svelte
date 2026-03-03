@@ -274,7 +274,7 @@
 		onclick={() => showContactModal = true}
 		class="fixed bottom-4 left-4 z-50 text-purple-600 text-sm hover:text-purple-800 underline"
 	>
-		¿Te gustó la invitación? Contáctanos
+		¿Te gustó la invitación? Contactame
 	</button>
 
 	<!-- Modal de contacto -->
@@ -294,7 +294,7 @@
 				tabindex="0"
 			>
 				<p class="text-center text-lg text-purple-800 font-semibold mb-4">
-					¿Te gustó la invitación? Contáctanos
+					¿Te gustó la invitación? Contactame
 				</p>
 				<a
 					href="https://wa.me/5217712345678?text=Hola%20me%20ayudas%20a%20crear%20una%20invitaci%C3%B3n%20para%20mi%20evento"

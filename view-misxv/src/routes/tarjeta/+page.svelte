@@ -218,16 +218,15 @@
 		bind:this={tiltElement}
 		class="relative w-full max-w-xs sm:max-w-sm md:w-[450px] lg:max-w-lg h-[85dvh] md:h-[80dvh] lg:h-[85vh] perspective-1000 cursor-pointer animate__animated animate__jackInTheBox"
 		onclick={toggleCard}
-		role="button"
+		role="container"
 		tabindex="0"
 		aria-label={isFlipped ? 'Ver información resumida' : 'Ver más información'}
 	>
 		<!-- Contenedor interno para flip -->
-		<div class="card-inner w-full h-full relative preserve-3d transition-transform duration-700 {isFlipped ? 'flipped' : ''}">
+		<div class="card-inner w-full h-full relative preserve-3d transition-transform  duration-700 {isFlipped ? 'flipped' : ''}">
 			<!-- Frente de la tarjeta -->
-			<div
-				bind:this={containerElement}
-				class="card-front absolute inset-0 backface-hidden custom-glass bg-white/90 rounded-3xl shadow-[0_0_30px_rgba(147,112,219,0.5)] border-[20px] border-purple-600 px-4 sm:px-6 py-2 sm:py-3 flex flex-col items-center justify-between text-center overflow-hidden" style="border: 3px solid #D8B4FE;"
+			<div bind:this={containerElement}
+				class="opacity-80 card-front absolute inset-0 backface-hidden custom-glass bg-white/90 rounded-3xl shadow-[0_0_30px_rgba(147,112,219,0.5)] border-[20px] border-purple-600 px-4 sm:px-6 py-2 sm:py-3 flex flex-col items-center justify-between text-center overflow-hidden" style="border: 3px solid #D8B4FE;"
 			>
 				<!-- Imagen decorativa flores -->
 				<img
@@ -299,7 +298,7 @@
 				<!-- Indicador para voltear -->
 				<div class="flex-shrink-0 z-10 mt-2">
 					<div class="flex flex-col items-center text-gray-400 text-xs sm:text-sm md:text-base animate-pulse">
-						<span class="mb-0.5">Tap para ver más</span>
+						<span class="mb-0.5">Toca para ver más</span>
 						<Icon icon="material-symbols:touch-app" class="text-primary text-lg sm:text-xl md:text-2xl" />
 					</div>
 				</div>
@@ -307,7 +306,7 @@
 
 			<!-- Reverso de la tarjeta (detalles) -->
 			<div
-				class="card-back absolute inset-0 backface-hidden custom-glass bg-white/90 rounded-3xl shadow-[0_0_30px_rgba(147,112,219,0.5)] border-[20px] border-purple-600 px-4 sm:px-6 py-2 flex flex-col items-center justify-between text-center overflow-hidden rotate-y-180" style="border: 3px solid #D8B4FE;"
+				class="opacity-80 card-back absolute inset-0 backface-hidden custom-glass bg-white/90 rounded-3xl shadow-[0_0_30px_rgba(147,112,219,0.5)] border-[20px] border-purple-600 px-4 sm:px-6 py-2 flex flex-col items-center justify-between text-center overflow-hidden rotate-y-180" style="border: 3px solid #D8B4FE;"
 			>
 				<!-- Imagen decorativa flores -->
 				<img
@@ -347,144 +346,30 @@
 						</p>
 					</div>
 
-						<!-- Reproductor de Música -->
-	<section class="flex flex-col items-center py-4">
-		<h3 class="font-script text-3xl sm:text-4xl text-center text-primary mb-4 drop-shadow-sm">Escucha mi canción favorita</h3>
-		<div class="bg-white/70 rounded-full px-4 py-2 shadow-sm flex items-center gap-3 w-full max-w-sm">
-			<button
-				onclick={toggleMusic}
-				class="w-10 h-10 rounded-full bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center transition-colors flex-shrink-0"
-			>
-				<Icon icon={isPlaying ? 'material-symbols:pause' : 'material-symbols:play-arrow'} class="text-xl" />
-			</button>
-			<div class="flex-1 min-w-0">
-				<p class="text-sm font-semibold text-purple-800 truncate">Say Yes To Heaven</p>
-				<p class="text-xs text-gray-500 truncate">Lana Del Rey</p>
-			</div>
-			<Icon icon="material-symbols:music-note" class="text-purple-400 text-xl flex-shrink-0 {isPlaying ? 'animate__animated animate__swing animate__infinite' : ''}" />
-		</div>
-		<audio bind:this={audio} src={music} loop onplay={() => isPlaying = true} onpause={() => isPlaying = false}></audio>
-	</section>
-
-					<!-- Contador -->
-					<div class="mb-1">
-						<p class="uppercase tracking-widest text-[8px] sm:text-[9px] md:text-xs font-bold text-gray-500 mb-0.5">
-							Faltan
-						</p>
-						<div class="flex justify-center gap-1">
-							<div class="flex flex-col items-center">
-								<span
-									class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-primary bg-purple-50 px-1.5 py-0.5 rounded"
-									>{days}</span
-								>
-								<span class="text-[7px] sm:text-[8px] md:text-xs text-gray-500">Días</span>
+					<!-- Reproductor de Música -->
+					<section class="flex flex-col items-center mb-6">
+						<h3 class="font-script text-3xl sm:text-4xl text-center text-primary mb-4 drop-shadow-sm">Escucha mi canción favorita</h3>
+						<div class="bg-white/70 rounded-full px-4 py-2 shadow-sm flex items-center gap-3 w-full max-w-sm">
+							<button
+								onclick={(e) => { e.stopPropagation(); toggleMusic(); }}
+								class="w-10 h-10 rounded-full bg-purple-600 hover:bg-purple-700 text-white flex items-center justify-center transition-colors flex-shrink-0"
+							>
+								<Icon icon={isPlaying ? 'material-symbols:pause' : 'material-symbols:play-arrow'} class="text-xl" />
+							</button>
+							<div class="flex-1 min-w-0">
+								<p class="text-sm font-semibold text-purple-800 truncate">Say Yes To Heaven</p>
+								<p class="text-xs text-gray-500 truncate">Lana Del Rey</p>
 							</div>
-							<span class="text-base sm:text-lg md:text-xl font-bold text-gray-400">:</span>
-							<div class="flex flex-col items-center">
-								<span
-									class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-primary bg-purple-50 px-1.5 py-0.5 rounded"
-									>{hours}</span
-								>
-								<span class="text-[7px] sm:text-[8px] md:text-xs text-gray-500">Hs</span>
-							</div>
-							<span class="text-base sm:text-lg md:text-xl font-bold text-gray-400">:</span>
-							<div class="flex flex-col items-center">
-								<span
-									class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-primary bg-purple-50 px-1.5 py-0.5 rounded"
-									>{minutes}</span
-								>
-								<span class="text-[7px] sm:text-[8px] md:text-xs text-gray-500">Min</span>
-							</div>
-							<span class="text-base sm:text-lg md:text-xl font-bold text-gray-400">:</span>
-							<div class="flex flex-col items-center">
-								<span
-									class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-primary bg-purple-50 px-1.5 py-0.5 rounded"
-									>{seconds}</span
-								>
-								<span class="text-[7px] sm:text-[8px] md:text-xs text-gray-500">Seg</span>
-							</div>
+							<Icon icon="material-symbols:music-note" class="text-purple-400 text-xl flex-shrink-0 {isPlaying ? 'animate__animated animate__swing animate__infinite' : ''}" />
 						</div>
-					</div>
-
-					<!-- Mini Calendario Marzo 2026 -->
-	<section class="flex justify-center py-2">
-		<div class="bg-white/70 rounded-xl p-3 sm:p-4 shadow-sm w-full max-w-sm sm:max-w-md">
-			<h4 class="text-center font-semibold text-purple-700 text-sm sm:text-base mb-2">Marzo 2026</h4>
-			<div class="grid grid-cols-7 gap-1 sm:gap-2 text-center text-[10px] sm:text-xs">
-				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">D</span>
-				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">L</span>
-				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">M</span>
-				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">M</span>
-				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">J</span>
-				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">V</span>
-				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">S</span>
-				
-				<!-- Semana 1 -->
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">1</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">2</span>
-				<span class="text-purple-600 font-bold border-2 border-purple-400 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto">3</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">4</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">5</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">6</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">7</span>
-				
-				<!-- Semana 2 -->
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">8</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">9</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">10</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">11</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">12</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">13</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">14</span>
-				
-				<!-- Semana 3 -->
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">15</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">16</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">17</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">18</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">19</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">20</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">21</span>
-				
-				<!-- Semana 4 -->
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">22</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">23</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">24</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">25</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">26</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">27</span>
-				<span class="text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto animate__animated animate__heartBeat animate__infinite" >28</span>
-				
-				<!-- Semana 5 -->
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">29</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">30</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">31</span>
-				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
-				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
-				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
-				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
-			</div>
-		</div>
-	</section>
-
-				<!-- Botón Guardar Fecha -->
-				<div class="flex-shrink-0 z-10 mt-4">
-					<button
-						onclick={(e) => { e.stopPropagation(); saveToCalendar(); }}
-						class="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-full shadow-md transition-all duration-300 hover:scale-105 text-xs sm:text-sm md:text-base"
-					>
-						<Icon icon="material-symbols:calendar-month" class="text-lg" />
-						Guarda la fecha
-					</button>
-				</div>
-
-					<!-- división -->
-					<div
-						class="w-10 sm:w-12 h-px bg-gradient-to-r from-transparent via-primary to-transparent my-1"
-					></div>
+						<audio bind:this={audio} src={music} loop onplay={() => isPlaying = true} onpause={() => isPlaying = false}></audio>
+					</section>
 
 					<!-- Detalles con enlaces -->
-					<div class="w-full">
+					<div class="w-full mt-6">
+
+						<h3 class="font-script text-3xl sm:text-4xl text-center text-primary mb-4 drop-shadow-sm">Detalles del evento</h3>
+
 						<!-- Ceremonia Religiosa - Imagen a la izquierda, texto a la derecha -->
 						<div class="mb-2 flex items-start gap-2">
 							<!-- Imagen Iglesia -->
@@ -531,7 +416,7 @@
 									{data.evento.recepcion.direccion}
 								</p>
 								<p class="text-xs sm:text-sm md:text-base text-primary font-medium">
-									{data.evento.recepcion.tipo} - {data.evento.recepcion.hora}
+									{data.evento.recepcion.hora}
 								</p>
 								<a
 									class="inline-flex items-center gap-1 text-xs sm:text-sm md:text-base text-purple-600 hover:text-purple-800 font-semibold underline mt-1 px-2 py-1 bg-purple-50 rounded"
@@ -552,9 +437,122 @@
 						</div>
 					</div>
 
-					<h4 class="font-bold uppercase text-xs sm:text-sm md:text-base tracking-widest text-gray-500 mb-0.5">
-					Galeria de Fotos
-					</h4>
+
+					<h3 class="font-script text-3xl sm:text-4xl text-center text-primary mb-4 drop-shadow-sm mt-6">Cuenta regresiva</h3>
+
+					<!-- Contador -->
+					<div class="mb-1">
+						<p class="uppercase tracking-widest text-[8px] sm:text-[9px] md:text-xs font-bold text-gray-500 mb-0.5">
+							Faltan
+						</p>
+						<div class="flex justify-center gap-1">
+							<div class="flex flex-col items-center">
+								<span
+									class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-primary bg-purple-50 px-1.5 py-0.5 rounded"
+									>{days}</span
+								>
+								<span class="text-[7px] sm:text-[8px] md:text-xs text-gray-500">Días</span>
+							</div>
+							<span class="text-base sm:text-lg md:text-xl font-bold text-gray-400">:</span>
+							<div class="flex flex-col items-center">
+								<span
+									class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-primary bg-purple-50 px-1.5 py-0.5 rounded"
+									>{hours}</span
+								>
+								<span class="text-[7px] sm:text-[8px] md:text-xs text-gray-500">Hs</span>
+							</div>
+							<span class="text-base sm:text-lg md:text-xl font-bold text-gray-400">:</span>
+							<div class="flex flex-col items-center">
+								<span
+									class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-primary bg-purple-50 px-1.5 py-0.5 rounded"
+									>{minutes}</span
+								>
+								<span class="text-[7px] sm:text-[8px] md:text-xs text-gray-500">Min</span>
+							</div>
+							<span class="text-base sm:text-lg md:text-xl font-bold text-gray-400">:</span>
+							<div class="flex flex-col items-center">
+								<span
+									class="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-primary bg-purple-50 px-1.5 py-0.5 rounded"
+									>{seconds}</span
+								>
+								<span class="text-[7px] sm:text-[8px] md:text-xs text-gray-500">Seg</span>
+							</div>
+						</div>
+					</div>
+
+					<!-- Mini Calendario Marzo 2026 -->
+					<section class="flex justify-center py-2">
+						<div class="bg-white/70 rounded-xl p-3 sm:p-4 shadow-sm w-full max-w-sm sm:max-w-md">
+							<h4 class="text-center font-semibold text-purple-700 text-sm sm:text-base mb-2">Marzo 2026</h4>
+							<div class="grid grid-cols-7 gap-1 sm:gap-2 text-center text-[10px] sm:text-xs">
+								<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">D</span>
+								<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">L</span>
+								<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">M</span>
+								<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">M</span>
+								<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">J</span>
+								<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">V</span>
+								<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">S</span>
+								
+								<!-- Semana 1 -->
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">1</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">2</span>
+								<span class="text-purple-600 font-bold border-2 border-purple-400 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto">3</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">4</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">5</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">6</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">7</span>
+								
+								<!-- Semana 2 -->
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">8</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">9</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">10</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">11</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">12</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">13</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">14</span>
+								
+								<!-- Semana 3 -->
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">15</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">16</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">17</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">18</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">19</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">20</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">21</span>
+								
+								<!-- Semana 4 -->
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">22</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">23</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">24</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">25</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">26</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">27</span>
+								<span class="text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto animate__animated animate__heartBeat animate__infinite" >28</span>
+								
+								<!-- Semana 5 -->
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">29</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">30</span>
+								<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">31</span>
+								<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
+								<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
+								<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
+								<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
+							</div>
+						</div>
+					</section>
+
+					<!-- Botón Guardar Fecha -->
+					<div class="flex-shrink-0 z-10 mt-4">
+						<button
+							onclick={(e) => { e.stopPropagation(); saveToCalendar(); }}
+							class="inline-flex items-center gap-2 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-full shadow-md transition-all duration-300 hover:scale-105 text-xs sm:text-sm md:text-base"
+						>
+							<Icon icon="material-symbols:calendar-month" class="text-lg" />
+							Guarda la fecha
+						</button>
+					</div>
+
+					<h3 class="font-script text-3xl sm:text-4xl text-center text-primary mb-4 drop-shadow-sm mt-6">Galeria de fotos</h3>
 
 					<!-- Galería tipo fan -->
 					<div class="fan-gallery flex justify-center items-center gap-1 mt-4 mb-4">
@@ -600,9 +598,9 @@
 <!-- Enlace de contacto -->
 <button
 	onclick={() => showContactModal = true}
-	class="fixed bottom-4 left-4 z-50 text-purple-600 text-sm hover:text-purple-800 underline"
+	class="fixed w-100 text-center bottom-4  z-50 text-purple-600 text-sm hover:text-purple-800 underline"
 >
-	¿Te gustó la invitación? Contáctanos
+	¿Te gustó la invitación? Contáctame
 </button>
 
 <!-- Modal de contacto -->
@@ -622,7 +620,7 @@
 			tabindex="0"
 		>
 			<p class="text-center text-lg text-purple-800 font-semibold mb-4">
-				¿Te gustó la invitación? Contáctanos
+				¿Te gustó la invitación? Contactame
 			</p>
 			<a
 				href="https://wa.me/5217712345678?text=Hola%20me%20ayudas%20a%20crear%20una%20invitaci%C3%B3n%20para%20mi%20evento"
