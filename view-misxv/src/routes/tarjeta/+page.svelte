@@ -13,6 +13,7 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import VanillaTilt from 'vanilla-tilt';
+	import { viewPreferenceStore } from '$lib/stores/viewPreferenceStore';
 
 	let isFlipped = $state(false);
 	let tiltElement: HTMLDivElement;
@@ -155,6 +156,9 @@
 	}
 
 	function navigateToOtherPage() {
+		// Increment view count before navigating
+		viewPreferenceStore.incrementViewCount();
+		
 		if ($page.url.pathname === '/tarjeta') {
 			goto('/clasica');
 		} else {

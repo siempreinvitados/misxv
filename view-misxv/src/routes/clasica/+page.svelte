@@ -11,6 +11,7 @@
 	import img2 from '$lib/assets/imgs/img2.jpeg';
 	import img3 from '$lib/assets/imgs/img3.jpeg';
 	import img4 from '$lib/assets/imgs/img4.jpeg';
+	import { viewPreferenceStore } from '$lib/stores/viewPreferenceStore';
 
 	// Estado del contador
 	let days = $state('00');
@@ -48,6 +49,9 @@
 	});
 
 	function navigateToOtherPage() {
+		// Increment view count before navigating
+		viewPreferenceStore.incrementViewCount();
+		
 		if ($page.url.pathname === '/clasica') {
 			goto('/tarjeta');
 		} else {

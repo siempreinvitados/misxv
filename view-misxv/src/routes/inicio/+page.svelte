@@ -6,6 +6,7 @@
 	import scrollIcon from '$lib/assets/imgs/scroll_icon.png';
 	import cardIcon from '$lib/assets/imgs/card_icon.png';
 	import Icon from '@iconify/svelte';
+	import { database, ref, get, set } from '$lib/firebase';
 
 	let showTxt1 = $state(false);
 	let showTxt2 = $state(false);
@@ -126,6 +127,23 @@
 	}
 
 	function viewInvitation() {
+		// Actualizar Firebase según la opción seleccionada (en background, silencioso)
+		if (selectedOption === 'clasico') {
+			get(ref(database, 'encu/inClassic'))
+				.then((snapshot) => {
+					const current = snapshot.val() || 0;
+					return set(ref(database, 'encu/inClassic'), current + 1);
+				})
+				.catch(() => { /* silencioso */ });
+		} else if (selectedOption === 'tarjeta') {
+			get(ref(database, 'encu/inCard'))
+				.then((snapshot) => {
+					const current = snapshot.val() || 0;
+					return set(ref(database, 'encu/inCard'), current + 1);
+				})
+				.catch(() => { /* silencioso */ });
+		}
+		
 		if (selectedOption === 'clasico') {
 			goto('/clasica');
 		} else if (selectedOption === 'tarjeta') {
