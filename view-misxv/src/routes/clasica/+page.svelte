@@ -106,7 +106,7 @@
 <!-- Flores en esquinas -->
 <button
 	onclick={navigateToOtherPage}
-	class="fixed top-4 right-4 z-50 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-full shadow-lg px-4 py-2 flex items-center gap-2 transition-all duration-300 hover:scale-105 opacity-60 hover:opacity-100"
+	class="fixed top-4 right-4 z-50 vintage-button font-semibold rounded-lg shadow-lg px-4 py-2 flex items-center gap-2 transition-all duration-300 hover:scale-105 opacity-60 hover:opacity-100"
 >
 	<Icon icon="material-symbols:swap-horiz" class="text-lg" />
 	<span class="text-sm">{$page.url.pathname === '/clasica' ? 'Tarjeta' : 'Vista Clásica'}</span>
@@ -210,7 +210,7 @@
 	<div class="text-center mt-4 mb-4">
 		<button
 			onclick={saveToCalendar}
-			class="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded-full shadow-lg transition-all duration-300 hover:scale-105 text-base sm:text-lg"
+			class="inline-flex items-center gap-2 px-6 py-3 vintage-button font-semibold rounded-lg shadow-lg transition-all duration-300 hover:scale-105 text-base sm:text-lg"
 		>
 			<Icon icon="material-symbols:calendar-month" class="text-xl" />
 			Guarda la fecha

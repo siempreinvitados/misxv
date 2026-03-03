@@ -1,375 +1,245 @@
 <!DOCTYPE html>
-<html lang="es"><head>
+
+<html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Mis XV - Briana Natali</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
-<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&amp;family=Lato:wght@300;400;700&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@300;400;500;600;700;800&amp;family=Noto+Sans:wght@400;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
                 extend: {
                     colors: {
-                        primary: "#a78bfa", // Soft Lavender
-                        secondary: "#c4b5fd", // Light Violet
-                        accent: "#8b5cf6", // Vibrant Violet
-                        "pastel-bg": "#f5f3ff", // Creamy lavender background
-                        "clay-light": "#ffffff",
-                        "clay-dark": "#e0d8fa",
+                        "primary": "#b19cd9", // Soft Lilac
+                        "accent": "#d4af37",  // Soft Gold
+                        "background-light": "#fdfbfd",
+                        "background-dark": "#1a1625",
                     },
                     fontFamily: {
-                        script: ["'Great Vibes'", "cursive"],
-                        serif: ["'Playfair Display'", "serif"],
-                        sans: ["'Lato'", "sans-serif"],
+                        "display": ["Public Sans", "sans-serif"]
                     },
-                    boxShadow: {
-                        'clay': '8px 8px 16px 0px rgba(167, 139, 250, 0.15), -8px -8px 16px 0px rgba(255, 255, 255, 0.8), inset 6px 6px 12px 0px rgba(167, 139, 250, 0.05), inset -6px -6px 12px 0px rgba(255, 255, 255, 0.6)',
-                        'clay-inset': 'inset 8px 8px 16px 0px rgba(167, 139, 250, 0.1), inset -8px -8px 16px 0px rgba(255, 255, 255, 0.9)',
-                        'floating': '0 15px 35px rgba(139, 92, 246, 0.25)',
-                        'glow-pill': '0 0 15px rgba(167, 139, 250, 0.6), 0 4px 6px rgba(0,0,0,0.05)',
-                    },
-                    borderRadius: {
-                        'squircle': '28px', 
-                    }
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
                 },
             },
-        };
+        }
     </script>
-<style>
-        body {
-            background-color: #f3f0ff;
-            background-image: 
-                radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-                radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
-                radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
-        }
-        .light-mesh {
-            background-color: #f8f6ff;
-            background-image: 
-                radial-gradient(at 10% 10%, rgba(221, 214, 254, 0.8) 0px, transparent 50%),
-                radial-gradient(at 90% 10%, rgba(233, 213, 255, 0.8) 0px, transparent 50%),
-                radial-gradient(at 50% 50%, rgba(196, 181, 253, 0.4) 0px, transparent 50%),
-                radial-gradient(at 80% 90%, rgba(167, 139, 250, 0.3) 0px, transparent 50%);
-            background-attachment: fixed;
-            background-size: cover;
-        }
-        .dark .light-mesh {
-             background-color: #1a1625;
-             background-image: 
-                radial-gradient(at 10% 10%, rgba(76, 29, 149, 0.4) 0px, transparent 50%),
-                radial-gradient(at 90% 90%, rgba(109, 40, 217, 0.3) 0px, transparent 50%);
-        }
-        .metallic-text {
-            background: linear-gradient(135deg, #a78bfa 0%, #ddd6fe 25%, #8b5cf6 50%, #c4b5fd 75%, #a78bfa 100%);
-            background-size: 200% auto;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 2px 2px 4px rgba(139, 92, 246, 0.1);
-            animation: shine 5s linear infinite;
-        }
-        @keyframes shine {
-            to {
-                background-position: 200% center;
-            }
-        }
-        .clay-card {
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(20px);
-            border-radius: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 8px 8px 16px 0px rgba(139, 92, 246, 0.08), -8px -8px 16px 0px rgba(255, 255, 255, 0.9);
-            transition: all 0.3s ease;
-        }
-        .dark .clay-card {
-            background: rgba(30, 27, 41, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 8px 8px 16px 0px rgba(0, 0, 0, 0.3), -8px -8px 16px 0px rgba(255, 255, 255, 0.05);
-        }
-        .clay-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 12px 12px 20px 0px rgba(139, 92, 246, 0.15), -8px -8px 16px 0px rgba(255, 255, 255, 0.9);
-        }
-        .squircle-img {
-            mask-image: url('data:image/svg+xml;utf8,<svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path d="M100,0 C20,0 0,20 0,100 C0,180 20,200 100,200 C180,200 200,180 200,100 C200,20 180,0 100,0 Z" fill="black"/></svg>');
-            -webkit-mask-image: url('data:image/svg+xml;utf8,<svg width="100%" height="100%" viewBox="0 0 100 100" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M50,0 C10,0 0,10 0,50 C0,90 10,100 50,100 C90,100 100,90 100,50 C100,10 90,0 50,0 Z" fill="black"/></svg>');
-            mask-size: 100% 100%;
-            -webkit-mask-size: 100% 100%;
-            mask-repeat: no-repeat;
-            -webkit-mask-repeat: no-repeat;
-        }.petal {
-            position: absolute;
-            background: linear-gradient(135deg, #ddd6fe, #a78bfa);
-            border-radius: 50% 0 50% 0;
-            opacity: 0.6;
-            filter: blur(1px);
-            box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
-            animation: falling 15s linear infinite;
-            z-index: 0;
-        }
-        @keyframes falling {
-            0% { transform: translate(0, -10vh) rotate(0deg) scale(0.8); opacity: 0; }
-            20% { opacity: 0.8; }
-            100% { transform: translate(20vw, 110vh) rotate(720deg) scale(1); opacity: 0; }
-        }
-        .glass-pill-btn {
-            background: rgba(255, 255, 255, 0.25);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            box-shadow: 0 4px 15px rgba(167, 139, 250, 0.4);
-            transition: all 0.3s ease;
-        }
-        .glass-pill-btn:hover {
-            background: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 0 25px rgba(167, 139, 250, 0.7);
-            transform: scale(1.05);
-        }.fan-gallery {
-            perspective: 1000px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 400px;
-            position: relative;
-        }
-        .fan-item {
-            width: 220px;
-            height: 320px;
-            position: absolute;
-            transition: all 0.5s ease;
-            border-radius: 28px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            border: 4px solid white;
-        }
-        .fan-item:nth-child(1) { transform: translateX(-140px) rotate(-10deg) scale(0.9); z-index: 1; }
-        .fan-item:nth-child(2) { transform: translateX(0px) rotate(0deg) scale(1.1); z-index: 3; box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3); }
-        .fan-item:nth-child(3) { transform: translateX(140px) rotate(10deg) scale(0.9); z-index: 1; }
-        .fan-item:hover { z-index: 10; transform: scale(1.15) rotate(0); }
-        @media (max-width: 768px) {
-            .fan-gallery { height: auto; flex-direction: column; gap: 20px; perspective: none; }
-            .fan-item { position: relative; width: 100%; max-width: 300px; height: 400px; transform: none !important; margin: 0 auto; }
-        }
-    </style>
+<style>.paper-texture {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuDItrNQ_nD5AvwM5YQTltxBee22GPjhno_kOnTKqAE5FJsVBFup43XrtD-fJ-jmlZkps1NsYgn3Tf33xRkv_fWx9bTgSq4F1XHUCIPq4zah6hsv9b82MUjwvUBHg0lOzatB3yjjAAd6iarWKSrQTpqHsuFOsZ-nDhhdG7zqtG17RNeLgruFOPzLiXIrlc5-auVknq--XQ0oGjR8Yc4n0vzR3gETWo5CIlHPsxUe_fNDMvfKR8XBjFVl_aeFFYxtY_YRhJBstiQJncs5)
+    }
+.lilac-glass {
+    background: rgba(177, 156, 217, 0.1);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(177, 156, 217, 0.2)
+    }</style>
 </head>
-<body class="light-mesh text-gray-700 dark:text-gray-200 transition-colors duration-500 min-h-screen relative overflow-x-hidden font-sans">
-<div class="fixed inset-0 pointer-events-none overflow-hidden h-full w-full z-0">
-<div class="petal w-4 h-4 left-[10%]" style="animation-delay: 0s; animation-duration: 12s;"></div>
-<div class="petal w-6 h-6 left-[30%]" style="animation-delay: 2s; animation-duration: 15s;"></div>
-<div class="petal w-3 h-3 left-[60%]" style="animation-delay: 5s; animation-duration: 10s;"></div>
-<div class="petal w-5 h-5 left-[80%]" style="animation-delay: 1s; animation-duration: 18s;"></div>
-<div class="petal w-4 h-4 left-[20%]" style="animation-delay: 7s; animation-duration: 14s;"></div>
-<div class="petal w-6 h-6 left-[75%]" style="animation-delay: 9s; animation-duration: 16s;"></div>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 selection:bg-primary/30">
+<div class="relative flex min-h-screen flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-primary/10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md px-6 py-3">
+<div class="max-w-5xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-3xl">auto_awesome</span>
+<h2 class="text-xl font-bold tracking-tight text-slate-900 dark:text-slate-100">Valentina's XV</h2>
 </div>
-<button class="fixed top-6 right-6 z-50 p-3 rounded-full bg-white/50 dark:bg-black/30 backdrop-blur-md shadow-clay text-accent hover:rotate-12 transition-all duration-300" id="theme-toggle">
-<span class="material-symbols-outlined text-2xl" id="theme-icon">dark_mode</span>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-xl h-10 w-10 bg-primary/10 text-primary hover:bg-primary/20 transition-colors">
+<span class="material-symbols-outlined">share</span>
 </button>
-<main class="relative z-10 max-w-5xl mx-auto px-6 py-16 flex flex-col gap-20">
-<section class="text-center relative pt-10">
-<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-purple-300/30 rounded-full blur-[100px] -z-10"></div>
-<p class="font-serif italic text-xl text-purple-600 dark:text-purple-300 mb-6 tracking-wide">Estás invitado a celebrar</p>
-<div class="relative inline-block mb-8">
-<h1 class="font-script text-6xl md:text-8xl text-purple-400 opacity-50 absolute blur-sm top-2 left-2 select-none">Mis XV</h1>
-<h1 class="font-script text-6xl md:text-8xl text-purple-500 relative z-10">Mis XV</h1>
+<button class="flex items-center justify-center rounded-xl h-10 px-4 bg-primary text-white font-bold text-sm gap-2 shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-[20px]">calendar_add_on</span>
+<span>Save Date</span>
+</button>
 </div>
-<div class="relative py-4">
-<h2 class="font-script text-7xl md:text-9xl metallic-text py-2 leading-tight">Briana Natali</h2>
 </div>
-<div class="clay-card p-8 md:p-10 max-w-3xl mx-auto mt-12 relative overflow-hidden group">
-<div class="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent opacity-50"></div>
-<h3 class="relative z-10 uppercase tracking-[0.2em] text-sm font-bold text-purple-500 dark:text-purple-300 mb-8 flex items-center justify-center gap-4">
-<span class="h-px w-8 bg-purple-300"></span> Faltan <span class="h-px w-8 bg-purple-300"></span>
-</h3>
-<div class="relative z-10 grid grid-cols-4 gap-4 md:gap-8 text-center">
-<div class="flex flex-col items-center">
-<div class="w-16 h-16 md:w-24 md:h-24 rounded-full shadow-clay-inset bg-purple-50/50 dark:bg-purple-900/20 flex items-center justify-center mb-3">
-<span class="text-2xl md:text-4xl font-bold text-accent" id="days">00</span>
+</header>
+<main class="flex-1">
+<!-- Hero Section -->
+<section class="px-6 py-8 @container">
+<div class="max-w-5xl mx-auto">
+<div class="relative rounded-3xl overflow-hidden min-h-[500px] flex flex-col justify-end p-8 bg-primary/5">
+<div class="absolute inset-0 z-0">
+<img alt="Elegant quinceañera dress detail" class="w-full h-full object-cover opacity-60 dark:opacity-40" data-alt="Close up of a sparkling lilac dress lace" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYlY75lIy_LklNyZNPR1ebCSHrkOriIOQbhZ2pHqT_WxhxTB-FXI8PHlkFSzu1ZVS7tudLtP4MHZqFy1jDC1_lL5rgxclW0HkwTUFtcPMYKQ1NbCu4B-mS3GLz6OAuch-gTLfmwvQ2NKZOv6umzOQ0QmWJCp9MWASQ1U_bSMIhD8cKaEhY1h7-wF5D1jdzpH-eyJTSkSTNnW5CSG1R8DdYLFP_WWOpuiNSJw6L0MiNvUIKcaZKy0JWhkBoZEWFVSRfMwesanl0p8i_"/>
+<div class="absolute inset-0 bg-gradient-to-t from-background-light dark:from-background-dark via-transparent to-transparent"></div>
 </div>
-<span class="text-xs uppercase tracking-wider text-gray-500 font-bold">Días</span>
-</div>
-<div class="flex flex-col items-center">
-<div class="w-16 h-16 md:w-24 md:h-24 rounded-full shadow-clay-inset bg-purple-50/50 dark:bg-purple-900/20 flex items-center justify-center mb-3">
-<span class="text-2xl md:text-4xl font-bold text-accent" id="hours">00</span>
-</div>
-<span class="text-xs uppercase tracking-wider text-gray-500 font-bold">Hs</span>
-</div>
-<div class="flex flex-col items-center">
-<div class="w-16 h-16 md:w-24 md:h-24 rounded-full shadow-clay-inset bg-purple-50/50 dark:bg-purple-900/20 flex items-center justify-center mb-3">
-<span class="text-2xl md:text-4xl font-bold text-accent" id="minutes">00</span>
-</div>
-<span class="text-xs uppercase tracking-wider text-gray-500 font-bold">Min</span>
-</div>
-<div class="flex flex-col items-center">
-<div class="w-16 h-16 md:w-24 md:h-24 rounded-full shadow-clay-inset bg-purple-50/50 dark:bg-purple-900/20 flex items-center justify-center mb-3">
-<span class="text-2xl md:text-4xl font-bold text-accent" id="seconds">00</span>
-</div>
-<span class="text-xs uppercase tracking-wider text-gray-500 font-bold">Seg</span>
+<div class="relative z-10 space-y-4 max-w-2xl">
+<span class="inline-block px-4 py-1.5 bg-accent/20 text-accent rounded-full text-sm font-bold tracking-widest uppercase">Mis Quince Años</span>
+<h1 class="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 dark:text-slate-100 leading-none">
+                                Valentina <br/><span class="text-primary italic font-serif">Isabel</span>
+</h1>
+<p class="text-lg text-slate-600 dark:text-slate-400 max-w-lg">
+                                A modern vintage fusion celebration. Join us for an evening of magic, elegance, and timeless memories as I step into my new chapter.
+                            </p>
 </div>
 </div>
 </div>
 </section>
-<section class="clay-card p-10 md:p-14 text-center relative overflow-hidden">
-<div class="absolute -top-10 -right-10 w-32 h-32 bg-purple-200 rounded-full blur-2xl opacity-50"></div>
-<div class="absolute -bottom-10 -left-10 w-40 h-40 bg-pink-200 rounded-full blur-2xl opacity-50"></div>
-<div class="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+<!-- Message & Countdown -->
+<section class="px-6 py-12">
+<div class="max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+<div class="space-y-6">
+<div class="inline-flex items-center gap-2 text-primary font-bold">
+<div class="h-[2px] w-8 bg-primary"></div>
+<span>OUR SPECIAL JOURNEY</span>
+</div>
+<h2 class="text-3xl font-bold leading-tight">Every moment has led to this beautiful night.</h2>
+<p class="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            "Laughter, dreams, and the warmth of family have shaped my path. As I celebrate my 15th birthday, I want to share this joy with the people who mean the most to me."
+                        </p>
+</div>
+<div class="lilac-glass p-8 rounded-3xl border-2 border-primary/20 paper-texture">
+<p class="text-center text-xs font-bold tracking-[0.2em] text-primary uppercase mb-6">Countdown to the Magic</p>
+<div class="grid grid-cols-4 gap-4">
+<div class="text-center">
+<div class="text-3xl font-bold text-slate-900 dark:text-slate-100">14</div>
+<div class="text-[10px] uppercase tracking-wider text-slate-500">Days</div>
+</div>
+<div class="text-center border-l border-primary/20">
+<div class="text-3xl font-bold text-slate-900 dark:text-slate-100">08</div>
+<div class="text-[10px] uppercase tracking-wider text-slate-500">Hours</div>
+</div>
+<div class="text-center border-l border-primary/20">
+<div class="text-3xl font-bold text-slate-900 dark:text-slate-100">42</div>
+<div class="text-[10px] uppercase tracking-wider text-slate-500">Mins</div>
+</div>
+<div class="text-center border-l border-primary/20">
+<div class="text-3xl font-bold text-slate-900 dark:text-slate-100">15</div>
+<div class="text-[10px] uppercase tracking-wider text-slate-500">Secs</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Parents & Godparents -->
+<section class="px-6 py-16 bg-primary/5">
+<div class="max-w-5xl mx-auto">
+<h2 class="text-2xl font-bold text-center mb-12">With the blessing of my family</h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div class="lilac-glass p-8 rounded-2xl flex flex-col items-center text-center space-y-4">
+<div class="size-16 rounded-full bg-accent/20 flex items-center justify-center text-accent">
+<span class="material-symbols-outlined text-3xl">favorite</span>
+</div>
 <div>
-<h3 class="font-script text-5xl text-accent mb-4">Mis Papás</h3>
-<p class="font-serif text-xl md:text-2xl text-gray-700 dark:text-gray-200 leading-relaxed">
-                        Oliva Amador Zarco <br/>
-<span class="text-sm font-sans text-purple-400 uppercase tracking-widest my-2 block">&amp;</span> 
-                        José Luis Montes González
-                    </p>
+<h3 class="text-sm font-bold text-primary uppercase tracking-widest mb-1">Parents</h3>
+<p class="text-xl font-semibold">Ricardo &amp; Sofia Mendoza</p>
 </div>
-<div class="hidden md:block w-px h-32 bg-gradient-to-b from-transparent via-purple-300 to-transparent mx-auto"></div>
-<div class="md:hidden w-32 h-px bg-gradient-to-r from-transparent via-purple-300 to-transparent mx-auto"></div>
+</div>
+<div class="lilac-glass p-8 rounded-2xl flex flex-col items-center text-center space-y-4">
+<div class="size-16 rounded-full bg-accent/20 flex items-center justify-center text-accent">
+<span class="material-symbols-outlined text-3xl">verified_user</span>
+</div>
 <div>
-<h3 class="font-script text-5xl text-accent mb-4">Mis Padrinos</h3>
-<p class="font-serif text-xl md:text-2xl text-gray-700 dark:text-gray-200 leading-relaxed">
-                        Angela Montes González <br/>
-<span class="text-sm font-sans text-purple-400 uppercase tracking-widest my-2 block">&amp;</span> 
-                        Héctor Armenta Olmos
-                    </p>
+<h3 class="text-sm font-bold text-primary uppercase tracking-widest mb-1">Godparents</h3>
+<p class="text-xl font-semibold">Carlos &amp; Elena Ramirez</p>
+</div>
+</div>
 </div>
 </div>
 </section>
-<section class="grid md:grid-cols-2 gap-8 lg:gap-12">
-<article class="clay-card p-8 rounded-[40px] text-center flex flex-col items-center h-full relative group hover:z-20">
-<div class="absolute inset-0 rounded-[40px] border-2 border-white/50 pointer-events-none"></div>
-<div class="w-20 h-20 bg-gradient-to-tr from-purple-100 to-white dark:from-purple-900 dark:to-gray-800 rounded-full shadow-clay flex items-center justify-center mb-6 text-accent group-hover:scale-110 transition-transform duration-300">
-<span class="material-symbols-outlined text-4xl">church</span>
+<!-- Locations -->
+<section class="px-6 py-16">
+<div class="max-w-5xl mx-auto space-y-12">
+<div class="text-center space-y-4">
+<h2 class="text-4xl font-bold">The Celebration</h2>
+<p class="text-slate-500">Saturday, October 12th, 2024</p>
 </div>
-<h3 class="font-script text-4xl text-gray-800 dark:text-white mb-2">Ceremonia Religiosa</h3>
-<div class="bg-purple-100 dark:bg-purple-900/40 text-accent px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
-                    2:00 PM
-                </div>
-<div class="flex-grow">
-<p class="font-serif italic text-xl mb-2">Parroquia de Nuestra Señora del Refugio</p>
-<p class="text-gray-500 dark:text-gray-400 mb-8 font-light">Omitlán de Juárez, Hgo.</p>
+<div class="grid lg:grid-cols-2 gap-8">
+<!-- Religious Ceremony -->
+<div class="group relative overflow-hidden rounded-3xl bg-white dark:bg-slate-800/50 shadow-sm border border-slate-200 dark:border-slate-700">
+<div class="h-48 overflow-hidden">
+<img alt="Church interior" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Beautiful white church interior with flowers" src="https://lh3.googleusercontent.com/aida-public/AB6AXuByDFWATf9ncXCovrnG3RgEOmcdWgneaIRYMyU7Pef27laMghjgpssZVCUga386SWCeMFV14gTCADeIKa4hEPGOPRUzreClDtNo08A8czxIaClaPIptY3846HMJlSqZzeER09S8HdMyhir0IOfwYALwX5nnT2rlVeB-N9o-xZIT60haiCqEGXH5EzBHJ-vIDwm39H6y9btFirs9tbXPxFpLusmRnRa31hN87mBsja5AjGPj68DOzIx0d9BThiWFW2kFV9zmXZhI7iet"/>
 </div>
-<div class="w-full mt-4">
-<p class="font-bold text-lg text-gray-400 dark:text-gray-500 mb-4">28 Marzo, 2026</p>
-<a class="glass-pill-btn flex items-center justify-center gap-2 px-8 py-4 rounded-full w-full text-purple-800 dark:text-purple-200 font-bold group-hover:text-white group-hover:bg-accent/80" href="#">
+<div class="p-8 space-y-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-2xl font-bold">Religious Ceremony</h3>
+<p class="text-primary font-semibold">5:00 PM</p>
+</div>
+<span class="material-symbols-outlined text-accent">church</span>
+</div>
+<p class="text-slate-600 dark:text-slate-400">Our Lady of Guadalupe Cathedral<br/>123 Sacred Heart Way, Heritage District</p>
+<button class="w-full py-3 rounded-xl border-2 border-primary/20 hover:bg-primary hover:text-white transition-all font-bold flex items-center justify-center gap-2">
 <span class="material-symbols-outlined text-sm">location_on</span>
-                        Ver Ubicación
-                    </a>
+                                    View Map
+                                </button>
 </div>
-</article>
-<article class="clay-card p-8 rounded-[40px] text-center flex flex-col items-center h-full relative group hover:z-20">
-<div class="absolute inset-0 rounded-[40px] border-2 border-white/50 pointer-events-none"></div>
-<div class="w-20 h-20 bg-gradient-to-tr from-purple-100 to-white dark:from-purple-900 dark:to-gray-800 rounded-full shadow-clay flex items-center justify-center mb-6 text-accent group-hover:scale-110 transition-transform duration-300">
-<span class="material-symbols-outlined text-4xl">celebration</span>
 </div>
-<h3 class="font-script text-4xl text-gray-800 dark:text-white mb-2">Recepción</h3>
-<div class="bg-purple-100 dark:bg-purple-900/40 text-accent px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest mb-6">
-                    3:30 PM
-                </div>
-<div class="flex-grow">
-<p class="font-serif italic text-xl mb-2">Auditorio de Omitlán de Juárez</p>
-<p class="text-gray-500 dark:text-gray-400 mb-8 font-light text-sm max-w-xs mx-auto">Ubicado en Omitlán de Juárez, Hidalgo, Centro, C.P. 43560</p>
+<!-- Reception -->
+<div class="group relative overflow-hidden rounded-3xl bg-white dark:bg-slate-800/50 shadow-sm border border-slate-200 dark:border-slate-700">
+<div class="h-48 overflow-hidden">
+<img alt="Reception hall" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" data-alt="Elegant ballroom setup with lilac lights" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRyLSuTqXQlLWo5DC1zn4JI-XnlLfFfgXD6Coms9HT6C9vPMDxFPKH4QKSdq6BljDEVW8jL1toeRGHLrmOyIfhEr22r8IArHjDhZnN6ZFa_BLvHafanee7B4fvQwnFDwHXBzZ56vSfVada78ovBQJ5SwOVIq3WA3eYGvOgyYLatfL7kC9GSmjOH3uslPvxy3YtOcVqGqtl1NR4RywDPBys3xuSD9_G5RtEavYn-g3vt_KnQA8RIq5VIOECDNRiut2zm6rY23EqkJgg"/>
 </div>
-<div class="w-full mt-4">
-<p class="font-bold text-lg text-gray-400 dark:text-gray-500 mb-4">Civil &amp; Fiesta</p>
-<a class="glass-pill-btn flex items-center justify-center gap-2 px-8 py-4 rounded-full w-full text-purple-800 dark:text-purple-200 font-bold group-hover:text-white group-hover:bg-accent/80" href="#">
+<div class="p-8 space-y-4">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-2xl font-bold">Grand Reception</h3>
+<p class="text-primary font-semibold">8:00 PM</p>
+</div>
+<span class="material-symbols-outlined text-accent">celebration</span>
+</div>
+<p class="text-slate-600 dark:text-slate-400">The Vintage Grand Hall<br/>456 Elegance Ave, Downtown Metropolis</p>
+<button class="w-full py-3 rounded-xl border-2 border-primary/20 hover:bg-primary hover:text-white transition-all font-bold flex items-center justify-center gap-2">
 <span class="material-symbols-outlined text-sm">location_on</span>
-                        Ver Ubicación
-                    </a>
-</div>
-</article>
-</section>
-<section class="clay-card p-8 rounded-full flex flex-col md:flex-row justify-around items-center gap-8 text-center shadow-floating">
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-full flex items-center justify-center text-accent">
-<span class="material-symbols-outlined">checkroom</span>
-</div>
-<div class="text-left">
-<h4 class="font-bold uppercase text-xs tracking-widest text-purple-400">Vestimenta</h4>
-<p class="font-serif text-lg text-gray-700 dark:text-gray-200">Formal</p>
+                                    View Map
+                                </button>
 </div>
 </div>
-<div class="hidden md:block w-px h-12 bg-gray-200 dark:bg-gray-700"></div>
-<div class="flex items-center gap-4">
-<div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/50 rounded-full flex items-center justify-center text-accent">
-<span class="material-symbols-outlined">card_giftcard</span>
-</div>
-<div class="text-left">
-<h4 class="font-bold uppercase text-xs tracking-widest text-purple-400">Regalos</h4>
-<p class="font-serif text-lg text-gray-700 dark:text-gray-200">Lluvia de Sobres</p>
 </div>
 </div>
 </section>
-<section class="py-10 overflow-hidden">
-<h3 class="font-script text-6xl text-center text-accent mb-12 drop-shadow-sm relative z-10">Galería de Fotos</h3>
-<div class="fan-gallery">
-<div class="fan-item bg-white">
-<img alt="Quinceañera Portrait 1" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3403EQGs3UxVbcTWrRIYyaNo3Rz53bMm8hijtn-NIJGIkdv02372Oy8tkuXYaw5FWG6rolL-u3-uNMHAuog1wNEFL7AVIz8WYLK27ZsOBifoWPBWqEfQJclEQ0YtJKNiiEuiO3iIda7cR5DvvOAozHujpfjln2j1gweTMGc2Ifoj3rlD8gCLxs10WpItTlm1q1bcva3a6kSmt3S9XjSCc209Tr65ajayuMzwR9w8DBxYu01lvYb8q4HN0cXM-JRenko2l9jd8CCWG"/>
+<!-- Mosaic Photo Gallery -->
+<section class="px-6 py-16 bg-background-light dark:bg-background-dark">
+<div class="max-w-5xl mx-auto">
+<div class="flex items-center justify-between mb-8">
+<h2 class="text-3xl font-bold">Pre-Quince Moments</h2>
+<span class="text-primary font-semibold">#ValentinaXV</span>
 </div>
-<div class="fan-item bg-white">
-<img alt="Quinceañera Details" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmp_XwMQ8DQY2q1CcPcn5SYaNznzhvLnQqMhuW6zbjv-s3ENjFaGuW6hYdUyM3bWIgV4dYuPJ9K7P7dfig7k0fGYp1zYrEago0OQ3ZHIaQMssR-qDvNUZu_mbOqzGKKkTtVL4Tpv4Pn3z_BuMXJWBaswO3e3lMtinWcSm34r-RwocFjlpr8_QP_DvaaFV7LAG2cbaFLd04G4ffNgP2Wv90wbvsTbxFYV7YDY-ApsPAhBHhGXgkJgVdlsgZ9UkRWd0mopgslzQ_ZR87"/>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[200px]">
+<div class="rounded-2xl overflow-hidden col-span-2 row-span-2">
+<img alt="Main portrait" class="w-full h-full object-cover hover:scale-110 transition-transform duration-700" data-alt="Young girl in a lilac dress in a park" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtPUFQXQYOaMMk9ZzMflQjGn_RYX_VN2rBaMTyDMrjTbmQCMadVDTQPpgDyRIXjzdN1rA3DSDPGNDy_Scoa2T_-tDXXLsoq68ItaW2w8vKU105kqy9Wb4JvccwKN2USt8X0MtD0L45Uy8423fhtEo5MKLXWn_mAi-sQi2XP7dTu6udx0lVnXD_qmtQt9ac8Am2NuKgvILXSu52sSzTCnFrZhER_nTLmGcf9LaBPIOEZ9J2Euc2Hb1ULUFzLJwRd4V-6K6dHghJeDHe"/>
 </div>
-<div class="fan-item bg-white">
-<img alt="Quinceañera Portrait 2" class="w-full h-full object-cover transition-transform duration-700 hover:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuARPlCJqOdujvedNYOT-uQNXfsZ9NXJcDQhvZta_TnI0zfU5gBTj_3irczIixo67_u6fAu7K4CjRMzfuwGm_NR6ijBMBWnVQMAmpogg0rG95sgne4a-ua5vGT30QsGRnz2MYS9T-WkSAqH6gek28P54zH13PAEzdcnxNnDrak0vJkqzoh9yS_3sE4QbuI99xWLuLcllpGOTCCS-TOorjFPi6NANCJ54o_Nv4VqC-VQuueDYrK6nppw8czCs8JSPTFkxEzJLAI5R2CrE"/>
+<div class="rounded-2xl overflow-hidden">
+<img alt="Gallery detail 1" class="w-full h-full object-cover" data-alt="Silver jewelry and flowers on a table" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBb8Uhni4eBbNiLt048qEN0KjwGeiQ5kgcw2MiqPWKXNeoYDS-Z0wn5IWr1PqY-A-P0u-dRfcG7NpJeHL-I-mX3PLx6PJrdk88M9XdHQWEGBhL3uQsK9BlnBfn9Ps64Xm1oQ-gcpg9WkMZx5ctS_FdwBpVjOF8TMrq0oURlEGJjCDArTA1YDrMUcV6JHlGBFsAajK9U9tOpc-TW5U4TZc9vAnEL_bGtb-OFUdV7gvZLdBYPYm98UUSbP5LSXVbOBrCigC0s1qtd7kd"/>
+</div>
+<div class="rounded-2xl overflow-hidden">
+<img alt="Gallery detail 2" class="w-full h-full object-cover" data-alt="Blurred party lights and decorations" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBkEloZrCaebnaE4rU7_6Yl7f9TuGUlx0Hrq-3hJnYybrmfIdo4oL93zVqEjRCnGy-nieGiicvSqhnFCvYpY0gq8TpdSKMnZQ1i0c1jNKhEyCJDGmH4XrI8SbI0y5ftyx7EYx511Nvi3NztJ6zp2oNlmzPPxZEHmaHYeqU51yuh7cw_cn1ClWAvgx0JoCGn9qWZknAeea5NWlVKWg7ZA16uOaXEWQ_G7bNBvN2m8PnYhwXoJGflx4n4qjYmrPT3zlBh8foOMY3nF3MP"/>
+</div>
+<div class="rounded-2xl overflow-hidden col-span-2">
+<img alt="Gallery detail 3" class="w-full h-full object-cover" data-alt="Sparklers lighting up at night" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBEHNOlqViFzuc1vbsuI20Q809PU5PnGDvI9CJEaHmzEdMkRQKHaldyjUZxuCCAipBtALPoyUORxWXcYR9CprMCvGIxVAhE6fYrJ77xI8g5aiBYPshKWKYg6a0A7PDtuMlchGmRy59wV4pVkfcGKV9vhEntwZfmqUBc0mPo6EQ5cpYVIyWLY9dDDoLBqW_KLM4XDrgyaX_atj8mQLscgxWP_zm9PPGOsQKzpVoHYCMVsD4X4wE4FBqR527s91tJnZNmOfCLPGXQ0-wq"/>
+</div>
 </div>
 </div>
 </section>
-<footer class="clay-card p-12 md:p-16 text-center mt-10 relative overflow-hidden">
-<div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-transparent via-purple-300 to-transparent"></div>
-<div class="relative z-10 max-w-2xl mx-auto">
-<span class="block material-symbols-outlined text-4xl text-purple-300 mb-6">format_quote</span>
-<p class="font-serif italic text-xl md:text-2xl text-gray-600 dark:text-gray-300 leading-loose">
-                    Hace XV años Dios me regaló la vida y una gran familia, por este motivo, hoy me siento muy afortunada y feliz de tener unos padres maravillosos y, junto a ellos, poder celebrar este mágico día para mi.
-                </p>
-<div class="mt-12 pt-10 border-t border-purple-100 dark:border-purple-900/30">
-<p class="font-script text-4xl md:text-5xl text-accent animate-pulse">Gracias por acompañarnos</p>
-<p class="text-sm text-gray-400 mt-4 uppercase tracking-widest">Briana Natali - Mis XV</p>
+<!-- RSVP Section -->
+<section class="px-6 py-20">
+<div class="max-w-xl mx-auto text-center lilac-glass p-12 rounded-[2rem] paper-texture relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl"></div>
+<div class="relative z-10 space-y-6">
+<span class="material-symbols-outlined text-5xl text-primary">mail</span>
+<h2 class="text-4xl font-bold">Will you join us?</h2>
+<p class="text-slate-600 dark:text-slate-400">Please confirm your attendance by September 15th to ensure we have a place reserved for you.</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center pt-4">
+<button class="px-10 py-4 bg-primary text-white rounded-xl font-bold hover:shadow-xl hover:shadow-primary/30 transition-all">
+                                Yes, I'll be there!
+                            </button>
+<button class="px-10 py-4 border-2 border-primary/20 rounded-xl font-bold hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+                                Sadly, I can't make it
+                            </button>
 </div>
+</div>
+</div>
+</section>
+</main>
+<footer class="px-6 py-12 border-t border-primary/10 text-center">
+<div class="max-w-5xl mx-auto space-y-6">
+<div class="flex items-center justify-center gap-2 text-primary">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="font-bold tracking-widest uppercase text-xs">Valentina's XV Celebration</span>
+</div>
+<p class="text-slate-400 text-sm">© 2024 Designed with love for a special day.</p>
 </div>
 </footer>
-</main>
-<script>
-        // Dark Mode Toggle
-        const themeToggleBtn = document.getElementById('theme-toggle');
-        const themeIcon = document.getElementById('theme-icon');
-        const htmlElement = document.documentElement;
-        // Check local storage or system preference
-        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            htmlElement.classList.add('dark');
-            themeIcon.textContent = 'light_mode';
-        } else {
-            htmlElement.classList.remove('dark');
-            themeIcon.textContent = 'dark_mode';
-        }
-        themeToggleBtn.addEventListener('click', () => {
-            htmlElement.classList.toggle('dark');
-            if (htmlElement.classList.contains('dark')) {
-                localStorage.theme = 'dark';
-                themeIcon.textContent = 'light_mode';
-            } else {
-                localStorage.theme = 'light';
-                themeIcon.textContent = 'dark_mode';
-            }
-        });
-        // Countdown Timer Logic
-        const targetDate = new Date("March 28, 2026 14:00:00").getTime();
-        const timerInterval = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = targetDate - now;
-            if (distance < 0) {
-                clearInterval(timerInterval);
-                document.getElementById("days").innerHTML = "00";
-                document.getElementById("hours").innerHTML = "00";
-                document.getElementById("minutes").innerHTML = "00";
-                document.getElementById("seconds").innerHTML = "00";
-                return;
-            }
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
-        }, 1000);
-    </script>
-
+</div>
 </body></html>
