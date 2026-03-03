@@ -206,7 +206,7 @@
 			<!-- Frente de la tarjeta -->
 			<div
 				bind:this={containerElement}
-				class="card-front absolute inset-0 backface-hidden custom-glass bg-white/90 rounded-lg shadow-[0_0_30px_rgba(139,69,19,0.3)] border-[20px] border-secondary px-4 sm:px-6 py-2 sm:py-3 flex flex-col items-center justify-between text-center overflow-hidden" style="border: 3px solid #D4A574;"
+				class="card-front absolute inset-0 backface-hidden custom-glass bg-white/90 rounded-3xl shadow-[0_0_30px_rgba(147,112,219,0.5)] border-[20px] border-purple-600 px-4 sm:px-6 py-2 sm:py-3 flex flex-col items-center justify-between text-center overflow-hidden" style="border: 3px solid #D8B4FE;"
 			>
 				<!-- Imagen decorativa flores -->
 				<img
@@ -286,7 +286,7 @@
 
 			<!-- Reverso de la tarjeta (detalles) -->
 			<div
-				class="card-back absolute inset-0 backface-hidden custom-glass bg-white/90 rounded-lg shadow-[0_0_30px_rgba(139,69,19,0.3)] border-[20px] border-secondary px-4 sm:px-6 py-2 flex flex-col items-center justify-between text-center overflow-hidden rotate-y-180" style="border: 3px solid #D4A574;"
+				class="card-back absolute inset-0 backface-hidden custom-glass bg-white/90 rounded-3xl shadow-[0_0_30px_rgba(147,112,219,0.5)] border-[20px] border-purple-600 px-4 sm:px-6 py-2 flex flex-col items-center justify-between text-center overflow-hidden rotate-y-180" style="border: 3px solid #D8B4FE;"
 			>
 				<!-- Imagen decorativa flores -->
 				<img

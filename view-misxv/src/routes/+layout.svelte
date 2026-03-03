@@ -161,12 +161,12 @@
 {#if showMusicPlayer}
 {#if !musicAsked}
 	<!-- Rectángulo con pregunta y botones Sí/No -->
-	<div class="fixed bottom-4 right-4 z-50 bg-parchment/90 backdrop-blur-sm rounded-xl shadow-lg p-2 border border-secondary animate__animated animate__tada animate__infinite">
-		<p class="text-xs text-sepia font-medium mb-1.5 text-center">¿Reproducir música?</p>
+	<div class="fixed bottom-4 right-4 z-50 bg-purple-100/90 backdrop-blur-sm rounded-xl shadow-lg p-2 border border-purple-300 animate__animated animate__tada animate__infinite">
+		<p class="text-xs text-purple-700 font-medium mb-1.5 text-center">¿Reproducir música?</p>
 		<div class="flex gap-1.5 justify-center">
 			<button
 				onclick={() => handleMusicAnswer(true)}
-				class="px-3 py-1 vintage-button text-xs font-semibold rounded-lg transition-all duration-300"
+				class="px-3 py-1 bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold rounded-full transition-all duration-300"
 			>
 				Sí
 			</button>
@@ -182,7 +182,7 @@
 	<!-- Reproduciendo: triángulo + título de canción + artista -->
 	<button
 		onclick={toggleMusicFromButton}
-		class="opacity-50 fixed bottom-4 right-4 z-50 vintage-button backdrop-blur-sm rounded-lg shadow-lg px-4 py-2 flex items-center gap-2 transition-all duration-300 hover:scale-105"
+		class="opacity-50 fixed bottom-4 right-4 z-50 bg-purple-600 hover:bg-purple-700 backdrop-blur-sm rounded-xl shadow-lg px-4 py-2 flex items-center gap-2 transition-all duration-300 hover:scale-105"
 	>
 		<Icon icon="material-symbols:pause-rounded" class="text-white text-xl" />
 		<div class="flex flex-col items-start">
@@ -194,7 +194,7 @@
 	<!-- Pausado: solo icono de reproducir -->
 	<button
 		onclick={toggleMusicFromButton}
-		class="opacity-50 fixed bottom-4 right-4 z-50 vintage-button rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110"
+		class="opacity-50 fixed bottom-4 right-4 z-50 bg-purple-600 hover:bg-purple-700 text-white rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110"
 	>
 		<Icon icon="material-symbols:play-arrow-rounded" class="text-2xl" />
 	</button>
@@ -213,7 +213,7 @@
 		</button>
 		<button
 			onclick={resetViewPreference}
-			class="block w-full px-2 py-1 vintage-button text-xs rounded transition-colors"
+			class="block w-full px-2 py-1 bg-purple-600 hover:bg-purple-700 text-white text-xs rounded transition-colors"
 		>
 			🔄 Reiniciar view_preference
 		</button>
@@ -224,7 +224,7 @@
 {#if $viewPreferenceStore.showFloatingButton && !showPreferenceModal && $page.url.pathname !== '/inicio'}
 	<button
 		onclick={openModal}
-		class="fixed top-20 right-4 z-50 bg-parchment/80 backdrop-blur-md hover:bg-parchment text-sepia rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 border border-secondary"
+		class="fixed top-20 right-4 z-50 bg-white/70 backdrop-blur-md hover:bg-white/90 text-purple-600 rounded-full w-12 h-12 flex items-center justify-center shadow-lg transition-all duration-300 hover:scale-110 border border-purple-200"
 		aria-label="¿Cuál experiencia prefieres?"
 	>
 		<Icon icon="material-symbols:help" class="text-2xl" />
@@ -248,14 +248,14 @@
 		
 		<!-- Modal Content -->
 		<div 
-			class="relative vintage-card backdrop-blur-xl rounded-lg shadow-2xl max-w-md w-full p-8 {isModalVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} transition-all duration-300"
+			class="relative bg-white/95 backdrop-blur-xl rounded-3xl shadow-2xl max-w-md w-full p-8 {isModalVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-95'} transition-all duration-300"
 			role="document"
 		>
 			
 			<!-- Close Button -->
 			<button
 				onclick={handleContinueViewing}
-				class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-parchment hover:bg-secondary text-sepia hover:text-sepia transition-all duration-300"
+				class="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 transition-all duration-300"
 				aria-label="Cerrar"
 			>
 				<Icon icon="material-symbols:close" class="text-xl" />
@@ -275,14 +275,14 @@
 			<div class="flex flex-col sm:flex-row gap-4 mb-8">
 				<button
 					onclick={() => selectPreference('tarjeta')}
-					class="flex-1 py-4 px-6 rounded-lg border-2 transition-all duration-300 font-medium {selectedPreference === 'tarjeta' ? 'border-gold bg-parchment text-sepia' : 'border-secondary hover:border-gold hover:bg-parchment text-sepia'}"
+					class="flex-1 py-4 px-6 rounded-2xl border-2 transition-all duration-300 font-medium {selectedPreference === 'tarjeta' ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-300 hover:bg-gray-50 text-gray-700'}"
 				>
 					<Icon icon="material-symbols:credit-card" class="text-2xl mb-1 block mx-auto" />
 					Modo Tarjeta
 				</button>
 				<button
 					onclick={() => selectPreference('clasica')}
-					class="flex-1 py-4 px-6 rounded-lg border-2 transition-all duration-300 font-medium {selectedPreference === 'clasica' ? 'border-gold bg-parchment text-sepia' : 'border-secondary hover:border-gold hover:bg-parchment text-sepia'}"
+					class="flex-1 py-4 px-6 rounded-2xl border-2 transition-all duration-300 font-medium {selectedPreference === 'clasica' ? 'border-purple-600 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-300 hover:bg-gray-50 text-gray-700'}"
 				>
 					<Icon icon="material-symbols:article" class="text-2xl mb-1 block mx-auto" />
 					Modo Clásico
@@ -300,7 +300,7 @@
 				<button
 					onclick={handleSend}
 					disabled={!selectedPreference}
-					class="flex-1 py-3 px-6 rounded-lg vintage-button disabled:opacity-50 disabled:cursor-not-allowed font-semibold transition-all duration-300 hover:shadow-lg disabled:hover:shadow-none"
+					class="flex-1 py-3 px-6 rounded-xl bg-purple-600 hover:bg-purple-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-semibold transition-all duration-300 hover:shadow-lg disabled:hover:shadow-none"
 				>
 					Enviar
 				</button>
