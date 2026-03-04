@@ -26,6 +26,9 @@
 	let isPlaying = $state(false);
 	let audio: HTMLAudioElement;
 
+	// Obtener el día actual para marcar en el calendario
+	let currentDay = $state<number>(new Date().getDate());
+
 	onMount(() => {
 		// Configurar contador
 		const targetDate = new Date('March 28, 2026 14:00:00').getTime();
@@ -304,14 +307,14 @@
 				<div class="w-8 sm:w-10 h-8 sm:h-10 bg-primary/10 rounded-full flex items-center justify-center mb-1 sm:mb-2 text-primary">
 					<Icon icon="material-symbols:church" class="text-lg sm:text-xl" />
 				</div>
-				<h3 class="font-script text-xl sm:text-2xl text-primary mb-1">Ceremonia Religiosa</h3>
-				<p class="text-[10px] uppercase tracking-wide text-gray-500 mb-1">
+				<h3 class="font-script text-2xl sm:text-2xl text-primary mb-1">Ceremonia Religiosa</h3>
+				<p class="text-md uppercase tracking-wide text-gray-500 mb-1">
 					{data.evento.ceremonia.hora}
 				</p>
-				<p class="font-serif italic text-xs sm:text-sm mb-1 px-1">{data.evento.ceremonia.lugar}</p>
-				<p class="text-[10px] sm:text-xs text-gray-600 mb-1 sm:mb-2 px-1">{data.evento.ceremonia.direccion}</p>
+				<p class="font-serif font-bold text-xl sm:text-base mb-1 px-1">{data.evento.ceremonia.lugar}</p>
+				<p class="text-md sm:text-xl text-gray-600 mb-1 sm:mb-2 px-1">{data.evento.ceremonia.direccion}</p>
 				<div class="mt-auto w-full px-1 sm:px-0">
-					<p class="font-bold text-sm sm:text-base text-gray-800 mb-1 sm:mb-2 border-t border-b border-primary/20 py-1 inline-block w-full">
+					<p class="font-bold text-md sm:text-base text-gray-800 mb-1 sm:mb-2 border-t border-b border-primary/20 py-1 inline-block w-full">
 						{data.evento.fecha}
 					</p>
 					<a 
@@ -341,16 +344,18 @@
 				<div class="w-8 sm:w-10 h-8 sm:h-10 bg-primary/10 rounded-full flex items-center justify-center mb-1 sm:mb-2 text-primary">
 					<Icon icon="material-symbols:celebration" class="text-lg sm:text-xl" />
 				</div>
-				<h3 class="font-script text-xl sm:text-2xl text-primary mb-1">Recepción</h3>
-				<p class="text-[10px] uppercase tracking-wide text-gray-500 mb-1">
+				<h3 class="font-script text-2xl sm:text-2xl text-primary mb-1">Recepción</h3>
+				<p class="text-md uppercase tracking-wide text-gray-500 mb-1">
 					{data.evento.recepcion.hora}
 				</p>
-				<p class="font-serif italic text-xs sm:text-sm mb-1 px-1">{data.evento.recepcion.lugar}</p>
-				<p class="text-[10px] sm:text-xs text-gray-600 mb-1 sm:mb-2 px-1">{data.evento.recepcion.direccion}</p>
+				<p class="font-serif font-bold text-xl sm:text-base mb-1 px-1">{data.evento.recepcion.lugar}</p>
+				<p class="text-md sm:text-sm text-gray-600 mb-1 sm:mb-2 px-1">{data.evento.recepcion.direccion}</p>
 				<div class="mt-auto w-full px-1 sm:px-0">
-					
+					<p class="font-bold text-md sm:text-base text-gray-800 mb-1 sm:mb-2 border-t border-b border-primary/20 py-1 inline-block w-full">
+						{data.evento.fecha}
+					</p>
 					<a 
-						class="inline-flex items-center justify-center gap-1 px-4 sm:px-6 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-full transition-colors w-full shadow-lg text-sm sm:text-base"
+						class="inline-flex items-center justify-center gap-1 px-4 sm:px-6 py-2 bg-primary hover:bg-purple-700 text-white rounded-full transition-colors w-full shadow-lg text-sm sm:text-base"
 						href="{data.evento.recepcion.enlace_mapa}"
 						target="_blank"
 					>
@@ -419,45 +424,45 @@
 				<span class="text-gray-500 font-medium h-6 sm:h-7 flex items-center justify-center">S</span>
 				
 				<!-- Semana 1 -->
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">1</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">2</span>
-				<span class="text-purple-600 font-bold border-2 border-purple-400 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto">3</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">4</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">5</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">6</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">7</span>
+				<span class="{currentDay === 1 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">1</span>
+				<span class="{currentDay === 2 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">2</span>
+				<span class="{currentDay === 3 ? 'text-purple-600 font-bold border-2 border-purple-400 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">3</span>
+				<span class="{currentDay === 4 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">4</span>
+				<span class="{currentDay === 5 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">5</span>
+				<span class="{currentDay === 6 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">6</span>
+				<span class="{currentDay === 7 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">7</span>
 				
 				<!-- Semana 2 -->
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">8</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">9</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">10</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">11</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">12</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">13</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">14</span>
+				<span class="{currentDay === 8 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">8</span>
+				<span class="{currentDay === 9 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">9</span>
+				<span class="{currentDay === 10 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">10</span>
+				<span class="{currentDay === 11 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">11</span>
+				<span class="{currentDay === 12 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">12</span>
+				<span class="{currentDay === 13 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">13</span>
+				<span class="{currentDay === 14 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">14</span>
 				
 				<!-- Semana 3 -->
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">15</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">16</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">17</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">18</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">19</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">20</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">21</span>
+				<span class="{currentDay === 15 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">15</span>
+				<span class="{currentDay === 16 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">16</span>
+				<span class="{currentDay === 17 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">17</span>
+				<span class="{currentDay === 18 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">18</span>
+				<span class="{currentDay === 19 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">19</span>
+				<span class="{currentDay === 20 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">20</span>
+				<span class="{currentDay === 21 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">21</span>
 				
 				<!-- Semana 4 -->
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">22</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">23</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">24</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">25</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">26</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">27</span>
-				<span class="text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto animate__animated animate__heartBeat animate__infinite" >28</span>
+				<span class="{currentDay === 22 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">22</span>
+				<span class="{currentDay === 23 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">23</span>
+				<span class="{currentDay === 24 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">24</span>
+				<span class="{currentDay === 25 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">25</span>
+				<span class="{currentDay === 26 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">26</span>
+				<span class="{currentDay === 27 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">27</span>
+				<span class="text-purple-600 font-bold border-2 border-purple-400 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto animate__animated animate__heartBeat animate__infinite" >28</span>
 				
 				<!-- Semana 5 -->
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">29</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">30</span>
-				<span class="text-gray-400 h-6 sm:h-7 flex items-center justify-center">31</span>
+				<span class="{currentDay === 29 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">29</span>
+				<span class="{currentDay === 30 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">30</span>
+				<span class="{currentDay === 31 ? 'text-purple-600 font-bold bg-purple-200 rounded-full w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center mx-auto' : 'text-gray-400 h-6 sm:h-7 flex items-center justify-center'}">31</span>
 				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
 				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
 				<span class="text-gray-300 h-6 sm:h-7 flex items-center justify-center"></span>
