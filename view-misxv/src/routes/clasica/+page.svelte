@@ -564,6 +564,7 @@
 			<div 
 				class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl animate__animated animate__zoomIn"
 				onclick={(e) => e.stopPropagation()}
+				onkeydown={(e) => e.key === 'Escape' && (showContactModal = false)}
 				role="dialog"
 				aria-modal="true"
 				tabindex="0"

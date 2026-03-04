@@ -10,10 +10,17 @@
 	import { viewPreferenceStore } from '$lib/stores/viewPreferenceStore';
 	import { database, ref, get, set } from '$lib/firebase';
 
+	import { browser } from '$app/environment';
+
 	let { children } = $props();
 	
-	// Debug state
-	let showDebug = $derived($page.url.searchParams.get('debug') === 'true');
+	// Debug state - solo se calcula en el navegador
+	let showDebug = $state(false);
+	$effect(() => {
+		if (browser) {
+			showDebug = new URLSearchParams(window.location.search).get('debug') === 'true';
+		}
+	});
 	
 	// Modal state
 	let showPreferenceModal = $state(false);
@@ -22,7 +29,8 @@
 
 	onMount(() => {
 		// Verificar si se debe limpiar el localStorage
-		if ($page.url.searchParams.get('c') === 'true') {
+		const searchParams = new URLSearchParams(window.location.search);
+		if (searchParams.get('c') === 'true') {
 			localStorage.removeItem('invitation_selection');
 			viewPreferenceStore.reset(); // Also reset our store
 		}

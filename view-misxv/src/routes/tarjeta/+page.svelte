@@ -219,7 +219,8 @@
 		bind:this={tiltElement}
 		class="relative w-full max-w-xs sm:max-w-sm md:w-[450px] lg:max-w-lg h-[85dvh] md:h-[80dvh] lg:h-[85vh] perspective-1000 cursor-pointer animate__animated animate__jackInTheBox"
 		onclick={toggleCard}
-		role="container"
+		onkeydown={(e) => e.key === 'Enter' && toggleCard()}
+		role="button"
 		tabindex="0"
 		aria-label={isFlipped ? 'Ver información resumida' : 'Ver más información'}
 	>
@@ -616,6 +617,7 @@
 		<div 
 			class="bg-white rounded-2xl p-6 max-w-sm w-full mx-4 shadow-2xl animate__animated animate__zoomIn"
 			onclick={(e) => e.stopPropagation()}
+			onkeydown={(e) => e.key === 'Escape' && (showContactModal = false)}
 			role="dialog"
 			aria-modal="true"
 			tabindex="0"
