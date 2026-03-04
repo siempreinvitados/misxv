@@ -1,7 +1,7 @@
 {
-	"name": "Bautizo Sofía",
-	"short_name": "Bautizo Sofía",
-	"description": "Invitación al bautizo de Sofía",
+	"name": "Mis XV Briana",
+	"short_name": "Mis XV Briana",
+	"description": "Mis XV Briana",
 	"start_url": "/misxv/",
 	"scope": "/misxv/",
 	"display": "standalone",
