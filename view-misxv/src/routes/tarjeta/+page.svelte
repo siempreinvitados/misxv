@@ -4,10 +4,10 @@
 	import flores from '$lib/assets/imgs/flores.png';
 	import iglesia from '$lib/assets/imgs/iglesia.png';
 	import salon from '$lib/assets/imgs/salon.png';
-	import img1 from '$lib/assets/imgs/img1.jpeg';
-	import img2 from '$lib/assets/imgs/img2.jpeg';
-	import img3 from '$lib/assets/imgs/img3.jpeg';
-	import img4 from '$lib/assets/imgs/img4.jpeg';
+	import img1 from '$lib/assets/imgs/img1.png';
+	import img2 from '$lib/assets/imgs/img2.png';
+	import img3 from '$lib/assets/imgs/img3.png';
+	import img4 from '$lib/assets/imgs/img4.png';
 	import { onMount } from 'svelte';
 	import { tick } from 'svelte';
 	import { page } from '$app/stores';
