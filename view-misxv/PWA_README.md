@@ -1,4 +1,4 @@
-# Configuración PWA - Bautizo Sofía
+# Configuración PWA - Mis XV Briana
 
 ## Descripción
 

@@ -13,9 +13,9 @@ export default defineConfig({
 				enabled: true
 			},
 			manifest: {
-				name: 'Bautizo Sofía',
-				short_name: 'Bautizo Sofía',
-				description: 'Invitación al bautizo de Sofía',
+				name: 'Mis XV Briana',
+				short_name: 'Mis XV Briana',
+				description: 'Invitación a los XV años de Briana',
 				start_url: '/misxv/',
 				scope: '/misxv/',
 				display: 'standalone',
