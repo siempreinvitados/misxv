@@ -8,6 +8,9 @@ const config = {
     }),
     paths: {
       base: '/misxv'
+    },
+    prerender: {
+      handleHttpError: 'warn'
     }
   }
 };
