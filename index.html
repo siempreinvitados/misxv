@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis XV Años — Valentina</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@300;400&family=Lato:wght@300;400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+</head>
+
+<body>
+
+    <canvas id="bg-canvas"></canvas>
+
+    <!-- Dress figure -->
+    <img id="dress" src="resources/dress.png" alt="Vestido">
+
+    <!-- Butterflies -->
+    <div class="butterfly"
+        style="--dur:9s;--delay:1s;--tx:80px;--ty:-90px;--rot:20deg;--tx2:140px;--ty2:-180px;--rot2:-5deg;left:15%;top:30%">
+        🦋</div>
+    <div class="butterfly"
+        style="--dur:12s;--delay:3s;--tx:-60px;--ty:-70px;--rot:-15deg;--tx2:-100px;--ty2:-150px;--rot2:10deg;right:18%;top:50%">
+        🦋</div>
+    <div class="butterfly"
+        style="--dur:10s;--delay:6s;--tx:50px;--ty:-100px;--rot:25deg;--tx2:90px;--ty2:-200px;--rot2:0deg;left:25%;top:65%">
+        🦋</div>
+
+    <div class="page-wrap">
+
+        <!-- ══ HERO ══ -->
+        <section id="hero">
+            <p class="eyebrow">Una noche que siempre recordarás</p>
+            <h1 class="hero-title">Mis XV</h1>
+            <p class="hero-name">Valentina</p>
+            <div class="divider-line"></div>
+            <p class="hero-phrase">Hay momentos que se graban para siempre en el corazón. Esta noche es uno de ellos.
+            </p>
+            <div class="families">
+                <p>Con el amor de sus padres</p>
+                <p><strong>Roberto García & María Elena López</strong></p>
+                <br>
+                <p>Y el apoyo de sus padrinos</p>
+                <p><strong>Carlos & Sofía Herrera &nbsp;·&nbsp; Pedro & Ana Martínez</strong></p>
+            </div>
+        </section>
+
+        <!-- ══ MÚSICA ══ -->
+        <section id="musica">
+            <p class="section-phrase">"Cada canción cuenta una historia.<br>Ésta te pertenece."</p>
+            <div class="music-player">
+                <div class="player-song">A Thousand Years</div>
+                <div class="player-artist" style="margin-bottom:.3rem">Christina Perri</div>
+                <div class="player-bar">
+                    <div class="player-bar-fill"></div>
+                </div>
+                <div class="player-btn"></div>
+            </div>
+        </section>
+
+        <!-- ══ EVENTO ══ -->
+        <section id="evento">
+            <p class="section-title">La celebración</p>
+            <h2 class="section-heading">Dónde & Cuándo</h2>
+            <div class="cards-grid">
+                <div class="glass-card">
+                    <div class="card-icon">⛪</div>
+                    <div class="card-type">Ceremonia Religiosa</div>
+                    <div class="card-name">Parroquia de San Francisco</div>
+                    <div class="card-time">Sábado 14 de junio · 5:00 PM</div>
+                    <div class="card-address">Av. Juárez 245, Centro<br>Pachuca, Hidalgo</div>
+                    <a class="btn-maps" href="https://maps.google.com" target="_blank">Ver en Maps →</a>
+                </div>
+                <div class="glass-card">
+                    <div class="card-icon">✨</div>
+                    <div class="card-type">Recepción</div>
+                    <div class="card-name">Salón Jardines del Valle</div>
+                    <div class="card-time">Sábado 14 de junio · 8:00 PM</div>
+                    <div class="card-address">Blvd. Valle de San Javier 890<br>Pachuca, Hidalgo</div>
+                    <a class="btn-maps" href="https://maps.google.com" target="_blank">Ver en Maps →</a>
+                </div>
+            </div>
+
+            <div class="countdown-wrap">
+                <div class="countdown-title">Faltan</div>
+                <div class="countdown-grid">
+                    <div class="cd-unit"><span class="cd-num" id="cd-d">--</span>
+                        <div class="cd-label">días</div>
+                    </div>
+                    <div class="cd-sep">·</div>
+                    <div class="cd-unit"><span class="cd-num" id="cd-h">--</span>
+                        <div class="cd-label">horas</div>
+                    </div>
+                    <div class="cd-sep">·</div>
+                    <div class="cd-unit"><span class="cd-num" id="cd-m">--</span>
+                        <div class="cd-label">minutos</div>
+                    </div>
+                    <div class="cd-sep">·</div>
+                    <div class="cd-unit"><span class="cd-num" id="cd-s">--</span>
+                        <div class="cd-label">segundos</div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-calendar" onclick="addToCalendar()">📅 &nbsp;Guardar en mi calendario</button>
+        </section>
+
+        <!-- ══ REGALOS ══ -->
+        <section id="regalos">
+            <p class="section-title">Detalles especiales</p>
+            <h2 class="section-heading">Mesa de Regalos</h2>
+            <div class="gift-cards">
+                <div class="gift-card" onclick="window.open('https://liverpool.com.mx','_blank')">
+                    <div class="gift-icon">🛍️</div>
+                    <div class="gift-store">Liverpool</div>
+                    <div class="gift-sub">Mesa de regalos</div>
+                </div>
+                <div class="gift-card" onclick="window.open('https://palacio.com.mx','_blank')">
+                    <div class="gift-icon">🎁</div>
+                    <div class="gift-store">El Palacio de Hierro</div>
+                    <div class="gift-sub">Mesa de regalos</div>
+                </div>
+            </div>
+            <div class="envelope-card">
+                <div class="envelope-icon">💌</div>
+                <p>Tu presencia es nuestro mejor regalo.<br>Sin embargo, si deseas tener un detalle especial con
+                    Valentina, habrá un espacio con cariño destinéido para sobres el día del evento.</p>
+            </div>
+        </section>
+
+        <!-- ══ DRESS CODE ══ -->
+        <section id="dresscode">
+            <p class="section-title">Para esa noche</p>
+            <h2 class="section-heading">Dress Code</h2>
+            <p style="font-size:.9rem;color:var(--text-mid);margin-bottom:1rem">Formal · Elegante</p>
+
+            <div class="palette-row">
+                <div class="color-swatch">
+                    <div class="swatch-circle" style="background:#f8e8d0"></div>
+                    <div class="swatch-label">Champagne</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="swatch-circle" style="background:#e8d4e8"></div>
+                    <div class="swatch-label">Lavanda</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="swatch-circle" style="background:#d4e8e0"></div>
+                    <div class="swatch-label">Menta</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="swatch-circle" style="background:#f0e0d0"></div>
+                    <div class="swatch-label">Nude</div>
+                </div>
+                <div class="color-swatch">
+                    <div class="swatch-circle" style="background:#e8e4d8"></div>
+                    <div class="swatch-label">Arena</div>
+                </div>
+            </div>
+
+            <div class="dresscode-note">
+                <p>Por favor evitar el color</p>
+                <div class="palette-row" style="margin:1rem 0 .5rem">
+                    <div class="color-swatch avoid-swatch">
+                        <div class="swatch-circle" style="background:#f2c4ce"></div>
+                        <div class="swatch-label" style="color:var(--rose-deep)">Rosa XV</div>
+                    </div>
+                </div>
+                <p style="font-size:.8rem;color:var(--text-light)">Este tono está reservado para la quinceañera ✨</p>
+            </div>
+        </section>
+
+        <!-- ══ GALERÍA ══ -->
+        <section id="galeria">
+            <p class="section-title">Momentos</p>
+            <h2 class="section-heading">Galería</h2>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </section>
+
+        <!-- ══ RSVP ══ -->
+        <section id="rsvp">
+            <p class="section-title">Confirmación</p>
+            <h2 class="section-heading">¿Nos acompañas?</h2>
+            <p class="rsvp-phrase">"Cada rostro familiar hace la noche más especial. Cuéntanos si estarás con nosotros."
+            </p>
+
+            <div class="rsvp-form" id="rsvpForm">
+                <div class="form-group">
+                    <label class="form-label">Nombre completo</label>
+                    <input class="form-input" type="text" placeholder="Tu nombre" id="rsvpName">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Número de invitados</label>
+                    <input class="form-input" type="number" min="1" max="10" placeholder="¿Cuántos serán?"
+                        id="rsvpGuests">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">¿Confirmas tu asistencia?</label>
+                    <div class="radio-group">
+                        <div class="radio-option" onclick="selectOption(this,'si')">Sí asistiré 🌸</div>
+                        <div class="radio-option" onclick="selectOption(this,'no')">No podré ir 🥹</div>
+                    </div>
+                </div>
+                <button class="btn-confirm" onclick="submitRSVP()">Confirmar Asistencia</button>
+            </div>
+            <div class="success-msg" id="successMsg">
+                ✨ ¡Gracias! Tu confirmación fue registrada con cariño.<br>
+                Valentina y su familia te esperan con el corazón abierto.
+            </div>
+        </section>
+
+    </div><!-- /page-wrap -->
+
+    <footer>
+        <p>Con amor · Valentina García · 2025</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+
+</html>
