@@ -76,7 +76,7 @@ body {
     max-height: 84vh;
     object-fit: contain;
     object-position: bottom left;
-    
+    /*pointer-events: none;*/
     z-index: 5;
     filter: drop-shadow(0 0 30px rgba(232, 160, 176, .4));
     will-change: left;
@@ -93,7 +93,7 @@ body {
 
 @media (min-width: 481px) and (max-width: 1024px) {
     #dress {
-        --dress-offset: -10%;
+        --dress-offset: 20vw;
         --dress-w: 70%;
         max-height: 70vh;
     }
@@ -101,7 +101,7 @@ body {
 
 @media (min-width: 1025px) {
     #dress {
-        --dress-offset: -17.5%;
+        --dress-offset: 20vw;
         --dress-w: 60%;
         max-height: 80vh;
     }
@@ -817,6 +817,7 @@ footer {
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
 </head>
 
 <body>
@@ -1085,18 +1086,68 @@ footer {
 })();
 
 /* ─── GSAP ANIMATIONS ─── */
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+
+/* ─── DRESS SCROLL ANIMATION ─── */
+const mm = gsap.matchMedia();
+
+mm.add({
+    mobile: "(max-width: 767px)",
+    tablet: "(min-width: 768px) and (max-width: 1023px)",
+    desktop: "(min-width: 1024px)"
+}, (context) => {
+
+    const { tablet, desktop } = context.conditions;
+
+    let slowEnd = '60vw';
+    let endValue = '+=2400';
+
+    if (tablet) {
+        slowEnd = '20vw';
+        endValue = '+=700';
+    }
+
+    if (desktop) {
+        slowEnd = '20vw';
+        endValue = '+=700';
+    }
+
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: 'body',
+            start: 'top top',
+            end: endValue,
+            scrub: 1,
+            invalidateOnRefresh: true
+        }
+    });
+
+    // movimiento lento hasta 20vw
+    tl.to('#dress', {
+        left: slowEnd,
+        duration: 0.5,
+        ease: 'none'
+    });
+
+    // salida ultra rápida
+    tl.to('#dress', {
+        left: '400vw',
+        duration: 0.05,
+        ease: 'none'
+    });
+
+});
 
 // ─── Posición inicial del vestido ───────────────────────────────────────────
 // left: -17.5vw → exactamente 1/4 del ancho (70vw) fuera por la izquierda.
-gsap.set('#dress', { left: '-17.5vw' });
+//gsap.set('#dress', { left: '-17.5vw' });
 
 // ─── FASE 1 · Hero → Múscia: vestido se desliza de izquierda a derecha ──────
 // Inicia cuando #musica empieza a entrar por la parte inferior del viewport,
 // termina cuando el borde superior de #musica alcanza la parte superior.
 // Al final de esta fase el vestido queda alineado al borde derecho (left: 30vw).
-gsap.fromTo('#dress',
-    { left: '-17.5vw' },
+/*gsap.fromTo('#dress',
+    { left: '-40vw' },
     {
         left: '-40vw',
         ease: 'none',
@@ -1108,13 +1159,13 @@ gsap.fromTo('#dress',
             invalidateOnRefresh: true,
         }
     }
-);//jmrm
+);*/ //jmrm
 
 // ─── FASE 2 · Dentro de #musica: vestido se sale por la derecha ──────────────
 // Inicia cuando #musica ocupa la pantalla completa y termina cuando
 // el fondo de #musica sale por arriba. Si el usuario sube, la animación
 // se revierte y el vestido vuelve a aparecer por la derecha.
-gsap.fromTo('#dress',
+/*gsap.fromTo('#dress',
     { left: '-40vw' },
     {
         left: '110vw',
@@ -1127,7 +1178,7 @@ gsap.fromTo('#dress',
             invalidateOnRefresh: true,
         }
     }
-);
+);*/
 
 // ─── Hero entrance ───────────────────────────────────────────────────────────
 // Los estados iniciales se aplican antes del timeline para que los elementos
