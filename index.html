@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis XV Años — Valentina</title>
+    <title>Mis XV Años — Daymi Galilea</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@300;400&family=Lato:wght@300;400&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
     <style>
         *,
@@ -44,10 +45,11 @@
 
         body {
             background: #fdf4f7;
-            font-family: 'Lato', sans-serif;
+            font-family: 'Roboto', sans-serif;
             font-weight: 300;
             color: var(--text-dark);
             overflow-x: hidden;
+            font-size: clamp(0.95rem, 1.5vw, 1.05rem);
         }
 
         #bg-canvas {
@@ -61,6 +63,29 @@
             opacity: .55
         }
 
+        #frame-top {
+            position: fixed;
+            top: 0;
+            right: -30px;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.5;
+            will-change: transform, opacity;
+        }
+
+        #flower {
+            position: fixed;
+            top: -30%;
+            left: -50%;
+            height: 60%;
+            transform: rotate(130deg);
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.7;
+            will-change: transform, opacity;
+        }
+
         #dress {
             position: fixed;
             bottom: -10vw;
@@ -69,7 +94,9 @@
             max-height: 84vh;
             object-fit: contain;
             object-position: bottom left;
-            z-index: 5;
+            z-index: 0;
+            opacity: 0.8;
+            pointer-events: none;
             filter: drop-shadow(0 0 30px rgba(232, 160, 176, .4));
             will-change: left;
         }
@@ -88,6 +115,11 @@
                 --dress-w: 70%;
                 max-height: 70vh;
             }
+
+            #flower {
+                top: -28%;
+                left: -15%;
+            }
         }
 
         @media (min-width: 1025px) {
@@ -95,6 +127,12 @@
                 --dress-offset: 20vw;
                 --dress-w: 60%;
                 max-height: 80vh;
+            }
+
+            #flower {
+                top: -40%;
+                left: -15%;
+                height: 90%;
             }
         }
 
@@ -119,7 +157,7 @@
         .eyebrow {
             font-family: 'Cinzel', serif;
             font-weight: 300;
-            font-size: clamp(.55rem, .85vw, .72rem);
+            font-size: clamp(.6rem, .9vw, .78rem);
             letter-spacing: .3em;
             color: var(--text-light);
             text-transform: uppercase;
@@ -127,10 +165,18 @@
             opacity: 0;
         }
 
+        .divider-line {
+            width: 55px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--rose-deep), transparent);
+            margin: 0 0 2rem;
+            opacity: 0;
+        }
+
         .hero-title {
-            font-family: 'Cormorant Garamond', serif;
-            font-weight: 300;
-            font-size: clamp(2.6rem, 9vw, 5.5rem);
+            font-family: 'Fleur De Leah', serif;
+            font-weight: 400;
+            font-size: clamp(3rem, 10vw, 6rem);
             line-height: 1;
             color: var(--text-dark);
             margin-bottom: .4rem;
@@ -138,10 +184,33 @@
         }
 
         .hero-name {
-            font-family: 'Cormorant Garamond', serif;
+            font-family: 'Fleur De Leah', serif;
             font-weight: 400;
             font-style: italic;
-            font-size: clamp(2rem, 7vw, 4.5rem);
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            background: linear-gradient(135deg, #c8899a, #e8a0b0, #d4a0c0, #c8899a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            padding-right: 1rem;
+        }
+
+        .hero-phrase {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1.1rem, 2.2vw, 1.4rem);
+            color: var(--text-mid);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            opacity: 0;
+        }
+
+        .hero-name {
+            font-family: 'Great Vibes', serif;
+            font-weight: 400;
+            font-style: italic;
+            font-size: clamp(2rem, 17vw, 4.5rem);
             background: linear-gradient(135deg, #c8899a, #e8a0b0, #d4a0c0, #c8899a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -168,12 +237,13 @@
         }
 
         .families {
-            font-size: .8rem;
+            font-family: 'Roboto', sans-serif;
+            font-size: .9rem;
             color: var(--text-light);
             letter-spacing: .08em;
             line-height: 2;
             opacity: 0;
-            padding: 0rem 0rem 2rem clamp(1rem, 24vw, 430px);
+            padding: 0rem 0rem 2rem clamp(1rem, 18vw, 430px);
         }
 
         .families strong {
@@ -186,49 +256,95 @@
             position: relative
         }
 
-        /* ─── MÚSICA (rediseñada) ─── */
         #musica {
             margin-top: -2rem;
-            min-height: 80svh;
+            min-height: auto;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             text-align: left;
-            padding-left: clamp(1.5rem, 6vw, 5rem);
+            padding: 2rem clamp(1rem, 4vw, 3rem);
             background: linear-gradient(180deg, rgba(237, 232, 245, .0) 0%, rgba(237, 232, 245, .45) 50%, rgba(237, 232, 245, .0) 100%);
-            gap: 2rem;
+            gap: 1rem;
         }
 
         .section-phrase {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: clamp(1.6rem, 4vw, 2.8rem);
+            font-size: clamp(1.3rem, 3vw, 2rem);
             color: var(--text-dark);
             max-width: 500px;
             line-height: 1.4;
             margin-bottom: 0;
         }
 
-        /* ─── MUSIC PLAYER slim ─── */
         .music-player {
             background: rgba(255, 255, 255, .7);
             backdrop-filter: blur(20px);
             border: 1px solid rgba(232, 160, 176, .3);
             border-radius: 14px;
-            padding: .75rem 1.2rem;
-            max-width: 320px;
+            padding: .5rem .9rem;
+            max-width: 280px;
             width: 100%;
             box-shadow: 0 8px 40px rgba(200, 137, 154, .15);
             display: flex;
             align-items: center;
-            gap: .9rem;
+            gap: .7rem;
+            transition: all 0.4s ease;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .music-player.expanded {
+            max-width: 400px;
+            padding: 1rem 1.2rem;
+        }
+
+        .lyrics-inline {
+            width: 100%;
+            text-align: center;
+            min-height: 3rem;
+            position: relative;
+            display: none;
+        }
+
+        .music-player.expanded .lyrics-inline {
+            display: block;
+        }
+
+        .lyrics-inline .lyrics-line {
+            display: none;
+        }
+
+        .lyric-current {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: var(--text-mid);
+            line-height: 1.2;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+
+        .lyric-current.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .lyric-current .lyric-translation {
+            font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+            color: var(--text-light);
+            font-style: normal;
+            display: block;
+            margin-top: 0.2rem;
         }
 
         .player-btn {
             flex-shrink: 0;
-            width: 40px;
-            height: 40px;
+            width: 34px;
+            height: 34px;
             border-radius: 50%;
             border: none;
             background: linear-gradient(135deg, var(--rose), var(--rose-deep));
@@ -237,7 +353,7 @@
             justify-content: center;
             cursor: pointer;
             color: white;
-            font-size: .95rem;
+            font-size: .8rem;
             box-shadow: 0 4px 16px rgba(200, 137, 154, .35);
             transition: transform .2s, box-shadow .2s;
         }
@@ -265,19 +381,19 @@
         .player-song {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: 1rem;
+            font-size: .85rem;
             color: var(--text-dark);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            margin-bottom: .12rem;
+            margin-bottom: .08rem;
         }
 
         .player-artist {
-            font-size: .65rem;
-            letter-spacing: .15em;
+            font-size: .58rem;
+            letter-spacing: .12em;
             color: var(--text-light);
-            margin-bottom: .45rem;
+            margin-bottom: .3rem;
         }
 
         .player-bar {
@@ -293,6 +409,9 @@
             width: 0%;
             background: linear-gradient(90deg, var(--rose), var(--rose-deep));
             border-radius: 4px;
+        }
+
+        .player-bar-fill.playing {
             animation: playerFill 4s ease-in-out infinite alternate;
         }
 
@@ -302,16 +421,16 @@
             }
         }
 
-        .player-bars {
+.player-bars {
             flex-shrink: 0;
             display: flex;
             align-items: flex-end;
             gap: 2px;
-            height: 22px;
+            height: 18px;
         }
 
         .bar-stick {
-            width: 3px;
+            width: 2.5px;
             border-radius: 2px;
             background: linear-gradient(180deg, var(--rose-deep), var(--rose));
             animation: barBounce 0.8s ease-in-out infinite alternate;
@@ -319,27 +438,80 @@
         }
 
         .bar-stick:nth-child(1) {
-            height: 11px;
+            height: 9px;
             animation-delay: 0s;
         }
 
         .bar-stick:nth-child(2) {
-            height: 18px;
+            height: 15px;
             animation-delay: .15s;
         }
 
         .bar-stick:nth-child(3) {
-            height: 14px;
+            height: 11px;
             animation-delay: .05s;
         }
 
         .bar-stick:nth-child(4) {
-            height: 20px;
+            height: 18px;
             animation-delay: .25s;
         }
 
         .bar-stick:nth-child(5) {
+            height: 7px;
+            animation-delay: .1s;
+        }
+
+        .bar-stick {
+            width: 3px;
+            border-radius: 2px;
+            background: linear-gradient(180deg, var(--rose-deep), var(--rose));
+            transform-origin: bottom;
+            transform: scaleY(0.3);
+            opacity: 0.5;
+        }
+
+        .bar-stick.playing {
+            animation: barBounce 0.8s ease-in-out infinite alternate;
+        }
+
+        .bar-stick:nth-child(1) {
+            height: 11px;
+        }
+
+        .bar-stick:nth-child(2) {
+            height: 18px;
+        }
+
+        .bar-stick:nth-child(3) {
+            height: 14px;
+        }
+
+        .bar-stick:nth-child(4) {
+            height: 20px;
+        }
+
+        .bar-stick:nth-child(5) {
             height: 9px;
+        }
+
+        .bar-stick.playing:nth-child(1) {
+            animation-delay: 0s;
+        }
+
+        .bar-stick.playing:nth-child(2) {
+            animation-delay: .15s;
+        }
+
+        .bar-stick.playing:nth-child(3) {
+            animation-delay: .05s;
+        }
+
+        .bar-stick.playing:nth-child(4) {
+            animation-delay: .25s;
+        }
+
+        .bar-stick.playing:nth-child(5) {
             animation-delay: .1s;
         }
 
@@ -355,11 +527,156 @@
             }
         }
 
-        /* ─── INFO CARDS de música ─── */
         .musica-extras {
             display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 0;
+            max-width: 480px;
+            position: relative;
+            width: 100%;
+        }
+
+        /* Lyrics display */
+        .lyrics-container {
+            position: relative;
+            padding: 1.5rem 1.2rem;
+            min-height: 4.5rem;
+            overflow: hidden;
+        }
+
+        .lyrics-quote-open,
+        .lyrics-quote-close {
+            font-family: 'Great Vibes', serif;
+            font-size: 2.5rem;
+            color: var(--rose-deep);
+            opacity: 0.35;
+            line-height: 1;
+            position: absolute;
+        }
+
+        .lyrics-quote-open {
+            top: -0.2rem;
+            left: 0.4rem;
+        }
+
+        .lyrics-quote-close {
+            bottom: -0.8rem;
+            right: 0.6rem;
+        }
+
+.lyrics-line {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: var(--text-mid);
+            line-height: 1.2;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+            display: block;
+            padding: 0 1.2rem;
+        }
+
+        .lyrics-line .lyric-translation {
+            font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+            color: var(--text-light);
+            font-style: normal;
+            display: block;
+            margin-top: 0.1rem;
+            line-height: 1.2;
+        }
+
+.lyrics-container {
+            position: relative;
+            padding: 1.5rem 1.2rem;
+            min-height: 4.5rem;
+            overflow: hidden;
+        }
+
+        .lyrics-quote-open,
+        .lyrics-quote-close {
+            font-family: 'Great Vibes', serif;
+            font-size: 2.5rem;
+            color: var(--rose-deep);
+            opacity: 0.35;
+            line-height: 1;
+            position: absolute;
+        }
+
+        .lyrics-quote-open {
+            top: -0.2rem;
+            left: 0.4rem;
+        }
+
+        .lyrics-quote-close {
+            bottom: -0.8rem;
+            right: 0.6rem;
+        }
+
+        .lyric-line,
+        .lyrics-line {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            color: var(--text-mid);
+            line-height: 1.2;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            display: block;
+            padding: 0 1.2rem;
+            position: absolute;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
+
+        .lyric-line.visible,
+        .lyrics-line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .lyric-line.hidden,
+        .lyrics-line.hidden {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+
+        .lyric-line .lyric-translation {
+            font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+            color: var(--text-light);
+            font-style: normal;
+            display: block;
+            margin-top: 0.1rem;
+            line-height: 1.2;
+        }
+
+        .lyrics-line .lyric-translation {
+            font-size: clamp(0.7rem, 1.8vw, 0.9rem);
+            color: var(--text-light);
+            font-style: normal;
+            display: block;
+            margin-top: 0.1rem;
+            line-height: 1.2;
+        }
+
+        .lyrics-line .lyric-translation {
+            font-size: clamp(0.75rem, 1.8vw, 0.95rem);
+            color: var(--text-light);
+            font-style: normal;
+            display: block;
+            margin-top: 0.1rem;
+            line-height: 1.2;
+        }
+
+        .lyrics-line.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .musica-extras {
+            gap: 0;
             max-width: 480px;
         }
 
@@ -401,16 +718,24 @@
             line-height: 1.3;
         }
 
-        /* ─── EVENTO ─── */
         #evento {
-            text-align: center
+            padding-top: 2rem;
+            text-align: center;
+        }
+
+        .evento-date {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: var(--text-mid);
+            margin-bottom: 2rem;
+            font-weight: 400;
         }
 
         .section-title {
             font-family: 'Cinzel', serif;
             font-weight: 300;
-            font-size: clamp(.55rem, .8vw, .7rem);
-            letter-spacing: .4em;
+            font-size: clamp(.65rem, 1vw, .8rem);
+            letter-spacing: .35em;
             text-transform: uppercase;
             color: var(--text-light);
             margin-bottom: 1rem;
@@ -419,12 +744,11 @@
         .section-heading {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 300;
-            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-size: clamp(2.2rem, 5.5vw, 3.5rem);
             color: var(--text-dark);
             margin-bottom: 3.5rem;
         }
 
-        /* ─── EVENTO TIMELINE LAYOUT ─── */
         .evento-timeline {
             position: relative;
             display: flex;
@@ -455,7 +779,6 @@
             }
         }
 
-        /* ─── EVENTO CARD con imagen de fondo ─── */
         .evento-card {
             position: relative;
             width: calc(50% - 28px);
@@ -483,7 +806,6 @@
             margin-top: -10px
         }
 
-        /* Imagen de fondo en la mitad derecha/izquierda */
         .ev-bg-img {
             position: absolute;
             top: 0;
@@ -499,7 +821,6 @@
             left: 0;
         }
 
-        /* Degradado sobre la imagen — izquierda opaca para card.left */
         .ev-gradient {
             position: absolute;
             top: 0;
@@ -510,20 +831,13 @@
         }
 
         .evento-card.left .ev-gradient {
-            background: linear-gradient(to right,
-                    rgba(253, 244, 247, 1) 38%,
-                    rgba(253, 244, 247, 0.82) 54%,
-                    rgba(253, 244, 247, 0) 100%);
+            background: linear-gradient(to right, rgba(253, 244, 247, 1) 38%, rgba(253, 244, 247, 0.82) 54%, rgba(253, 244, 247, 0) 100%);
         }
 
         .evento-card.right .ev-gradient {
-            background: linear-gradient(to left,
-                    rgba(253, 244, 247, 1) 38%,
-                    rgba(253, 244, 247, 0.82) 54%,
-                    rgba(253, 244, 247, 0) 100%);
+            background: linear-gradient(to left, rgba(253, 244, 247, 1) 38%, rgba(253, 244, 247, 0.82) 54%, rgba(253, 244, 247, 0) 100%);
         }
 
-        /* Contenido sobre la imagen */
         .ev-content {
             position: relative;
             z-index: 2;
@@ -540,16 +854,43 @@
             align-items: center;
             gap: .4rem;
             font-family: 'Cinzel', serif;
-            font-size: .52rem;
-            letter-spacing: .3em;
+            font-size: .58rem;
+            letter-spacing: .25em;
             text-transform: uppercase;
             color: var(--rose-deep);
             background: rgba(255, 255, 255, .75);
             border: 1px solid rgba(232, 160, 176, .4);
             border-radius: 20px;
-            padding: .25rem .8rem;
-            margin-bottom: .8rem;
+            padding: .3rem .9rem;
+            margin-bottom: .9rem;
             backdrop-filter: blur(8px);
+        }
+
+        .ev-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+            margin-bottom: .35rem;
+            line-height: 1.3;
+        }
+
+        .ev-time {
+            font-family: 'Roboto', sans-serif;
+            font-size: .85rem;
+            color: var(--rose-deep);
+            font-weight: 400;
+            margin-bottom: .4rem;
+            display: flex;
+            align-items: center;
+            gap: .3rem;
+        }
+
+        .ev-addr {
+            font-family: 'Roboto', sans-serif;
+            font-size: .8rem;
+            color: var(--text-mid);
+            line-height: 1.6;
+            margin-bottom: 1rem;
         }
 
         .ev-icon {
@@ -583,10 +924,11 @@
 
         .btn-maps {
             display: inline-block;
-            padding: .35rem 1rem;
+            padding: .4rem 1.1rem;
             border: 1px solid rgba(232, 160, 176, .6);
             border-radius: 30px;
-            font-size: .65rem;
+            font-family: 'Roboto', sans-serif;
+            font-size: .72rem;
             letter-spacing: .1em;
             color: var(--rose-deep);
             text-decoration: none;
@@ -602,7 +944,6 @@
             border-color: var(--rose)
         }
 
-        /* Dot timeline */
         .evento-card.left::after {
             content: '';
             position: absolute;
@@ -644,7 +985,6 @@
             }
         }
 
-        /* ─── COUNTDOWN ─── */
         .countdown-wrap {
             background: rgba(255, 255, 255, .55);
             backdrop-filter: blur(16px);
@@ -657,7 +997,7 @@
         .countdown-title {
             font-family: 'Cinzel', serif;
             font-weight: 300;
-            font-size: .65rem;
+            font-size: .7rem;
             letter-spacing: .35em;
             text-transform: uppercase;
             color: var(--text-light);
@@ -668,7 +1008,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: clamp(.4rem, 2vw, 1.4rem);
+            gap: clamp(.5rem, 2.5vw, 1.6rem);
             flex-wrap: nowrap;
         }
 
@@ -679,18 +1019,19 @@
 
         .cd-num {
             font-family: 'Cormorant Garamond', serif;
-            font-size: clamp(1.6rem, 5vw, 3rem);
+            font-size: clamp(1.8rem, 5.5vw, 3.2rem);
             color: var(--text-dark);
             line-height: 1;
             display: block;
         }
 
         .cd-label {
-            font-size: clamp(.48rem, 1.2vw, .6rem);
+            font-family: 'Roboto', sans-serif;
+            font-size: clamp(.52rem, 1.3vw, .65rem);
             letter-spacing: .15em;
             text-transform: uppercase;
             color: var(--text-light);
-            margin-top: .3rem;
+            margin-top: .35rem;
             white-space: nowrap;
         }
 
@@ -707,11 +1048,12 @@
             display: inline-flex;
             align-items: center;
             gap: .5rem;
-            padding: .7rem 2rem;
+            padding: .75rem 2.2rem;
             border: 1px solid rgba(200, 137, 154, .5);
             border-radius: 30px;
             background: transparent;
-            font-size: .8rem;
+            font-family: 'Roboto', sans-serif;
+            font-size: .85rem;
             letter-spacing: .12em;
             color: var(--text-mid);
             cursor: pointer;
@@ -724,7 +1066,6 @@
             color: var(--text-dark)
         }
 
-        /* ─── REGALOS con lluvia de sobres ─── */
         #regalos {
             text-align: center;
             position: relative;
@@ -734,7 +1075,7 @@
         .gift-cards {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 1rem;
+            gap: 1.2rem;
             margin-bottom: 2.5rem;
         }
 
@@ -749,7 +1090,7 @@
             backdrop-filter: blur(16px);
             border: 1px solid rgba(232, 160, 176, .28);
             border-radius: 18px;
-            padding: 1.8rem 1.2rem;
+            padding: 2rem 1.4rem;
             text-align: center;
             box-shadow: 0 4px 24px rgba(200, 137, 154, .07);
             cursor: pointer;
@@ -762,24 +1103,24 @@
         }
 
         .gift-icon {
-            font-size: 2rem;
-            margin-bottom: .7rem
+            font-size: 2.2rem;
+            margin-bottom: .8rem
         }
 
         .gift-store {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
             color: var(--text-dark);
-            margin-bottom: .3rem
+            margin-bottom: .35rem
         }
 
         .gift-sub {
-            font-size: .72rem;
+            font-family: 'Roboto', sans-serif;
+            font-size: .78rem;
             color: var(--text-light);
             letter-spacing: .08em
         }
 
-        /* Envelope rain card rediseñada */
         .envelope-card {
             background: linear-gradient(135deg, rgba(255, 255, 255, .75), rgba(250, 232, 236, .75));
             backdrop-filter: blur(20px);
@@ -814,22 +1155,21 @@
         .envelope-title {
             font-family: 'Cinzel', serif;
             font-weight: 300;
-            font-size: .6rem;
-            letter-spacing: .4em;
+            font-size: .65rem;
+            letter-spacing: .35em;
             text-transform: uppercase;
             color: var(--rose-deep);
-            margin-bottom: .8rem;
+            margin-bottom: .9rem;
         }
 
         .envelope-text {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             color: var(--text-mid);
             line-height: 1.7;
         }
 
-        /* ─── DRESS CODE ─── */
         #dresscode {
             text-align: center
         }
@@ -931,7 +1271,6 @@
             margin: 0 auto;
         }
 
-        /* ─── GALERÍA ─── */
         #galeria {
             text-align: center;
             overflow: hidden
@@ -1026,7 +1365,6 @@
             aspect-ratio: 4/3
         }
 
-        /* ─── RSVP REDISEÑADO ─── */
         #rsvp {
             text-align: center;
             padding-bottom: 4rem;
@@ -1035,14 +1373,13 @@
         .rsvp-phrase {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+            font-size: clamp(1.6rem, 4vw, 2.4rem);
             color: var(--text-dark);
             max-width: 460px;
             margin: 0 auto 3rem;
             line-height: 1.5;
         }
 
-        /* Stepper */
         .rsvp-stepper {
             max-width: 420px;
             margin: 0 auto;
@@ -1096,7 +1433,6 @@
             }
         }
 
-        /* Paso 1: ¿Asistirás? */
         .attend-cards {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1146,7 +1482,6 @@
             letter-spacing: .05em;
         }
 
-        /* Paso 2: Datos */
         .rsvp-form-fields {
             display: flex;
             flex-direction: column;
@@ -1172,9 +1507,9 @@
             backdrop-filter: blur(16px);
             border: 1px solid rgba(232, 160, 176, .3);
             border-radius: 12px;
-            padding: .85rem 1.1rem;
-            font-size: .9rem;
-            font-family: 'Lato', sans-serif;
+            padding: .9rem 1.1rem;
+            font-family: 'Roboto', sans-serif;
+            font-size: .95rem;
             color: var(--text-dark);
             outline: none;
             transition: border-color .3s, box-shadow .3s;
@@ -1186,7 +1521,6 @@
             box-shadow: 0 0 0 3px rgba(232, 160, 176, .15);
         }
 
-        /* Selector de invitados */
         .guest-counter {
             display: flex;
             align-items: center;
@@ -1231,7 +1565,6 @@
             color: var(--text-light);
         }
 
-        /* Paso 3: Confirmar */
         .confirm-summary {
             background: rgba(255, 255, 255, .7);
             backdrop-filter: blur(16px);
@@ -1276,7 +1609,6 @@
             color: var(--text-dark);
         }
 
-        /* Botones de navegación */
         .step-btns {
             display: flex;
             gap: .8rem;
@@ -1285,15 +1617,15 @@
         }
 
         .btn-back {
-            padding: .8rem 1.8rem;
+            padding: .85rem 1.9rem;
             background: transparent;
             border: 1px solid rgba(232, 160, 176, .4);
             border-radius: 30px;
             color: var(--text-mid);
-            font-size: .8rem;
+            font-family: 'Roboto', sans-serif;
+            font-size: .85rem;
             letter-spacing: .12em;
             cursor: pointer;
-            font-family: 'Lato', sans-serif;
             transition: all .3s;
         }
 
@@ -1302,16 +1634,16 @@
         }
 
         .btn-next {
-            padding: .8rem 2.2rem;
+            padding: .85rem 2.4rem;
             background: linear-gradient(135deg, var(--rose), var(--rose-deep));
             border: none;
             border-radius: 30px;
             color: white;
-            font-size: .8rem;
+            font-family: 'Roboto', sans-serif;
+            font-size: .85rem;
             letter-spacing: .18em;
             text-transform: uppercase;
             cursor: pointer;
-            font-family: 'Lato', sans-serif;
             font-weight: 300;
             box-shadow: 0 6px 20px rgba(200, 137, 154, .3);
             transition: transform .2s, box-shadow .2s;
@@ -1324,16 +1656,16 @@
 
         .btn-confirm {
             width: 100%;
-            padding: 1rem 2.5rem;
+            padding: 1.1rem 2.5rem;
             background: linear-gradient(135deg, var(--rose), var(--rose-deep));
             border: none;
             border-radius: 30px;
             color: white;
-            font-size: .85rem;
-            letter-spacing: .2em;
+            font-family: 'Roboto', sans-serif;
+            font-size: .9rem;
+            letter-spacing: .18em;
             text-transform: uppercase;
             cursor: pointer;
-            font-family: 'Lato', sans-serif;
             font-weight: 300;
             box-shadow: 0 8px 24px rgba(200, 137, 154, .3);
             transition: transform .3s, box-shadow .3s;
@@ -1365,20 +1697,19 @@
 
         .success-title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: var(--text-dark);
-            margin-bottom: .8rem;
+            margin-bottom: .9rem;
         }
 
         .success-sub {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: 1.05rem;
+            font-size: 1.15rem;
             color: var(--text-mid);
             line-height: 1.7;
         }
 
-        /* ─── Frase de cierre ─── */
         .closing-phrase {
             text-align: center;
             padding: 3rem 2rem 5rem;
@@ -1388,7 +1719,7 @@
         .closing-phrase-text {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
-            font-size: clamp(1.3rem, 3.5vw, 2rem);
+            font-size: clamp(1.5rem, 4vw, 2.2rem);
             color: var(--text-mid);
             line-height: 1.6;
             max-width: 480px;
@@ -1405,13 +1736,12 @@
         .closing-name {
             font-family: 'Cinzel', serif;
             font-weight: 300;
-            font-size: .6rem;
-            letter-spacing: .5em;
+            font-size: .7rem;
+            letter-spacing: .45em;
             text-transform: uppercase;
             color: var(--text-light);
         }
 
-        /* ─── BUTTERFLIES ─── */
         .butterfly {
             position: fixed;
             pointer-events: none;
@@ -1454,6 +1784,217 @@
             position: relative;
             z-index: 2;
         }
+
+        /* ════════════════════════════════════════
+   MOBILE TYPOGRAPHY IMPROVEMENTS
+   Solo mejora lectura en pantallas pequeñas
+════════════════════════════════════════ */
+        @media (max-width: 767px) {
+
+            body {
+                font-size: 1.05rem;
+                line-height: 1.65;
+            }
+
+            section {
+                padding: 4.5rem 1.35rem;
+            }
+
+            /* HERO */
+            .eyebrow {
+                font-size: .82rem;
+                letter-spacing: .22em;
+            }
+
+            .hero-phrase {
+                font-size: 1.08rem;
+                line-height: 1.8;
+                max-width: 95%;
+            }
+
+            .families {
+                font-size: 1rem;
+                line-height: 2.1;
+            }
+
+            /* TITULOS */
+            .section-title {
+                font-size: .82rem;
+                letter-spacing: .24em;
+            }
+
+            .section-heading {
+                font-size: clamp(2.5rem, 8vw, 3.3rem);
+                line-height: 1.15;
+            }
+
+            .section-phrase {
+                font-size: 2rem;
+                line-height: 1.45;
+            }
+
+            /* PLAYER */
+            .music-player {
+                max-width: 100%;
+                padding: 1rem 1rem;
+            }
+
+            .player-song {
+                font-size: 1.15rem;
+            }
+
+            .player-artist {
+                font-size: .8rem;
+            }
+
+            /* LETRAS CANCION */
+            .lyrics-line {
+                font-size: 1.3rem;
+                line-height: 1.45;
+            }
+
+            .lyrics-line .lyric-translation {
+                font-size: .95rem;
+                line-height: 1.45;
+            }
+
+            /* EVENTO */
+            .evento-date {
+                font-size: 1.45rem;
+                line-height: 1.5;
+            }
+
+            .ev-badge {
+                font-size: .7rem;
+            }
+
+            .ev-name {
+                font-size: 1.3rem;
+                line-height: 1.35;
+            }
+
+            .ev-time {
+                font-size: .92rem;
+            }
+
+            .ev-addr {
+                font-size: .9rem;
+                line-height: 1.7;
+            }
+
+            .btn-maps {
+                font-size: .82rem;
+                padding: .55rem 1.2rem;
+            }
+
+            /* COUNTDOWN */
+            .countdown-title {
+                font-size: .82rem;
+            }
+
+            .cd-num {
+                font-size: 2.3rem;
+            }
+
+            .cd-label {
+                font-size: .72rem;
+            }
+
+            /* REGALOS */
+            .gift-store {
+                font-size: 1.4rem;
+            }
+
+            .gift-sub {
+                font-size: .88rem;
+            }
+
+            .envelope-title {
+                font-size: .78rem;
+            }
+
+            .envelope-text {
+                font-size: 1.2rem;
+                line-height: 1.8;
+            }
+
+            /* DRESSCODE */
+            .swatch-label {
+                font-size: .78rem;
+            }
+
+            .dresscode-note {
+                font-size: 1rem;
+                line-height: 1.9;
+                padding: 1.6rem 1.4rem;
+            }
+
+            /* RSVP */
+            .rsvp-phrase {
+                font-size: 1.9rem;
+                line-height: 1.6;
+            }
+
+            .ao-label {
+                font-size: 1.25rem;
+            }
+
+            .ao-sub {
+                font-size: .82rem;
+            }
+
+            .form-label {
+                font-size: .78rem;
+                letter-spacing: .12em;
+            }
+
+            .form-input {
+                font-size: 1rem;
+                padding: 1rem 1rem;
+            }
+
+            .counter-num {
+                font-size: 1.7rem;
+            }
+
+            .counter-label {
+                font-size: .85rem;
+            }
+
+            .confirm-row-label {
+                font-size: .72rem;
+            }
+
+            .confirm-row-val {
+                font-size: 1.08rem;
+            }
+
+            /* BOTONES */
+            .btn-next,
+            .btn-back,
+            .btn-confirm,
+            .btn-calendar {
+                font-size: .92rem;
+                min-height: 48px;
+            }
+
+            /* FOOTER */
+            footer {
+                font-size: .82rem;
+                line-height: 1.7;
+            }
+
+            /* CIERRE */
+            .closing-phrase-text {
+                font-size: 1.8rem;
+                line-height: 1.7;
+            }
+
+            .closing-name {
+                font-size: .82rem;
+                letter-spacing: .28em;
+            }
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -1475,70 +2016,58 @@
         style="--dur:10s;--delay:6s;--tx:50px;--ty:-100px;--rot:25deg;--tx2:90px;--ty2:-200px;--rot2:0deg;left:25%;top:65%">
         🦋</div>
 
+    <!-- Audio element -->
+    <audio id="bgAudio" src="resources/music.mp3" loop preload="auto"></audio>
+
     <div class="page-wrap">
+        <img id="frame-top" src="resources/border.png" alt="borde">
+        <img id="flower" src="resources/flower.png" alt="flores">
         <img id="dress" src="resources/dress.png" alt="Vestido">
 
         <!-- ══ HERO ══ -->
         <section id="hero">
             <p class="eyebrow">Una noche que siempre recordarás</p>
             <h1 class="hero-title">Mis XV</h1>
-            <p class="hero-name">Valentina</p>
+            <p class="hero-name">Daymi Galilea</p>
             <div class="divider-line"></div>
             <p class="hero-phrase">Hay momentos que se graban para siempre en el corazón. Esta noche es uno de ellos.
             </p>
             <div class="families">
                 <p>Con el amor de sus padres</p>
-                <p><strong>Roberto García & María Elena López</strong></p>
+                <p><strong>Diego Gómez Téllez <br> Perla Alejandra Montes Torres</strong></p>
                 <br>
                 <p>Y el apoyo de sus padrinos</p>
-                <p><strong>Carlos & Sofía Herrera &nbsp;·&nbsp; Pedro & Ana Martínez</strong></p>
+                <p><strong>Rigoberto Téllez Gómez <br> Evelin Larisa Juárez Figueroa</strong></p>
             </div>
         </section>
 
-        <!-- ══ MÚSICA (alineada izquierda, más compacta) ══ -->
+        <!-- ══ MÚSICA ══ -->
         <section id="musica">
             <p class="section-phrase">Escucha mi canción favorita</p>
 
-            <div class="music-player">
+            <div class="music-player" id="musicPlayer">
                 <button class="player-btn" id="playBtn" onclick="togglePlay(this)"></button>
                 <div class="player-info">
-                    <div class="player-song">A Thousand Years</div>
-                    <div class="player-artist">Christina Perri</div>
-                    <div class="player-bar">
-                        <div class="player-bar-fill"></div>
-                    </div>
+                    <div class="player-song">Summertime Sadness</div>
+                    <div class="player-artist">Lana del Rey</div>
                 </div>
-                <div class="player-bars">
+                <div class="player-bars" id="playerBars">
                     <div class="bar-stick"></div>
                     <div class="bar-stick"></div>
                     <div class="bar-stick"></div>
                     <div class="bar-stick"></div>
                     <div class="bar-stick"></div>
                 </div>
-            </div>
-
-            <!-- Tarjetas de info del evento -->
-            <div class="musica-extras">
-                <div class="musica-info-card">
-                    <div class="mi-icon">📅</div>
-                    <div class="mi-text">
-                        <span class="mi-label">Fecha</span>
-                        <span class="mi-value">8 de agosto, 2026</span>
-                    </div>
-                </div>
-                <div class="musica-info-card">
-                    <div class="mi-icon">📍</div>
-                    <div class="mi-text">
-                        <span class="mi-label">Lugar</span>
-                        <span class="mi-value">Pachuca, Hidalgo</span>
-                    </div>
-                </div>
-                <div class="musica-info-card">
-                    <div class="mi-icon">🕑</div>
-                    <div class="mi-text">
-                        <span class="mi-label">Hora</span>
-                        <span class="mi-value">2:00 PM</span>
-                    </div>
+                <div class="lyrics-inline" id="lyricsInline">
+                    <div class="lyric-current" id="lyricCurrent"></div>
+                    <span class="lyrics-line" id="lyric-0" data-duration="4">Kiss me hard before you go<span class="lyric-translation">Bésame fuerte antes de irte</span></span>
+                    <span class="lyrics-line" id="lyric-1" data-duration="4">Summertime sadness<span class="lyric-translation">Tristeza de verano</span></span>
+                    <span class="lyrics-line" id="lyric-2" data-duration="5">I just wanted you to know<span class="lyric-translation">Solo quería que supieras</span></span>
+                    <span class="lyrics-line" id="lyric-3" data-duration="3">That, baby, you the best<span class="lyric-translation">Que, cariño, eres el mejor</span></span>
+                    <span class="lyrics-line" id="lyric-4" data-duration="4">I got my red dress on tonight<span class="lyric-translation">Me puse mi vestido rojo esta noche</span></span>
+                    <span class="lyrics-line" id="lyric-5" data-duration="4">Dancin' in the dark, in the pale moonlight<span class="lyric-translation">Bailando en la oscuridad bajo la pálida luz de la luna</span></span>
+                    <span class="lyrics-line" id="lyric-6" data-duration="5">Done my hair up real big, beauty queen style<span class="lyric-translation">Mi cabello muy grande, estilo reina de la belleza</span></span>
+                    <span class="lyrics-line" id="lyric-7" data-duration="4">High heels off, I'm feelin' alive ...<span class="lyric-translation">Quitándome los tacones, me siento viva ...</span></span>
                 </div>
             </div>
         </section>
@@ -1547,33 +2076,33 @@
         <section id="evento">
             <p class="section-title">La celebración</p>
             <h2 class="section-heading">Dónde & Cuándo</h2>
+            <p class="evento-date">Sábado 8 de agosto de 2026</p>
 
             <div class="evento-timeline">
-                <!-- Ceremonia religiosa: imagen a la derecha, degradado desde izquierda -->
                 <div class="evento-card left">
-                    <img class="ev-bg-img" src="https://images.unsplash.com/photo-1548625149-720754503e6e?w=600&q=80"
-                        alt="Iglesia" loading="lazy">
+                    <img class="ev-bg-img" src="./resources/iglesia.png" alt="Iglesia" loading="lazy">
                     <div class="ev-gradient"></div>
                     <div class="ev-content">
                         <div class="ev-badge"><span class="ev-icon">⛪</span>Ceremonia Religiosa</div>
-                        <div class="ev-name">Parroquia de San Francisco</div>
-                        <div class="ev-time">🕐 Viernes 8 de agosto · 2:00 PM</div>
-                        <div class="ev-addr">Av. Juárez 245, Centro<br>Pachuca, Hidalgo</div>
-                        <a class="btn-maps" href="https://maps.google.com" target="_blank">Ver en Maps →</a>
+                        <div class="ev-name">Parroquia del Sr de Zelontla</div>
+                        <div class="ev-time">🕐 Sábado · 2:00 PM</div>
+                        <div class="ev-addr">Real del Monte, Hidalgo</div>
+                        <a class="btn-maps" href="https://maps.app.goo.gl/ERFRqPfEZkdnpnkt8" target="_blank">Ver
+                            ubicaci&oacute;n</a>
                     </div>
                 </div>
 
-                <!-- Recepción: imagen a la izquierda, degradado desde derecha -->
                 <div class="evento-card right">
                     <img class="ev-bg-img" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&q=80"
                         alt="Salón de fiestas" loading="lazy">
                     <div class="ev-gradient"></div>
                     <div class="ev-content">
                         <div class="ev-badge"><span class="ev-icon">✨</span>Recepción</div>
-                        <div class="ev-name">Salón Jardines del Valle</div>
-                        <div class="ev-time">🕕 Viernes 8 de agosto · 5:00 PM</div>
-                        <div class="ev-addr">Blvd. Valle de San Javier 890<br>Pachuca, Hidalgo</div>
-                        <a class="btn-maps" href="https://maps.google.com" target="_blank">Ver en Maps →</a>
+                        <div class="ev-name">Casa de la familia Gómez Montes</div>
+                        <div class="ev-time">🕕 Sábado · 3:30 PM</div>
+                        <div class="ev-addr">Real del Monte, Hidalgo</div>
+                        <a class="btn-maps" href="https://maps.app.goo.gl/yWWcWuquwRW3PCACA" target="_blank">Ver
+                            ubicaci&oacute;n</a>
                     </div>
                 </div>
             </div>
@@ -1602,7 +2131,7 @@
             <button class="btn-calendar" onclick="addToCalendar()">📅 &nbsp;Guardar en mi calendario</button>
         </section>
 
-        <!-- ══ REGALOS con lluvia de sobres ══ -->
+        <!-- ══ REGALOS ══ -->
         <section id="regalos">
             <p class="section-title">Detalles especiales</p>
             <h2 class="section-heading">Mesa de Regalos</h2>
@@ -1697,21 +2226,19 @@
             </div>
         </section>
 
-        <!-- ══ RSVP REDISEÑADO ══ -->
+        <!-- ══ RSVP ══ -->
         <section id="rsvp">
             <p class="section-title">Confirmación</p>
             <h2 class="section-heading">¿Nos acompañas?</h2>
             <p class="rsvp-phrase">"Tu presencia ilumina cada momento de esta noche tan especial."</p>
 
             <div class="rsvp-stepper" id="rsvpStepper">
-                <!-- Puntos de progreso -->
                 <div class="stepper-nav">
                     <div class="step-dot active" id="dot0"></div>
                     <div class="step-dot" id="dot1"></div>
                     <div class="step-dot" id="dot2"></div>
                 </div>
 
-                <!-- Paso 1: ¿Asistirás? -->
                 <div class="rsvp-step active" id="step0">
                     <p
                         style="font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-light);margin-bottom:1.5rem">
@@ -1733,7 +2260,6 @@
                     </div>
                 </div>
 
-                <!-- Paso 2: Datos -->
                 <div class="rsvp-step" id="step1">
                     <div class="rsvp-form-fields">
                         <div class="form-group">
@@ -1761,7 +2287,6 @@
                     </div>
                 </div>
 
-                <!-- Paso 3: Confirmar -->
                 <div class="rsvp-step" id="step2">
                     <div class="confirm-summary" id="confirmSummary"></div>
                     <button class="btn-confirm" onclick="submitRSVP()">Confirmar Asistencia ✨</button>
@@ -1771,7 +2296,6 @@
                 </div>
             </div>
 
-            <!-- Mensaje de éxito -->
             <div class="success-msg" id="successMsg">
                 <div class="success-inner">
                     <span class="success-emoji">🎀</span>
@@ -1785,9 +2309,8 @@
         <!-- ══ FRASE DE CIERRE ══ -->
         <div class="closing-phrase">
             <div class="closing-divider"></div>
-            <p class="closing-phrase-text">
-                "Te esperamos con los brazos abiertos para compartir juntos la noche más especial de mi vida."
-            </p>
+            <p class="closing-phrase-text">"Te esperamos con los brazos abiertos para compartir juntos la noche más
+                especial de mi vida."</p>
             <div class="closing-divider"></div>
             <p class="closing-name">Con amor · Valentina · Agosto 2026</p>
         </div>
@@ -1838,6 +2361,7 @@
         /* ─── GSAP ─── */
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
+        /* ─── DRESS scroll animation (original) ─── */
         const mm = gsap.matchMedia();
         mm.add({
             mobile: "(max-width: 767px)",
@@ -1853,6 +2377,61 @@
             tl.to('#dress', { opacity: 0, duration: 0.5, ease: 'none' }, "-=0.3");
         });
 
+        /* ─── BORDER (frame-top) — sale hacia la derecha con scroll ─── */
+        gsap.matchMedia().add({
+            mobile: "(max-width: 767px)",
+            tablet: "(min-width: 768px) and (max-width: 1023px)",
+            desktop: "(min-width: 1024px)"
+        }, (context) => {
+            const { tablet, desktop } = context.conditions;
+            const exitX = desktop ? '160px' : tablet ? '120px' : '80px';
+            const endDist = desktop ? '+=1600' : tablet ? '+=1400' : '+=1200';
+
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: 'body',
+                    start: 'top top',
+                    end: endDist,
+                    scrub: 1.2,
+                    invalidateOnRefresh: true
+                }
+            })
+                .to('#frame-top', {
+                    x: exitX,
+                    opacity: 0,
+                    ease: 'none',
+                    duration: 1
+                });
+        });
+
+        /* ─── FLOWER — sale hacia arriba con scroll ─── */
+        gsap.matchMedia().add({
+            mobile: "(max-width: 767px)",
+            tablet: "(min-width: 768px) and (max-width: 1023px)",
+            desktop: "(min-width: 1024px)"
+        }, (context) => {
+            const { tablet, desktop } = context.conditions;
+            const exitY = desktop ? '-220px' : tablet ? '-160px' : '-120px';
+            const endDist = desktop ? '+=1600' : tablet ? '+=1400' : '+=1200';
+
+            gsap.timeline({
+                scrollTrigger: {
+                    trigger: 'body',
+                    start: 'top top',
+                    end: endDist,
+                    scrub: 1.2,
+                    invalidateOnRefresh: true
+                }
+            })
+                .to('#flower', {
+                    y: exitY,
+                    opacity: 0,
+                    ease: 'none',
+                    duration: 1
+                });
+        });
+
+        /* ─── HERO ANIMATIONS ─── */
         gsap.set(['.eyebrow', '.hero-title', '.hero-name', '.divider-line', '.hero-phrase', '.families'], { opacity: 0, y: 30 });
         gsap.timeline({ delay: .3 })
             .to('.eyebrow', { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, 0)
@@ -1862,6 +2441,7 @@
             .to('.hero-phrase', { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, '1.1')
             .to('.families', { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, '1.3');
 
+        /* ─── SCROLL REVEAL ─── */
         document.querySelectorAll('.gift-card,.envelope-card,.music-player,.countdown-wrap,.dresscode-note,.evento-card,.dc-photo-wrap,.musica-info-card').forEach(el => {
             gsap.fromTo(el, { opacity: 0, y: 40 }, {
                 opacity: 1, y: 0, duration: 1, ease: 'power2.out',
@@ -1877,17 +2457,15 @@
 
         /* ─── GALLERY CAROUSEL ─── */
         const galleryImages = [
-            { url: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=400&q=80', emoji: '🌸' },
-            { url: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=400&q=80', emoji: '🌷' },
-            { url: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?w=400&q=80', emoji: '💐' },
-            { url: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?w=400&q=80', emoji: '✨' },
-            { url: 'https://images.unsplash.com/photo-1460978812857-470ed1c77af0?w=400&q=80', emoji: '🦋' },
-            { url: 'https://images.unsplash.com/photo-1501196354995-cbb51c65aaea?w=400&q=80', emoji: '🌺' },
-            { url: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&q=80', emoji: '💫' },
-            { url: 'https://images.unsplash.com/photo-1529636798458-92182e662485?w=400&q=80', emoji: '🌹' },
-            { url: 'https://images.unsplash.com/photo-1478145046317-39f10e56b5e9?w=400&q=80', emoji: '🎀' },
-            { url: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=400&q=80', emoji: '🌸' },
-            { url: 'https://images.unsplash.com/photo-1504196606672-aef5c9cefc92?w=400&q=80', emoji: '💜' },
+            { url: './resources/img1.jpeg', emoji: '🌸' },
+            { url: './resources/img2.jpeg', emoji: '🌷' },
+            { url: './resources/img3.jpeg', emoji: '💐' },
+            { url: './resources/img4.jpeg', emoji: '✨' },
+            { url: './resources/img5.jpeg', emoji: '🦋' },
+            { url: './resources/img6.jpeg', emoji: '🌺' },
+            { url: './resources/img7.jpeg', emoji: '💫' },
+            { url: './resources/img8.jpeg', emoji: '🌹' },
+
         ];
 
         function buildCarouselRow(trackId, images, wide) {
@@ -1908,7 +2486,7 @@
         buildCarouselRow('track1', galleryImages.slice(0, 6), false);
         buildCarouselRow('track2', galleryImages.slice(5), true);
 
-        /* ─── COUNTDOWN — fecha: 8 agosto 2026, 2:00 PM ─── */
+        /* ─── COUNTDOWN ─── */
         const target = new Date('2026-08-08T14:00:00');
         function updateCd() {
             const now = new Date();
@@ -1964,7 +2542,6 @@
                 ctx.translate(x, y);
                 ctx.rotate(rot);
                 const w = size, h = size * 0.68;
-                // Body
                 ctx.beginPath();
                 ctx.roundRect(-w / 2, -h / 2, w, h, 3);
                 ctx.fillStyle = '#f9dde4';
@@ -1972,7 +2549,6 @@
                 ctx.lineWidth = 1;
                 ctx.fill();
                 ctx.stroke();
-                // Flap (V line)
                 ctx.beginPath();
                 ctx.moveTo(-w / 2, -h / 2);
                 ctx.lineTo(0, 2);
@@ -1997,7 +2573,6 @@
                 raf = requestAnimationFrame(animate);
             }
 
-            // Solo animar cuando sea visible
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting && !animating) {
@@ -2023,7 +2598,6 @@
             rsvpChoice = val;
             document.getElementById('opt-si').classList.toggle('selected', val === 'si');
             document.getElementById('opt-no').classList.toggle('selected', val === 'no');
-            // Si no asistirá, ocultar campo de invitados
             document.getElementById('guestGroup').style.display = val === 'no' ? 'none' : '';
         }
 
@@ -2033,14 +2607,12 @@
         }
 
         function goStep(n) {
-            // Validaciones
             if (n === 1 && currentStep === 0) {
                 if (!rsvpChoice) { shake('step0'); return; }
             }
             if (n === 2 && currentStep === 1) {
                 const name = document.getElementById('rsvpName').value.trim();
                 if (!name) { shake('step1'); document.getElementById('rsvpName').focus(); return; }
-                // Generar resumen
                 buildSummary();
             }
 
@@ -2053,7 +2625,6 @@
             document.getElementById('dot' + currentStep).classList.remove('done');
             document.getElementById('dot' + currentStep).classList.add('active');
 
-            // Actualizar dots anteriores
             for (let i = 0; i < 3; i++) {
                 const dot = document.getElementById('dot' + i);
                 dot.classList.remove('active', 'done');
@@ -2118,11 +2689,91 @@
             gsap.fromTo('#successMsg', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .8, ease: 'power2.out' });
         }
 
-        /* ─── PLAYER TOGGLE ─── */
+        /* ─── LYRICS ANIMATION ─── */
+        const audio = document.getElementById('bgAudio');
+        const lyricsLines = document.querySelectorAll('.lyrics-line');
+        const totalLines = lyricsLines.length;
+        let lyricsTimers = [];
+        let currentLineIndex = -1;
+
+        function showNextLyric() {
+            if (currentLineIndex >= totalLines) return;
+            const lyricCurrent = document.getElementById('lyricCurrent');
+            currentLineIndex++;
+            if (currentLineIndex < totalLines) {
+                const el = lyricsLines[currentLineIndex];
+                lyricCurrent.innerHTML = el.innerHTML;
+                lyricCurrent.classList.remove('visible');
+                void lyricCurrent.offsetWidth;
+                lyricCurrent.classList.add('visible');
+                const duration = parseFloat(el.getAttribute('data-duration')) || 3;
+                const t = setTimeout(showNextLyric, duration * 1000);
+                lyricsTimers.push(t);
+            }
+        }
+
+        function startLyrics() {
+            currentLineIndex = -1;
+            const lyricCurrent = document.getElementById('lyricCurrent');
+            lyricCurrent.classList.remove('visible');
+            const t = setTimeout(showNextLyric, 600);
+            lyricsTimers.push(t);
+        }
+
+        function pauseLyrics() {
+            lyricsTimers.forEach(t => clearTimeout(t));
+            lyricsTimers = [];
+        }
+
+        function resetLyrics() {
+            pauseLyrics();
+            currentLineIndex = -1;
+            const lyricCurrent = document.getElementById('lyricCurrent');
+            lyricCurrent.classList.remove('visible');
+        }
+
+        /* ─── PLAYER TOGGLE with real audio ─── */
+        const musicPlayer = document.getElementById('musicPlayer');
+        const barSticks = document.querySelectorAll('#playerBars .bar-stick');
+
+        audio.addEventListener('ended', () => {
+            document.getElementById('playBtn').classList.remove('playing');
+            setPlayerVisualState(false);
+            musicPlayer.classList.remove('expanded');
+            resetLyrics();
+        });
+
+        function setPlayerVisualState(playing) {
+            if (playing) {
+                barSticks.forEach(s => s.classList.add('playing'));
+            } else {
+                barSticks.forEach(s => s.classList.remove('playing'));
+            }
+        }
+
         function togglePlay(btn) {
-            btn.classList.toggle('playing');
+            if (audio.paused) {
+                audio.play().then(() => {
+                    btn.classList.add('playing');
+                    setPlayerVisualState(true);
+                    musicPlayer.classList.add('expanded');
+                    startLyrics();
+                }).catch(() => {
+                    btn.classList.add('playing');
+                    setPlayerVisualState(true);
+                    musicPlayer.classList.add('expanded');
+                    startLyrics();
+                });
+            } else {
+                audio.pause();
+                btn.classList.remove('playing');
+                setPlayerVisualState(false);
+                musicPlayer.classList.remove('expanded');
+                pauseLyrics();
+            }
         }
     </script>
+        
 </body>
 
 </html>
