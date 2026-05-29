@@ -147,11 +147,29 @@
             min-height: 100svh;
             display: flex;
             flex-direction: column;
-            justify-content: start;
+            justify-content: center;
             align-items: flex-end;
             text-align: right;
             position: relative;
-            padding-top: 2rem;
+            padding: 2rem clamp(1rem, 0vw, 2.5rem);
+        }
+
+        .hero-content {
+            background: rgba(253, 244, 247, 0.45);
+            backdrop-filter: blur(0.3px);
+            -webkit-backdrop-filter: blur(0.3px);
+            border: 1px solid rgba(232, 160, 176, 0.25);
+            border-radius: 20px;
+            padding: 1rem 0.5rem;
+            max-width: 460px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            text-align: right;
+            box-shadow: 0 10px 40px rgba(232, 160, 176, 0.08);
+            z-index: 2;
+            opacity: 0;
         }
 
         .eyebrow {
@@ -210,7 +228,7 @@
             font-family: 'Great Vibes', serif;
             font-weight: 400;
             font-style: italic;
-            font-size: clamp(2rem, 17vw, 4.5rem);
+            font-size: clamp(2rem, 12vw, 4.5rem);
             background: linear-gradient(135deg, #c8899a, #e8a0b0, #d4a0c0, #c8899a);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -243,7 +261,8 @@
             letter-spacing: .08em;
             line-height: 2;
             opacity: 0;
-            padding: 0rem 0rem 2rem clamp(1rem, 18vw, 430px);
+            padding: 0;
+            margin-top: 1rem;
         }
 
         .families strong {
@@ -299,6 +318,72 @@
         .music-player.expanded {
             max-width: 400px;
             padding: 1rem 1.2rem;
+        }
+
+        .music-player-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            min-height: 52px;
+        }
+
+        .music-player.sticky {
+            position: fixed;
+            top: 15px;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(232, 160, 176, 0.4);
+            box-shadow: 0 10px 30px rgba(200, 137, 154, 0.25);
+            max-width: 220px;
+            padding: 0.35rem 0.6rem;
+            gap: 0.5rem;
+        }
+
+        .music-player.sticky.expanded {
+            max-width: 320px;
+            padding: 0.6rem 0.8rem;
+        }
+
+        .music-player.sticky .player-btn {
+            width: 26px;
+            height: 26px;
+            font-size: 0.65rem;
+        }
+
+        .music-player.sticky .player-song {
+            font-size: 0.75rem;
+            margin-bottom: 0px;
+        }
+
+        .music-player.sticky .player-artist {
+            font-size: 0.5rem;
+            margin-bottom: 0px;
+        }
+
+        .music-player.sticky .player-bars {
+            height: 12px;
+            gap: 1.5px;
+        }
+
+        .music-player.sticky .bar-stick {
+            width: 2px;
+        }
+
+        .music-player.sticky .lyrics-inline {
+            min-height: 2.2rem;
+            margin-top: 0.3rem;
+        }
+
+        .music-player.sticky .lyric-current {
+            font-size: 0.95rem;
+        }
+
+        .music-player.sticky .lyric-current .lyric-translation {
+            font-size: 0.7rem;
+            margin-top: 0.05rem;
         }
 
         .lyrics-inline {
@@ -421,7 +506,21 @@
             }
         }
 
-.player-bars {
+        .dresscode-photos {
+            display: flex;
+            gap: 1rem;
+            width: 100%;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dresscode-photo {
+            width: 20rem;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+
+        .player-bars {
             flex-shrink: 0;
             display: flex;
             align-items: flex-end;
@@ -536,7 +635,6 @@
             width: 100%;
         }
 
-        /* Lyrics display */
         .lyrics-container {
             position: relative;
             padding: 1.5rem 1.2rem;
@@ -564,7 +662,7 @@
             right: 0.6rem;
         }
 
-.lyrics-line {
+        .lyrics-line {
             font-family: 'Cormorant Garamond', serif;
             font-style: italic;
             font-size: clamp(1rem, 2.5vw, 1.3rem);
@@ -584,33 +682,6 @@
             display: block;
             margin-top: 0.1rem;
             line-height: 1.2;
-        }
-
-.lyrics-container {
-            position: relative;
-            padding: 1.5rem 1.2rem;
-            min-height: 4.5rem;
-            overflow: hidden;
-        }
-
-        .lyrics-quote-open,
-        .lyrics-quote-close {
-            font-family: 'Great Vibes', serif;
-            font-size: 2.5rem;
-            color: var(--rose-deep);
-            opacity: 0.35;
-            line-height: 1;
-            position: absolute;
-        }
-
-        .lyrics-quote-open {
-            top: -0.2rem;
-            left: 0.4rem;
-        }
-
-        .lyrics-quote-close {
-            bottom: -0.8rem;
-            right: 0.6rem;
         }
 
         .lyric-line,
@@ -644,15 +715,6 @@
         }
 
         .lyric-line .lyric-translation {
-            font-size: clamp(0.7rem, 1.8vw, 0.9rem);
-            color: var(--text-light);
-            font-style: normal;
-            display: block;
-            margin-top: 0.1rem;
-            line-height: 1.2;
-        }
-
-        .lyrics-line .lyric-translation {
             font-size: clamp(0.7rem, 1.8vw, 0.9rem);
             color: var(--text-light);
             font-style: normal;
@@ -719,7 +781,7 @@
         }
 
         #evento {
-            padding-top: 2rem;
+            padding-top: 5rem;
             text-align: center;
         }
 
@@ -746,7 +808,7 @@
             font-weight: 300;
             font-size: clamp(2.2rem, 5.5vw, 3.5rem);
             color: var(--text-dark);
-            margin-bottom: 3.5rem;
+
         }
 
         .evento-timeline {
@@ -775,7 +837,7 @@
             }
 
             .evento-timeline {
-                gap: 1.2rem
+                gap: 3rem
             }
         }
 
@@ -843,6 +905,11 @@
             z-index: 2;
             padding: 1.6rem 1.4rem;
             width: 65%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
 
         .evento-card.right .ev-content {
@@ -850,20 +917,14 @@
         }
 
         .ev-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: .4rem;
+            display: block;
             font-family: 'Cinzel', serif;
-            font-size: .58rem;
+            font-size: .65rem;
             letter-spacing: .25em;
             text-transform: uppercase;
             color: var(--rose-deep);
-            background: rgba(255, 255, 255, .75);
-            border: 1px solid rgba(232, 160, 176, .4);
-            border-radius: 20px;
-            padding: .3rem .9rem;
             margin-bottom: .9rem;
-            backdrop-filter: blur(8px);
+            text-align: center;
         }
 
         .ev-name {
@@ -882,6 +943,7 @@
             margin-bottom: .4rem;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: .3rem;
         }
 
@@ -912,6 +974,7 @@
             margin-bottom: .3rem;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: .3rem;
         }
 
@@ -1170,6 +1233,17 @@
             line-height: 1.7;
         }
 
+        .dresscode-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            color: var(--text-mid);
+            line-height: 1.7;
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            text-align: center;
+        }
+
         #dresscode {
             text-align: center
         }
@@ -1208,18 +1282,9 @@
             border: 2px dashed rgba(200, 137, 154, .4)
         }
 
-        .dresscode-photos {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.2rem;
-            max-width: 500px;
-            margin: 2rem auto;
-        }
-
         @media(max-width:480px) {
             .dresscode-photos {
                 grid-template-columns: 1fr;
-                max-width: 260px
             }
         }
 
@@ -1394,6 +1459,7 @@
         }
 
         .step-dot {
+            display: none;
             width: 8px;
             height: 8px;
             border-radius: 50%;
@@ -1462,12 +1528,6 @@
             background: var(--rose-light);
         }
 
-        .attend-option .ao-emoji {
-            font-size: 2.2rem;
-            margin-bottom: .6rem;
-            display: block;
-        }
-
         .attend-option .ao-label {
             font-family: 'Cormorant Garamond', serif;
             font-size: 1.1rem;
@@ -1512,13 +1572,46 @@
             font-size: .95rem;
             color: var(--text-dark);
             outline: none;
-            transition: border-color .3s, box-shadow .3s;
+            transition: border-color .3s, box-shadow .3s, opacity .3s;
             width: 100%;
         }
 
         .form-input:focus {
             border-color: var(--rose-deep);
             box-shadow: 0 0 0 3px rgba(232, 160, 176, .15);
+        }
+
+        .form-input:disabled {
+            opacity: .38;
+            cursor: not-allowed;
+        }
+
+        .anon-label {
+            display: flex;
+            align-items: center;
+            gap: .55rem;
+            margin-top: .3rem;
+            cursor: pointer;
+            width: fit-content;
+        }
+
+        .anon-label input[type="checkbox"] {
+            accent-color: var(--rose-deep);
+            width: 15px;
+            height: 15px;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .anon-label span {
+            font-size: .78rem;
+            color: var(--text-light);
+            letter-spacing: .04em;
+            transition: color .2s;
+        }
+
+        .anon-label:hover span {
+            color: var(--text-mid);
         }
 
         .guest-counter {
@@ -1786,9 +1879,199 @@
         }
 
         /* ════════════════════════════════════════
-   MOBILE TYPOGRAPHY IMPROVEMENTS
-   Solo mejora lectura en pantallas pequeñas
-════════════════════════════════════════ */
+           CALENDAR MODAL
+        ════════════════════════════════════════ */
+        .cal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(58, 42, 48, 0.42);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s ease;
+            padding: 1rem;
+        }
+
+        .cal-overlay.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .cal-modal-box {
+            background: rgba(253, 248, 250, .97);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(232, 160, 176, .4);
+            border-radius: 26px;
+            padding: 2.2rem 2rem 2rem;
+            max-width: 360px;
+            width: 100%;
+            box-shadow: 0 24px 70px rgba(200, 137, 154, .25);
+            position: relative;
+            transform: translateY(22px) scale(.96);
+            transition: transform .38s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        .cal-overlay.visible .cal-modal-box {
+            transform: translateY(0) scale(1);
+        }
+
+        .cal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            line-height: 1;
+            transition: color .2s, transform .2s;
+            padding: .2rem;
+        }
+
+        .cal-close:hover {
+            color: var(--text-dark);
+            transform: rotate(90deg);
+        }
+
+        .cal-modal-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: .7rem;
+        }
+
+        .cal-modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            color: var(--text-dark);
+            margin-bottom: .4rem;
+            line-height: 1.2;
+        }
+
+        .cal-modal-sub {
+            font-size: .83rem;
+            color: var(--text-mid);
+            line-height: 1.65;
+            margin-bottom: 1.8rem;
+        }
+
+        .cal-section-label {
+            font-size: .6rem;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: var(--text-light);
+            margin-bottom: .65rem;
+            display: block;
+        }
+
+        .cal-options {
+            display: flex;
+            gap: .5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .cal-opt {
+            flex: 1;
+            min-width: fit-content;
+            padding: .6rem .85rem;
+            border: 1.5px solid rgba(232, 160, 176, .35);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, .65);
+            font-family: 'Roboto', sans-serif;
+            font-size: .8rem;
+            color: var(--text-mid);
+            cursor: pointer;
+            transition: all .22s;
+            white-space: nowrap;
+        }
+
+        .cal-opt:hover {
+            border-color: var(--rose-deep);
+            background: var(--rose-light);
+            color: var(--text-dark);
+        }
+
+        .cal-opt.selected {
+            background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+            border-color: transparent;
+            color: white;
+            box-shadow: 0 4px 14px rgba(200, 137, 154, .32);
+        }
+
+        .cal-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(232, 160, 176, .3), transparent);
+            margin: .2rem 0 1.5rem;
+        }
+
+        .cal-confirm-btn {
+            width: 100%;
+            padding: .95rem;
+            background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+            border: none;
+            border-radius: 30px;
+            color: white;
+            font-family: 'Roboto', sans-serif;
+            font-size: .85rem;
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 6px 22px rgba(200, 137, 154, .32);
+            transition: transform .22s, box-shadow .22s, opacity .22s;
+            margin-top: .2rem;
+        }
+
+        .cal-confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(200, 137, 154, .42);
+        }
+
+        .cal-confirm-btn:disabled {
+            opacity: .45;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .cal-shake {
+            animation: calShake .38s ease;
+        }
+
+        @keyframes calShake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            20% {
+                transform: translateX(-7px);
+            }
+
+            40% {
+                transform: translateX(6px);
+            }
+
+            60% {
+                transform: translateX(-5px);
+            }
+
+            80% {
+                transform: translateX(4px);
+            }
+        }
+
+        /* ════════════════════════════════════════
+           MOBILE TYPOGRAPHY IMPROVEMENTS
+        ════════════════════════════════════════ */
         @media (max-width: 767px) {
 
             body {
@@ -1800,7 +2083,6 @@
                 padding: 4.5rem 1.35rem;
             }
 
-            /* HERO */
             .eyebrow {
                 font-size: .82rem;
                 letter-spacing: .22em;
@@ -1817,7 +2099,6 @@
                 line-height: 2.1;
             }
 
-            /* TITULOS */
             .section-title {
                 font-size: .82rem;
                 letter-spacing: .24em;
@@ -1831,9 +2112,9 @@
             .section-phrase {
                 font-size: 2rem;
                 line-height: 1.45;
+                text-align: center;
             }
 
-            /* PLAYER */
             .music-player {
                 max-width: 100%;
                 padding: 1rem 1rem;
@@ -1847,7 +2128,6 @@
                 font-size: .8rem;
             }
 
-            /* LETRAS CANCION */
             .lyrics-line {
                 font-size: 1.3rem;
                 line-height: 1.45;
@@ -1858,7 +2138,6 @@
                 line-height: 1.45;
             }
 
-            /* EVENTO */
             .evento-date {
                 font-size: 1.45rem;
                 line-height: 1.5;
@@ -1887,7 +2166,6 @@
                 padding: .55rem 1.2rem;
             }
 
-            /* COUNTDOWN */
             .countdown-title {
                 font-size: .82rem;
             }
@@ -1900,7 +2178,6 @@
                 font-size: .72rem;
             }
 
-            /* REGALOS */
             .gift-store {
                 font-size: 1.4rem;
             }
@@ -1918,7 +2195,6 @@
                 line-height: 1.8;
             }
 
-            /* DRESSCODE */
             .swatch-label {
                 font-size: .78rem;
             }
@@ -1929,7 +2205,6 @@
                 padding: 1.6rem 1.4rem;
             }
 
-            /* RSVP */
             .rsvp-phrase {
                 font-size: 1.9rem;
                 line-height: 1.6;
@@ -1969,7 +2244,6 @@
                 font-size: 1.08rem;
             }
 
-            /* BOTONES */
             .btn-next,
             .btn-back,
             .btn-confirm,
@@ -1978,13 +2252,11 @@
                 min-height: 48px;
             }
 
-            /* FOOTER */
             footer {
                 font-size: .82rem;
                 line-height: 1.7;
             }
 
-            /* CIERRE */
             .closing-phrase-text {
                 font-size: 1.8rem;
                 line-height: 1.7;
@@ -1994,11 +2266,151 @@
                 font-size: .82rem;
                 letter-spacing: .28em;
             }
+
+            .cal-modal-box {
+                padding: 2rem 1.5rem 1.8rem;
+            }
+
+            .cal-modal-title {
+                font-size: 1.4rem;
+            }
+        }
+
+        /* ════════════════════════════════════════
+           CONTACT MODAL
+        ════════════════════════════════════════ */
+        .contact-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            background: rgba(58, 42, 48, 0.42);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s ease;
+        }
+
+        .contact-overlay.visible {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .contact-modal-box {
+            background: rgba(253, 248, 243, 0.97);
+            backdrop-filter: blur(28px);
+            -webkit-backdrop-filter: blur(28px);
+            border: 1px solid rgba(232, 160, 176, .4);
+            border-radius: 26px;
+            padding: 2.5rem 2rem 2rem;
+            max-width: 360px;
+            width: 100%;
+            box-shadow: 0 24px 70px rgba(200, 137, 154, .25);
+            position: relative;
+            text-align: center;
+            transform: translateY(22px) scale(.96);
+            transition: transform .38s cubic-bezier(.34, 1.56, .64, 1);
+        }
+
+        .contact-overlay.visible .contact-modal-box {
+            transform: translateY(0) scale(1);
+        }
+
+        .contact-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.2rem;
+            background: transparent;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            cursor: pointer;
+            line-height: 1;
+            transition: color .2s, transform .2s;
+            padding: .2rem;
+        }
+
+        .contact-close:hover {
+            color: var(--text-dark);
+            transform: rotate(90deg);
+        }
+
+        .contact-modal-icon {
+            font-size: 2.2rem;
+            display: block;
+            margin-bottom: .8rem;
+        }
+
+        .contact-modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.55rem;
+            color: var(--text-dark);
+            line-height: 1.3;
+            margin-bottom: .6rem;
+        }
+
+        .contact-modal-sub {
+            font-size: .88rem;
+            color: var(--text-mid);
+            line-height: 1.65;
+            margin-bottom: 1.8rem;
+        }
+
+        .btn-whatsapp {
+            display: inline-flex;
+            align-items: center;
+            gap: .55rem;
+            padding: .9rem 1.8rem;
+            background: #25D366;
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            font-family: 'Roboto', sans-serif;
+            font-size: .88rem;
+            font-weight: 500;
+            letter-spacing: .06em;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: 0 6px 20px rgba(37, 211, 102, .35);
+            transition: transform .22s, box-shadow .22s;
+        }
+
+        .btn-whatsapp:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(37, 211, 102, .45);
+        }
+
+        .btn-whatsapp svg {
+            width: 20px;
+            height: 20px;
+            fill: #fff;
+            flex-shrink: 0;
+        }
+
+        footer a.contact-link {
+            color: var(--rose-deep);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(232, 160, 176, .45);
+            transition: color .2s, border-color .2s;
+            cursor: pointer;
+        }
+
+        footer a.contact-link:hover {
+            color: var(--text-dark);
+            border-color: var(--text-dark);
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+
+    <!-- ══ FIREBASE SDK ══ -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 </head>
 
 <body>
@@ -2026,18 +2438,21 @@
 
         <!-- ══ HERO ══ -->
         <section id="hero">
-            <p class="eyebrow">Una noche que siempre recordarás</p>
-            <h1 class="hero-title">Mis XV</h1>
-            <p class="hero-name">Daymi Galilea</p>
-            <div class="divider-line"></div>
-            <p class="hero-phrase">Hay momentos que se graban para siempre en el corazón. Esta noche es uno de ellos.
-            </p>
-            <div class="families">
-                <p>Con el amor de sus padres</p>
-                <p><strong>Diego Gómez Téllez <br> Perla Alejandra Montes Torres</strong></p>
-                <br>
-                <p>Y el apoyo de sus padrinos</p>
-                <p><strong>Rigoberto Téllez Gómez <br> Evelin Larisa Juárez Figueroa</strong></p>
+            <div class="hero-content">
+                <p class="eyebrow">Tengo el honor de invitarte a compartir la celebración de</p>
+                <h1 class="hero-title">Mis XV</h1>
+                <p class="hero-name">Daymi Galilea</p>
+                <div class="divider-line"></div>
+                <p class="hero-phrase">Hay momentos que se graban para siempre en el corazón. Este d&iacute;a es uno de
+                    ellos.
+                </p>
+                <div class="families">
+                    <p>Con el amor de mis padres</p>
+                    <p><strong>Diego Gómez Téllez <br> Perla Alejandra Montes Torres</strong></p>
+                    <br>
+                    <p>Y el apoyo de mis padrinos</p>
+                    <p><strong>Rigoberto Téllez Gómez <br> Evelin Larisa Juárez Figueroa</strong></p>
+                </div>
             </div>
         </section>
 
@@ -2045,29 +2460,41 @@
         <section id="musica">
             <p class="section-phrase">Escucha mi canción favorita</p>
 
-            <div class="music-player" id="musicPlayer">
-                <button class="player-btn" id="playBtn" onclick="togglePlay(this)"></button>
-                <div class="player-info">
-                    <div class="player-song">Summertime Sadness</div>
-                    <div class="player-artist">Lana del Rey</div>
-                </div>
-                <div class="player-bars" id="playerBars">
-                    <div class="bar-stick"></div>
-                    <div class="bar-stick"></div>
-                    <div class="bar-stick"></div>
-                    <div class="bar-stick"></div>
-                    <div class="bar-stick"></div>
-                </div>
-                <div class="lyrics-inline" id="lyricsInline">
-                    <div class="lyric-current" id="lyricCurrent"></div>
-                    <span class="lyrics-line" id="lyric-0" data-duration="4">Kiss me hard before you go<span class="lyric-translation">Bésame fuerte antes de irte</span></span>
-                    <span class="lyrics-line" id="lyric-1" data-duration="4">Summertime sadness<span class="lyric-translation">Tristeza de verano</span></span>
-                    <span class="lyrics-line" id="lyric-2" data-duration="5">I just wanted you to know<span class="lyric-translation">Solo quería que supieras</span></span>
-                    <span class="lyrics-line" id="lyric-3" data-duration="3">That, baby, you the best<span class="lyric-translation">Que, cariño, eres el mejor</span></span>
-                    <span class="lyrics-line" id="lyric-4" data-duration="4">I got my red dress on tonight<span class="lyric-translation">Me puse mi vestido rojo esta noche</span></span>
-                    <span class="lyrics-line" id="lyric-5" data-duration="4">Dancin' in the dark, in the pale moonlight<span class="lyric-translation">Bailando en la oscuridad bajo la pálida luz de la luna</span></span>
-                    <span class="lyrics-line" id="lyric-6" data-duration="5">Done my hair up real big, beauty queen style<span class="lyric-translation">Mi cabello muy grande, estilo reina de la belleza</span></span>
-                    <span class="lyrics-line" id="lyric-7" data-duration="4">High heels off, I'm feelin' alive ...<span class="lyric-translation">Quitándome los tacones, me siento viva ...</span></span>
+            <div class="music-player-container" id="musicPlayerContainer">
+                <div class="music-player" id="musicPlayer">
+                    <button class="player-btn" id="playBtn" onclick="togglePlay(this)"></button>
+                    <div class="player-info">
+                        <div class="player-song">Summertime Sadness</div>
+                        <div class="player-artist">Lana del Rey</div>
+                    </div>
+                    <div class="player-bars" id="playerBars">
+                        <div class="bar-stick"></div>
+                        <div class="bar-stick"></div>
+                        <div class="bar-stick"></div>
+                        <div class="bar-stick"></div>
+                        <div class="bar-stick"></div>
+                    </div>
+                    <div class="lyrics-inline" id="lyricsInline">
+                        <div class="lyric-current" id="lyricCurrent"></div>
+                        <span class="lyrics-line" id="lyric-0" data-duration="4">Kiss me hard before you go<span
+                                class="lyric-translation">Bésame fuerte antes de irte</span></span>
+                        <span class="lyrics-line" id="lyric-1" data-duration="4">Summertime sadness<span
+                                class="lyric-translation">Tristeza de verano</span></span>
+                        <span class="lyrics-line" id="lyric-2" data-duration="5">I just wanted you to know<span
+                                class="lyric-translation">Solo quería que supieras</span></span>
+                        <span class="lyrics-line" id="lyric-3" data-duration="3">That, baby, you the best<span
+                                class="lyric-translation">Que, cariño, eres el mejor</span></span>
+                        <span class="lyrics-line" id="lyric-4" data-duration="4">I got my red dress on tonight<span
+                                class="lyric-translation">Me puse mi vestido rojo esta noche</span></span>
+                        <span class="lyrics-line" id="lyric-5" data-duration="4">Dancin' in the dark, in the pale
+                            moonlight<span class="lyric-translation">Bailando en la oscuridad bajo la pálida luz de la
+                                luna</span></span>
+                        <span class="lyrics-line" id="lyric-6" data-duration="5">Done my hair up real big, beauty queen
+                            style<span class="lyric-translation">Mi cabello muy grande, estilo reina de la
+                                belleza</span></span>
+                        <span class="lyrics-line" id="lyric-7" data-duration="4">High heels off, I'm feelin' alive
+                            ...<span class="lyric-translation">Quitándome los tacones, me siento viva ...</span></span>
+                    </div>
                 </div>
             </div>
         </section>
@@ -2083,10 +2510,10 @@
                     <img class="ev-bg-img" src="./resources/iglesia.png" alt="Iglesia" loading="lazy">
                     <div class="ev-gradient"></div>
                     <div class="ev-content">
-                        <div class="ev-badge"><span class="ev-icon">⛪</span>Ceremonia Religiosa</div>
+                        <div class="ev-badge">Ceremonia Religiosa</div>
                         <div class="ev-name">Parroquia del Sr de Zelontla</div>
-                        <div class="ev-time">🕐 Sábado · 2:00 PM</div>
-                        <div class="ev-addr">Real del Monte, Hidalgo</div>
+                        <div class="ev-time">Sábado · 2:00 PM</div>
+                        <div class="ev-addr">Av. Hidalgo, San Ignacio, 42133 Mineral del Monte, Hgo.</div>
                         <a class="btn-maps" href="https://maps.app.goo.gl/ERFRqPfEZkdnpnkt8" target="_blank">Ver
                             ubicaci&oacute;n</a>
                     </div>
@@ -2097,10 +2524,10 @@
                         alt="Salón de fiestas" loading="lazy">
                     <div class="ev-gradient"></div>
                     <div class="ev-content">
-                        <div class="ev-badge"><span class="ev-icon">✨</span>Recepción</div>
+                        <div class="ev-badge">Recepción</div>
                         <div class="ev-name">Casa de la familia Gómez Montes</div>
-                        <div class="ev-time">🕕 Sábado · 3:30 PM</div>
-                        <div class="ev-addr">Real del Monte, Hidalgo</div>
+                        <div class="ev-time">Sábado · 3:30 PM</div>
+                        <div class="ev-addr">San Pedro Huixotitla. Real del Monte, Hidalgo</div>
                         <a class="btn-maps" href="https://maps.app.goo.gl/yWWcWuquwRW3PCACA" target="_blank">Ver
                             ubicaci&oacute;n</a>
                     </div>
@@ -2133,84 +2560,46 @@
 
         <!-- ══ REGALOS ══ -->
         <section id="regalos">
-            <p class="section-title">Detalles especiales</p>
-            <h2 class="section-heading">Mesa de Regalos</h2>
-            <div class="gift-cards">
-                <div class="gift-card" onclick="window.open('https://liverpool.com.mx','_blank')">
-                    <div class="gift-icon">🛍️</div>
-                    <div class="gift-store">Liverpool</div>
-                    <div class="gift-sub">Mesa de regalos</div>
-                </div>
-                <div class="gift-card" onclick="window.open('https://palacio.com.mx','_blank')">
-                    <div class="gift-icon">🎁</div>
-                    <div class="gift-store">El Palacio de Hierro</div>
-                    <div class="gift-sub">Mesa de regalos</div>
-                </div>
-            </div>
+            <!--<p class="section-title">Mesa de regalos</p>-->
+            <h2 class="section-heading">Detalles especiales</h2>
+            <div class="gift-cards"></div>
             <div class="envelope-card">
                 <canvas class="envelope-rain-canvas" id="envelopeCanvas"></canvas>
                 <div class="envelope-card-content">
                     <span class="envelope-icon">💌</span>
                     <div class="envelope-title">Lluvia de Sobres</div>
-                    <p class="envelope-text">Tu presencia es nuestro mejor regalo.<br>
-                        Sin embargo, si deseas tener un detalle especial con Valentina, habrá una hermosa <strong>lluvia
-                            de sobres</strong> — un espacio lleno de cariño destinado para tus buenos deseos el día del
-                        evento.</p>
+                    <p class="envelope-text">Tu presencia en este día tan especial es el mejor regalo para mi<br> <br>
+                        Sin embargo, <strong>si deseas tener un detalle especial y no sabes qué obsequiarme</strong>, en
+                        la mesa de regalos el día del evento encontrarás una caja destinada para sobres, donde con mucho
+                        cariño podrás
+                        depositar tu regalo en efectivo.
                 </div>
             </div>
         </section>
 
         <!-- ══ DRESS CODE ══ -->
         <section id="dresscode">
-            <p class="section-title">Para esa noche</p>
+            <p class="section-title">Para el gran d&iacute;a</p>
             <h2 class="section-heading">Dress Code</h2>
-            <p style="font-size:.9rem;color:var(--text-mid);margin-bottom:1rem">Formal · Elegante</p>
 
             <div class="dresscode-photos">
-                <div class="dc-photo-wrap">
-                    <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&q=80" alt="Dama formal"
-                        loading="lazy">
-                    <div class="dc-photo-label">Dama</div>
-                </div>
-                <div class="dc-photo-wrap">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80"
-                        alt="Caballero formal" loading="lazy">
-                    <div class="dc-photo-label">Caballero</div>
-                </div>
+                <img class="dresscode-photo" src="./resources/dress_code.PNG" alt="Dama formal" loading="lazy">
             </div>
 
-            <div class="palette-row">
-                <div class="color-swatch">
-                    <div class="swatch-circle" style="background:#f8e8d0"></div>
-                    <div class="swatch-label">Champagne</div>
-                </div>
-                <div class="color-swatch">
-                    <div class="swatch-circle" style="background:#e8d4e8"></div>
-                    <div class="swatch-label">Lavanda</div>
-                </div>
-                <div class="color-swatch">
-                    <div class="swatch-circle" style="background:#d4e8e0"></div>
-                    <div class="swatch-label">Menta</div>
-                </div>
-                <div class="color-swatch">
-                    <div class="swatch-circle" style="background:#f0e0d0"></div>
-                    <div class="swatch-label">Nude</div>
-                </div>
-                <div class="color-swatch">
-                    <div class="swatch-circle" style="background:#e8e4d8"></div>
-                    <div class="swatch-label">Arena</div>
-                </div>
-            </div>
+            <p style="font-size:.9rem;color:var(--text-mid);margin-bottom:1rem">Me encataria que te sientas cómodo(a) y
+                luzcas espectacular <br> <br>
+                Te invitamos a asistir con un estilo elegante o casual/elegante para disfrutar juntos de una celebración
+                inolvidable.</p>
 
             <div class="dresscode-note">
                 <p>Por favor evitar el color</p>
                 <div class="palette-row" style="margin:1rem 0 .5rem">
                     <div class="color-swatch avoid-swatch">
                         <div class="swatch-circle" style="background:#f2c4ce"></div>
-                        <div class="swatch-label" style="color:var(--rose-deep)">Rosa XV</div>
+                        <div class="swatch-label" style="color:var(--rose-deep)">Rosa</div>
                     </div>
                 </div>
-                <p style="font-size:.8rem;color:var(--text-light)">Este tono está reservado para la quinceañera ✨</p>
+                <p style="font-size:.8rem;color:var(--text-light)">Este tono está reservado para la quinceañera</p>
             </div>
         </section>
 
@@ -2230,31 +2619,31 @@
         <section id="rsvp">
             <p class="section-title">Confirmación</p>
             <h2 class="section-heading">¿Nos acompañas?</h2>
-            <p class="rsvp-phrase">"Tu presencia ilumina cada momento de esta noche tan especial."</p>
+
 
             <div class="rsvp-stepper" id="rsvpStepper">
-                <div class="stepper-nav">
-                    <div class="step-dot active" id="dot0"></div>
-                    <div class="step-dot" id="dot1"></div>
-                    <div class="step-dot" id="dot2"></div>
-                </div>
 
                 <div class="rsvp-step active" id="step0">
                     <p
                         style="font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-light);margin-bottom:1.5rem">
-                        ¿Confirmas tu asistencia?</p>
+                        Por favor confirma tu asistencia</p>
                     <div class="attend-cards">
                         <div class="attend-option" id="opt-si" onclick="selectAttend('si')">
-                            <span class="ao-emoji">🌸</span>
                             <span class="ao-label">Sí asistiré</span>
                             <span class="ao-sub">¡Allá estaré!</span>
                         </div>
                         <div class="attend-option" id="opt-no" onclick="selectAttend('no')">
-                            <span class="ao-emoji">🥹</span>
                             <span class="ao-label">No podré ir</span>
                             <span class="ao-sub">Lo siento mucho</span>
                         </div>
                     </div>
+
+                    <div class="stepper-nav">
+                        <div class="step-dot active" id="dot0"></div>
+                        <div class="step-dot" id="dot1"></div>
+                        <div class="step-dot" id="dot2"></div>
+                    </div>
+
                     <div class="step-btns">
                         <button class="btn-next" onclick="goStep(1)" id="btnStep0">Continuar →</button>
                     </div>
@@ -2263,8 +2652,13 @@
                 <div class="rsvp-step" id="step1">
                     <div class="rsvp-form-fields">
                         <div class="form-group">
-                            <label class="form-label">Nombre completo</label>
-                            <input class="form-input" type="text" placeholder="Tu nombre completo" id="rsvpName">
+                            <label class="form-label">Nombre o familia</label>
+                            <input class="form-input" type="text" placeholder="Tu nombre o el de tu familia"
+                                id="rsvpName">
+                            <label class="anon-label">
+                                <input type="checkbox" id="rsvpAnon" onchange="toggleAnon(this)">
+                                <span>Prefiero ser anónimo(a)</span>
+                            </label>
                         </div>
                         <div class="form-group" id="guestGroup">
                             <label class="form-label">¿Cuántos serán?</label>
@@ -2275,11 +2669,6 @@
                                 <button class="counter-btn" onclick="changeGuests(1)">+</button>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="form-label">¿Alguna consideración especial?</label>
-                            <input class="form-input" type="text"
-                                placeholder="Alergias, silla de ruedas, etc. (opcional)" id="rsvpNote">
-                        </div>
                     </div>
                     <div class="step-btns">
                         <button class="btn-back" onclick="goStep(0)">← Atrás</button>
@@ -2289,7 +2678,7 @@
 
                 <div class="rsvp-step" id="step2">
                     <div class="confirm-summary" id="confirmSummary"></div>
-                    <button class="btn-confirm" onclick="submitRSVP()">Confirmar Asistencia ✨</button>
+                    <button class="btn-confirm" onclick="submitRSVP()">Confirmar Asistencia</button>
                     <div class="step-btns" style="margin-top:.8rem">
                         <button class="btn-back" onclick="goStep(1)">← Editar</button>
                     </div>
@@ -2300,8 +2689,8 @@
                 <div class="success-inner">
                     <span class="success-emoji">🎀</span>
                     <div class="success-title">¡Gracias, <span id="successName"></span>!</div>
-                    <p class="success-sub">Tu confirmación fue registrada con todo el cariño del mundo.<br>
-                        Valentina y su familia te esperan con el corazón abierto y los brazos extendidos.</p>
+                    <p class="success-sub">Tu confirmación fue registrada.<br>
+                        Mi familia y yo te esperamos para celebrar juntos este gran día.</p>
                 </div>
             </div>
         </section>
@@ -2309,19 +2698,99 @@
         <!-- ══ FRASE DE CIERRE ══ -->
         <div class="closing-phrase">
             <div class="closing-divider"></div>
-            <p class="closing-phrase-text">"Te esperamos con los brazos abiertos para compartir juntos la noche más
-                especial de mi vida."</p>
+            <p class="closing-phrase-text">"Será un honor contar con tu presencia, te esperamos"</p>
             <div class="closing-divider"></div>
-            <p class="closing-name">Con amor · Valentina · Agosto 2026</p>
         </div>
 
     </div><!-- /page-wrap -->
 
+    <!-- ══ CALENDAR MODAL ══ -->
+    <div class="cal-overlay" id="calModal" onclick="handleCalOverlayClick(event)">
+        <div class="cal-modal-box">
+            <button class="cal-close" onclick="closeCalModal()">×</button>
+            <span class="cal-modal-icon">📅</span>
+            <p class="cal-modal-title">Guardar recordatorio</p>
+            <p class="cal-modal-sub">Agrega un recordatorio a tu calendario para que no olvides este día tan especial.
+                El evento se guardará automáticamente el <strong>8 de agosto de 2026</strong> con el título
+                <strong>XV Años Galilea</strong>.
+            </p>
+
+            <span class="cal-section-label">¿Con cuánto tiempo de anticipación?</span>
+            <div class="cal-options" id="calDayOpts">
+                <button class="cal-opt" data-days="7" onclick="selectCalDay(this)">7 días antes</button>
+                <button class="cal-opt" data-days="3" onclick="selectCalDay(this)">3 días antes</button>
+                <button class="cal-opt" data-days="1" onclick="selectCalDay(this)">1 día antes</button>
+            </div>
+
+            <div class="cal-divider"></div>
+
+            <span class="cal-section-label">¿A qué hora quieres que te avise?</span>
+            <div class="cal-options" id="calTimeOpts">
+                <button class="cal-opt" data-hour="9" onclick="selectCalTime(this)">Por la mañana</button>
+                <button class="cal-opt" data-hour="15" onclick="selectCalTime(this)">Por la tarde</button>
+                <button class="cal-opt" data-hour="20" onclick="selectCalTime(this)">Por la noche</button>
+            </div>
+
+            <button class="cal-confirm-btn" id="calConfirmBtn" onclick="confirmCalendar()">Agregar al
+                calendario</button>
+        </div>
+    </div>
+
     <footer>
-        <p>Con amor · Valentina García · 2026</p>
+        <p>
+            ¿Quieres una invitación asi para tu evento?, <a class="contact-link" href="#"
+                onclick="openContactModal(); return false;">contactame</a>
+        </p>
     </footer>
 
+    <!-- ══ CONTACT MODAL ══ -->
+    <div class="contact-overlay" id="contactModal" onclick="handleContactOverlayClick(event)">
+        <div class="contact-modal-box">
+            <button class="contact-close" onclick="closeContactModal()">×</button>
+            <span class="contact-modal-icon">✨</span>
+            <p class="contact-modal-title">Crea invitaciones para tu evento</p>
+            <p class="contact-modal-sub">
+                Diseños únicos y personalizados para que tu celebración sea inolvidable.<br>
+                Escríbenos y cuéntanos sobre tu evento.
+            </p>
+            <a class="btn-whatsapp"
+                href="https://wa.me/5215658936778?text=Hola%2C%20me%20ayudas%20a%20crear%20una%20invitaci%C3%B3n%20para%20mi%20evento."
+                target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+                </svg>
+                Escríbenos por WhatsApp
+            </a>
+        </div>
+    </div>
+
     <script>
+        /* ════════════════════════════════════════
+           FIREBASE — init
+        ════════════════════════════════════════ */
+        const firebaseConfig = {
+            apiKey: "AIzaSyC6Xrc9EqMyXKH_gNFaOGuAX-ItudzZAVs",
+            authDomain: "bautizo-sofia.firebaseapp.com",
+            databaseURL: "https://bautizo-sofia-default-rtdb.firebaseio.com",
+            projectId: "bautizo-sofia",
+            storageBucket: "bautizo-sofia.firebasestorage.app",
+            messagingSenderId: "981839514602",
+            appId: "1:981839514602:web:981d3b9a4dcde418c84093",
+            measurementId: "G-TVQSGB0FWT"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        /* ─── VISIT COUNTER ─── */
+        (function () {
+            if (!localStorage.getItem('visita')) {
+                localStorage.setItem('visita', '1');
+                db.ref('contadoresGali/visitas')
+                    .transaction(current => (current || 0) + 1);
+            }
+        })();
+
         /* ─── BG CANVAS ─── */
         (function () {
             const canvas = document.getElementById('bg-canvas');
@@ -2361,7 +2830,7 @@
         /* ─── GSAP ─── */
         gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-        /* ─── DRESS scroll animation (original) ─── */
+        /* ─── DRESS scroll animation ─── */
         const mm = gsap.matchMedia();
         mm.add({
             mobile: "(max-width: 767px)",
@@ -2377,7 +2846,7 @@
             tl.to('#dress', { opacity: 0, duration: 0.5, ease: 'none' }, "-=0.3");
         });
 
-        /* ─── BORDER (frame-top) — sale hacia la derecha con scroll ─── */
+        /* ─── BORDER (frame-top) ─── */
         gsap.matchMedia().add({
             mobile: "(max-width: 767px)",
             tablet: "(min-width: 768px) and (max-width: 1023px)",
@@ -2386,25 +2855,12 @@
             const { tablet, desktop } = context.conditions;
             const exitX = desktop ? '160px' : tablet ? '120px' : '80px';
             const endDist = desktop ? '+=1600' : tablet ? '+=1400' : '+=1200';
-
             gsap.timeline({
-                scrollTrigger: {
-                    trigger: 'body',
-                    start: 'top top',
-                    end: endDist,
-                    scrub: 1.2,
-                    invalidateOnRefresh: true
-                }
-            })
-                .to('#frame-top', {
-                    x: exitX,
-                    opacity: 0,
-                    ease: 'none',
-                    duration: 1
-                });
+                scrollTrigger: { trigger: 'body', start: 'top top', end: endDist, scrub: 1.2, invalidateOnRefresh: true }
+            }).to('#frame-top', { x: exitX, opacity: 0, ease: 'none', duration: 1 });
         });
 
-        /* ─── FLOWER — sale hacia arriba con scroll ─── */
+        /* ─── FLOWER ─── */
         gsap.matchMedia().add({
             mobile: "(max-width: 767px)",
             tablet: "(min-width: 768px) and (max-width: 1023px)",
@@ -2413,33 +2869,22 @@
             const { tablet, desktop } = context.conditions;
             const exitY = desktop ? '-220px' : tablet ? '-160px' : '-120px';
             const endDist = desktop ? '+=1600' : tablet ? '+=1400' : '+=1200';
-
             gsap.timeline({
-                scrollTrigger: {
-                    trigger: 'body',
-                    start: 'top top',
-                    end: endDist,
-                    scrub: 1.2,
-                    invalidateOnRefresh: true
-                }
-            })
-                .to('#flower', {
-                    y: exitY,
-                    opacity: 0,
-                    ease: 'none',
-                    duration: 1
-                });
+                scrollTrigger: { trigger: 'body', start: 'top top', end: endDist, scrub: 1.2, invalidateOnRefresh: true }
+            }).to('#flower', { y: exitY, opacity: 0, ease: 'none', duration: 1 });
         });
 
         /* ─── HERO ANIMATIONS ─── */
+        gsap.set('.hero-content', { opacity: 0 });
         gsap.set(['.eyebrow', '.hero-title', '.hero-name', '.divider-line', '.hero-phrase', '.families'], { opacity: 0, y: 30 });
         gsap.timeline({ delay: .3 })
-            .to('.eyebrow', { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, 0)
-            .to('.hero-title', { opacity: 1, y: 0, duration: 1.4, ease: 'power2.out' }, '.3')
-            .to('.hero-name', { opacity: 1, y: 0, duration: 1.4, ease: 'power2.out' }, '.6')
-            .to('.divider-line', { opacity: 1, scaleX: 1, duration: 1, ease: 'power2.out' }, '.9')
-            .to('.hero-phrase', { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, '1.1')
-            .to('.families', { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, '1.3');
+            .to('.hero-content', { opacity: 1, duration: 1.2, ease: 'power2.out' }, 0)
+            .to('.eyebrow', { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, 0.2)
+            .to('.hero-title', { opacity: 1, y: 0, duration: 1.4, ease: 'power2.out' }, '.5')
+            .to('.hero-name', { opacity: 1, y: 0, duration: 1.4, ease: 'power2.out' }, '.8')
+            .to('.divider-line', { opacity: 1, scaleX: 1, duration: 1, ease: 'power2.out' }, '1.1')
+            .to('.hero-phrase', { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, '1.3')
+            .to('.families', { opacity: 1, y: 0, duration: 1.2, ease: 'power2.out' }, '1.5');
 
         /* ─── SCROLL REVEAL ─── */
         document.querySelectorAll('.gift-card,.envelope-card,.music-player,.countdown-wrap,.dresscode-note,.evento-card,.dc-photo-wrap,.musica-info-card').forEach(el => {
@@ -2457,15 +2902,16 @@
 
         /* ─── GALLERY CAROUSEL ─── */
         const galleryImages = [
-            { url: './resources/img1.jpeg', emoji: '🌸' },
-            { url: './resources/img2.jpeg', emoji: '🌷' },
-            { url: './resources/img3.jpeg', emoji: '💐' },
-            { url: './resources/img4.jpeg', emoji: '✨' },
-            { url: './resources/img5.jpeg', emoji: '🦋' },
-            { url: './resources/img6.jpeg', emoji: '🌺' },
-            { url: './resources/img7.jpeg', emoji: '💫' },
-            { url: './resources/img8.jpeg', emoji: '🌹' },
-
+            { url: './resources/img1.jpg', emoji: '🌸' },
+            { url: './resources/img2.jpg', emoji: '🌷' },
+            { url: './resources/img3.jpg', emoji: '💐' },
+            { url: './resources/img4.jpg', emoji: '✨' },
+            { url: './resources/img5.jpg', emoji: '🦋' },
+            { url: './resources/img6.jpg', emoji: '🌺' },
+            { url: './resources/img7.jpg', emoji: '💫' },
+            { url: './resources/img8.jpg', emoji: '🌹' },
+            { url: './resources/img9.jpg', emoji: '🌹' },
+            { url: './resources/img10.jpg', emoji: '🌹' },
         ];
 
         function buildCarouselRow(trackId, images, wide) {
@@ -2502,14 +2948,170 @@
         }
         updateCd(); setInterval(updateCd, 1000);
 
-        /* ─── CALENDAR ─── */
+        /* ─── CALENDAR MODAL ─── */
+        let calSelectedDays = null;
+        let calSelectedHour = null;
+
         function addToCalendar() {
-            const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nBEGIN:VEVENT\nSUMMARY:XV Años de Valentina\nDTSTART:20260808T140000\nDTEND:20260809T020000\nLOCATION:Salón Jardines del Valle, Pachuca\nDESCRIPTION:¡Celebra los XV años de Valentina!\nEND:VEVENT\nEND:VCALENDAR`;
-            const blob = new Blob([ics], { type: 'text/calendar' });
-            const a = document.createElement('a');
-            a.href = URL.createObjectURL(blob); a.download = 'xv_valentina.ics'; a.click();
+
+            calSelectedDays = null;
+            calSelectedHour = null;
+
+            document.querySelectorAll('.cal-opt')
+                .forEach(b => b.classList.remove('selected'));
+
+            document.getElementById('calModal')
+                .classList.add('visible');
+
+            document.body.style.overflow = 'hidden';
         }
 
+        function closeCalModal() {
+            document.getElementById('calModal').classList.remove('visible');
+            document.body.style.overflow = '';
+        }
+
+        function handleCalOverlayClick(e) {
+            if (e.target === document.getElementById('calModal')) closeCalModal();
+        }
+
+        function selectCalDay(btn) {
+            document.querySelectorAll('#calDayOpts .cal-opt').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            calSelectedDays = parseInt(btn.dataset.days);
+        }
+
+        function selectCalTime(btn) {
+            document.querySelectorAll('#calTimeOpts .cal-opt').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            calSelectedHour = parseInt(btn.dataset.hour);
+        }
+
+        function padN(n) { return String(n).padStart(2, '0'); }
+
+        function toICSLocal(d) {
+            return `${d.getFullYear()}${padN(d.getMonth() + 1)}${padN(d.getDate())}T${padN(d.getHours())}${padN(d.getMinutes())}00`;
+        }
+
+        function shakeEl(selector) {
+            const el = document.querySelector(selector);
+            if (!el) return;
+            el.classList.remove('cal-shake');
+            void el.offsetWidth;
+            el.classList.add('cal-shake');
+            el.addEventListener('animationend', () => el.classList.remove('cal-shake'), { once: true });
+        }
+
+        function confirmCalendar() {
+
+            if (!calSelectedDays) {
+                shakeEl('#calDayOpts');
+                return;
+            }
+
+            if (calSelectedHour === null) {
+                shakeEl('#calTimeOpts');
+                return;
+            }
+
+            const isAndroid = /Android/i.test(navigator.userAgent);
+
+            // Fecha del evento
+            const eventDate = new Date(2026, 7, 8, 14, 0, 0);
+
+            // Fecha del recordatorio
+            const reminderDate = new Date(eventDate);
+
+            reminderDate.setDate(
+                reminderDate.getDate() - calSelectedDays
+            );
+
+            reminderDate.setHours(calSelectedHour);
+            reminderDate.setMinutes(0);
+            reminderDate.setSeconds(0);
+
+            // ANDROID → GOOGLE CALENDAR
+            if (isAndroid) {
+
+                const startDate = new Date(reminderDate);
+
+                startDate.setMinutes(0);
+                startDate.setSeconds(0);
+
+                const endDate = new Date(startDate);
+                endDate.setHours(endDate.getHours() + 1);
+
+                const start = toICSLocal(startDate);
+                const end = toICSLocal(endDate);
+
+                const googleUrl =
+                    'https://calendar.google.com/calendar/render?action=TEMPLATE' +
+                    '&text=' + encodeURIComponent('XV Años Galilea') +
+                    '&dates=' + start + '/' + end +
+                    '&details=' + encodeURIComponent(
+                        'Recordatorio XV Años Galilea el 8 de agosto'
+                    ) +
+                    '&location=' + encodeURIComponent(
+                        'Mineral del Monte, Hidalgo'
+                    );
+
+                window.open(googleUrl, '_blank');
+
+                closeCalModal();
+
+                return;
+            }
+
+            // IOS / DESKTOP → ICS
+
+            const reminderStart = toICSLocal(reminderDate);
+
+            const reminderEndDate = new Date(reminderDate);
+            reminderEndDate.setHours(reminderEndDate.getHours() + 1);
+
+            const reminderEnd = toICSLocal(reminderEndDate);
+
+            const ics = [
+                'BEGIN:VCALENDAR',
+                'VERSION:2.0',
+                'PRODID:-//XV Años Galilea//ES',
+
+                'BEGIN:VEVENT',
+
+                `UID:recordatorio-xv-${Date.now()}`,
+
+                'SUMMARY:Recordatorio XV Años Galilea',
+
+                `DTSTART:${reminderStart}`,
+
+                `DTEND:${reminderEnd}`,
+
+                'DESCRIPTION:Recordatorio XV Años Galilea el 8 de agosto.',
+
+                'LOCATION:Mineral del Monte, Hidalgo, México',
+
+                'END:VEVENT',
+
+                'END:VCALENDAR'
+            ].join('\r\n');
+
+            const blob = new Blob([ics], {
+                type: 'text/calendar;charset=utf-8'
+            });
+
+            const a = document.createElement('a');
+
+            a.href = URL.createObjectURL(blob);
+            a.download = 'xv_galilea.ics';
+
+            document.body.appendChild(a);
+
+            a.click();
+
+            document.body.removeChild(a);
+
+            closeCalModal();
+        }
         /* ─── LLUVIA DE SOBRES ─── */
         (function () {
             const canvas = document.getElementById('envelopeCanvas');
@@ -2606,13 +3208,22 @@
             document.getElementById('guestNum').textContent = guestCount;
         }
 
+        function toggleAnon(cb) {
+            const nameInput = document.getElementById('rsvpName');
+            if (cb.checked) {
+                nameInput.value = '';
+                nameInput.disabled = true;
+            } else {
+                nameInput.disabled = false;
+                nameInput.focus();
+            }
+        }
+
         function goStep(n) {
             if (n === 1 && currentStep === 0) {
                 if (!rsvpChoice) { shake('step0'); return; }
             }
             if (n === 2 && currentStep === 1) {
-                const name = document.getElementById('rsvpName').value.trim();
-                if (!name) { shake('step1'); document.getElementById('rsvpName').focus(); return; }
                 buildSummary();
             }
 
@@ -2622,8 +3233,6 @@
 
             currentStep = n;
             document.getElementById('step' + currentStep).classList.add('active');
-            document.getElementById('dot' + currentStep).classList.remove('done');
-            document.getElementById('dot' + currentStep).classList.add('active');
 
             for (let i = 0; i < 3; i++) {
                 const dot = document.getElementById('dot' + i);
@@ -2634,9 +3243,10 @@
         }
 
         function buildSummary() {
-            const name = document.getElementById('rsvpName').value.trim();
-            const note = document.getElementById('rsvpNote').value.trim();
+            const isAnon = document.getElementById('rsvpAnon').checked;
+            const name = isAnon ? 'Anónimo(a)' : (document.getElementById('rsvpName').value.trim() || 'Invitado(a)');
             const asiste = rsvpChoice === 'si';
+
             let html = `
                 <div class="confirm-row">
                     <span class="confirm-row-icon">${asiste ? '🌸' : '🥹'}</span>
@@ -2661,15 +3271,6 @@
                     </div>
                 </div>`;
             }
-            if (note) {
-                html += `<div class="confirm-row">
-                    <span class="confirm-row-icon">📝</span>
-                    <div class="confirm-row-text">
-                        <div class="confirm-row-label">Nota especial</div>
-                        <div class="confirm-row-val">${note}</div>
-                    </div>
-                </div>`;
-            }
             document.getElementById('confirmSummary').innerHTML = html;
         }
 
@@ -2682,7 +3283,30 @@
         }
 
         function submitRSVP() {
-            const name = document.getElementById('rsvpName').value.trim();
+            const isAnon = document.getElementById('rsvpAnon').checked;
+            const rawName = document.getElementById('rsvpName').value.trim();
+            const name = isAnon || !rawName ? 'Anonimo' : rawName;
+
+            /* ── Firebase writes ── */
+            if (rsvpChoice === 'no') {
+                // Increment noConfirmados
+                db.ref('contadoresGali/noConfirmados')
+                    .transaction(current => (current || 0) + 1);
+            } else {
+                // Increment confirmados by guest count
+                db.ref('contadoresGali/confirmados')
+                    .transaction(current => (current || 0) + guestCount);
+
+                // Append to asistentes array
+                db.ref('contadoresGali/asistentes')
+                    .transaction(current => {
+                        const arr = Array.isArray(current) ? current : [];
+                        arr.push({ as: name, per: guestCount });
+                        return arr;
+                    });
+            }
+
+            /* ── UI update ── */
             document.getElementById('rsvpStepper').style.display = 'none';
             document.getElementById('successName').textContent = name;
             document.getElementById('successMsg').style.display = 'block';
@@ -2695,9 +3319,13 @@
         const totalLines = lyricsLines.length;
         let lyricsTimers = [];
         let currentLineIndex = -1;
+        let lyricsFinished = false;
+
+        let lyricStartTime = 0;
+        let lyricRemainingTime = 0;
+        let currentLineDuration = 0;
 
         function showNextLyric() {
-            if (currentLineIndex >= totalLines) return;
             const lyricCurrent = document.getElementById('lyricCurrent');
             currentLineIndex++;
             if (currentLineIndex < totalLines) {
@@ -2706,33 +3334,70 @@
                 lyricCurrent.classList.remove('visible');
                 void lyricCurrent.offsetWidth;
                 lyricCurrent.classList.add('visible');
+
                 const duration = parseFloat(el.getAttribute('data-duration')) || 3;
-                const t = setTimeout(showNextLyric, duration * 1000);
+                currentLineDuration = duration * 1000;
+                lyricStartTime = Date.now();
+                lyricRemainingTime = currentLineDuration;
+
+                const t = setTimeout(() => {
+                    lyricRemainingTime = 0;
+                    showNextLyric();
+                }, currentLineDuration);
+                lyricsTimers.push(t);
+            } else if (currentLineIndex === totalLines) {
+                lyricCurrent.classList.remove('visible');
+                lyricsFinished = true;
+                const t = setTimeout(() => {
+                    musicPlayer.classList.remove('expanded');
+                }, 1000);
                 lyricsTimers.push(t);
             }
         }
 
         function startLyrics() {
             currentLineIndex = -1;
+            lyricRemainingTime = 0;
             const lyricCurrent = document.getElementById('lyricCurrent');
             lyricCurrent.classList.remove('visible');
-            const t = setTimeout(showNextLyric, 600);
+            const t = setTimeout(() => {
+                showNextLyric();
+            }, 600);
             lyricsTimers.push(t);
+        }
+
+        function resumeLyrics() {
+            if (lyricsFinished) return;
+            if (currentLineIndex >= 0 && currentLineIndex < totalLines && lyricRemainingTime > 0) {
+                lyricStartTime = Date.now();
+                const t = setTimeout(() => {
+                    lyricRemainingTime = 0;
+                    showNextLyric();
+                }, lyricRemainingTime);
+                lyricsTimers.push(t);
+            } else {
+                startLyrics();
+            }
         }
 
         function pauseLyrics() {
             lyricsTimers.forEach(t => clearTimeout(t));
             lyricsTimers = [];
+            if (currentLineIndex >= 0 && currentLineIndex < totalLines && lyricRemainingTime > 0) {
+                const elapsed = Date.now() - lyricStartTime;
+                lyricRemainingTime = Math.max(0, lyricRemainingTime - elapsed);
+            }
         }
 
         function resetLyrics() {
             pauseLyrics();
             currentLineIndex = -1;
+            lyricRemainingTime = 0;
             const lyricCurrent = document.getElementById('lyricCurrent');
             lyricCurrent.classList.remove('visible');
         }
 
-        /* ─── PLAYER TOGGLE with real audio ─── */
+        /* ─── PLAYER TOGGLE ─── */
         const musicPlayer = document.getElementById('musicPlayer');
         const barSticks = document.querySelectorAll('#playerBars .bar-stick');
 
@@ -2741,6 +3406,7 @@
             setPlayerVisualState(false);
             musicPlayer.classList.remove('expanded');
             resetLyrics();
+            lyricsFinished = false;
         });
 
         function setPlayerVisualState(playing) {
@@ -2756,24 +3422,72 @@
                 audio.play().then(() => {
                     btn.classList.add('playing');
                     setPlayerVisualState(true);
-                    musicPlayer.classList.add('expanded');
-                    startLyrics();
+                    if (!lyricsFinished) {
+                        musicPlayer.classList.add('expanded');
+                        resumeLyrics();
+                    }
                 }).catch(() => {
                     btn.classList.add('playing');
                     setPlayerVisualState(true);
-                    musicPlayer.classList.add('expanded');
-                    startLyrics();
+                    if (!lyricsFinished) {
+                        musicPlayer.classList.add('expanded');
+                        resumeLyrics();
+                    }
                 });
             } else {
                 audio.pause();
                 btn.classList.remove('playing');
                 setPlayerVisualState(false);
-                musicPlayer.classList.remove('expanded');
-                pauseLyrics();
+                if (!lyricsFinished) {
+                    musicPlayer.classList.remove('expanded');
+                    pauseLyrics();
+                }
             }
         }
+
+        /* ─── STICKY PLAYER ON SCROLL ─── */
+        (function () {
+            const container = document.getElementById('musicPlayerContainer');
+            const player = document.getElementById('musicPlayer');
+
+            function handleScroll() {
+                const rect = container.getBoundingClientRect();
+                if (rect.top <= 15) {
+                    player.classList.add('sticky');
+                } else {
+                    player.classList.remove('sticky');
+                }
+            }
+
+            window.addEventListener('scroll', handleScroll, { passive: true });
+            window.addEventListener('resize', handleScroll, { passive: true });
+            handleScroll();
+        })();
+
+        /* ─── ESC key closes modals ─── */
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeCalModal();
+                closeContactModal();
+            }
+        });
+
+        /* ─── CONTACT MODAL ─── */
+        function openContactModal() {
+            document.getElementById('contactModal').classList.add('visible');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeContactModal() {
+            document.getElementById('contactModal').classList.remove('visible');
+            document.body.style.overflow = '';
+        }
+
+        function handleContactOverlayClick(e) {
+            if (e.target === document.getElementById('contactModal')) closeContactModal();
+        }
     </script>
-        
+
 </body>
 
 </html>
