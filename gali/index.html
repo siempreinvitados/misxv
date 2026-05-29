@@ -423,19 +423,13 @@
         }
 
         .player-btn::before {
-            padding-left: 3px;
-            content: "";
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3E%3Cpath d='M8 5v14l11-7z'/%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-size: contain;
+            content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16'><polygon points='5,3 13,8 5,13'/></svg>");
+            padding-left: 0;
         }
 
-        .player-btn.playing::after {
-            content: "⏸";
-            padding-left: 0
+        .player-btn.playing::before {
+            content: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' viewBox='0 0 16 16' > <rect x='4' y='2' width='2' height='12' /> <rect x='10' y='2' width='2' height='12' /> </svg>");
+            padding-left: 0;
         }
 
         .player-info {
