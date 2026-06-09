@@ -1,0 +1,87 @@
+<svg width="220px" height="220px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo transparente -->
+
+  <!-- Calendario inclinado -->
+  <g transform="translate(55 70) rotate(-10 160 160)">
+    <!-- Sombra calendario -->
+    <rect x="20" y="45" width="260" height="300" rx="32" fill="#D8D8DE" opacity="0.55"/>
+
+    <!-- Cuerpo calendario -->
+    <rect x="10" y="35" width="260" height="300" rx="32" fill="#FFF8ED"/>
+
+    <!-- Barra superior -->
+    <path d="M10 70C10 50 25 35 45 35H235C255 35 270 50 270 70V125H10V70Z" fill="#F7A7C8"/>
+
+    <!-- Sombra barra -->
+    <path d="M225 35H235C255 35 270 50 270 70V125H230V70C230 50 215 35 195 35H225Z" fill="#E987B5" opacity="0.55"/>
+
+    <!-- Aros superiores -->
+    <rect x="70" y="0" width="32" height="75" rx="16" fill="#FFD86B"/>
+    <rect x="178" y="0" width="32" height="75" rx="16" fill="#FFD86B"/>
+
+    <!-- Brillo de aros -->
+    <rect x="82" y="8" width="8" height="55" rx="4" fill="#FFF1A8" opacity="0.8"/>
+    <rect x="190" y="8" width="8" height="55" rx="4" fill="#FFF1A8" opacity="0.8"/>
+
+    <!-- Círculos decorativos -->
+    <circle cx="55" cy="170" r="11" fill="#C7EFD0"/>
+    <circle cx="95" cy="170" r="11" fill="#C7EFD0"/>
+    <circle cx="135" cy="170" r="11" fill="#C7EFD0"/>
+    <circle cx="175" cy="170" r="11" fill="#C7EFD0"/>
+    <circle cx="215" cy="170" r="11" fill="#C7EFD0"/>
+
+    <circle cx="55" cy="215" r="11" fill="#D8C6F3"/>
+    <circle cx="95" cy="215" r="11" fill="#D8C6F3"/>
+    <circle cx="175" cy="215" r="11" fill="#D8C6F3"/>
+    <circle cx="215" cy="215" r="11" fill="#D8C6F3"/>
+
+    <!-- Día 11 -->
+    <text x="140" y="285"
+          text-anchor="middle"
+          font-family="Arial, sans-serif"
+          font-size="108"
+          font-weight="800"
+          fill="#956EC4">11</text>
+
+    <!-- Detalle inferior -->
+    <path d="M65 312C95 332 185 332 215 312" stroke="#F7A7C8" stroke-width="10" stroke-linecap="round" fill="none"/>
+  </g>
+
+  <!-- Pin de ubicación inclinado -->
+  <g transform="translate(285 150) rotate(12 100 140)">
+    <!-- Sombra pin -->
+    <ellipse cx="105" cy="285" rx="65" ry="18" fill="#D8D8DE" opacity="0.5"/>
+
+    <!-- Pin principal -->
+    <path d="M105 20C45 20 0 66 0 124C0 207 105 295 105 295C105 295 210 207 210 124C210 66 165 20 105 20Z"
+          fill="#A8D8F0"/>
+
+    <!-- Sombra lateral -->
+    <path d="M125 22C174 31 210 72 210 124C210 207 105 295 105 295C105 295 135 213 135 130C135 78 115 42 125 22Z"
+          fill="#75BFE6" opacity="0.45"/>
+
+    <!-- Centro del pin -->
+    <circle cx="105" cy="122" r="48" fill="#FFF8ED"/>
+
+    <!-- Corazón decorativo -->
+    <path d="M105 145
+             C105 145 76 129 76 105
+             C76 91 87 82 100 88
+             C103 90 105 94 105 94
+             C105 94 108 90 111 88
+             C124 82 136 91 136 105
+             C136 129 105 145 105 145Z"
+          fill="#F7A7C8"/>
+  </g>
+
+  <!-- Confeti decorativo -->
+  <g opacity="0.95">
+    <rect x="55" y="35" width="12" height="24" rx="4" fill="#FFD86B" transform="rotate(-25 55 35)"/>
+    <rect x="415" y="70" width="12" height="24" rx="4" fill="#F7A7C8" transform="rotate(20 415 70)"/>
+    <rect x="350" y="420" width="12" height="24" rx="4" fill="#956EC4" transform="rotate(-15 350 420)"/>
+    <circle cx="455" cy="365" r="8" fill="#FFD86B"/>
+    <circle cx="65" cy="420" r="7" fill="#A8D8F0"/>
+    <path d="M420 300C440 285 445 315 465 300" stroke="#F7A7C8" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <path d="M90 370C110 350 122 385 145 362" stroke="#956EC4" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

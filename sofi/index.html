@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ángela cumple 2 años 🌿</title>
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@600;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@600;700&family=Fredoka+One&display=swap"
         rel="stylesheet">
     <style>
         :root {
@@ -19,23 +19,17 @@
             --font-title: 'Dancing Script', cursive;
             --font-body: 'Quicksand', sans-serif;
             --font-elegant: 'Playfair Display', serif;
+            --font-fun: 'Fredoka One', cursive;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        html,
-        body {
-            height: 100%;
-            overflow: hidden;
-        }
+        html, body { height: 100%; overflow: hidden; }
 
         body {
             font-family: var(--font-body);
-            background: linear-gradient(135deg, #0f3d1f 0%, #1a5c32 50%, #0d3a1d 100%);
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+              url(./resources/bg_desktop.png) center / cover no-repeat;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -44,7 +38,13 @@
             position: relative;
         }
 
-        /* ── Background glow ── */
+        @media (max-width: 768px) {
+            body { 
+                background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+              url(./resources/bg_cel.png) center / cover no-repeat;
+            }
+        }
+
         body::before {
             content: '';
             position: fixed;
@@ -55,20 +55,19 @@
             pointer-events: none;
         }
 
-        /* ─────────────────────────────────────────
-   ICON NAV
-───────────────────────────────────────── */
+        /* ── ICON NAV ── */
         .icon-nav {
             display: flex;
-            align-items: flex-end;
+            align-items: flex-start;
             justify-content: center;
             gap: 6px;
-            padding: 14px 16px 10px;
+            padding: 10px 16px 16px;
             width: 100%;
             max-width: 420px;
             flex-shrink: 0;
             position: relative;
             z-index: 20;
+            order: 2;
         }
 
         .nav-item {
@@ -78,22 +77,20 @@
             gap: 3px;
             cursor: pointer;
             flex: 1;
-            transition: transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
             -webkit-tap-highlight-color: transparent;
             outline: none;
             border: none;
-            background: none;
-            padding: 4px 2px;
+            background: rgba(0, 0, 0, 0.30);
+            border-radius: 14px;
+            padding: 6px 4px;
         }
 
-        .nav-item .nav-emoji {
+        .nav-item .nav-icon {
             display: block;
-            line-height: 1;
-            transition: font-size 0.35s cubic-bezier(0.34, 1.4, 0.64, 1),
-                filter 0.3s ease,
-                transform 0.35s cubic-bezier(0.34, 1.4, 0.64, 1);
-            font-size: 18px;
-            filter: grayscale(0.5) opacity(0.55);
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            filter: opacity(0.50) saturate(0.5);
         }
 
         .nav-item .nav-dot {
@@ -101,14 +98,16 @@
             height: 4px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.25);
-            transition: all 0.35s ease;
         }
 
-        /* Active state */
-        .nav-item.active .nav-emoji {
-            font-size: 28px;
-            filter: grayscale(0) opacity(1);
-            transform: translateY(-3px);
+        .nav-item.active {
+            background: rgba(0, 0, 0, 0.45);
+        }
+
+        .nav-item.active .nav-icon {
+            width: 34px;
+            height: 34px;
+            filter: opacity(1) saturate(1.15) drop-shadow(0 1px 5px rgba(0,0,0,0.45));
         }
 
         .nav-item.active .nav-dot {
@@ -117,39 +116,42 @@
             border-radius: 2px;
         }
 
-        /* Done (passed) state */
-        .nav-item.done .nav-emoji {
-            filter: grayscale(0.2) opacity(0.75);
+        .nav-item.done .nav-icon { filter: opacity(0.75) saturate(0.85); }
+        .nav-item.done .nav-dot { background: rgba(168, 216, 240, 0.55); }
+
+        .nav-label {
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            color: rgba(255, 255, 255, 0.50);
+            text-align: center;
+            line-height: 1.25;
+            text-transform: uppercase;
+            margin-top: 2px;
+            max-width: 72px;
         }
 
-        .nav-item.done .nav-dot {
-            background: rgba(168, 216, 240, 0.55);
-        }
+        .nav-item.active .nav-label { color: rgba(255, 255, 255, 0.88); }
+        .nav-item.done .nav-label   { color: rgba(255, 255, 255, 0.65); }
 
-        /* ─────────────────────────────────────────
-   DECK CONTAINER
-───────────────────────────────────────── */
+        /* ── DECK ── */
         .deck-container {
             flex: 1;
+            order: 1;
             position: relative;
             width: 100%;
             max-width: 420px;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 4px 20px 0;
+            padding: 16px 20px 0;
             overflow: hidden;
         }
 
-        .deck-stack {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
+        .deck-stack { position: relative; width: 100%; height: 100%; }
 
-        /* ─────────────────────────────────────────
-   CARDS
-───────────────────────────────────────── */
+        /* ── CARDS ── */
         .card {
             position: absolute;
             inset: 0;
@@ -163,9 +165,7 @@
             will-change: transform;
         }
 
-        .card:active {
-            cursor: grabbing;
-        }
+        .card:active { cursor: grabbing; }
 
         .card-inner {
             width: 100%;
@@ -182,10 +182,7 @@
             background-position: center;
         }
 
-        .card-overlay {
-            position: absolute;
-            inset: 0;
-        }
+        .card-overlay { position: absolute; inset: 0; }
 
         .card-body {
             position: relative;
@@ -198,1022 +195,1519 @@
             scrollbar-width: none;
         }
 
-        .card-body::-webkit-scrollbar {
-            display: none;
-        }
+        .card-body::-webkit-scrollbar { display: none; }
 
-        /* ── Swipe hint (only card-1) ── */
-        .swipe-hint-overlay {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            z-index: 5;
-            animation: swipeBounce 2s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        @keyframes swipeBounce {
-
-            0%,
-            100% {
-                transform: translateY(0);
-                opacity: .7;
-            }
-
-            50% {
-                transform: translateY(-6px);
-                opacity: 1;
-            }
-        }
-
-        .swipe-hint-text {
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .swipe-hint-arrow {
-            font-size: 20px;
-        }
-
-        /* ── Shared typography ── */
         @keyframes bobAnimal {
-
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-8px);
-            }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-8px); }
         }
 
         @keyframes heartbeat {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.15);
-            }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
         }
 
-        /* ══════════════════════════════════════════
-   CARD 1 – Portada
-══════════════════════════════════════════ */
-        .card-1 .card-bg {
-            background-image: url('./resources/bg_1.png');
-        }
+        /* ══ CARD 1 – Portada ══ */
+        .card-1 .card-bg { background-image: url('./resources/bg_1.png'); }
 
         .card-1 .card-overlay {
-            background: linear-gradient(180deg, rgba(0, 40, 10, .45) 0%, rgba(0, 60, 20, .75) 100%);
+            background: linear-gradient(180deg,
+                rgba(0, 25, 8, .55) 0%, rgba(0, 45, 15, .30) 35%,
+                rgba(0, 45, 15, .30) 65%, rgba(0, 25, 8, .75) 100%);
         }
 
         .card-1 .card-body {
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
             text-align: center;
+            padding: 36px 28px 40px;
         }
 
-        .card-tag {
-            display: inline-block;
-            background: rgba(255, 255, 255, .15);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, .25);
-            color: white;
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            padding: 6px 16px;
-            border-radius: 50px;
-            margin-bottom: 12px;
-        }
-
-        .card-1-animals {
-            font-size: 28px;
-            display: flex;
-            gap: 8px;
-            justify-content: center;
-            margin-bottom: 12px;
-        }
+        .card-1-top { display: flex; flex-direction: column; align-items: center; gap: 6px; }
 
         .card-1-name {
             font-family: var(--font-title);
-            font-size: 52px;
+            font-size: 68px;
             color: white;
-            line-height: 1;
-            margin-bottom: 6px;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, .5);
+            line-height: 0.95;
+            text-shadow: 0 4px 30px rgba(0,0,0,.5), 0 0 80px rgba(168,216,240,.2);
+            letter-spacing: -1px;
         }
 
-        .card-1-age {
-            background: var(--pink);
-            color: var(--deep-green);
-            font-weight: 700;
-            font-size: 16px;
-            padding: 8px 20px;
-            border-radius: 50px;
-            margin-bottom: 20px;
-            display: inline-block;
+        .card-1-subtitle {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 19px;
+            color: rgba(255,255,255,0.88);
+            line-height: 1.5;
+            text-shadow: 0 2px 16px rgba(0,0,0,.45);
+            max-width: 260px;
         }
 
-        .card-start-btn {
-            background: white;
-            color: var(--deep-green);
-            border: none;
-            border-radius: 50px;
-            padding: 14px 32px;
-            font-family: var(--font-body);
-            font-size: 14px;
-            font-weight: 700;
-            cursor: pointer;
+        .card-1-photo-wrap {
+            position: relative;
+            width: 100%;
+            flex: 1;
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin: 0 auto 64px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, .2);
-            transition: transform .2s;
+            justify-content: center;
+            min-height: 0;
+            padding: 12px 0;
         }
 
-        .card-start-btn:hover {
-            transform: scale(1.05);
+        .card-1-photo {
+            width: min(220px, 58%);
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 40%, transparent 100%);
+            mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 40%, transparent 100%);
+            box-shadow: 0 0 0 2px rgba(255,255,255,.12), 0 8px 40px rgba(0,0,0,.35), 0 0 80px rgba(168,216,240,.18);
+            animation: photoFloat 5s ease-in-out infinite, photoReveal 1.4s cubic-bezier(.22,1,.36,1) both;
         }
 
-        .card-1 .swipe-hint-text {
-            color: rgba(255, 255, 255, .8);
+        @keyframes photoFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
         }
 
-        /* ══════════════════════════════════════════
-   CARD 2 – Bienvenida
-══════════════════════════════════════════ */
+        @keyframes photoReveal {
+            from { opacity: 0; transform: scale(0.82) translateY(20px); filter: blur(12px); }
+            to { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+        }
+
+        .card-1-photo-wrap::before {
+            content: '';
+            position: absolute;
+            width: min(260px, 68%);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168,216,240,.18) 0%, transparent 70%);
+            animation: haloBreath 4s ease-in-out infinite;
+        }
+
+        @keyframes haloBreath {
+            0%, 100% { transform: scale(1); opacity: .7; }
+            50% { transform: scale(1.12); opacity: 1; }
+        }
+
+        .card-1-bottom { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+
+        .card-1-invite-big {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 22px;
+            color: white;
+            line-height: 1.45;
+            text-shadow: 0 2px 20px rgba(0,0,0,.5);
+            max-width: 280px;
+        }
+
+        .card-1-deco-line {
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,.5), transparent);
+            border-radius: 2px;
+            margin-top: 2px;
+        }
+
+        .rhene-peek-wrap {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+            overflow: hidden;
+            border-radius: 28px;
+        }
+
+        .rhene-peek {
+            position: absolute;
+            width: 30rem;
+            height: 30rem;
+            object-fit: contain;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        /* ══ CARD 2 – Cumpleaños ══ */
         .card-2 .card-bg {
-            background-image: url('https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=600&q=80');
-            opacity: .22;
+            background-image: url('./resources/bg_2.png');
+            background-size: cover;
+            background-position: center;
         }
 
         .card-2 .card-overlay {
-            background: linear-gradient(180deg, var(--green-soft) 0%, rgba(255, 248, 237, .96) 40%);
+            background: linear-gradient(180deg,
+                rgba(232,245,233,0.80) 0%, rgba(254,249,240,0.72) 50%, rgba(252,228,236,0.80) 100%);
         }
 
         .card-2 .card-body {
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
             text-align: center;
+            padding: 36px 28px 32px;
         }
 
-        .card-welcome-animals {
-            font-size: 32px;
-            text-align: center;
-            margin-bottom: 16px;
+        .card-2-confetti-canvas {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
         }
 
-        .card-welcome-title {
-            font-family: var(--font-title);
-            font-size: 36px;
-            color: var(--deep-green);
-            text-align: center;
-            margin-bottom: 16px;
-        }
-
-        .card-welcome-text {
+        .card-2-top {
             font-family: var(--font-elegant);
             font-style: italic;
-            font-size: 16px;
-            color: #555;
-            line-height: 1.8;
-            text-align: center;
+            font-size: 22px;
+            color: var(--deep-green);
+            line-height: 1.62;
+            max-width: 270px;
+            text-shadow: 0 1px 6px rgba(255,255,255,.7);
         }
 
-        .card-divider {
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--green-forest), var(--blue-stream));
-            border-radius: 3px;
-            margin: 20px auto;
+        .card-2-number-section { display: flex; flex-direction: column; align-items: center; margin-bottom: 5rem; }
+
+        .card-2-big-number {
+            font-family: var(--font-fun);
+            font-size: 168px;
+            color: var(--deep-green);
+            line-height: 0.9;
+            text-shadow: 0 6px 0 rgba(74,124,89,.18), 0 12px 32px rgba(74,124,89,.22), 0 0 60px rgba(205,232,200,.5);
         }
 
-        .card-name-highlight {
-            font-family: var(--font-title);
-            font-size: 28px;
+        .card-2-anitos {
+            font-family: var(--font-fun);
+            font-size: 20px;
             color: var(--green-forest);
-        }
-
-        /* ══════════════════════════════════════════
-   CARD 3 – Fecha
-══════════════════════════════════════════ */
-        .card-3 .card-overlay {
-            background: linear-gradient(135deg, #e8f5e9 0%, #fff8ed 100%);
-        }
-
-        .card-date-header {
-            background: linear-gradient(135deg, var(--deep-green), var(--green-forest));
-            margin: -28px -24px 24px;
-            padding: 28px 24px 24px;
-        }
-
-        .card-date-label {
-            font-size: 10px;
-            font-weight: 700;
             letter-spacing: 3px;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, .7);
-            margin-bottom: 4px;
+            margin-top: 2px;
         }
 
-        .card-date-title {
-            font-family: var(--font-title);
-            font-size: 36px;
-            color: white;
-        }
-
-        .card-date-items {
-            display: flex;
-            flex-direction: column;
-            gap: 14px;
-        }
-
-        .card-date-item {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            background: white;
-            border-radius: 20px;
-            padding: 14px 18px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, .06);
-        }
-
-        .card-date-item-icon {
-            font-size: 30px;
-            flex-shrink: 0;
-        }
-
-        .card-date-item-label {
-            font-size: 10px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--green-forest);
-            margin-bottom: 3px;
-        }
-
-        .card-date-item-value {
-            font-family: var(--font-title);
+        .card-2-bottom {
+            font-family: var(--font-elegant);
+            font-style: italic;
             font-size: 20px;
             color: var(--deep-green);
+            line-height: 1.6;
+            max-width: 260px;
+            text-shadow: 0 1px 6px rgba(255,255,255,.7);
         }
 
-        /* ══════════════════════════════════════════
-   CARD 4 – Lugar
-══════════════════════════════════════════ */
-        .card-4 .card-overlay {
-            background: linear-gradient(160deg, #e3f2fd 0%, #e8f5e9 100%);
-        }
-
-        .card-4 .card-body {
-            padding-top: 0;
-            padding-left: 0;
-            padding-right: 0;
-        }
-
-        .card-location-map {
-            width: 100%;
-            height: 180px;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .card-location-map img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .card-location-badge {
+        /* ══ CARD 2 – Sofi slide ══ */
+        .card-2-sofi-slide {
             position: absolute;
-            bottom: 12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: white;
-            border-radius: 50px;
-            padding: 6px 16px;
-            font-size: 12px;
+            bottom: 8%;
+            left: 0;
+            width: 400px;
+            opacity: 0.4;
+            height: auto;
+            object-fit: contain;
+            z-index: 6;
+            pointer-events: none;
+            animation: sofiaSlide 5s linear infinite;
+            filter: drop-shadow(0 4px 14px rgba(0,0,0,0.22));
+        }
+
+        @keyframes sofiaSlide {
+            0%   { transform: translateX(480px); }
+            50%  { transform: translateX(-100px); }
+            100% { transform: translateX(-650px); }
+        }
+
+        /* ══ CARD 3 – Fecha & Lugar ══ */
+        .card-3 .card-bg {
+            background-image: url('./resources/bg_3.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-3 .card-overlay {
+            background: linear-gradient(180deg,
+                rgba(0,30,10,.52) 0%, rgba(0,45,16,.38) 38%, rgba(0,38,14,.48) 68%, rgba(0,18,6,.70) 100%);
+        }
+
+        .card-3 .card-body {
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            padding: 38px 28px 36px;
+        }
+
+        .card-3-date-wrap { display: flex; flex-direction: column; align-items: center; gap: 0; }
+
+        .card-3-pre {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 17px;
+            color: rgba(205,232,200,.88);
+            letter-spacing: .5px;
+            margin-bottom: 2px;
+        }
+
+        .card-3-day {
+            font-family: var(--font-fun);
+            font-size: 132px;
+            color: white;
+            line-height: .82;
+            text-shadow: 0 4px 0 rgba(74,124,89,.45), 0 10px 36px rgba(0,0,0,.45);
+        }
+
+        .card-3-month {
+            font-family: var(--font-title);
+            font-size: 54px;
+            color: var(--green-soft);
+            line-height: 1.05;
+            text-shadow: 0 3px 14px rgba(0,0,0,.4);
+        }
+
+        .card-3-year {
+            font-family: var(--font-body);
+            font-size: 15px;
             font-weight: 700;
-            color: var(--deep-green);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, .15);
+            letter-spacing: 7px;
+            text-transform: uppercase;
+            color: rgba(247,198,217,.85);
+            margin-top: 5px;
+        }
+
+        .card-3-time-wrap { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+
+        .card-3-time-connector { display: flex; align-items: center; gap: 10px; width: 100%; }
+        .card-3-time-rule { flex: 1; height: 1px; background: rgba(255,255,255,.3); }
+
+        .card-3-time-label {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 15px;
+            color: rgba(255,255,255,.72);
             white-space: nowrap;
         }
 
-        .card-location-inner {
-            padding: 20px 24px;
+        .card-3-time {
+            font-family: var(--font-fun);
+            font-size: 52px;
+            color: white;
+            line-height: 1.1;
+            text-shadow: 0 4px 20px rgba(0,0,0,.4);
         }
 
-        .card-location-title {
-            font-family: var(--font-title);
-            font-size: 32px;
-            color: var(--deep-green);
-            margin-bottom: 8px;
-        }
+        .card-3-location { display: flex; flex-direction: column; align-items: center; gap: 10px; }
 
-        .card-location-address {
+        .card-3-address {
             font-family: var(--font-body);
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 18px;
-            line-height: 1.5;
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(255,255,255,.88);
+            line-height: 1.6;
+            text-shadow: 0 2px 10px rgba(0,0,0,.45);
         }
 
-        .maps-btn {
+        .card-3-map-btn {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-            gap: 8px;
-            background: linear-gradient(135deg, var(--green-forest), var(--deep-green));
+            gap: 7px;
+            background: rgba(255,255,255,.14);
+            border: 1.5px solid rgba(255,255,255,.32);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: white;
-            border: none;
             border-radius: 50px;
-            padding: 12px 24px;
+            padding: 10px 24px;
             font-family: var(--font-body);
             font-size: 13px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             text-decoration: none;
-            box-shadow: 0 4px 20px rgba(74, 124, 89, .4);
-            transition: transform .2s, box-shadow .2s;
+            transition: background .22s, transform .22s;
         }
 
-        .maps-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(74, 124, 89, .5);
+        .card-3-map-btn:hover { background: rgba(255,255,255,.24); transform: translateY(-2px); }
+
+        /* ══ CARD 3 – Globos flotantes (20 globos) ══ */
+        .card-3-balloons {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 28px;
+            z-index: 3;
         }
 
-        /* ══════════════════════════════════════════
-   CARD 5 – Countdown
-══════════════════════════════════════════ */
-        .card-5 .card-bg {
-            background-image: url('https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=600&q=80');
+        .card-3-balloon {
+            position: absolute;
+            bottom: -120px;
+            width: 80px;
+            opacity: 0;
+            will-change: transform, opacity;
         }
+
+        /* 4 variantes de vuelo
+           Ciclo 12s: 50% vuelo (6s) + 50% pausa (6s)
+           Con 10 globos escalonados 0.4s cada uno (último termina a los 9.6s),
+           todos están invisibles desde ~9.6s hasta 12s → ~2.4s de silencio antes de repetir */
+        @keyframes bUp {
+            0%    { transform: translateY(0)                rotate( 1deg); opacity: 0; }
+            4%    { opacity: 0.42; }
+            46%   { opacity: 0.40; }
+            50%   { transform: translateY(-118vh)           rotate(-2deg); opacity: 0; }
+            50.1% { transform: translateY(0)                rotate( 1deg); opacity: 0; }
+            100%  { transform: translateY(0)                rotate( 1deg); opacity: 0; }
+        }
+        @keyframes bUpL {
+            0%    { transform: translateY(0) translateX(0)  rotate(-3deg); opacity: 0; }
+            4%    { opacity: 0.42; }
+            46%   { opacity: 0.40; }
+            50%   { transform: translateY(-121vh) translateX(-18px) rotate(4deg); opacity: 0; }
+            50.1% { transform: translateY(0) translateX(0)  rotate(-3deg); opacity: 0; }
+            100%  { transform: translateY(0) translateX(0)  rotate(-3deg); opacity: 0; }
+        }
+        @keyframes bUpR {
+            0%    { transform: translateY(0) translateX(0)  rotate( 4deg); opacity: 0; }
+            4%    { opacity: 0.42; }
+            46%   { opacity: 0.40; }
+            50%   { transform: translateY(-115vh) translateX(18px) rotate(-3deg); opacity: 0; }
+            50.1% { transform: translateY(0) translateX(0)  rotate( 4deg); opacity: 0; }
+            100%  { transform: translateY(0) translateX(0)  rotate( 4deg); opacity: 0; }
+        }
+        @keyframes bUpH {
+            0%    { transform: translateY(0)                rotate(-2deg); opacity: 0; }
+            4%    { opacity: 0.42; }
+            46%   { opacity: 0.40; }
+            50%   { transform: translateY(-125vh)           rotate( 5deg); opacity: 0; }
+            50.1% { transform: translateY(0)                rotate(-2deg); opacity: 0; }
+            100%  { transform: translateY(0)                rotate(-2deg); opacity: 0; }
+        }
+
+        /* 10 globos: delays mezclados (rango 0–3.6s) para que salgan de forma aleatoria */
+        .b1  { left:  8%; margin-left:-40px; animation: bUpR 12s linear infinite 0.8s; }
+        .b2  { left: 18%; margin-left:-40px; animation: bUp  12s linear infinite 2.4s; }
+        .b3  { left: 28%; margin-left:-40px; animation: bUpL 12s linear infinite 0.0s; }
+        .b4  { left: 38%; margin-left:-40px; animation: bUpH 12s linear infinite 3.2s; }
+        .b5  { left: 48%; margin-left:-40px; animation: bUpR 12s linear infinite 1.2s; }
+        .b6  { left: 58%; margin-left:-40px; animation: bUp  12s linear infinite 2.8s; }
+        .b7  { left: 68%; margin-left:-40px; animation: bUpL 12s linear infinite 0.4s; }
+        .b8  { left: 78%; margin-left:-40px; animation: bUpH 12s linear infinite 3.6s; }
+        .b9  { left: 22%; margin-left:-40px; animation: bUpR 12s linear infinite 2.0s; }
+        .b10 { left: 62%; margin-left:-40px; animation: bUp  12s linear infinite 1.6s; }
+
+        /* ══ CARD 5 – Cuenta regresiva ══ */
+        .card-5 .card-bg { background-image: url('./resources/bg_4.png'); }
 
         .card-5 .card-overlay {
-            background: linear-gradient(180deg, rgba(0, 30, 10, .75) 0%, rgba(0, 50, 20, .88) 100%);
+            background: linear-gradient(180deg, rgba(0,28,10,.55) 0%, rgba(0,45,18,.70) 100%);
         }
 
-        .card-5 .card-body {
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-        }
+        .card-5 .card-body { justify-content: space-evenly; align-items: center; text-align: center; }
 
-        .card-countdown-title {
-            font-family: var(--font-title);
-            font-size: 36px;
-            color: white;
-            margin-bottom: 8px;
-        }
-
-        .card-countdown-subtitle {
+        .card-cd-eyebrow {
             font-family: var(--font-elegant);
             font-style: italic;
-            color: rgba(168, 216, 240, .85);
-            font-size: 14px;
-            margin-bottom: 28px;
+            font-size: 17px;
+            color: rgba(205,232,200,.9);
         }
 
-        .card-countdown-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 8px;
-            width: 100%;
-            margin-bottom: 24px;
-        }
+        .card-cd-days-wrap { display: flex; flex-direction: column; align-items: center; }
 
-        .card-countdown-unit {
-            background: rgba(255, 255, 255, .08);
-            border: 1px solid rgba(255, 255, 255, .15);
-            border-radius: 16px;
-            padding: 12px 4px;
-            text-align: center;
-        }
-
-        .card-countdown-num {
-            font-family: var(--font-elegant);
-            font-size: 32px;
-            font-weight: 700;
+        .card-cd-days-num {
+            font-family: var(--font-fun);
+            font-size: 124px;
             color: white;
-            display: block;
-            margin-bottom: 4px;
+            line-height: .82;
+            text-shadow: 0 0 50px rgba(168,216,240,.45), 0 8px 32px rgba(0,0,0,.45);
         }
 
-        .card-countdown-lbl {
-            font-size: 8px;
+        .card-cd-days-lbl {
+            font-family: var(--font-body);
+            font-size: 13px;
             font-weight: 700;
-            letter-spacing: 1px;
+            letter-spacing: 5px;
             text-transform: uppercase;
-            color: rgba(168, 216, 240, .7);
+            color: rgba(168,216,240,.78);
+            margin-top: 6px;
         }
 
-        .card-5-animals {
-            font-size: 36px;
-            display: flex;
-            gap: 12px;
+        .card-cd-hms-row { display: flex; align-items: flex-start; justify-content: center; width: 100%; }
+
+        .card-cd-hms-unit { flex: 1; display: flex; flex-direction: column; align-items: center; }
+
+        .card-cd-hms-num {
+            font-family: var(--font-fun);
+            font-size: 56px;
+            color: white;
+            line-height: .88;
+            text-shadow: 0 4px 20px rgba(0,0,0,.38);
         }
 
-        /* ══════════════════════════════════════════
-   CARD 6 – Galería
-══════════════════════════════════════════ */
-        .card-6 .card-overlay {
-            background: linear-gradient(180deg, #fef0f5 0%, #fff8ed 100%);
+        .card-cd-hms-lbl {
+            font-family: var(--font-body);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(168,216,240,.65);
+            margin-top: 5px;
         }
 
-        .card-gallery-title {
-            font-family: var(--font-title);
-            font-size: 32px;
+        .card-cd-sep {
+            font-family: var(--font-fun);
+            font-size: 44px;
+            color: rgba(255,255,255,.28);
+            line-height: .88;
+        }
+
+        .card-cd-footer {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 15px;
+            color: rgba(247,198,217,.88);
+            text-shadow: 0 2px 10px rgba(0,0,0,.38);
+        }
+
+        /* ══ CARD 7 – Mesa de Regalos ══ */
+        .card-7 .card-bg { background-image: url('./resources/bg_5.png'); }
+
+        .card-7 .card-overlay {
+            background: linear-gradient(160deg,
+                rgba(255, 240, 248, 0.90) 0%,
+                rgba(255, 248, 237, 0.86) 50%,
+                rgba(240, 235, 255, 0.90) 100%);
+        }
+
+        .card-7 .card-body {
+            justify-content: space-evenly;
+            gap: 0;
+            padding: 32px 24px 28px;
+        }
+
+        .gifts-title-icon {
+            width: 3rem;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(0,0,0,0.14));
+        }
+
+        .gifts-deposit-intro {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 12px;
+            color: #777;
+            line-height: 1.5;
+            margin-bottom: 6px;
+        }
+
+        .gifts-phrase {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 15px;
             color: var(--deep-green);
             text-align: center;
-            margin-bottom: 18px;
+            line-height: 1.6;
+            opacity: 0.9;
         }
 
-        .mini-carousel {
-            position: relative;
-            border-radius: 20px;
-            overflow: hidden;
-            aspect-ratio: 4/3;
-            margin-bottom: 14px;
+        .gifts-deposit {
+            background: rgba(255, 255, 255, 0.80);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 12px 14px;
+            border: 1px solid rgba(74, 124, 89, 0.18);
+            box-shadow: 0 3px 14px rgba(0,0,0,0.07);
         }
 
-        .mini-carousel img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: none;
-        }
-
-        .mini-carousel img.active {
-            display: block;
-        }
-
-        .carousel-controls {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0 4px;
-        }
-
-        .carousel-btn {
-            background: var(--green-soft);
-            border: none;
-            border-radius: 50px;
-            padding: 8px 16px;
-            font-size: 18px;
-            cursor: pointer;
+        .gifts-deposit-header {
+            font-family: var(--font-fun);
+            font-size: 14px;
             color: var(--deep-green);
-            font-weight: 700;
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(74,124,89,0.12);
         }
 
-        .carousel-dots {
+        .deposit-row {
             display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
             gap: 6px;
         }
 
-        .carousel-dot {
+        .deposit-row:last-child { border-bottom: none; }
+
+        .deposit-label {
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 700;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .deposit-value {
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--deep-green);
+        }
+
+        .copy-btn {
+            background: var(--green-soft);
+            border: none;
+            border-radius: 7px;
+            padding: 4px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            color: var(--deep-green);
+            font-weight: 700;
+            flex-shrink: 0;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .copy-btn:active { transform: scale(0.93); }
+
+        .gifts-registry { display: flex; flex-direction: column; gap: 8px; flex: 1; min-height: 0; }
+
+        .gifts-registry-title {
+            font-family: var(--font-title);
+            font-size: 32px;
+            color: var(--deep-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .gift-slide {
+            background: rgba(255, 255, 255, 0.52);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 18px;
+            padding: 0px 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            border: 1.5px solid rgba(123,174,127,0.18);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+            flex: 1;
+            min-height: 0;
+            justify-content: space-evenly;
+        }
+
+        .gift-emoji-wrap {
+            position: relative;
+            font-size: 42px;
+            line-height: 1;
+        }
+
+        .gift-bought-badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            width: 19px;
+            height: 19px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .gift-name {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--deep-green);
+            text-align: center;
+        }
+
+        .gift-desc {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 11.5px;
+            color: #888;
+            text-align: center;
+            line-height: 1.4;
+            max-width: 240px;
+        }
+
+        .gift-actions { display: flex; gap: 7px; width: 100%; margin-top: 4px; }
+
+        .gift-buy-btn {
+            flex: 1;
+            background: var(--deep-green);
+            color: white;
+            border: none;
+            border-radius: 11px;
+            padding: 9px 8px;
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            transition: background 0.2s;
+        }
+
+        .gift-buy-btn:hover { background: var(--green-forest); }
+
+        .gift-mark-btn {
+            flex: 1;
+            background: transparent;
+            border: 1.5px solid rgba(123,174,127,0.45);
+            border-radius: 11px;
+            padding: 9px 8px;
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--green-forest);
+            transition: all 0.2s;
+        }
+
+        .gift-mark-btn.is-bought {
+            background: var(--green-soft);
+            color: var(--deep-green);
+            border-color: var(--green-forest);
+        }
+
+        .gifts-nav-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .gifts-nav-btn {
+            background: rgba(74, 124, 89, 0.20);
+            border: 1.5px solid rgba(74, 124, 89, 0.30);
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            font-size: 22px;
+            cursor: pointer;
+            color: var(--deep-green);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.15s;
+            flex-shrink: 0;
+        }
+
+        .gifts-nav-btn:hover { background: var(--green-soft); transform: scale(1.08); }
+        .gifts-nav-btn:active { transform: scale(0.93); }
+
+        .gifts-dots { display: flex; gap: 5px; }
+
+        .gifts-dot {
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: rgba(123, 174, 127, .3);
-            transition: all .3s;
+            background: rgba(123,174,127,0.3);
+            transition: all 0.3s;
         }
 
-        .carousel-dot.active {
+        .gifts-dot.active {
             background: var(--green-forest);
             width: 16px;
             border-radius: 3px;
         }
 
-        /* ══════════════════════════════════════════
-   CARD 7 – Mesa de regalos
-══════════════════════════════════════════ */
-        .card-7 .card-overlay {
-            background: linear-gradient(160deg, #fce4ec 0%, #f3e5f5 100%);
+        /* ══ CARD 9 – Cierre ══ */
+        .card-9 .card-bg { background-image: url('./resources/bg_1.png'); }
+
+        .card-9 .card-overlay {
+            background: linear-gradient(180deg,
+                rgba(0, 22, 8, .60) 0%,
+                rgba(0, 40, 15, .38) 42%,
+                rgba(0, 22, 8, .68) 100%);
         }
 
-        .card-gifts-header {
+        .card-9 .card-body {
+            justify-content: space-between;
+            align-items: center;
             text-align: center;
-            margin-bottom: 24px;
+            padding: 52px 28px 48px;
         }
 
-        .card-gifts-emoji {
-            font-size: 48px;
-            display: block;
-            margin-bottom: 12px;
-        }
-
-        .card-gifts-title {
+        .card-9-title {
             font-family: var(--font-title);
-            font-size: 32px;
-            color: var(--deep-green);
-            margin-bottom: 8px;
+            font-size: 46px;
+            color: white;
+            line-height: 1.15;
+            text-shadow: 0 4px 30px rgba(0,0,0,.55), 0 0 60px rgba(168,216,240,.18);
         }
 
-        .card-gifts-text {
+        .card-9-rhene {
+            width: min(230px, 60%);
+            object-fit: contain;
+            filter: drop-shadow(0 10px 32px rgba(0,0,0,.45));
+            animation: rheneJump 1.4s ease-in-out infinite;
+        }
+
+        @keyframes rheneJump {
+            0%, 100% { transform: translateY(0); }
+            45% { transform: translateY(-22px); }
+        }
+
+        .card-9-footer { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+
+        .card-9-love {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 17px;
+            color: rgba(255,255,255,0.90);
+            text-shadow: 0 2px 14px rgba(0,0,0,.45);
+            line-height: 1.55;
+        }
+
+        .card-9-heart {
+            font-size: 36px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        /* ── GIFT REGISTRY HINT ── */
+        .gifts-registry-hint {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 12px;
+            color: var(--deep-green);
+            text-align: center;
+            line-height: 1.5;
+            opacity: 0.82;
+        }
+
+        /* ── GIFT CONFIRM MODAL ── */
+        .gift-confirm-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 220;
+            background: rgba(0, 0, 0, 0.60);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            padding: 28px;
+        }
+
+        .gift-confirm-modal.open { display: flex; }
+
+        .gift-confirm-content {
+            background: white;
+            border-radius: 22px;
+            padding: 30px 26px 24px;
+            max-width: 310px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.32);
+            animation: modalIn 0.3s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+        }
+
+        @keyframes modalIn {
+            from { opacity: 0; transform: scale(0.88) translateY(16px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .gift-confirm-icon { font-size: 44px; margin-bottom: 10px; }
+
+        .gift-confirm-title {
+            font-family: var(--font-fun);
+            font-size: 18px;
+            color: var(--deep-green);
+            margin-bottom: 10px;
+        }
+
+        .gift-confirm-msg {
+            font-family: var(--font-body);
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .gift-confirm-actions { display: flex; gap: 10px; }
+
+        .gift-confirm-cancel {
+            flex: 1;
+            background: transparent;
+            border: 1.5px solid rgba(123,174,127,0.45);
+            border-radius: 12px;
+            padding: 11px 8px;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #888;
+            transition: all 0.2s;
+        }
+
+        .gift-confirm-cancel:hover { background: #f5f5f5; }
+
+        .gift-confirm-ok {
+            flex: 1;
+            background: var(--deep-green);
+            border: none;
+            border-radius: 12px;
+            padding: 11px 8px;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            color: white;
+            transition: all 0.2s;
+        }
+
+        .gift-confirm-ok:hover { background: var(--green-forest); }
+
+        .gift-empty {
             font-family: var(--font-elegant);
             font-style: italic;
             font-size: 14px;
-            color: #666;
-            line-height: 1.6;
-        }
-
-        .card-gifts-buttons {
-            display: flex;
-            gap: 12px;
-        }
-
-        .card-gift-btn {
-            flex: 1;
-            background: white;
-            border: 2px solid rgba(123, 174, 127, .2);
-            border-radius: 20px;
-            padding: 16px 12px;
-            text-align: center;
-            cursor: pointer;
-            text-decoration: none;
-            transition: all .3s;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, .06);
-        }
-
-        .card-gift-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, .1);
-        }
-
-        .card-gift-icon {
-            font-size: 32px;
-            display: block;
-            margin-bottom: 6px;
-        }
-
-        .card-gift-name {
-            font-family: var(--font-body);
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--deep-green);
-        }
-
-        /* ══════════════════════════════════════════
-   CARD 8 – RSVP
-══════════════════════════════════════════ */
-        .card-8 .card-overlay {
-            background: linear-gradient(160deg, #e8f5e9 0%, #fff8ed 100%);
-        }
-
-        .card-rsvp-title {
-            font-family: var(--font-title);
-            font-size: 30px;
             color: var(--deep-green);
             text-align: center;
-            margin-bottom: 4px;
+            padding: 20px;
+            opacity: 0.75;
         }
 
-        .card-rsvp-sub {
-            font-family: var(--font-elegant);
-            font-style: italic;
-            font-size: 13px;
-            color: #888;
-            text-align: center;
-            margin-bottom: 18px;
-        }
-
-        .form-group {
-            margin-bottom: 14px;
-        }
-
-        .form-label {
-            display: block;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: var(--green-forest);
-            margin-bottom: 5px;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 16px;
-            border: 2px solid var(--green-soft);
-            border-radius: 12px;
-            font-family: var(--font-body);
-            font-size: 15px;
-            color: #333;
-            background: #fafafa;
-            outline: none;
-            transition: border-color .3s;
-            -webkit-appearance: none;
-        }
-
-        .form-input:focus {
-            border-color: var(--green-forest);
-            background: white;
-        }
-
-        .form-row {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #25D366, #128C7E);
+        /* ── GIFTS VIEW BUTTON ── */
+        .gifts-view-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--deep-green);
             color: white;
             border: none;
-            border-radius: 14px;
+            border-radius: 50px;
+            padding: 13px 28px;
             font-family: var(--font-body);
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 700;
             cursor: pointer;
+            box-shadow: 0 6px 20px rgba(74,124,89,.30);
+            transition: background .22s, transform .18s, box-shadow .22s;
+            width: 100%;
+            max-width: 280px;
+            align-self: center;
+        }
+
+        .gifts-view-btn:hover { background: var(--green-forest); transform: translateY(-2px); box-shadow: 0 10px 28px rgba(74,124,89,.38); }
+        .gifts-view-btn:active { transform: scale(0.95); }
+
+        .gifts-view-btn-icon { font-size: 18px; }
+
+        /* ── GIFTS REGISTRY MODAL ── */
+        .gifts-registry-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 210;
+            background: rgba(0,0,0,.55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .gifts-registry-modal.open { display: flex; }
+
+        .gifts-registry-modal-sheet {
+            background: linear-gradient(160deg, rgba(255,240,248,0.98) 0%, rgba(255,248,237,0.98) 50%, rgba(240,235,255,0.98) 100%);
+            border-radius: 28px 28px 0 0;
+            padding: 20px 20px 36px;
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            animation: sheetSlideUp 0.38s cubic-bezier(0.34,1.3,0.64,1) both;
+            max-height: 88svh;
+        }
+
+        @keyframes sheetSlideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to   { transform: translateY(0);    opacity: 1; }
+        }
+
+        .gifts-registry-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .gifts-registry-modal-title {
+            font-family: var(--font-title);
+            font-size: 22px;
+            color: var(--deep-green);
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin-top: 6px;
-            transition: transform .2s, box-shadow .2s;
-            box-shadow: 0 6px 24px rgba(37, 211, 102, .35);
         }
 
-        .submit-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(37, 211, 102, .4);
-        }
-
-        /* ══════════════════════════════════════════
-   CARD 9 – Cierre
-══════════════════════════════════════════ */
-        .card-9 .card-bg {
-            background-image: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80');
-        }
-
-        .card-9 .card-overlay {
-            background: linear-gradient(180deg, rgba(0, 50, 20, .55) 0%, rgba(0, 30, 10, .82) 100%);
-        }
-
-        .card-9 .card-body {
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-
-        .card-9-animals {
-            font-size: 36px;
+        .gifts-registry-modal-close {
+            background: rgba(74,124,89,0.12);
+            border: none;
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            font-size: 16px;
+            cursor: pointer;
+            color: var(--deep-green);
             display: flex;
-            gap: 12px;
-            margin-bottom: 24px;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s;
+            flex-shrink: 0;
         }
 
-        .card-closing-title {
+        .gifts-registry-modal-close:hover { background: rgba(74,124,89,0.22); }
+
+        .gifts-registry-modal .gifts-registry {
+            flex: 1;
+            min-height: 260px;
+        }
+
+        .gifts-registry-modal .gift-slide {
+            min-height: 200px;
+        }
+
+        /* ── SWIPE HINT ── */
+        .swipe-hint {
+            position: fixed;
+            right: max(16px, calc(50% - 192px));
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 30;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.6s ease;
+        }
+
+        /* visibility controlled entirely via JS inline style */
+
+        .swipe-hint-bubble {
+            width: 84px;
+            height: 84px;
+            
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+
+        .swipe-hand {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+            filter: brightness(0) invert(1) drop-shadow(0 1px 4px rgba(0,0,0,0.5));
+            animation: swipeUpHint 3.6s ease-in-out infinite;
+            transform-origin: center bottom;
+        }
+
+        @keyframes swipeUpHint {
+            0%   { transform: translateY(0);     opacity: 0.95; }
+            26%  { transform: translateY(-28px); opacity: 0.5; }
+            34%  { transform: translateY(-36px); opacity: 0; }
+            35%  { transform: translateY(6px);   opacity: 0; }
+            50%  { transform: translateY(0);     opacity: 0.95; }
+            100% { transform: translateY(0);     opacity: 0.95; }
+        }
+
+        /* ── LOADING SCREEN ── */
+        #loadingScreen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(160deg, #fce4ef 0%, #fff5f9 45%, #f0ede8 100%);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        #loadingScreen::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(247,198,217,.55) 0%, transparent 52%),
+                radial-gradient(ellipse at 80% 75%, rgba(205,232,200,.40) 0%, transparent 52%),
+                radial-gradient(ellipse at 60% 10%, rgba(168,216,240,.28) 0%, transparent 45%);
+            pointer-events: none;
+        }
+
+        .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            transition: opacity 0.4s ease;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 0 32px;
+        }
+
+        .loading-state img {
+            width: min(72vw, 180px);
+            filter: drop-shadow(0 4px 18px rgba(160,60,90,.18));
+        }
+
+        .loading-name {
             font-family: var(--font-title);
-            font-size: 36px;
-            color: white;
-            margin-bottom: 12px;
-            line-height: 1.15;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, .4);
+            font-size: 46px;
+            color: var(--deep-green);
+            line-height: 1;
+            text-shadow: 0 2px 18px rgba(74,124,89,.18);
+            letter-spacing: -0.5px;
+            margin-top: 2px;
         }
 
-        .card-closing-sub {
+        .loading-text {
             font-family: var(--font-elegant);
             font-style: italic;
-            color: rgba(168, 216, 240, .9);
-            font-size: 16px;
+            font-size: 15px;
+            color: rgba(120, 70, 90, .72);
+            letter-spacing: 0.3px;
         }
 
-        .card-closing-heart {
-            font-size: 48px;
-            margin-top: 24px;
-            animation: heartbeat 1.5s ease-in-out infinite;
+        .loading-dots {
+            display: flex;
+            gap: 7px;
+            margin-top: 2px;
         }
 
-        /* ── Swipe tip bottom ── */
-        .deck-swipe-tip {
-            color: rgba(255, 255, 255, .4);
-            font-size: 10px;
-            font-weight: 600;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            padding: 6px 0 14px;
-            flex-shrink: 0;
+        .loading-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(247,198,217,.5);
+            animation: ldotPulse 1.5s ease-in-out infinite;
+        }
+
+        .loading-dot:nth-child(2) { animation-delay: 0.22s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.44s; }
+
+        @keyframes ldotPulse {
+            0%, 100% { transform: scale(1); opacity: .5; background: rgba(247,198,217,.5); }
+            50%       { transform: scale(1.55); opacity: 1; background: var(--pink); }
+        }
+
+        .loading-ready {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            padding: 0 24px;
+        }
+
+        .loading-ready.visible { display: flex; }
+
+        .loading-ready-title {
+            font-family: var(--font-title);
+            font-size: 38px;
+            color: var(--deep-green);
+            text-shadow: 0 2px 18px rgba(74,124,89,.15);
             text-align: center;
+            line-height: 1.1;
+        }
+
+        .loading-tips-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: stretch;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        .loading-tip-box {
+            flex: 1;
+            min-width: 0;
+            background: rgba(255,255,255,.58);
+            border: 1px solid rgba(247,198,217,.55);
+            border-radius: 20px;
+            padding: 16px 12px;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(200,120,150,.10);
+        }
+
+        .loading-tip-left  { animation: ltipFloat 4s ease-in-out infinite; }
+        .loading-tip-right { animation: ltipFloat 4s ease-in-out infinite 0.9s; }
+
+        @keyframes ltipFloat {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(-6px); }
+        }
+
+        .loading-tip-icon {
+            font-size: 26px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .loading-tip-text {
+            font-family: var(--font-body);
+            font-size: 12.5px;
+            color: var(--deep-green);
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .loading-swipe-cta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .swipe-hint-bubble-loading {
+            width: 68px;
+            height: 68px;
+            background: var(--deep-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 22px rgba(74,124,89,.30);
+        }
+
+        .swipe-hand-loading {
+            width: 46px;
+            height: 46px;
+            object-fit: contain;
+            filter: brightness(0) invert(1) drop-shadow(0 1px 4px rgba(0,0,0,0.3));
+            animation: swipeUpHint 3.6s ease-in-out infinite;
+            transform-origin: center bottom;
+        }
+
+        .loading-swipe-label {
+            font-family: var(--font-body);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            color: rgba(74,124,89,.50);
         }
     </style>
 </head>
 
 <body>
 
-    <!-- ═══════════════════════════════════════
-     ICON NAV
-═══════════════════════════════════════ -->
-    <nav class="icon-nav" id="iconNav">
-        <!-- filled by JS -->
-    </nav>
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+        <div class="loading-state" id="loadingState">
+            <img src="./resources/loading.svg" alt="">
+            <div class="loading-name">Ángela Sofía</div>
+            <div class="loading-text">Preparando todo...</div>
+            <div class="loading-dots">
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+            </div>
+        </div>
+        <div class="loading-ready" id="loadingReady">
+            <div class="loading-ready-title">¡Todo listo! 🌿</div>
+            <div class="loading-tips-row">
+                <div class="loading-tip-box loading-tip-left">
+                    <span class="loading-tip-icon">👆</span>
+                    <div class="loading-tip-text">Desliza hacia arriba para avanzar</div>
+                </div>
+                <div class="loading-tip-box loading-tip-right">
+                    <span class="loading-tip-icon">🎵</span>
+                    <div class="loading-tip-text">Ajusta el volumen de tu dispositivo, para escuchar la canci&oacute;n</div>
+                </div>
+            </div>
+            <div class="loading-swipe-cta">
+                <div class="swipe-hint-bubble-loading">
+                    <img class="swipe-hand-loading" src="./resources/hand.svg" alt="">
+                </div>
+                <div class="loading-swipe-label">Desliza para entrar</div>
+            </div>
+        </div>
+    </div>
 
-    <!-- ═══════════════════════════════════════
-     DECK
-═══════════════════════════════════════ -->
     <div class="deck-container">
         <div class="deck-stack" id="deckStack">
 
-            <!-- CARTA 9 – Cierre (bottom of stack) -->
+            <!-- CARTA 9 – Cierre -->
             <div class="card card-9" data-card="9">
                 <div class="card-inner">
                     <div class="card-bg"></div>
                     <div class="card-overlay"></div>
                     <div class="card-body">
-                        <div class="card-9-animals">
-                            <span style="animation:bobAnimal 2s ease-in-out infinite;">🦋</span>
-                            <span style="animation:bobAnimal 2s .3s ease-in-out infinite;">🐇</span>
-                            <span style="animation:bobAnimal 2s .6s ease-in-out infinite;">🦌</span>
-                            <span style="animation:bobAnimal 2s .9s ease-in-out infinite;">🐢</span>
+                        <div class="card-9-title">Ángela Sofía<br>te espera</div>
+                        <img class="card-9-rhene" src="./resources/rana_jump.png" alt="">
+                        <div class="card-9-footer">
+                            <div class="card-9-love">Con amor,<br>Familia Ram&iacute;rez Montes</div>
+                            <div class="card-9-heart">💚</div>
                         </div>
-                        <div class="card-closing-title">Gracias por ser parte de esta aventura 🌿</div>
-                        <div class="card-closing-sub">Con amor, la familia de Ángela</div>
-                        <div class="card-closing-heart">💚</div>
                     </div>
                 </div>
             </div>
 
-            <!-- CARTA 8 – RSVP -->
-            <div class="card card-8" data-card="8">
-                <div class="card-inner">
-                    <div class="card-overlay"></div>
-                    <div class="card-body">
-                        <div class="card-rsvp-title">¿Nos acompañas? 🌿</div>
-                        <div class="card-rsvp-sub">Confirma tu asistencia</div>
-                        <div class="form-group">
-                            <label class="form-label">Tu nombre</label>
-                            <input class="form-input" type="text" id="card-rsvp-name"
-                                placeholder="Escribe tu nombre...">
-                        </div>
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label class="form-label">Adultos</label>
-                                <input class="form-input" type="number" id="card-rsvp-adults" placeholder="0" min="0"
-                                    max="10">
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Niños</label>
-                                <input class="form-input" type="number" id="card-rsvp-kids" placeholder="0" min="0"
-                                    max="10">
-                            </div>
-                        </div>
-                        <button class="submit-btn" onclick="sendWhatsApp()">
-                            <span>💬</span> Confirmar por WhatsApp
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARTA 7 – Mesa de regalos -->
+            <!-- CARTA 7 – Mesa de Regalos -->
             <div class="card card-7" data-card="7">
                 <div class="card-inner">
+                    <div class="card-bg"></div>
                     <div class="card-overlay"></div>
                     <div class="card-body">
-                        <div class="card-gifts-header">
-                            <span class="card-gifts-emoji">🎁</span>
-                            <div class="card-gifts-title">Mesa de regalos</div>
-                            <div class="card-gifts-text">
-                                Tu presencia es nuestro mejor regalo. Si deseas obsequiar algo a Ángela, puedes hacerlo
-                                aquí.
+
+                        <div class="gifts-registry-title">
+                            <img class="gifts-title-icon" src="./resources/rana_gift.png" alt="">
+                            Mesa de regalos
+                        </div>
+
+                        <div class="gifts-phrase">
+                            Aquí encontrarás algunas ideas si no sabes qué regalarle.
+                        </div>
+
+                        <button class="gifts-view-btn" onclick="openGiftsModal()">
+                            <span class="gifts-view-btn-icon">🎁</span> Mira opciones de regalo
+                        </button>
+
+                        <div class="gifts-phrase">
+                            Si prefieres apoyarla con un detalle, te invitamos a sumar un granito de arena a su cuenta de ahorros:
+                        </div>
+
+                        <!-- Cuenta para depósito -->
+                        <div class="gifts-deposit">
+                            
+                            <div class="gifts-deposit-header">💳 Cuenta Cetes Niños de Sof&iacute;a</div>
+                            <div class="deposit-row">
+                                <span class="deposit-label">CLABE</span>
+                                <div style="display:flex;align-items:center;gap:5px;flex:1;justify-content:flex-end;">
+                                    <span class="deposit-value" id="giftsClabe">1351 8033 0029 499 788</span>
+                                    <button class="copy-btn" id="copyBtn" onclick="copyClabe(event)">Copiar</button>
+                                </div>
+                            </div>
+                            <div class="deposit-row">
+                                <span class="deposit-label">Banco</span>
+                                <span class="deposit-value">NAFIN</span>
+                            </div>
+                            <div class="deposit-row">
+                                <span class="deposit-label">A nombre de</span>
+                                <span class="deposit-value">Angela Sofia</span>
                             </div>
                         </div>
-                        <div class="card-gifts-buttons">
-                            <a href="https://www.liverpool.com.mx" target="_blank" class="card-gift-btn">
-                                <span class="card-gift-icon">🏬</span>
-                                <div class="card-gift-name">Liverpool</div>
-                            </a>
-                            <a href="https://www.amazon.com.mx" target="_blank" class="card-gift-btn">
-                                <span class="card-gift-icon">📦</span>
-                                <div class="card-gift-name">Amazon</div>
-                            </a>
-                        </div>
+
+                        
+
                     </div>
                 </div>
             </div>
 
-            <!-- CARTA 6 – Galería -->
-            <div class="card card-6" data-card="6">
-                <div class="card-inner">
-                    <div class="card-overlay"></div>
-                    <div class="card-body">
-                        <div class="card-gallery-title">🌿 Galería mágica</div>
-                        <div class="mini-carousel" id="miniCarousel">
-                            <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?w=500&q=80" alt=""
-                                class="active">
-                            <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?w=500&q=80" alt="">
-                            <img src="https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=500&q=80" alt="">
-                            <img src="https://images.unsplash.com/photo-1504701954957-2010ec3bcec1?w=500&q=80" alt="">
-                        </div>
-                        <div class="carousel-controls">
-                            <button class="carousel-btn" onclick="carouselPrev()">‹</button>
-                            <div class="carousel-dots" id="carouselDots"></div>
-                            <button class="carousel-btn" onclick="carouselNext()">›</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARTA 5 – Countdown -->
+            <!-- CARTA 5 – Cuenta regresiva -->
             <div class="card card-5" data-card="5">
                 <div class="card-inner">
                     <div class="card-bg"></div>
                     <div class="card-overlay"></div>
                     <div class="card-body">
-                        <div class="card-countdown-title">Cuenta regresiva 🎉</div>
-                        <div class="card-countdown-subtitle">para la gran aventura</div>
-                        <div class="card-countdown-grid">
-                            <div class="card-countdown-unit">
-                                <span class="card-countdown-num" id="card-cd-days">--</span>
-                                <div class="card-countdown-lbl">Días</div>
+                        <div class="card-cd-eyebrow">¡Nos vemos en&hellip;</div>
+                        <div class="card-cd-days-wrap">
+                            <div class="card-cd-days-num" id="card-cd-days">--</div>
+                            <div class="card-cd-days-lbl">días</div>
+                        </div>
+                        <div class="card-cd-hms-row">
+                            <div class="card-cd-hms-unit">
+                                <div class="card-cd-hms-num" id="card-cd-hours">--</div>
+                                <div class="card-cd-hms-lbl">horas</div>
                             </div>
-                            <div class="card-countdown-unit">
-                                <span class="card-countdown-num" id="card-cd-hours">--</span>
-                                <div class="card-countdown-lbl">Horas</div>
+                            <div class="card-cd-sep">:</div>
+                            <div class="card-cd-hms-unit">
+                                <div class="card-cd-hms-num" id="card-cd-mins">--</div>
+                                <div class="card-cd-hms-lbl">minutos</div>
                             </div>
-                            <div class="card-countdown-unit">
-                                <span class="card-countdown-num" id="card-cd-mins">--</span>
-                                <div class="card-countdown-lbl">Mins</div>
-                            </div>
-                            <div class="card-countdown-unit">
-                                <span class="card-countdown-num" id="card-cd-secs">--</span>
-                                <div class="card-countdown-lbl">Segs</div>
+                            <div class="card-cd-sep">:</div>
+                            <div class="card-cd-hms-unit">
+                                <div class="card-cd-hms-num" id="card-cd-secs">--</div>
+                                <div class="card-cd-hms-lbl">segundos</div>
                             </div>
                         </div>
-                        <div class="card-5-animals">
-                            <span style="animation:bobAnimal 2s ease-in-out infinite;">🐻</span>
-                            <span style="animation:bobAnimal 2s .4s ease-in-out infinite;">🦌</span>
-                            <span style="animation:bobAnimal 2s .8s ease-in-out infinite;">🐇</span>
-                        </div>
+                        <div class="card-cd-footer">11 de julio de 2026 &middot; 1:00 p.m.</div>
                     </div>
                 </div>
             </div>
 
-            <!-- CARTA 4 – Lugar -->
-            <div class="card card-4" data-card="4">
+            <!-- CARTA 3 – Fecha & Lugar -->
+            <div class="card card-3" data-card="3">
                 <div class="card-inner">
+                    <div class="card-bg"></div>
                     <div class="card-overlay"></div>
+                    <div class="card-3-balloons">
+                        <img class="card-3-balloon b1"  src="./resources/globos_2.png" alt="">
+                        <img class="card-3-balloon b2"  src="./resources/globo_3.png"  alt="">
+                        <img class="card-3-balloon b3"  src="./resources/globos_2.png" alt="">
+                        <img class="card-3-balloon b4"  src="./resources/globo_3.png"  alt="">
+                        <img class="card-3-balloon b5"  src="./resources/globos_2.png" alt="">
+                        <img class="card-3-balloon b6"  src="./resources/globo_3.png"  alt="">
+                        <img class="card-3-balloon b7"  src="./resources/globos_2.png" alt="">
+                        <img class="card-3-balloon b8"  src="./resources/globo_3.png"  alt="">
+                        <img class="card-3-balloon b9"  src="./resources/globos_2.png" alt="">
+                        <img class="card-3-balloon b10" src="./resources/globo_3.png"  alt="">
+                    </div>
                     <div class="card-body">
-                        <div class="card-location-map">
-                            <img src="https://images.unsplash.com/photo-1448375240586-882707db888b?w=500&q=80"
-                                alt="Salón">
-                            <div class="card-location-badge">📍 Salón El Bosque Encantado</div>
+                        <div class="card-3-date-wrap">
+                            <div class="card-3-pre">¡Te esperamos el</div>
+                            <div class="card-3-day">11</div>
+                            <div class="card-3-month">de julio</div>
+                            <div class="card-3-year">2026</div>
                         </div>
-                        <div class="card-location-inner">
-                            <div class="card-location-title">¿Dónde nos vemos?</div>
-                            <div class="card-location-address">
-                                Salón El Bosque Encantado<br>
-                                Av. del Bosque 123, Ciudad de México
+                        <div class="card-3-time-wrap">
+                            <div class="card-3-time-connector">
+                                <div class="card-3-time-rule"></div>
+                                <div class="card-3-time-label">a partir de las</div>
+                                <div class="card-3-time-rule"></div>
                             </div>
-                            <a href="https://maps.google.com/?q=Salon+El+Bosque+Encantado+Mexico+City" target="_blank"
-                                class="maps-btn">
-                                📍 Abrir en Google Maps
+                            <div class="card-3-time">1:00 p.m.</div>
+                        </div>
+                        <div class="card-3-location">
+                            <div class="card-3-address">
+                                📍 Sagrada Familia 141<br>Fracc. Rinconadas de Santa Fe, Hgo.
+                            </div>
+                            <a href="https://maps.app.goo.gl/NSsh535NDvUMKebM8" target="_blank" class="card-3-map-btn">
+                                🗺️ C&oacute;mo llegar
                             </a>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- CARTA 3 – Fecha -->
-            <div class="card card-3" data-card="3">
-                <div class="card-inner">
-                    <div class="card-overlay"></div>
-                    <div class="card-body">
-                        <div class="card-date-header">
-                            <div class="card-date-label">La aventura comienza</div>
-                            <div class="card-date-title">Fecha y hora</div>
-                        </div>
-                        <div class="card-date-items">
-                            <div class="card-date-item">
-                                <div class="card-date-item-icon">📅</div>
-                                <div>
-                                    <div class="card-date-item-label">Fecha</div>
-                                    <div class="card-date-item-value">20 de Septiembre 2026</div>
-                                </div>
-                            </div>
-                            <div class="card-date-item">
-                                <div class="card-date-item-icon">🕐</div>
-                                <div>
-                                    <div class="card-date-item-label">Hora</div>
-                                    <div class="card-date-item-value">1:00 PM</div>
-                                </div>
-                            </div>
-                            <div class="card-date-item">
-                                <div class="card-date-item-icon">🌿</div>
-                                <div>
-                                    <div class="card-date-item-label">Ambiente</div>
-                                    <div class="card-date-item-value">Arroyo encantado</div>
-                                </div>
-                            </div>
-                            <div class="card-date-item">
-                                <div class="card-date-item-icon">👗</div>
-                                <div>
-                                    <div class="card-date-item-label">Vestimenta</div>
-                                    <div class="card-date-item-value">Casual y festivo</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- CARTA 2 – Bienvenida -->
+            <!-- CARTA 2 – Cumpleaños -->
             <div class="card card-2" data-card="2">
                 <div class="card-inner">
                     <div class="card-bg"></div>
                     <div class="card-overlay"></div>
+                    <canvas class="card-2-confetti-canvas" id="card2Canvas"></canvas>
+                    <img class="card-2-sofi-slide" src="./resources/img_sofi.png" alt="Sofía">
                     <div class="card-body">
-                        <div class="card-welcome-animals">🦋 🌸 🐿️</div>
-                        <div class="card-welcome-title">Bienvenido al bosque</div>
-                        <div class="card-divider"></div>
-                        <div class="card-welcome-text">
-                            Entre flores, mariposas y amigos del bosque, viviremos una aventura inolvidable.
+                        <div class="card-2-top">
+                            Mis pap&aacute;s y yo queremos invitarte a celebrar mis 
                         </div>
-                        <div class="card-divider"></div>
-                        <div class="card-welcome-text">
-                            Acompáñanos a celebrar los 2 años de<br>
-                            <span class="card-name-highlight">Ángela</span>
+                        <div class="card-2-number-section">
+                            <div class="card-2-big-number">2</div>
+                            <div class="card-2-anitos">a&ntilde;itos</div>
+                        </div>
+                        <div class="card-2-bottom">
+                            y compartir juntos una tarde llena de alegr&iacute;a y diversi&oacute;n.
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- CARTA 1 – Portada (top of stack) -->
+            <!-- CARTA 1 – Portada -->
             <div class="card card-1" data-card="1">
                 <div class="card-inner">
                     <div class="card-bg"></div>
                     <div class="card-overlay"></div>
+                    <div class="rhene-peek-wrap" id="rhenePeekWrap">
+                        <img id="rhenePeek" class="rhene-peek" src="./resources/rana.png" alt="rhene">
+                    </div>
                     <div class="card-body">
-                        <div class="card-tag">🌿 Invitación especial</div>
-                        <div class="card-1-animals">
-                            <span style="animation:bobAnimal 2s ease-in-out infinite;">🐇</span>
-                            <span style="animation:bobAnimal 2s .3s ease-in-out infinite;">🦌</span>
-                            <span style="animation:bobAnimal 2s .6s ease-in-out infinite;">🐢</span>
+                        <div class="card-1-top">
+                            <div class="card-1-name">Ángela<br>Sofía</div>
+                            <div class="card-1-subtitle">tiene una invitación<br>muy especial para ti…</div>
                         </div>
-                        <div class="card-1-name">Ángela</div>
-                        <div class="card-1-age">🎂 cumple 2 años 🎂</div>
-                        <button class="card-start-btn" onclick="goNext()">
-                            🌊 Comenzar aventura
-                        </button>
-                        <div class="swipe-hint-overlay">
-                            <span class="swipe-hint-text" style="color:rgba(255,255,255,.75);">Desliza hacia
-                                arriba</span>
-                            <span class="swipe-hint-arrow" style="color:rgba(255,255,255,.75);">↑</span>
+                        <div class="card-1-photo-wrap">
+                            <img class="card-1-photo" src="./resources/sofi.png" alt="Ángela Sofía">
+                        </div>
+                        <div class="card-1-bottom">
+                            <div class="card-1-deco-line"></div>
+                            <div class="card-1-invite-big">Quiere que seas parte de este d&iacute;a</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-        </div><!-- /deck-stack -->
-    </div><!-- /deck-container -->
+        </div>
+    </div>
 
-    <div class="deck-swipe-tip">↑ Arriba = siguiente &nbsp;·&nbsp; Abajo = anterior ↓</div>
+    <nav class="icon-nav" id="iconNav"></nav>
+
+    <!-- Swipe hint -->
+    <div class="swipe-hint" id="swipeHint">
+        <div class="swipe-hint-bubble">
+            <img class="swipe-hand" src="./resources/hand.svg" alt="">
+        </div>
+    </div>
+
+    <!-- Modal carrusel de regalos -->
+    <div class="gifts-registry-modal" id="giftsRegistryModal">
+        <div class="gifts-registry-modal-sheet">
+            <div class="gifts-registry-modal-header">
+                <div class="gifts-registry-modal-title">
+                    Ideas de regalo
+                </div>
+                <button class="gifts-registry-modal-close" onclick="closeGiftsModal()">✕</button>
+            </div>
+            <div class="gifts-registry">
+                <div class="gift-slide" id="giftSlide"><!-- filled by JS --></div>
+                <div class="gifts-nav-row">
+                    <button class="gifts-nav-btn" onclick="giftPrev()">‹</button>
+                    <div class="gifts-dots" id="giftsDots"></div>
+                    <button class="gifts-nav-btn" onclick="giftNext()">›</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal confirmación regalo comprado -->
+    <div class="gift-confirm-modal" id="giftConfirmModal">
+        <div class="gift-confirm-content">
+            <div class="gift-confirm-icon">🎁</div>
+            <div class="gift-confirm-title">¿Marcar como comprado?</div>
+            <div class="gift-confirm-msg">Una vez marcado el regalo como comprado se quitar&aacute; de la lista y no se podr&aacute; ver como opci&oacute;n de regalo. &iquest;Est&aacute;s seguro?</div>
+            <div class="gift-confirm-actions">
+                <button class="gift-confirm-cancel" onclick="closeGiftModal()">Cancelar</button>
+                <button class="gift-confirm-ok" onclick="confirmGiftBought()">S&iacute;, marcar</button>
+            </div>
+        </div>
+    </div>
 
     <script>
-        /* ═══════════════════════════════════════════════════════
-           DATA: one entry per card
-        ═══════════════════════════════════════════════════════ */
+        /* ═══════════ DATA ═══════════ */
         const CARD_META = [
-            { emoji: '🌟', label: 'Portada' },
-            { emoji: '🌿', label: 'Bienvenida' },
-            { emoji: '📅', label: 'Fecha' },
-            { emoji: '📍', label: 'Lugar' },
-            { emoji: '⏳', label: 'Cuenta' },
-            { emoji: '🖼️', label: 'Galería' },
-            { emoji: '🎁', label: 'Regalos' },
-            { emoji: '💬', label: 'Asistencia' },
-            { emoji: '💚', label: 'Gracias' },
+            { svgSrc: './resources/icon1.svg', label: 'Portada',  navLabel: 'Inicio',           cardIndex: 0 },
+            { svgSrc: './resources/icon2.svg', label: 'Fecha',    navLabel: 'Fecha y ubicación', cardIndex: 2 },
+            { svgSrc: './resources/icon3.svg', label: 'Regalos',  navLabel: 'Mesa de regalos',  cardIndex: 4 },
         ];
-        const TOTAL_CARDS = CARD_META.length; // 9
+        let TOTAL_CARDS = 6;
         let currentCardIndex = 0;
         let animating = false;
 
-        /* ═══════════════════════════════════════════════════════
-           ICON NAV – build & update
-        ═══════════════════════════════════════════════════════ */
+        /* ═══════════ ICON NAV ═══════════ */
         function buildNav() {
             const nav = document.getElementById('iconNav');
             nav.innerHTML = '';
-            CARD_META.forEach((meta, i) => {
+            CARD_META.forEach((meta) => {
                 const btn = document.createElement('button');
                 btn.className = 'nav-item';
                 btn.setAttribute('aria-label', meta.label);
-                btn.innerHTML = `<span class="nav-emoji">${meta.emoji}</span><span class="nav-dot"></span>`;
-                btn.addEventListener('click', () => jumpTo(i));
+                btn.innerHTML = `<span class="nav-dot"></span><img class="nav-icon" src="${meta.svgSrc}" alt="${meta.label}"><span class="nav-label">${meta.navLabel}</span>`;
+                btn.addEventListener('click', () => jumpTo(meta.cardIndex));
                 nav.appendChild(btn);
             });
         }
@@ -1222,14 +1716,104 @@
             const items = document.querySelectorAll('.nav-item');
             items.forEach((el, i) => {
                 el.classList.remove('active', 'done');
-                if (i < currentCardIndex) el.classList.add('done');
-                else if (i === currentCardIndex) el.classList.add('active');
+                const start = CARD_META[i].cardIndex;
+                const end = i + 1 < CARD_META.length ? CARD_META[i + 1].cardIndex : TOTAL_CARDS;
+                if (currentCardIndex >= end) el.classList.add('done');
+                else if (currentCardIndex >= start) el.classList.add('active');
             });
+            if (currentCardIndex === 0) startRheneAnim();
+            else stopRheneAnim();
+            if (currentCardIndex === 1) Card2Confetti.start();
+            else Card2Confetti.stop();
+            updateHint();
+            updateMusic();
         }
 
-        /* ═══════════════════════════════════════════════════════
-           CARD LAYOUT – fan with alternating offsets
-        ═══════════════════════════════════════════════════════ */
+        /* ═══════════ MUSIC ═══════════ */
+        function updateMusic() {
+            const onLast = currentCardIndex === TOTAL_CARDS - 1;
+            if (onLast) {
+                if (window._music1) window._music1.pause();
+                if (!window._music2) {
+                    window._music2 = new Audio('./resources/music_2.mp3');
+                    window._music2.loop = true;
+                    window._music2.volume = 0.7;
+                }
+                window._music2.play().catch(() => {});
+            } else {
+                if (window._music2) window._music2.pause();
+                if (window._music1) window._music1.play().catch(() => {});
+            }
+        }
+
+        /* ═══════════ RHENE PEEK ═══════════ */
+        let rheneTimeout = null;
+        let rheneActive = false;
+
+        const RHENE_SPOTS = [
+            { hiddenStyle: { top: '10%', right: '-31rem', bottom: 'auto', left: 'auto', transform: 'rotate(-35deg)' }, visibleStyle: { top: '10%', right: '-15rem', bottom: 'auto', left: 'auto', transform: 'rotate(-35deg)' } },
+            { hiddenStyle: { bottom: '10%', right: '-31rem', top: 'auto', left: 'auto', transform: 'rotate(-35deg)' }, visibleStyle: { bottom: '10%', right: '-15rem', top: 'auto', left: 'auto', transform: 'rotate(-35deg)' } },
+            { hiddenStyle: { top: '10%', left: '-31rem', bottom: 'auto', right: 'auto', transform: 'rotate(35deg)' }, visibleStyle: { top: '10%', left: '-15rem', bottom: 'auto', right: 'auto', transform: 'rotate(35deg)' } },
+            { hiddenStyle: { bottom: '10%', left: '-31rem', top: 'auto', right: 'auto', transform: 'rotate(35deg)' }, visibleStyle: { bottom: '10%', left: '-15rem', top: 'auto', right: 'auto', transform: 'rotate(35deg)' } },
+            { hiddenStyle: { top: '-31rem', left: '10%', bottom: 'auto', right: 'auto', transform: 'rotate(180deg)' }, visibleStyle: { top: '-15rem', left: '10%', bottom: 'auto', right: 'auto', transform: 'rotate(180deg)' } },
+            { hiddenStyle: { top: '-31rem', right: '10%', bottom: 'auto', left: 'auto', transform: 'rotate(180deg)' }, visibleStyle: { top: '-15rem', right: '10%', bottom: 'auto', left: 'auto', transform: 'rotate(180deg)' } },
+            { hiddenStyle: { bottom: '-31rem', left: '10%', top: 'auto', right: 'auto', transform: 'rotate(0deg)' }, visibleStyle: { bottom: '-15rem', left: '10%', top: 'auto', right: 'auto', transform: 'rotate(0deg)' } },
+            { hiddenStyle: { bottom: '-31rem', right: '10%', top: 'auto', left: 'auto', transform: 'rotate(0deg)' }, visibleStyle: { bottom: '-15rem', right: '10%', top: 'auto', left: 'auto', transform: 'rotate(0deg)' } },
+        ];
+
+        let lastSpotIdx = -1;
+
+        function applyStyle(el, s) {
+            el.style.top = s.top || 'auto';
+            el.style.bottom = s.bottom || 'auto';
+            el.style.left = s.left || 'auto';
+            el.style.right = s.right || 'auto';
+            el.style.transform = s.transform || 'rotate(0deg)';
+        }
+
+        function pickRandomSpot() {
+            let idx;
+            do { idx = Math.floor(Math.random() * RHENE_SPOTS.length); }
+            while (idx === lastSpotIdx && RHENE_SPOTS.length > 1);
+            lastSpotIdx = idx;
+            return RHENE_SPOTS[idx];
+        }
+
+        function rheneLoop() {
+            if (!rheneActive) return;
+            const img = document.getElementById('rhenePeek');
+            const spot = pickRandomSpot();
+            img.style.transition = 'none';
+            img.style.opacity = '0';
+            applyStyle(img, spot.hiddenStyle);
+            img.getBoundingClientRect();
+            img.style.transition = 'all 0.6s cubic-bezier(0.34,1.4,0.64,1), opacity 0.4s ease';
+            img.style.opacity = '1';
+            applyStyle(img, spot.visibleStyle);
+            rheneTimeout = setTimeout(() => {
+                if (!rheneActive) return;
+                img.style.transition = 'all 0.5s cubic-bezier(0.4,0,0.6,1), opacity 0.4s ease';
+                img.style.opacity = '0';
+                applyStyle(img, spot.hiddenStyle);
+                rheneTimeout = setTimeout(() => { if (rheneActive) rheneLoop(); }, 3000);
+            }, 2000);
+        }
+
+        function startRheneAnim() {
+            if (rheneActive) return;
+            rheneActive = true;
+            rheneTimeout = setTimeout(rheneLoop, 1200);
+        }
+
+        function stopRheneAnim() {
+            rheneActive = false;
+            clearTimeout(rheneTimeout);
+            rheneTimeout = null;
+            const img = document.getElementById('rhenePeek');
+            if (img) { img.style.transition = 'opacity 0.3s ease'; img.style.opacity = '0'; }
+        }
+
+        /* ═══════════ DECK LAYOUT ═══════════ */
         function slotTransform(slot) {
             if (slot === 0) return { tx: 0, ty: 0, scale: 1, rot: 0, opacity: 1 };
             if (slot === 1) return { tx: 18, ty: 14, scale: 0.93, rot: 5, opacity: 0.82 };
@@ -1240,16 +1824,13 @@
 
         function applySlot(card, slot, animated) {
             const { tx, ty, scale, rot, opacity } = slotTransform(slot);
-            card.style.transition = animated
-                ? 'transform .42s cubic-bezier(.34,1.3,.64,1), opacity .38s ease'
-                : 'none';
+            card.style.transition = animated ? 'transform .42s cubic-bezier(.34,1.3,.64,1), opacity .38s ease' : 'none';
             card.style.transform = `translate(${tx}px,${ty}px) scale(${scale}) rotate(${rot}deg)`;
             card.style.opacity = String(opacity);
             card.style.zIndex = String(22 - slot);
             card.style.display = '';
         }
 
-        /* Returns all 9 cards in logical order (card-1 first) */
         function getAllCards() {
             return Array.from(document.getElementById('deckStack').querySelectorAll('.card')).reverse();
         }
@@ -1257,34 +1838,25 @@
         function positionCards(animated = true) {
             getAllCards().forEach((card, idx) => {
                 const slot = idx - currentCardIndex;
-                if (slot < 0) {
-                    card.style.display = 'none';
-                } else {
-                    applySlot(card, slot, animated);
-                }
+                if (slot < 0) card.style.display = 'none';
+                else applySlot(card, slot, animated);
             });
         }
 
-        /* ═══════════════════════════════════════════════════════
-           NAVIGATION
-        ═══════════════════════════════════════════════════════ */
+        /* ═══════════ NAVIGATION ═══════════ */
         function goNext() {
             if (animating) return;
-
-            // Last card → LOOP back to first
-            if (currentCardIndex === TOTAL_CARDS - 1) {
-                resetDeck();
-                return;
-            }
-
+            if (currentCardIndex === TOTAL_CARDS - 1) { resetDeck(); return; }
             animating = true;
             const all = getAllCards();
             const top = all[currentCardIndex];
-
             top.style.transition = 'transform .46s cubic-bezier(.4,0,.6,1), opacity .36s ease';
             top.style.transform = 'translateY(-130%) rotate(-8deg) scale(.85)';
             top.style.opacity = '0';
-
+            // update hint immediately so it fades out in sync with card transition
+            const nextIdx = currentCardIndex + 1;
+            const hintEl = document.getElementById('swipeHint');
+            if (hintEl) hintEl.style.opacity = (hintEnabled && nextIdx < 2) ? '1' : '0';
             setTimeout(() => {
                 top.style.display = 'none';
                 currentCardIndex++;
@@ -1297,62 +1869,43 @@
         function goBack() {
             if (animating || currentCardIndex <= 0) return;
             animating = true;
-
             currentCardIndex--;
             const all = getAllCards();
             const returning = all[currentCardIndex];
-
-            // Start off-screen top
             returning.style.transition = 'none';
             returning.style.transform = 'translateY(-130%) rotate(-5deg) scale(.85)';
             returning.style.opacity = '0';
             returning.style.display = '';
             returning.style.zIndex = '25';
-            returning.getBoundingClientRect(); // force reflow
-
+            returning.getBoundingClientRect();
             returning.style.transition = 'transform .46s cubic-bezier(.34,1.3,.64,1), opacity .4s ease';
             const { tx, ty, scale, rot } = slotTransform(0);
             returning.style.transform = `translate(${tx}px,${ty}px) scale(${scale}) rotate(${rot}deg)`;
             returning.style.opacity = '1';
-
-            // Push remaining cards into new slots
             all.forEach((card, idx) => {
                 if (idx === currentCardIndex) return;
                 const slot = idx - currentCardIndex;
                 if (slot >= 0) applySlot(card, slot, true);
             });
-
-            setTimeout(() => {
-                updateNav();
-                positionCards(false);
-                animating = false;
-            }, 480);
+            setTimeout(() => { updateNav(); positionCards(false); animating = false; }, 480);
         }
 
-        /* Jump directly to a card index */
         function jumpTo(targetIdx) {
             if (animating || targetIdx === currentCardIndex) return;
             animating = true;
-
             const all = getAllCards();
             const forward = targetIdx > currentCardIndex;
-
-            // Hide or show cards instantly then settle into positions
             all.forEach((card, idx) => {
                 const slot = idx - targetIdx;
                 if (slot < 0) {
                     card.style.transition = 'none';
                     card.style.display = 'none';
                 } else if (idx === targetIdx) {
-                    // Fly in from appropriate direction
-                    const fromAbove = forward;
                     card.style.transition = 'none';
                     card.style.display = '';
                     card.style.opacity = '0';
                     card.style.zIndex = '25';
-                    card.style.transform = fromAbove
-                        ? 'translateY(-100%) scale(.88)'
-                        : 'translateY(60%) scale(.88)';
+                    card.style.transform = forward ? 'translateY(-100%) scale(.88)' : 'translateY(60%) scale(.88)';
                     card.getBoundingClientRect();
                     card.style.transition = 'transform .44s cubic-bezier(.34,1.3,.64,1), opacity .38s ease';
                     const { tx, ty, scale, rot } = slotTransform(0);
@@ -1362,22 +1915,13 @@
                     applySlot(card, slot, true);
                 }
             });
-
             currentCardIndex = targetIdx;
-
-            setTimeout(() => {
-                updateNav();
-                positionCards(false);
-                animating = false;
-            }, 460);
+            setTimeout(() => { updateNav(); positionCards(false); animating = false; }, 460);
         }
 
-        /* Reset deck to card 1 with a satisfying "shuffle back" effect */
         function resetDeck() {
             animating = true;
             const all = getAllCards();
-
-            // Show all cards stacked at center briefly, then fly last dismissed one back
             all.forEach((card, idx) => {
                 card.style.transition = 'none';
                 card.style.display = '';
@@ -1385,8 +1929,6 @@
                 card.style.opacity = idx === 0 ? '1' : String(Math.max(0, 1 - idx * 0.15));
                 card.style.zIndex = String(TOTAL_CARDS - idx);
             });
-
-            // Small delay then settle into slot positions from card 1
             all[0].getBoundingClientRect();
             setTimeout(() => {
                 currentCardIndex = 0;
@@ -1396,9 +1938,7 @@
             }, 80);
         }
 
-        /* ═══════════════════════════════════════════════════════
-           DRAG
-        ═══════════════════════════════════════════════════════ */
+        /* ═══════════ DRAG ═══════════ */
         function setupDrag() {
             const stack = document.getElementById('deckStack');
             let sx = 0, sy = 0, dragging = false, activeCard = null;
@@ -1450,41 +1990,36 @@
             window.addEventListener('mouseup', onEnd);
         }
 
-        /* ═══════════════════════════════════════════════════════
-           MINI CAROUSEL
-        ═══════════════════════════════════════════════════════ */
-        let carouselIdx = 0;
-        const carouselImgs = document.querySelectorAll('#miniCarousel img');
+        /* ═══════════ SWIPE HINT ═══════════ */
+        const HINT_KEY = 'sofi_hint_v';
+        let hintEnabled = false;
 
-        function initCarouselDots() {
-            const el = document.getElementById('carouselDots');
+        function initHint() {
+            const visits = parseInt(localStorage.getItem(HINT_KEY) || '0', 10) + 1;
+            localStorage.setItem(HINT_KEY, String(visits));
+            hintEnabled = visits <= 2;
+        }
+
+        function updateHint() {
+            const el = document.getElementById('swipeHint');
             if (!el) return;
-            el.innerHTML = '';
-            carouselImgs.forEach((_, i) => {
-                const d = document.createElement('div');
-                d.className = 'carousel-dot' + (i === 0 ? ' active' : '');
-                el.appendChild(d);
-            });
+            el.style.opacity = (hintEnabled && currentCardIndex < 2) ? '1' : '0';
         }
 
-        function showSlide(idx) {
-            carouselImgs.forEach((img, i) => img.classList.toggle('active', i === idx));
-            document.querySelectorAll('#carouselDots .carousel-dot').forEach((d, i) => {
-                d.classList.toggle('active', i === idx);
-            });
-        }
-        function carouselNext() { carouselIdx = (carouselIdx + 1) % carouselImgs.length; showSlide(carouselIdx); }
-        function carouselPrev() { carouselIdx = (carouselIdx - 1 + carouselImgs.length) % carouselImgs.length; showSlide(carouselIdx); }
-        setInterval(carouselNext, 3200);
-
-        /* ═══════════════════════════════════════════════════════
-           COUNTDOWN
-        ═══════════════════════════════════════════════════════ */
+        /* ═══════════ COUNTDOWN ═══════════ */
         function updateCountdown() {
-            const diff = new Date('2026-09-20T13:00:00') - new Date();
-            if (diff < 0) { ['days', 'hours', 'mins', 'secs'].forEach(k => { const el = document.getElementById('card-cd-' + k); if (el) el.textContent = '00'; }); return; }
-            const d = Math.floor(diff / 86400000), h = Math.floor(diff % 86400000 / 3600000),
-                m = Math.floor(diff % 3600000 / 60000), s = Math.floor(diff % 60000 / 1000);
+            const diff = new Date('2026-07-11T13:00:00') - new Date();
+            if (diff < 0) {
+                ['days', 'hours', 'mins', 'secs'].forEach(k => {
+                    const el = document.getElementById('card-cd-' + k);
+                    if (el) el.textContent = '00';
+                });
+                return;
+            }
+            const d = Math.floor(diff / 86400000),
+                h = Math.floor(diff % 86400000 / 3600000),
+                m = Math.floor(diff % 3600000 / 60000),
+                s = Math.floor(diff % 60000 / 1000);
             [['days', d], ['hours', h], ['mins', m], ['secs', s]].forEach(([k, v]) => {
                 const el = document.getElementById('card-cd-' + k);
                 if (el) el.textContent = String(v).padStart(2, '0');
@@ -1493,34 +2028,323 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        /* ═══════════════════════════════════════════════════════
-           WHATSAPP
-        ═══════════════════════════════════════════════════════ */
-        function sendWhatsApp() {
-            const name = document.getElementById('card-rsvp-name').value || 'Invitado';
-            const adults = document.getElementById('card-rsvp-adults').value || '0';
-            const kids = document.getElementById('card-rsvp-kids').value || '0';
-            const msg = encodeURIComponent(
-                `¡Hola! Soy ${name} y confirmo mi asistencia al festejo de Ángela 🎉\n` +
-                `👥 Adultos: ${adults}\n👶 Niños: ${kids}\n` +
-                `¡Nos vemos en el arroyo encantado! 🌿`
-            );
-            window.open(`https://wa.me/5215512345678?text=${msg}`, '_blank');
+        /* ═══════════ GIFT REGISTRY ═══════════ */
+        let GIFTS = [
+            { id: 'g1', emoji: '🎨', name: 'Set de pintura lavable', desc: 'Pinturas no tóxicas para despertar su creatividad artística', link: 'https://www.amazon.com.mx', store: 'Amazon' },
+            { id: 'g2', emoji: '📚', name: 'Libros de cuentos ilustrados', desc: 'Cuentos mágicos para estimular su imaginación y lenguaje', link: 'https://www.amazon.com.mx', store: 'Amazon' },
+            { id: 'g3', emoji: '🧩', name: 'Bloques de madera educativos', desc: 'Para desarrollar la coordinación y el pensamiento creativo', link: 'https://www.liverpool.com.mx', store: 'Liverpool' },
+            { id: 'g4', emoji: '🚲', name: 'Bicicleta de equilibrio', desc: 'Ideal para aprender a balancearse de forma divertida y segura', link: 'https://www.liverpool.com.mx', store: 'Liverpool' },
+            { id: 'g5', emoji: '🧸', name: 'Peluche suave', desc: 'Un tierno compañero para sus aventuras y sueños', link: 'https://www.amazon.com.mx', store: 'Amazon' },
+        ];
+
+        let giftIdx = 0;
+
+        function getBought() {
+            try { return JSON.parse(localStorage.getItem('sofi_gifts_2026') || '{}'); }
+            catch { return {}; }
         }
 
-        /* ═══════════════════════════════════════════════════════
-           BOOT
-        ═══════════════════════════════════════════════════════ */
+        function setBought(id, val) {
+            const b = getBought();
+            b[id] = val;
+            localStorage.setItem('sofi_gifts_2026', JSON.stringify(b));
+        }
+
+        function renderGift() {
+            const slide = document.getElementById('giftSlide');
+            if (!slide) return;
+            if (GIFTS.length === 0) {
+                slide.innerHTML = '<div class="gift-empty">🎀 ¡Todos los regalos han sido marcados como comprados!</div>';
+                return;
+            }
+            giftIdx = Math.min(giftIdx, GIFTS.length - 1);
+            const g = GIFTS[giftIdx];
+            slide.innerHTML = `
+                <div class="gift-emoji-wrap">
+                    <span>${g.emoji}</span>
+                </div>
+                <div class="gift-name">${g.name}</div>
+                <div class="gift-desc">${g.desc}</div>
+                <div class="gift-actions">
+                    <a href="${g.link}" target="_blank" class="gift-buy-btn">🛍️ Ver en ${g.store}</a>
+                    <button class="gift-mark-btn" onclick="toggleGiftBought('${g.id}')">Marcar comprado</button>
+                </div>`;
+            document.querySelectorAll('#giftsDots .gifts-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === giftIdx);
+            });
+        }
+
+        function initGiftsDots() {
+            const el = document.getElementById('giftsDots');
+            if (!el) return;
+            el.innerHTML = '';
+            GIFTS.forEach((_, i) => {
+                const d = document.createElement('div');
+                d.className = 'gifts-dot' + (i === 0 ? ' active' : '');
+                el.appendChild(d);
+            });
+        }
+
+        function giftNext() { if (GIFTS.length) { giftIdx = (giftIdx + 1) % GIFTS.length; renderGift(); } }
+        function giftPrev() { if (GIFTS.length) { giftIdx = (giftIdx - 1 + GIFTS.length) % GIFTS.length; renderGift(); } }
+
+        let pendingBoughtId = null;
+
+        function toggleGiftBought(id) {
+            pendingBoughtId = id;
+            document.getElementById('giftConfirmModal').classList.add('open');
+        }
+
+        function closeGiftModal() {
+            document.getElementById('giftConfirmModal').classList.remove('open');
+            pendingBoughtId = null;
+        }
+
+        function confirmGiftBought() {
+            if (!pendingBoughtId) return;
+            setBought(pendingBoughtId, true);
+            const idx = GIFTS.findIndex(g => g.id === pendingBoughtId);
+            if (idx !== -1) GIFTS.splice(idx, 1);
+            giftIdx = Math.max(0, Math.min(giftIdx, GIFTS.length - 1));
+            closeGiftModal();
+            initGiftsDots();
+            renderGift();
+        }
+
+        function openGiftsModal() {
+            const modal = document.getElementById('giftsRegistryModal');
+            if (modal) modal.classList.add('open');
+        }
+
+        function closeGiftsModal() {
+            const modal = document.getElementById('giftsRegistryModal');
+            if (modal) modal.classList.remove('open');
+        }
+
+        document.addEventListener('click', e => {
+            const modal = document.getElementById('giftsRegistryModal');
+            if (modal && modal.classList.contains('open') && e.target === modal) closeGiftsModal();
+        });
+
+        function copyClabe(e) {
+            const el = document.getElementById('giftsClabe');
+            const btn = document.getElementById('copyBtn');
+            if (!el || !btn) return;
+            const text = el.textContent.trim();
+            const done = () => {
+                btn.textContent = '¡Copiado!';
+                setTimeout(() => { btn.textContent = 'Copiar'; }, 2200);
+            };
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(done).catch(() => {
+                    const r = document.createRange();
+                    r.selectNode(el);
+                    window.getSelection().removeAllRanges();
+                    window.getSelection().addRange(r);
+                    document.execCommand('copy');
+                    window.getSelection().removeAllRanges();
+                    done();
+                });
+            } else {
+                const r = document.createRange();
+                r.selectNode(el);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(r);
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+                done();
+            }
+        }
+
+        /* ═══════════ CARD-2 CONFETTI ═══════════ */
+        const Card2Confetti = (function () {
+            const BURST_MS = 2500, WAIT_MS = 3000, RIGHT_DELAY = 700;
+            const COLORS = ['#7BAE7F', '#F7C6D9', '#A8D8F0', '#CDE8C8', '#FFD700', '#FF8CA0', '#4A7C59', '#E8B4C8'];
+            let canvas = null, ctx = null, particles = [];
+            let rafId = null, t2 = null, tCycle = null;
+            let running = false, lastTs = null;
+
+            function spawnBurst(side) {
+                if (!canvas) return;
+                const W = canvas.width, H = canvas.height, cy = H * 0.74;
+                for (let i = 0; i < 22; i++) {
+                    const isRight = side === 'right';
+                    const angle = (isRight ? Math.PI : 0) + (Math.random() - 0.5) * Math.PI * 0.55;
+                    const speed = 130 + Math.random() * 190;
+                    particles.push({
+                        x: isRight ? W + 2 : -2, y: cy + (Math.random() - 0.5) * H * 0.28,
+                        vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - 55,
+                        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+                        size: 5 + Math.random() * 6, rect: Math.random() > 0.45,
+                        rot: Math.random() * Math.PI * 2, rotV: (Math.random() - 0.5) * 9,
+                        born: performance.now(),
+                    });
+                }
+            }
+
+            function tick(ts) {
+                if (!running) return;
+                const dt = lastTs ? Math.min((ts - lastTs) / 1000, 0.05) : 0;
+                lastTs = ts;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles = particles.filter(p => {
+                    const elapsed = ts - p.born;
+                    if (elapsed >= BURST_MS) return false;
+                    const t = elapsed / BURST_MS;
+                    const a = t < 0.10 ? t / 0.10 : t > 0.65 ? 1 - (t - 0.65) / 0.35 : 1;
+                    p.x += p.vx * dt; p.y += p.vy * dt;
+                    p.vy += 240 * dt; p.rot += p.rotV * dt;
+                    ctx.save();
+                    ctx.globalAlpha = Math.max(0, a);
+                    ctx.fillStyle = p.color;
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rot);
+                    if (p.rect) ctx.fillRect(-p.size / 2, -p.size * 0.3, p.size, p.size * 0.6);
+                    else { ctx.beginPath(); ctx.arc(0, 0, p.size * 0.5, 0, Math.PI * 2); ctx.fill(); }
+                    ctx.restore();
+                    return true;
+                });
+                rafId = requestAnimationFrame(tick);
+            }
+
+            function fireCycle() {
+                if (!running) return;
+                spawnBurst('left');
+                t2 = setTimeout(() => { if (running) spawnBurst('right'); }, RIGHT_DELAY);
+                tCycle = setTimeout(fireCycle, RIGHT_DELAY + BURST_MS + WAIT_MS);
+            }
+
+            function start() {
+                if (running) return;
+                canvas = document.getElementById('card2Canvas');
+                if (!canvas) return;
+                ctx = canvas.getContext('2d');
+                const inner = document.querySelector('.card-2 .card-inner');
+                if (inner) { canvas.width = inner.offsetWidth; canvas.height = inner.offsetHeight; }
+                running = true; lastTs = null; particles = [];
+                rafId = requestAnimationFrame(tick);
+                fireCycle();
+            }
+
+            function stop() {
+                running = false;
+                clearTimeout(t2); clearTimeout(tCycle);
+                if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+                if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles = []; lastTs = null;
+            }
+
+            return { start, stop };
+        })();
+
+        /* ═══════════ BOOT ═══════════ */
         function boot() {
+            if (new Date() >= new Date('2026-07-11T13:00:00')) {
+                const cdCard = document.querySelector('.card-5');
+                if (cdCard) cdCard.remove();
+                TOTAL_CARDS--;
+                CARD_META.forEach(m => { if (m.cardIndex > 3) m.cardIndex--; });
+            }
+            const bought = getBought();
+            for (let i = GIFTS.length - 1; i >= 0; i--) {
+                if (bought[GIFTS[i].id]) GIFTS.splice(i, 1);
+            }
+            initHint();
             buildNav();
             updateNav();
             positionCards(false);
             setupDrag();
-            initCarouselDots();
+            initGiftsDots();
+            renderGift();
+            startRheneAnim();
         }
 
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
         else setTimeout(boot, 0);
+
+        /* ═══════════ LOADING SCREEN ═══════════ */
+        (function () {
+            const screen = document.getElementById('loadingScreen');
+            const loadingState = document.getElementById('loadingState');
+            const readyState = document.getElementById('loadingReady');
+            let dismissed = false;
+            let lsDragging = false, lsStartY = 0;
+            const DISMISS_THRESHOLD = 60;
+
+            function showReady() {
+                loadingState.style.opacity = '0';
+                setTimeout(() => {
+                    loadingState.style.display = 'none';
+                    readyState.classList.add('visible');
+                }, 400);
+            }
+
+            function dismiss() {
+                if (dismissed) return;
+                dismissed = true;
+                window._music1 = new Audio('./resources/music_1.mp3');
+                window._music1.loop = true;
+                window._music1.volume = 0.7;
+                window._music1.play().catch(() => {});
+                screen.style.transition = 'transform 0.55s cubic-bezier(0.4,0,0.6,1)';
+                screen.style.transform = 'translateY(-100%)';
+                screen.addEventListener('transitionend', () => { screen.style.display = 'none'; }, { once: true });
+            }
+
+            if (document.readyState === 'complete') showReady();
+            else window.addEventListener('load', showReady, { once: true });
+
+            screen.addEventListener('touchstart', e => {
+                if (dismissed || !readyState.classList.contains('visible')) return;
+                lsStartY = e.touches[0].clientY;
+                lsDragging = true;
+                screen.style.transition = 'none';
+            }, { passive: true });
+
+            screen.addEventListener('touchmove', e => {
+                if (!lsDragging || dismissed) return;
+                const dy = e.touches[0].clientY - lsStartY;
+                if (dy < 0) screen.style.transform = `translateY(${dy}px)`;
+                if (e.cancelable) e.preventDefault();
+            }, { passive: false });
+
+            screen.addEventListener('touchend', e => {
+                if (!lsDragging || dismissed) return;
+                lsDragging = false;
+                const dy = e.changedTouches[0].clientY - lsStartY;
+                if (dy < -DISMISS_THRESHOLD) {
+                    dismiss();
+                } else {
+                    screen.style.transition = 'transform 0.35s ease';
+                    screen.style.transform = 'translateY(0)';
+                }
+            }, { passive: true });
+
+            screen.addEventListener('mousedown', e => {
+                if (dismissed || !readyState.classList.contains('visible')) return;
+                lsStartY = e.clientY;
+                lsDragging = true;
+                screen.style.transition = 'none';
+            });
+
+            window.addEventListener('mousemove', e => {
+                if (!lsDragging || dismissed) return;
+                const dy = e.clientY - lsStartY;
+                if (dy < 0) screen.style.transform = `translateY(${dy}px)`;
+            });
+
+            window.addEventListener('mouseup', e => {
+                if (!lsDragging || dismissed) return;
+                lsDragging = false;
+                const dy = e.clientY - lsStartY;
+                if (dy < -DISMISS_THRESHOLD) {
+                    dismiss();
+                } else {
+                    screen.style.transition = 'transform 0.35s ease';
+                    screen.style.transform = 'translateY(0)';
+                }
+            });
+        })();
     </script>
 </body>
 
