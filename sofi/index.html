@@ -4,7 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ángela cumple 2 años 🌿</title>
+    <title>Cumpleaños de Sofia</title>
+    <!-- Open Graph / WhatsApp / iMessage -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="¡Ángela Sofía cumple 2 años! 🌿">
+    <meta property="og:description" content="Angela Sofia tiene una invitación muy especial para tí">
+    <meta property="og:image" content="./resources/share.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="¡Ángela Sofía cumple 2 años! 🌿">
+    <meta name="twitter:description" content="Angela Sofia tiene una invitación muy especial para tí">
+    <meta name="twitter:image" content="./resources/share.png">
     <link
         href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@600;700&family=Fredoka+One&display=swap"
         rel="stylesheet">
@@ -23,6 +33,52 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        /* ── IMAGE PROTECTION ── */
+        img {
+            -webkit-user-drag: none;
+            -webkit-touch-callout: none;
+            pointer-events: none;
+        }
+
+        /* ── LANDSCAPE BLOCK ── */
+        #rotateOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: linear-gradient(160deg, #fce4ef 0%, #fff5f9 45%, #f0ede8 100%);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            text-align: center;
+            padding: 32px;
+        }
+
+        @media screen and (orientation: landscape) and (pointer: coarse) {
+            #rotateOverlay { display: flex; }
+        }
+
+        .rotate-icon { font-size: 56px; animation: rotateHint 2s ease-in-out infinite; }
+
+        @keyframes rotateHint {
+            0%, 100% { transform: rotate(0deg); }
+            50%       { transform: rotate(-90deg); }
+        }
+
+        .rotate-title {
+            font-family: var(--font-title);
+            font-size: 28px;
+            color: var(--deep-green);
+        }
+
+        .rotate-msg {
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: rgba(74,124,89,.72);
+            line-height: 1.6;
+        }
 
         html, body { height: 100%; overflow: hidden; }
 
@@ -1185,6 +1241,107 @@
             min-height: 200px;
         }
 
+        /* ── MIS GUSTOS ── */
+        .gustos-section {
+            background: rgba(255,255,255,0.70);
+            border-radius: 16px;
+            border: 1.5px solid rgba(247,198,217,0.45);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .gustos-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--deep-green);
+            gap: 8px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .gustos-toggle-left { display: flex; align-items: center; gap: 7px; }
+
+        .gustos-chevron {
+            font-size: 20px;
+            color: var(--green-forest);
+            transition: transform 0.25s cubic-bezier(.34,1.3,.64,1);
+            display: inline-block;
+            line-height: 1;
+        }
+
+        .gustos-chevron.open { transform: rotate(90deg); }
+
+        .gustos-content {
+            padding: 0 14px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            animation: gustosIn 0.28s cubic-bezier(.34,1.3,.64,1) both;
+        }
+
+        @keyframes gustosIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .gustos-interests {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .gustos-chip {
+            background: linear-gradient(135deg, rgba(247,198,217,0.50), rgba(205,232,200,0.50));
+            border: 1px solid rgba(123,174,127,0.28);
+            border-radius: 50px;
+            padding: 5px 13px;
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--deep-green);
+        }
+
+        .gustos-sizes { display: flex; gap: 8px; }
+
+        .gustos-size-item {
+            flex: 1;
+            background: rgba(255,255,255,0.82);
+            border-radius: 12px;
+            border: 1px solid rgba(74,124,89,0.12);
+            padding: 9px 11px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .gustos-size-icon { font-size: 20px; flex-shrink: 0; }
+
+        .gustos-size-label {
+            font-family: var(--font-body);
+            font-size: 9.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #aaa;
+            line-height: 1.2;
+        }
+
+        .gustos-size-value {
+            font-family: var(--font-body);
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--deep-green);
+            line-height: 1.2;
+        }
+
         /* ── SWIPE HINT ── */
         .swipe-hint {
             position: fixed;
@@ -1417,10 +1574,17 @@
 
 <body>
 
+    <!-- Landscape block overlay -->
+    <div id="rotateOverlay">
+        <div class="rotate-icon">📱</div>
+        <div class="rotate-title">Gira tu dispositivo</div>
+        <div class="rotate-msg">Esta invitación está diseñada<br>para verse en modo vertical.</div>
+    </div>
+
     <!-- Loading Screen -->
     <div id="loadingScreen">
         <div class="loading-state" id="loadingState">
-            <img src="./resources/loading.svg" alt="">
+            <img src="./resources/loading.svg" alt="" draggable="false">
             <div class="loading-name">Ángela Sofía</div>
             <div class="loading-text">Preparando todo...</div>
             <div class="loading-dots">
@@ -1430,7 +1594,7 @@
             </div>
         </div>
         <div class="loading-ready" id="loadingReady">
-            <div class="loading-ready-title">¡Todo listo! 🌿</div>
+            <div class="loading-ready-title">¡Todo listo!</div>
             <div class="loading-tips-row">
                 <div class="loading-tip-box loading-tip-left">
                     <span class="loading-tip-icon">👆</span>
@@ -1443,7 +1607,7 @@
             </div>
             <div class="loading-swipe-cta">
                 <div class="swipe-hint-bubble-loading">
-                    <img class="swipe-hand-loading" src="./resources/hand.svg" alt="">
+                    <img class="swipe-hand-loading" src="./resources/hand.svg" alt="" draggable="false">
                 </div>
                 <div class="loading-swipe-label">Desliza para entrar</div>
             </div>
@@ -1460,7 +1624,7 @@
                     <div class="card-overlay"></div>
                     <div class="card-body">
                         <div class="card-9-title">Ángela Sofía<br>te espera</div>
-                        <img class="card-9-rhene" src="./resources/rana_jump.png" alt="">
+                        <img class="card-9-rhene" src="./resources/rana_jump.png" alt="" draggable="false">
                         <div class="card-9-footer">
                             <div class="card-9-love">Con amor,<br>Familia Ram&iacute;rez Montes</div>
                             <div class="card-9-heart">💚</div>
@@ -1477,7 +1641,7 @@
                     <div class="card-body">
 
                         <div class="gifts-registry-title">
-                            <img class="gifts-title-icon" src="./resources/rana_gift.png" alt="">
+                            <img class="gifts-title-icon" src="./resources/rana_gift.png" alt="" draggable="false">
                             Mesa de regalos
                         </div>
 
@@ -1558,16 +1722,16 @@
                     <div class="card-bg"></div>
                     <div class="card-overlay"></div>
                     <div class="card-3-balloons">
-                        <img class="card-3-balloon b1"  src="./resources/globos_2.png" alt="">
-                        <img class="card-3-balloon b2"  src="./resources/globo_3.png"  alt="">
-                        <img class="card-3-balloon b3"  src="./resources/globos_2.png" alt="">
-                        <img class="card-3-balloon b4"  src="./resources/globo_3.png"  alt="">
-                        <img class="card-3-balloon b5"  src="./resources/globos_2.png" alt="">
-                        <img class="card-3-balloon b6"  src="./resources/globo_3.png"  alt="">
-                        <img class="card-3-balloon b7"  src="./resources/globos_2.png" alt="">
-                        <img class="card-3-balloon b8"  src="./resources/globo_3.png"  alt="">
-                        <img class="card-3-balloon b9"  src="./resources/globos_2.png" alt="">
-                        <img class="card-3-balloon b10" src="./resources/globo_3.png"  alt="">
+                        <img class="card-3-balloon b1"  src="./resources/globos_2.png" alt="" draggable="false">
+                        <img class="card-3-balloon b2"  src="./resources/globo_3.png"  alt="" draggable="false">
+                        <img class="card-3-balloon b3"  src="./resources/globos_2.png" alt="" draggable="false">
+                        <img class="card-3-balloon b4"  src="./resources/globo_3.png"  alt="" draggable="false">
+                        <img class="card-3-balloon b5"  src="./resources/globos_2.png" alt="" draggable="false">
+                        <img class="card-3-balloon b6"  src="./resources/globo_3.png"  alt="" draggable="false">
+                        <img class="card-3-balloon b7"  src="./resources/globos_2.png" alt="" draggable="false">
+                        <img class="card-3-balloon b8"  src="./resources/globo_3.png"  alt="" draggable="false">
+                        <img class="card-3-balloon b9"  src="./resources/globos_2.png" alt="" draggable="false">
+                        <img class="card-3-balloon b10" src="./resources/globo_3.png"  alt="" draggable="false">
                     </div>
                     <div class="card-body">
                         <div class="card-3-date-wrap">
@@ -1602,7 +1766,7 @@
                     <div class="card-bg"></div>
                     <div class="card-overlay"></div>
                     <canvas class="card-2-confetti-canvas" id="card2Canvas"></canvas>
-                    <img class="card-2-sofi-slide" src="./resources/img_sofi.png" alt="Sofía">
+                    <img class="card-2-sofi-slide" src="./resources/img_sofi.png" alt="Sofía" draggable="false">
                     <div class="card-body">
                         <div class="card-2-top">
                             Mis pap&aacute;s y yo queremos invitarte a celebrar mis 
@@ -1624,7 +1788,7 @@
                     <div class="card-bg"></div>
                     <div class="card-overlay"></div>
                     <div class="rhene-peek-wrap" id="rhenePeekWrap">
-                        <img id="rhenePeek" class="rhene-peek" src="./resources/rana.png" alt="rhene">
+                        <img id="rhenePeek" class="rhene-peek" src="./resources/rana.png" alt="rhene" draggable="false">
                     </div>
                     <div class="card-body">
                         <div class="card-1-top">
@@ -1632,7 +1796,7 @@
                             <div class="card-1-subtitle">tiene una invitación<br>muy especial para ti…</div>
                         </div>
                         <div class="card-1-photo-wrap">
-                            <img class="card-1-photo" src="./resources/sofi.png" alt="Ángela Sofía">
+                            <img class="card-1-photo" src="./resources/sofi.png" alt="Ángela Sofía" draggable="false">
                         </div>
                         <div class="card-1-bottom">
                             <div class="card-1-deco-line"></div>
@@ -1650,7 +1814,7 @@
     <!-- Swipe hint -->
     <div class="swipe-hint" id="swipeHint">
         <div class="swipe-hint-bubble">
-            <img class="swipe-hand" src="./resources/hand.svg" alt="">
+            <img class="swipe-hand" src="./resources/hand.svg" alt="" draggable="false">
         </div>
     </div>
 
@@ -1663,6 +1827,38 @@
                 </div>
                 <button class="gifts-registry-modal-close" onclick="closeGiftsModal()">✕</button>
             </div>
+            <!-- Mis gustos -->
+            <div class="gustos-section">
+                <button class="gustos-toggle" onclick="toggleGustos()" id="gustosToggle">
+                    <span class="gustos-toggle-left">✨ ¿Qué le gusta a Sofía?</span>
+                    <span class="gustos-chevron" id="gustosChevron">›</span>
+                </button>
+                <div class="gustos-content" id="gustosContent" style="display:none;">
+                    <div class="gustos-interests">
+                        <div class="gustos-chip">🎨 Pintar</div>
+                        <div class="gustos-chip">🎵 Cantar</div>
+                        <div class="gustos-chip">📸 Tomar fotos</div>
+                        <div class="gustos-chip">📖 Leer cuentos</div>
+                    </div>
+                    <div class="gustos-sizes">
+                        <div class="gustos-size-item">
+                            <span class="gustos-size-icon">👗</span>
+                            <div>
+                                <div class="gustos-size-label">Ropa</div>
+                                <div class="gustos-size-value">Talla 3 años</div>
+                            </div>
+                        </div>
+                        <div class="gustos-size-item">
+                            <span class="gustos-size-icon">👟</span>
+                            <div>
+                                <div class="gustos-size-label">Zapatos</div>
+                                <div class="gustos-size-value">Número 13.5 - 14</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="gifts-registry">
                 <div class="gift-slide" id="giftSlide"><!-- filled by JS --></div>
                 <div class="gifts-nav-row">
@@ -1687,7 +1883,30 @@
         </div>
     </div>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js';
+        import { getDatabase, ref, get, update, increment } from 'https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js';
+
+        /* ═══════════ FIREBASE ═══════════ */
+        const firebaseConfig = {
+            apiKey: "AIzaSyC6Xrc9EqMyXKH_gNFaOGuAX-ItudzZAVs",
+            authDomain: "bautizo-sofia.firebaseapp.com",
+            databaseURL: "https://bautizo-sofia-default-rtdb.firebaseio.com",
+            projectId: "bautizo-sofia",
+            storageBucket: "bautizo-sofia.firebasestorage.app",
+            messagingSenderId: "981839514602",
+            appId: "1:981839514602:web:981d3b9a4dcde418c84093",
+            measurementId: "G-TVQSGB0FWT"
+        };
+        let db;
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getDatabase(app);
+            console.log('[Firebase] ✅ App y Realtime Database inicializados, projectId:', firebaseConfig.projectId);
+        } catch (e) {
+            console.error('[Firebase] ❌ Error al inicializar Firebase:', e);
+        }
+
         /* ═══════════ DATA ═══════════ */
         const CARD_META = [
             { svgSrc: './resources/icon1.svg', label: 'Portada',  navLabel: 'Inicio',           cardIndex: 0 },
@@ -1706,7 +1925,7 @@
                 const btn = document.createElement('button');
                 btn.className = 'nav-item';
                 btn.setAttribute('aria-label', meta.label);
-                btn.innerHTML = `<span class="nav-dot"></span><img class="nav-icon" src="${meta.svgSrc}" alt="${meta.label}"><span class="nav-label">${meta.navLabel}</span>`;
+                btn.innerHTML = `<span class="nav-dot"></span><img class="nav-icon" src="${meta.svgSrc}" alt="${meta.label}" draggable="false"><span class="nav-label">${meta.navLabel}</span>`;
                 btn.addEventListener('click', () => jumpTo(meta.cardIndex));
                 nav.appendChild(btn);
             });
@@ -1731,20 +1950,41 @@
 
         /* ═══════════ MUSIC ═══════════ */
         function updateMusic() {
+            if (document.hidden) return;
             const onLast = currentCardIndex === TOTAL_CARDS - 1;
             if (onLast) {
                 if (window._music1) window._music1.pause();
                 if (!window._music2) {
                     window._music2 = new Audio('./resources/music_2.mp3');
-                    window._music2.loop = true;
                     window._music2.volume = 0.7;
+                    window._music2._plays = 0;
+                    window._music2.addEventListener('ended', () => {
+                        window._music2._plays++;
+                        if (window._music2._plays < 3) {
+                            window._music2.currentTime = 0;
+                            window._music2.play().catch(() => {});
+                        }
+                    });
                 }
-                window._music2.play().catch(() => {});
+                if (window._music2._plays < 3 && window._music2.paused) {
+                    window._music2.play().catch(() => {});
+                }
             } else {
                 if (window._music2) window._music2.pause();
-                if (window._music1) window._music1.play().catch(() => {});
+                if (window._music1 && !window._music1._ended) {
+                    window._music1.play().catch(() => {});
+                }
             }
         }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (window._music1) window._music1.pause();
+                if (window._music2) window._music2.pause();
+            } else {
+                updateMusic();
+            }
+        });
 
         /* ═══════════ RHENE PEEK ═══════════ */
         let rheneTimeout = null;
@@ -2029,44 +2269,53 @@
         setInterval(updateCountdown, 1000);
 
         /* ═══════════ GIFT REGISTRY ═══════════ */
-        let GIFTS = [
-            { id: 'g1', emoji: '🎨', name: 'Set de pintura lavable', desc: 'Pinturas no tóxicas para despertar su creatividad artística', link: 'https://www.amazon.com.mx', store: 'Amazon' },
-            { id: 'g2', emoji: '📚', name: 'Libros de cuentos ilustrados', desc: 'Cuentos mágicos para estimular su imaginación y lenguaje', link: 'https://www.amazon.com.mx', store: 'Amazon' },
-            { id: 'g3', emoji: '🧩', name: 'Bloques de madera educativos', desc: 'Para desarrollar la coordinación y el pensamiento creativo', link: 'https://www.liverpool.com.mx', store: 'Liverpool' },
-            { id: 'g4', emoji: '🚲', name: 'Bicicleta de equilibrio', desc: 'Ideal para aprender a balancearse de forma divertida y segura', link: 'https://www.liverpool.com.mx', store: 'Liverpool' },
-            { id: 'g5', emoji: '🧸', name: 'Peluche suave', desc: 'Un tierno compañero para sus aventuras y sueños', link: 'https://www.amazon.com.mx', store: 'Amazon' },
-        ];
-
+        let GIFTS = [];
         let giftIdx = 0;
 
-        function getBought() {
-            try { return JSON.parse(localStorage.getItem('sofi_gifts_2026') || '{}'); }
-            catch { return {}; }
-        }
-
-        function setBought(id, val) {
-            const b = getBought();
-            b[id] = val;
-            localStorage.setItem('sofi_gifts_2026', JSON.stringify(b));
+        async function loadGiftsFromFirebase() {
+            console.log('[Firebase] 🎁 Cargando regalos de contadoresSofi/regalos...');
+            const snap = await get(ref(db, 'contadoresSofi/regalos'));
+            if (!snap.exists()) {
+                console.warn('[Firebase] ⚠️ Nodo contadoresSofi/regalos no existe');
+                return [];
+            }
+            const data = snap.val();
+            console.log('[Firebase] 📦 Datos crudos de regalos:', data);
+            const result = [];
+            Object.keys(data).sort((a, b) => Number(a) - Number(b)).forEach(k => {
+                const parts = String(data[k]).split('|');
+                if (parts.length < 5) {
+                    console.warn(`[Firebase] ⚠️ Regalo "${k}" tiene formato incorrecto (esperados 5 campos separados por |):`, data[k]);
+                    return;
+                }
+                const [bought, name, desc, imageUrl, link] = parts;
+                if (bought === '1') {
+                    console.log(`[Firebase] 🛒 Regalo "${k}" (${name}) ya comprado, omitido`);
+                    return;
+                }
+                result.push({ id: k, name, desc, imageUrl, link });
+            });
+            console.log(`[Firebase] ✅ ${result.length} regalo(s) disponibles cargados`);
+            return result;
         }
 
         function renderGift() {
             const slide = document.getElementById('giftSlide');
             if (!slide) return;
             if (GIFTS.length === 0) {
-                slide.innerHTML = '<div class="gift-empty">🎀 ¡Todos los regalos han sido marcados como comprados!</div>';
+                slide.innerHTML = '<div class="gift-empty">¡Todos los regalos han sido marcados como comprados!</div>';
                 return;
             }
             giftIdx = Math.min(giftIdx, GIFTS.length - 1);
             const g = GIFTS[giftIdx];
             slide.innerHTML = `
                 <div class="gift-emoji-wrap">
-                    <span>${g.emoji}</span>
+                    ${g.imageUrl ? `<img src="${g.imageUrl}" style="width:80px;height:80px;object-fit:cover;border-radius:12px;" alt="${g.name}">` : '<span>🎁</span>'}
                 </div>
                 <div class="gift-name">${g.name}</div>
                 <div class="gift-desc">${g.desc}</div>
                 <div class="gift-actions">
-                    <a href="${g.link}" target="_blank" class="gift-buy-btn">🛍️ Ver en ${g.store}</a>
+                    <a href="${g.link}" target="_blank" class="gift-buy-btn">🛍️ Ver regalo</a>
                     <button class="gift-mark-btn" onclick="toggleGiftBought('${g.id}')">Marcar comprado</button>
                 </div>`;
             document.querySelectorAll('#giftsDots .gifts-dot').forEach((d, i) => {
@@ -2100,9 +2349,21 @@
             pendingBoughtId = null;
         }
 
-        function confirmGiftBought() {
+        async function confirmGiftBought() {
             if (!pendingBoughtId) return;
-            setBought(pendingBoughtId, true);
+            const g = GIFTS.find(g => g.id === pendingBoughtId);
+            if (g) {
+                try {
+                    console.log(`[Firebase] 🛒 Marcando regalo "${g.id}" como comprado...`);
+                    const regalosRef = ref(db, 'contadoresSofi/regalos');
+                    const snap = await get(regalosRef);
+                    if (snap.exists()) {
+                        const val = String(snap.val()[g.id] || '');
+                        await update(regalosRef, { [g.id]: '1' + val.slice(1) });
+                        console.log(`[Firebase] ✅ Regalo "${g.id}" marcado como comprado`);
+                    }
+                } catch (e) { console.error('Error actualizando regalo:', e); }
+            }
             const idx = GIFTS.findIndex(g => g.id === pendingBoughtId);
             if (idx !== -1) GIFTS.splice(idx, 1);
             giftIdx = Math.max(0, Math.min(giftIdx, GIFTS.length - 1));
@@ -2111,9 +2372,20 @@
             renderGift();
         }
 
-        function openGiftsModal() {
+        async function openGiftsModal() {
             const modal = document.getElementById('giftsRegistryModal');
             if (modal) modal.classList.add('open');
+            const slide = document.getElementById('giftSlide');
+            if (slide) slide.innerHTML = '<div class="gift-empty">Cargando regalos...</div>';
+            try {
+                GIFTS = await loadGiftsFromFirebase();
+                giftIdx = 0;
+                initGiftsDots();
+                renderGift();
+            } catch (e) {
+                console.error('Error cargando regalos:', e);
+                if (slide) slide.innerHTML = '<div class="gift-empty">No se pudieron cargar los regalos.</div>';
+            }
         }
 
         function closeGiftsModal() {
@@ -2245,9 +2517,16 @@
                 TOTAL_CARDS--;
                 CARD_META.forEach(m => { if (m.cardIndex > 3) m.cardIndex--; });
             }
-            const bought = getBought();
-            for (let i = GIFTS.length - 1; i >= 0; i--) {
-                if (bought[GIFTS[i].id]) GIFTS.splice(i, 1);
+            // Contador de visitas — solo cuenta la primera vez
+            const VISIT_KEY = 'sofi_visited';
+            if (!localStorage.getItem(VISIT_KEY)) {
+                localStorage.setItem(VISIT_KEY, '1');
+                console.log('[Firebase] 📊 Primera visita, registrando en Firestore...');
+                update(ref(db, 'contadoresSofi/visitas'), { count: increment(1) })
+                  .then(() => console.log('[Firebase] ✅ Visita registrada en contadoresSofi/visitas'))
+                  .catch(e => console.error('[Firebase] ❌ Error al registrar visita:', e.code, e.message));
+            } else {
+                console.log('[Firebase] ℹ️ Visita ya registrada (localStorage)');
             }
             initHint();
             buildNav();
@@ -2258,6 +2537,34 @@
             renderGift();
             startRheneAnim();
         }
+
+        /* ═══════════ EXPONER FUNCIONES AL HTML (onclick) ═══════════ */
+        /* type="module" aísla el scope — los onclick del HTML necesitan window.X */
+        document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+
+        function toggleGustos() {
+            const content = document.getElementById('gustosContent');
+            const chevron = document.getElementById('gustosChevron');
+            if (!content || !chevron) return;
+            const isOpen = content.style.display !== 'none';
+            if (isOpen) {
+                content.style.display = 'none';
+                chevron.classList.remove('open');
+            } else {
+                content.style.display = 'flex';
+                chevron.classList.add('open');
+            }
+        }
+
+        window.openGiftsModal   = openGiftsModal;
+        window.closeGiftsModal  = closeGiftsModal;
+        window.giftNext         = giftNext;
+        window.giftPrev         = giftPrev;
+        window.toggleGiftBought = toggleGiftBought;
+        window.closeGiftModal   = closeGiftModal;
+        window.confirmGiftBought = confirmGiftBought;
+        window.copyClabe        = copyClabe;
+        window.toggleGustos     = toggleGustos;
 
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
         else setTimeout(boot, 0);
@@ -2283,8 +2590,9 @@
                 if (dismissed) return;
                 dismissed = true;
                 window._music1 = new Audio('./resources/music_1.mp3');
-                window._music1.loop = true;
                 window._music1.volume = 0.7;
+                window._music1._ended = false;
+                window._music1.addEventListener('ended', () => { window._music1._ended = true; });
                 window._music1.play().catch(() => {});
                 screen.style.transition = 'transform 0.55s cubic-bezier(0.4,0,0.6,1)';
                 screen.style.transform = 'translateY(-100%)';
