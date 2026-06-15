@@ -1,0 +1,59 @@
+<svg width="220px" height="220px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Regalos con temática pastel infantil -->
+  <g transform="translate(55 70) rotate(-7 200 200)">
+    <!-- Sombra -->
+    <ellipse cx="205" cy="365" rx="165" ry="28" fill="#D8D8DE" opacity="0.45"/>
+
+    <!-- Regalo grande -->
+    <rect x="75" y="150" width="250" height="200" rx="24" fill="#F7A7C8"/>
+    <rect x="180" y="150" width="42" height="200" fill="#FFD86B"/>
+    <rect x="75" y="205" width="250" height="42" fill="#FFD86B"/>
+
+    <!-- Tapa -->
+    <rect x="55" y="115" width="290" height="60" rx="20" fill="#F9B8D3"/>
+    <rect x="178" y="115" width="46" height="60" fill="#FFD86B"/>
+
+    <!-- Moño -->
+    <path d="M200 115C165 70 110 75 115 120C120 160 175 145 200 115Z" fill="#956EC4"/>
+    <path d="M200 115C235 70 290 75 285 120C280 160 225 145 200 115Z" fill="#956EC4"/>
+    <circle cx="200" cy="120" r="20" fill="#7C4EB0"/>
+
+    <!-- Brillos del regalo -->
+    <circle cx="115" cy="185" r="8" fill="#FFF8ED" opacity="0.75"/>
+    <circle cx="285" cy="285" r="8" fill="#FFF8ED" opacity="0.75"/>
+    <circle cx="145" cy="310" r="6" fill="#FFF8ED" opacity="0.65"/>
+
+    <!-- Regalo pequeño izquierdo -->
+    <g transform="translate(-35 165) rotate(8 80 80)">
+      <rect x="0" y="55" width="115" height="105" rx="16" fill="#A8D8F0"/>
+      <rect x="45" y="55" width="22" height="105" fill="#F7A7C8"/>
+      <rect x="0" y="90" width="115" height="22" fill="#F7A7C8"/>
+      <rect x="-8" y="35" width="130" height="35" rx="14" fill="#BCE6F7"/>
+      <path d="M58 35C38 5 5 12 10 42C15 68 45 55 58 35Z" fill="#FFD86B"/>
+      <path d="M58 35C78 5 112 12 105 42C100 68 70 55 58 35Z" fill="#FFD86B"/>
+      <circle cx="58" cy="38" r="10" fill="#F5C34E"/>
+    </g>
+
+    <!-- Regalo pequeño derecho -->
+    <g transform="translate(300 190) rotate(10 80 80)">
+      <rect x="0" y="55" width="120" height="115" rx="16" fill="#956EC4"/>
+      <rect x="48" y="55" width="24" height="115" fill="#FFD86B"/>
+      <rect x="0" y="95" width="120" height="24" fill="#FFD86B"/>
+      <rect x="-10" y="35" width="140" height="38" rx="14" fill="#A985D5"/>
+      <path d="M60 35C40 4 5 12 12 42C18 70 48 55 60 35Z" fill="#F7A7C8"/>
+      <path d="M60 35C82 4 118 12 108 42C100 70 72 55 60 35Z" fill="#F7A7C8"/>
+      <circle cx="60" cy="38" r="11" fill="#E987B5"/>
+    </g>
+  </g>
+
+  <!-- Confeti -->
+  <g opacity="0.9">
+    <rect x="55" y="60" width="12" height="24" rx="4" fill="#FFD86B" transform="rotate(-25 55 60)"/>
+    <rect x="430" y="80" width="12" height="24" rx="4" fill="#F7A7C8" transform="rotate(20 430 80)"/>
+    <rect x="390" y="395" width="12" height="24" rx="4" fill="#956EC4" transform="rotate(-15 390 395)"/>
+    <circle cx="455" cy="310" r="8" fill="#FFD86B"/>
+    <circle cx="60" cy="390" r="7" fill="#A8D8F0"/>
+    <path d="M410 220C430 205 440 235 462 218" stroke="#F7A7C8" stroke-width="8" stroke-linecap="round" fill="none"/>
+    <path d="M70 250C95 230 105 270 130 245" stroke="#956EC4" stroke-width="8" stroke-linecap="round" fill="none"/>
+  </g>
+</svg>

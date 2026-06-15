@@ -1,0 +1,82 @@
+<svg width="220px" height="220px" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <!-- Marco tipo picture -->
+  <g transform="translate(55 55) rotate(-7 200 200)">
+    <!-- Sombra -->
+    <rect x="18" y="22" width="390" height="330" rx="34" fill="#D8D8DE" opacity="0.55"/>
+
+    <!-- Marco exterior -->
+    <rect x="0" y="0" width="390" height="330" rx="34" fill="#F7A7C8"/>
+
+    <!-- Marco interior -->
+    <rect x="28" y="28" width="334" height="274" rx="24" fill="#FFF8ED"/>
+
+    <!-- Escena -->
+    <clipPath id="sceneClip">
+      <rect x="42" y="42" width="306" height="246" rx="18"/>
+    </clipPath>
+
+    <g clip-path="url(#sceneClip)">
+      <!-- Cielo -->
+      <rect x="42" y="42" width="306" height="246" fill="#A8D8F0"/>
+
+      <!-- Sol -->
+      <circle cx="285" cy="88" r="36" fill="#FFD86B"/>
+      <circle cx="285" cy="88" r="48" fill="#FFD86B" opacity="0.25"/>
+
+      <!-- Rayos -->
+      <g stroke="#FFD86B" stroke-width="8" stroke-linecap="round">
+        <line x1="285" y1="28" x2="285" y2="48"/>
+        <line x1="285" y1="128" x2="285" y2="150"/>
+        <line x1="225" y1="88" x2="245" y2="88"/>
+        <line x1="325" y1="88" x2="345" y2="88"/>
+      </g>
+
+      <!-- Nubes -->
+      <g fill="#FFFFFF" opacity="0.95">
+        <circle cx="95" cy="95" r="22"/>
+        <circle cx="120" cy="88" r="28"/>
+        <circle cx="150" cy="100" r="20"/>
+        <rect x="80" y="95" width="90" height="24" rx="12"/>
+
+        <circle cx="240" cy="150" r="18"/>
+        <circle cx="262" cy="143" r="24"/>
+        <circle cx="288" cy="153" r="17"/>
+        <rect x="230" y="150" width="75" height="22" rx="11"/>
+      </g>
+
+      <!-- Montañas traseras -->
+      <path d="M42 288L140 135L235 288Z" fill="#C7EFD0"/>
+      <path d="M130 288L250 120L348 288Z" fill="#8FD6A3"/>
+
+      <!-- Picos nevados -->
+      <path d="M140 135L112 180L140 168L166 180Z" fill="#FFF8ED"/>
+      <path d="M250 120L215 170L250 158L283 170Z" fill="#FFF8ED"/>
+
+      <!-- Colinas -->
+      <path d="M42 255C95 220 145 230 190 260C245 295 300 240 348 265V288H42Z" fill="#7BAE7F"/>
+      <path d="M42 275C110 245 170 260 225 280C270 295 312 270 348 275V288H42Z" fill="#4A7C59" opacity="0.55"/>
+
+      <!-- Flores -->
+      <g>
+        <circle cx="90" cy="265" r="5" fill="#F7A7C8"/>
+        <circle cx="105" cy="250" r="5" fill="#FFD86B"/>
+        <circle cx="300" cy="258" r="5" fill="#F7A7C8"/>
+        <circle cx="320" cy="270" r="5" fill="#FFD86B"/>
+      </g>
+    </g>
+
+    <!-- Brillos decorativos -->
+    <g fill="#FFFFFF" opacity="0.9">
+      <path d="M60 25L66 40L82 46L66 52L60 68L54 52L38 46L54 40Z"/>
+      <path d="M350 305L354 316L366 320L354 324L350 336L346 324L334 320L346 316Z"/>
+    </g>
+  </g>
+
+  <!-- Confeti externo -->
+  <g opacity="0.9">
+    <rect x="42" y="410" width="12" height="22" rx="4" fill="#FFD86B" transform="rotate(-25 42 410)"/>
+    <rect x="430" y="90" width="12" height="22" rx="4" fill="#956EC4" transform="rotate(20 430 90)"/>
+    <circle cx="455" cy="360" r="7" fill="#F7A7C8"/>
+    <circle cx="70" cy="75" r="7" fill="#A8D8F0"/>
+  </g>
+</svg>

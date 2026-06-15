@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 80" width="100%">
+  <g transform="translate(0,50)">
+    <path fill="#b71c1c" d="M97,0 C97,0 92,-8 85,-5 C80,-2 80,6 84,10 C88,14 97,22 97,22 C97,22 106,14 110,10 C114,6 114,-2 109,-5 C102,-8 97,0 97,0 Z">
+      <animate attributeName="opacity" values="0.15;1;0.15" dur="1.8s" begin="0s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </path>
+    <path fill="#e91e63" d="M194,0 C194,0 189,-8 182,-5 C177,-2 177,6 181,10 C185,14 194,22 194,22 C194,22 203,14 207,10 C211,6 211,-2 206,-5 C199,-8 194,0 194,0 Z">
+      <animate attributeName="opacity" values="0.15;1;0.15" dur="1.8s" begin="0.3s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </path>
+    <path fill="#b71c1c" d="M291,0 C291,0 286,-8 279,-5 C274,-2 274,6 278,10 C282,14 291,22 291,22 C291,22 300,14 304,10 C308,6 308,-2 303,-5 C296,-8 291,0 291,0 Z">
+      <animate attributeName="opacity" values="0.15;1;0.15" dur="1.8s" begin="0.6s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </path>
+    <path fill="#e91e63" d="M388,0 C388,0 383,-8 376,-5 C371,-2 371,6 375,10 C379,14 388,22 388,22 C388,22 397,14 401,10 C405,6 405,-2 400,-5 C393,-8 388,0 388,0 Z">
+      <animate attributeName="opacity" values="0.15;1;0.15" dur="1.8s" begin="0.9s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </path>
+    <path fill="#b71c1c" d="M485,0 C485,0 480,-8 473,-5 C468,-2 468,6 472,10 C476,14 485,22 485,22 C485,22 494,14 498,10 C502,6 502,-2 497,-5 C490,-8 485,0 485,0 Z">
+      <animate attributeName="opacity" values="0.15;1;0.15" dur="1.8s" begin="1.2s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </path>
+    <path fill="#e91e63" d="M582,0 C582,0 577,-8 570,-5 C565,-2 565,6 569,10 C573,14 582,22 582,22 C582,22 591,14 595,10 C599,6 599,-2 594,-5 C587,-8 582,0 582,0 Z">
+      <animate attributeName="opacity" values="0.15;1;0.15" dur="1.8s" begin="1.5s" repeatCount="indefinite" calcMode="spline" keyTimes="0;0.5;1" keySplines="0.4 0 0.6 1;0.4 0 0.6 1"/>
+    </path>
+  </g>
+</svg>

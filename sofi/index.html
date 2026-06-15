@@ -1,0 +1,3198 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cumpleaños de Sofia</title>
+    <!-- Open Graph / WhatsApp / iMessage -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="¡Ángela Sofía cumple 2 años!">
+    <meta property="og:description" content="Angela Sofia tiene una invitación muy especial para tí">
+    <meta property="og:image" content="./resources/share.png">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="¡Ángela Sofía cumple 2 años!">
+    <meta name="twitter:description" content="Angela Sofia tiene una invitación muy especial para tí">
+    <meta name="twitter:image" content="./resources/share.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@600;700&family=Fredoka+One&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --green-forest: #7BAE7F;
+            --green-soft: #CDE8C8;
+            --blue-stream: #A8D8F0;
+            --cream: #FFF8ED;
+            --pink: #F7C6D9;
+            --deep-green: #4A7C59;
+            --font-title: 'Dancing Script', cursive;
+            --font-body: 'Quicksand', sans-serif;
+            --font-elegant: 'Playfair Display', serif;
+            --font-fun: 'Fredoka One', cursive;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* ── IMAGE PROTECTION ── */
+        img {
+            -webkit-user-drag: none;
+            -webkit-touch-callout: none;
+            pointer-events: none;
+        }
+
+        /* ── LANDSCAPE BLOCK ── */
+        #rotateOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: linear-gradient(160deg, #fce4ef 0%, #fff5f9 45%, #f0ede8 100%);
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+            text-align: center;
+            padding: 32px;
+        }
+
+        @media screen and (orientation: landscape) and (pointer: coarse) {
+            #rotateOverlay {
+                display: flex;
+            }
+        }
+
+        .rotate-icon {
+            font-size: 56px;
+            animation: rotateHint 2s ease-in-out infinite;
+        }
+
+        @keyframes rotateHint {
+
+            0%,
+            100% {
+                transform: rotate(0deg);
+            }
+
+            50% {
+                transform: rotate(-90deg);
+            }
+        }
+
+        .rotate-title {
+            font-family: var(--font-title);
+            font-size: 28px;
+            color: var(--deep-green);
+        }
+
+        .rotate-msg {
+            font-family: var(--font-body);
+            font-size: 14px;
+            color: rgba(74, 124, 89, .72);
+            line-height: 1.6;
+        }
+
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+                url(./resources/bg_desktop.png) center / cover no-repeat;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100svh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.2)),
+                    url(./resources/bg_cel.png) center / cover no-repeat;
+            }
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 25% 15%, rgba(168, 216, 240, .09) 0%, transparent 55%),
+                radial-gradient(ellipse at 75% 85%, rgba(247, 198, 217, .09) 0%, transparent 55%);
+            pointer-events: none;
+        }
+
+        /* ── ICON NAV ── */
+        .icon-nav {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 6px;
+            padding: 10px 16px 16px;
+            width: 100%;
+            max-width: 420px;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 20;
+            order: 2;
+            visibility: hidden;
+        }
+
+        @keyframes navReveal {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .icon-nav.reveal {
+            visibility: visible;
+            animation: navReveal 700ms cubic-bezier(.22, 1, .36, 1) forwards;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            flex: 1;
+            -webkit-tap-highlight-color: transparent;
+            outline: none;
+            border: none;
+            background: rgba(0, 0, 0, 0.30);
+            border-radius: 14px;
+            padding: 6px 4px;
+        }
+
+        .nav-item .nav-icon {
+            display: block;
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            filter: opacity(0.50) saturate(0.5);
+        }
+
+        .nav-item .nav-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .nav-item.active {
+            background: rgba(0, 0, 0, 0.45);
+        }
+
+        .nav-item.active .nav-icon {
+            width: 34px;
+            height: 34px;
+            filter: opacity(1) saturate(1.15) drop-shadow(0 1px 5px rgba(0, 0, 0, 0.45));
+        }
+
+        .nav-item.active .nav-dot {
+            background: white;
+            width: 14px;
+            border-radius: 2px;
+        }
+
+        .nav-item.done .nav-icon {
+            filter: opacity(0.75) saturate(0.85);
+        }
+
+        .nav-item.done .nav-dot {
+            background: rgba(168, 216, 240, 0.55);
+        }
+
+        .nav-label {
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+            color: rgba(255, 255, 255, 0.50);
+            text-align: center;
+            line-height: 1.25;
+            text-transform: uppercase;
+            margin-top: 2px;
+            max-width: 72px;
+        }
+
+        .nav-item.active .nav-label {
+            color: rgba(255, 255, 255, 0.88);
+        }
+
+        .nav-item.done .nav-label {
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        /* ── DECK ── */
+        .deck-container {
+            flex: 1;
+            order: 1;
+            position: relative;
+            width: 100%;
+            max-width: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 20px 0;
+            overflow: hidden;
+        }
+
+        .deck-stack {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            visibility: hidden;
+        }
+
+        /* ── CARDS ── */
+        .card {
+            position: absolute;
+            inset: 0;
+            border-radius: 28px;
+            background: white;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, .22), 0 4px 12px rgba(0, 0, 0, .12);
+            overflow: hidden;
+            cursor: grab;
+            touch-action: none;
+            user-select: none;
+            will-change: transform;
+        }
+
+        .card:active {
+            cursor: grabbing;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-bg {
+            position: absolute;
+            inset: 0;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-overlay {
+            position: absolute;
+            inset: 0;
+        }
+
+        .card-body {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 28px 24px;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+
+        .card-body::-webkit-scrollbar {
+            display: none;
+        }
+
+        @keyframes bobAnimal {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @keyframes heartbeat {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.15);
+            }
+        }
+
+        /* ══ CARD 1 – Portada ══ */
+        .card-1 .card-bg {
+            background-image: url('./resources/bg_1.png');
+        }
+
+        .card-1 .card-overlay {
+            background: linear-gradient(180deg,
+                    rgba(0, 25, 8, .55) 0%, rgba(0, 45, 15, .30) 35%,
+                    rgba(0, 45, 15, .30) 65%, rgba(0, 25, 8, .75) 100%);
+        }
+
+        .card-1 .card-body {
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            padding: 36px 28px 40px;
+        }
+
+        .card-1-top {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .card-1-name {
+            font-family: var(--font-title);
+            font-size: 68px;
+            color: white;
+            line-height: 0.95;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, .5), 0 0 80px rgba(168, 216, 240, .2);
+            letter-spacing: -1px;
+        }
+
+        .card-1-subtitle {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 19px;
+            color: rgba(255, 255, 255, 0.88);
+            line-height: 1.5;
+            text-shadow: 0 2px 16px rgba(0, 0, 0, .45);
+            max-width: 260px;
+        }
+
+        .card-1-photo-wrap {
+            position: relative;
+            width: 100%;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+            padding: 12px 0;
+        }
+
+        .card-1-photo {
+            width: min(220px, 58%);
+            aspect-ratio: 1 / 1;
+            object-fit: cover;
+            border-radius: 50%;
+            display: block;
+            -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 40%, transparent 100%);
+            mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 40%, transparent 100%);
+            box-shadow: 0 0 0 2px rgba(255, 255, 255, .12), 0 8px 40px rgba(0, 0, 0, .35), 0 0 80px rgba(168, 216, 240, .18);
+            animation: photoFloat 5s ease-in-out infinite, photoReveal 2.5s cubic-bezier(.22, 1, .36, 1) both;
+        }
+
+        @keyframes photoFloat {
+
+            0%,
+            100% {
+                transform: translateY(0px) scaleX(-1);
+            }
+
+            50% {
+                transform: translateY(-8px) scaleX(-1);
+            }
+        }
+
+        @keyframes photoReveal {
+            from {
+                opacity: 0;
+                transform: scale(0.82) translateY(20px) scaleX(-1);
+                filter: blur(12px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0) scaleX(-1);
+                filter: blur(0);
+            }
+        }
+
+        .card-1-photo-wrap::before {
+            content: '';
+            position: absolute;
+            width: min(260px, 68%);
+            aspect-ratio: 1;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(168, 216, 240, .18) 0%, transparent 70%);
+            animation: haloBreath 4s ease-in-out infinite;
+        }
+
+        @keyframes haloBreath {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: .7;
+            }
+
+            50% {
+                transform: scale(1.12);
+                opacity: 1;
+            }
+        }
+
+        .card-1-bottom {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-1-invite-big {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 22px;
+            color: white;
+            line-height: 1.45;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, .5);
+            max-width: 280px;
+        }
+
+        .card-1-deco-line {
+            width: 50px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .5), transparent);
+            border-radius: 2px;
+            margin-top: 2px;
+        }
+
+        .rhene-peek-wrap {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+            overflow: hidden;
+            border-radius: 28px;
+        }
+
+        .rhene-peek {
+            position: absolute;
+            width: 30rem;
+            height: 30rem;
+            object-fit: contain;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        /* ══ CARD 2 – Cumpleaños ══ */
+        .card-2 .card-bg {
+            background-image: url('./resources/bg_2.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-2 .card-overlay {
+            background: linear-gradient(180deg,
+                    rgba(232, 245, 233, 0.80) 0%, rgba(254, 249, 240, 0.72) 50%, rgba(252, 228, 236, 0.80) 100%);
+        }
+
+        .card-2 .card-body {
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            padding: 36px 28px 32px;
+        }
+
+        .card-2-confetti-canvas {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .card-2-top {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 22px;
+            color: var(--deep-green);
+            line-height: 1.62;
+            max-width: 270px;
+            text-shadow: 0 1px 6px rgba(255, 255, 255, .7);
+        }
+
+        .card-2-number-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 5rem;
+        }
+
+        .card-2-big-number {
+            font-family: var(--font-fun);
+            font-size: 168px;
+            color: var(--deep-green);
+            line-height: 0.9;
+            text-shadow: 0 6px 0 rgba(74, 124, 89, .18), 0 12px 32px rgba(74, 124, 89, .22), 0 0 60px rgba(205, 232, 200, .5);
+        }
+
+        .card-2-anitos {
+            font-family: var(--font-fun);
+            font-size: 20px;
+            color: var(--green-forest);
+            letter-spacing: 3px;
+            margin-top: 2px;
+        }
+
+        .card-2-bottom {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 20px;
+            color: var(--deep-green);
+            line-height: 1.6;
+            max-width: 260px;
+            text-shadow: 0 1px 6px rgba(255, 255, 255, .7);
+        }
+
+        /* ══ CARD 2 – Sofi slide ══ */
+        .card-2-sofi-slide {
+            position: absolute;
+            bottom: 8%;
+            left: 0;
+            width: 400px;
+            opacity: 0.4;
+            height: auto;
+            object-fit: contain;
+            z-index: 6;
+            pointer-events: none;
+            animation: sofiaSlide 5s linear infinite;
+            filter: drop-shadow(0 4px 14px rgba(0, 0, 0, 0.22));
+        }
+
+        @keyframes sofiaSlide {
+            0% {
+                transform: translateX(480px);
+            }
+
+            50% {
+                transform: translateX(-100px);
+            }
+
+            100% {
+                transform: translateX(-650px);
+            }
+        }
+
+        /* ══ CARD 3 – Fecha & Lugar ══ */
+        .card-3 .card-bg {
+            background-image: url('./resources/bg_3.png');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-3 .card-overlay {
+            background: linear-gradient(180deg,
+                    rgba(0, 30, 10, .52) 0%, rgba(0, 45, 16, .38) 38%, rgba(0, 38, 14, .48) 68%, rgba(0, 18, 6, .70) 100%);
+        }
+
+        .card-3 .card-body {
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            padding: 38px 28px 36px;
+        }
+
+        .card-3-date-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+        }
+
+        .card-3-pre {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 17px;
+            color: rgba(205, 232, 200, .88);
+            letter-spacing: .5px;
+            margin-bottom: 2px;
+        }
+
+        .card-3-day {
+            font-family: var(--font-fun);
+            font-size: 132px;
+            color: white;
+            line-height: .82;
+            text-shadow: 0 4px 0 rgba(74, 124, 89, .45), 0 10px 36px rgba(0, 0, 0, .45);
+        }
+
+        .card-3-month {
+            font-family: var(--font-title);
+            font-size: 54px;
+            color: var(--green-soft);
+            line-height: 1.05;
+            text-shadow: 0 3px 14px rgba(0, 0, 0, .4);
+        }
+
+        .card-3-year {
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 7px;
+            text-transform: uppercase;
+            color: rgba(247, 198, 217, .85);
+            margin-top: 5px;
+        }
+
+        .card-3-time-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2px;
+        }
+
+        .card-3-time-connector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .card-3-time-rule {
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, .3);
+        }
+
+        .card-3-time-label {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 15px;
+            color: rgba(255, 255, 255, .72);
+            white-space: nowrap;
+        }
+
+        .card-3-time {
+            font-family: var(--font-fun);
+            font-size: 52px;
+            color: white;
+            line-height: 1.1;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, .4);
+        }
+
+        .card-3-location {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-3-address {
+            font-family: var(--font-body);
+            font-size: 16px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, .88);
+            line-height: 1.6;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, .45);
+        }
+
+        .card-3-map-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            background: rgba(255, 255, 255, .14);
+            border: 1.5px solid rgba(255, 255, 255, .32);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            border-radius: 50px;
+            padding: 10px 24px;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background .22s, transform .22s;
+        }
+
+        .card-3-map-btn:hover {
+            background: rgba(255, 255, 255, .24);
+            transform: translateY(-2px);
+        }
+
+        /* ══ CARD 3 – Globos flotantes (20 globos) ══ */
+        .card-3-balloons {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 28px;
+            z-index: 3;
+        }
+
+        .card-3-balloon {
+            position: absolute;
+            bottom: -120px;
+            width: 80px;
+            opacity: 0;
+            will-change: transform, opacity;
+        }
+
+        @keyframes bUp {
+            0% {
+                transform: translateY(0) rotate(1deg);
+                opacity: 0;
+            }
+
+            4% {
+                opacity: 0.42;
+            }
+
+            46% {
+                opacity: 0.40;
+            }
+
+            50% {
+                transform: translateY(-118vh) rotate(-2deg);
+                opacity: 0;
+            }
+
+            50.1% {
+                transform: translateY(0) rotate(1deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0) rotate(1deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bUpL {
+            0% {
+                transform: translateY(0) translateX(0) rotate(-3deg);
+                opacity: 0;
+            }
+
+            4% {
+                opacity: 0.42;
+            }
+
+            46% {
+                opacity: 0.40;
+            }
+
+            50% {
+                transform: translateY(-121vh) translateX(-18px) rotate(4deg);
+                opacity: 0;
+            }
+
+            50.1% {
+                transform: translateY(0) translateX(0) rotate(-3deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0) translateX(0) rotate(-3deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bUpR {
+            0% {
+                transform: translateY(0) translateX(0) rotate(4deg);
+                opacity: 0;
+            }
+
+            4% {
+                opacity: 0.42;
+            }
+
+            46% {
+                opacity: 0.40;
+            }
+
+            50% {
+                transform: translateY(-115vh) translateX(18px) rotate(-3deg);
+                opacity: 0;
+            }
+
+            50.1% {
+                transform: translateY(0) translateX(0) rotate(4deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0) translateX(0) rotate(4deg);
+                opacity: 0;
+            }
+        }
+
+        @keyframes bUpH {
+            0% {
+                transform: translateY(0) rotate(-2deg);
+                opacity: 0;
+            }
+
+            4% {
+                opacity: 0.42;
+            }
+
+            46% {
+                opacity: 0.40;
+            }
+
+            50% {
+                transform: translateY(-125vh) rotate(5deg);
+                opacity: 0;
+            }
+
+            50.1% {
+                transform: translateY(0) rotate(-2deg);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0) rotate(-2deg);
+                opacity: 0;
+            }
+        }
+
+        .b1 {
+            left: 8%;
+            margin-left: -40px;
+            animation: bUpR 12s linear infinite 0.8s;
+        }
+
+        .b2 {
+            left: 18%;
+            margin-left: -40px;
+            animation: bUp 12s linear infinite 2.4s;
+        }
+
+        .b3 {
+            left: 28%;
+            margin-left: -40px;
+            animation: bUpL 12s linear infinite 0.0s;
+        }
+
+        .b4 {
+            left: 38%;
+            margin-left: -40px;
+            animation: bUpH 12s linear infinite 3.2s;
+        }
+
+        .b5 {
+            left: 48%;
+            margin-left: -40px;
+            animation: bUpR 12s linear infinite 1.2s;
+        }
+
+        .b6 {
+            left: 58%;
+            margin-left: -40px;
+            animation: bUp 12s linear infinite 2.8s;
+        }
+
+        .b7 {
+            left: 68%;
+            margin-left: -40px;
+            animation: bUpL 12s linear infinite 0.4s;
+        }
+
+        .b8 {
+            left: 78%;
+            margin-left: -40px;
+            animation: bUpH 12s linear infinite 3.6s;
+        }
+
+        .b9 {
+            left: 22%;
+            margin-left: -40px;
+            animation: bUpR 12s linear infinite 2.0s;
+        }
+
+        .b10 {
+            left: 62%;
+            margin-left: -40px;
+            animation: bUp 12s linear infinite 1.6s;
+        }
+
+        /* ══ CARD 5 – Cuenta regresiva ══ */
+        .card-5 .card-bg {
+            background-image: url('./resources/bg_4.png');
+        }
+
+        .card-5 .card-overlay {
+            background: linear-gradient(180deg, rgba(0, 28, 10, .55) 0%, rgba(0, 45, 18, .70) 100%);
+        }
+
+        .card-5 .card-body {
+            justify-content: space-evenly;
+            align-items: center;
+            text-align: center;
+        }
+
+        .card-cd-eyebrow {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 17px;
+            color: rgba(205, 232, 200, .9);
+        }
+
+        .card-cd-days-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card-cd-days-num {
+            font-family: var(--font-fun);
+            font-size: 124px;
+            color: white;
+            line-height: .82;
+            text-shadow: 0 0 50px rgba(168, 216, 240, .45), 0 8px 32px rgba(0, 0, 0, .45);
+        }
+
+        .card-cd-days-lbl {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: rgba(168, 216, 240, .78);
+            margin-top: 6px;
+        }
+
+        .card-cd-hms-row {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .card-cd-hms-unit {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .card-cd-hms-num {
+            font-family: var(--font-fun);
+            font-size: 56px;
+            color: white;
+            line-height: .88;
+            text-shadow: 0 4px 20px rgba(0, 0, 0, .38);
+        }
+
+        .card-cd-hms-lbl {
+            font-family: var(--font-body);
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: rgba(168, 216, 240, .65);
+            margin-top: 5px;
+        }
+
+        .card-cd-sep {
+            font-family: var(--font-fun);
+            font-size: 44px;
+            color: rgba(255, 255, 255, .28);
+            line-height: .88;
+        }
+
+        .card-cd-footer {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 15px;
+            color: rgba(247, 198, 217, .88);
+            text-shadow: 0 2px 10px rgba(0, 0, 0, .38);
+        }
+
+        /* ══ CARD 7 – Mesa de Regalos ══ */
+        .card-7 .card-bg {
+            background-image: url('./resources/bg_5.png');
+        }
+
+        .card-7 .card-overlay {
+            background: linear-gradient(160deg,
+                    rgba(255, 240, 248, 0.90) 0%,
+                    rgba(255, 248, 237, 0.86) 50%,
+                    rgba(240, 235, 255, 0.90) 100%);
+        }
+
+        .card-7 .card-body {
+            justify-content: space-evenly;
+            gap: 0;
+            padding: 32px 24px 28px;
+        }
+
+        .gifts-title-icon {
+            width: 3rem;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.14));
+        }
+
+        .gifts-deposit-intro {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 12px;
+            color: #777;
+            line-height: 1.5;
+            margin-bottom: 6px;
+        }
+
+        .gifts-phrase {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 15px;
+            color: var(--deep-green);
+            text-align: center;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .gifts-deposit {
+            background: rgba(255, 255, 255, 0.80);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 12px 14px;
+            border: 1px solid rgba(74, 124, 89, 0.18);
+            box-shadow: 0 3px 14px rgba(0, 0, 0, 0.07);
+        }
+
+        .gifts-deposit-header {
+            font-family: var(--font-fun);
+            font-size: 14px;
+            color: var(--deep-green);
+            margin-bottom: 8px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid rgba(74, 124, 89, 0.12);
+        }
+
+        .deposit-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 4px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            gap: 6px;
+        }
+
+        .deposit-row:last-child {
+            border-bottom: none;
+        }
+
+        .deposit-label {
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 700;
+            color: #aaa;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .deposit-value {
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--deep-green);
+        }
+
+        .copy-btn {
+            background: var(--green-soft);
+            border: none;
+            border-radius: 7px;
+            padding: 4px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            color: var(--deep-green);
+            font-weight: 700;
+            flex-shrink: 0;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.93);
+        }
+
+        .gifts-registry {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+            min-height: 0;
+        }
+
+        .gifts-registry-title {
+            font-family: var(--font-title);
+            font-size: 32px;
+            color: var(--deep-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .gift-slide {
+            background: rgba(255, 255, 255, 0.52);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-radius: 18px;
+            padding: 0px 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            border: 1.5px solid rgba(123, 174, 127, 0.18);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.07);
+            flex: 1;
+            min-height: 0;
+            justify-content: space-evenly;
+        }
+
+        .gift-emoji-wrap {
+            position: relative;
+            font-size: 42px;
+            line-height: 1;
+        }
+
+        .gift-bought-badge {
+            position: absolute;
+            top: -5px;
+            right: -8px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            width: 19px;
+            height: 19px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .gift-name {
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--deep-green);
+            text-align: center;
+        }
+
+        .gift-desc {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 11.5px;
+            color: #888;
+            text-align: center;
+            line-height: 1.4;
+            max-width: 240px;
+        }
+
+        .gift-actions {
+            display: flex;
+            gap: 7px;
+            width: 100%;
+            margin-top: 4px;
+        }
+
+        .gift-buy-btn {
+            flex: 1;
+            background: var(--deep-green);
+            color: white;
+            border: none;
+            border-radius: 11px;
+            padding: 9px 8px;
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 3px;
+            transition: background 0.2s;
+        }
+
+        .gift-buy-btn:hover {
+            background: var(--green-forest);
+        }
+
+        .gift-mark-btn {
+            flex: 1;
+            background: transparent;
+            border: 1.5px solid rgba(123, 174, 127, 0.45);
+            border-radius: 11px;
+            padding: 9px 8px;
+            font-family: var(--font-body);
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            color: var(--green-forest);
+            transition: all 0.2s;
+        }
+
+        .gift-mark-btn.is-bought {
+            background: var(--green-soft);
+            color: var(--deep-green);
+            border-color: var(--green-forest);
+        }
+
+        .gifts-nav-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .gifts-nav-btn {
+            background: rgba(74, 124, 89, 0.20);
+            border: 1.5px solid rgba(74, 124, 89, 0.30);
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            font-size: 22px;
+            cursor: pointer;
+            color: var(--deep-green);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s, transform 0.15s;
+            flex-shrink: 0;
+        }
+
+        .gifts-nav-btn:hover {
+            background: var(--green-soft);
+            transform: scale(1.08);
+        }
+
+        .gifts-nav-btn:active {
+            transform: scale(0.93);
+        }
+
+        .gifts-dots {
+            display: flex;
+            gap: 5px;
+        }
+
+        .gifts-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(123, 174, 127, 0.3);
+            transition: all 0.3s;
+        }
+
+        .gifts-dot.active {
+            background: var(--green-forest);
+            width: 16px;
+            border-radius: 3px;
+        }
+
+        /* ══ CARD 9 – Cierre ══ */
+        .card-9 .card-bg {
+            background-image: url('./resources/bg_1.png');
+        }
+
+        .card-9 .card-overlay {
+            background: linear-gradient(180deg,
+                    rgba(0, 22, 8, .60) 0%,
+                    rgba(0, 40, 15, .38) 42%,
+                    rgba(0, 22, 8, .68) 100%);
+        }
+
+        .card-9 .card-body {
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+            padding: 52px 28px 48px;
+        }
+
+        .card-9-title {
+            font-family: var(--font-title);
+            font-size: 46px;
+            color: white;
+            line-height: 1.15;
+            text-shadow: 0 4px 30px rgba(0, 0, 0, .55), 0 0 60px rgba(168, 216, 240, .18);
+        }
+
+        .card-9-rhene {
+            width: min(230px, 60%);
+            object-fit: contain;
+            filter: drop-shadow(0 10px 32px rgba(0, 0, 0, .45));
+            animation: rheneJump 1.4s ease-in-out infinite;
+        }
+
+        @keyframes rheneJump {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            45% {
+                transform: translateY(-22px);
+            }
+        }
+
+        .card-9-footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-9-love {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 17px;
+            color: rgba(255, 255, 255, 0.90);
+            text-shadow: 0 2px 14px rgba(0, 0, 0, .45);
+            line-height: 1.55;
+        }
+
+        .card-9-heart {
+            font-size: 36px;
+            animation: heartbeat 1.5s ease-in-out infinite;
+        }
+
+        /* ── GIFT REGISTRY HINT ── */
+        .gifts-registry-hint {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 12px;
+            color: var(--deep-green);
+            text-align: center;
+            line-height: 1.5;
+            opacity: 0.82;
+        }
+
+        /* ── GIFT CONFIRM MODAL ── */
+        .gift-confirm-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 220;
+            background: rgba(0, 0, 0, 0.60);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            padding: 28px;
+        }
+
+        .gift-confirm-modal.open {
+            display: flex;
+        }
+
+        .gift-confirm-content {
+            background: white;
+            border-radius: 22px;
+            padding: 30px 26px 24px;
+            max-width: 310px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.32);
+            animation: modalIn 0.3s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+        }
+
+        @keyframes modalIn {
+            from {
+                opacity: 0;
+                transform: scale(0.88) translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .gift-confirm-icon {
+            font-size: 44px;
+            margin-bottom: 10px;
+        }
+
+        .gift-confirm-title {
+            font-family: var(--font-fun);
+            font-size: 18px;
+            color: var(--deep-green);
+            margin-bottom: 10px;
+        }
+
+        .gift-confirm-msg {
+            font-family: var(--font-body);
+            font-size: 13px;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .gift-confirm-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .gift-confirm-cancel {
+            flex: 1;
+            background: transparent;
+            border: 1.5px solid rgba(123, 174, 127, 0.45);
+            border-radius: 12px;
+            padding: 11px 8px;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            color: #888;
+            transition: all 0.2s;
+        }
+
+        .gift-confirm-cancel:hover {
+            background: #f5f5f5;
+        }
+
+        .gift-confirm-ok {
+            flex: 1;
+            background: var(--deep-green);
+            border: none;
+            border-radius: 12px;
+            padding: 11px 8px;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            color: white;
+            transition: all 0.2s;
+        }
+
+        .gift-confirm-ok:hover {
+            background: var(--green-forest);
+        }
+
+        .gift-empty {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 14px;
+            color: var(--deep-green);
+            text-align: center;
+            padding: 20px;
+            opacity: 0.75;
+        }
+
+        /* ── GIFTS VIEW BUTTON ── */
+        .gifts-view-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: var(--deep-green);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 13px 28px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(74, 124, 89, .30);
+            transition: background .22s, transform .18s, box-shadow .22s;
+            width: 100%;
+            max-width: 280px;
+            align-self: center;
+        }
+
+        .gifts-view-btn:hover {
+            background: var(--green-forest);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(74, 124, 89, .38);
+        }
+
+        .gifts-view-btn:active {
+            transform: scale(0.95);
+        }
+
+        .gifts-view-btn-icon {
+            font-size: 18px;
+        }
+
+        /* ── GIFTS REGISTRY MODAL ── */
+        .gifts-registry-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 210;
+            background: rgba(0, 0, 0, .55);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            align-items: flex-end;
+            justify-content: center;
+            padding: 0;
+        }
+
+        .gifts-registry-modal.open {
+            display: flex;
+        }
+
+        .gifts-registry-modal-sheet {
+            background: linear-gradient(160deg, rgba(255, 240, 248, 0.98) 0%, rgba(255, 248, 237, 0.98) 50%, rgba(240, 235, 255, 0.98) 100%);
+            border-radius: 28px 28px 0 0;
+            padding: 20px 20px 36px;
+            width: 100%;
+            max-width: 480px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            animation: sheetSlideUp 0.38s cubic-bezier(0.34, 1.3, 0.64, 1) both;
+            max-height: 88svh;
+        }
+
+        @keyframes sheetSlideUp {
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .gifts-registry-modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .gifts-registry-modal-title {
+            font-family: var(--font-title);
+            font-size: 22px;
+            color: var(--deep-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .gifts-registry-modal-close {
+            background: rgba(74, 124, 89, 0.12);
+            border: none;
+            border-radius: 50%;
+            width: 34px;
+            height: 34px;
+            font-size: 16px;
+            cursor: pointer;
+            color: var(--deep-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background .2s;
+            flex-shrink: 0;
+        }
+
+        .gifts-registry-modal-close:hover {
+            background: rgba(74, 124, 89, 0.22);
+        }
+
+        .gifts-registry-modal .gifts-registry {
+            flex: 1;
+            min-height: 260px;
+        }
+
+        .gifts-registry-modal .gift-slide {
+            min-height: 200px;
+        }
+
+        /* ── MIS GUSTOS ── */
+        .gustos-section {
+            background: rgba(255, 255, 255, 0.70);
+            border-radius: 16px;
+            border: 1.5px solid rgba(247, 198, 217, 0.45);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .gustos-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 11px 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--deep-green);
+            gap: 8px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .gustos-toggle-left {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .gustos-chevron {
+            font-size: 20px;
+            color: var(--green-forest);
+            transition: transform 0.25s cubic-bezier(.34, 1.3, .64, 1);
+            display: inline-block;
+            line-height: 1;
+        }
+
+        .gustos-chevron.open {
+            transform: rotate(90deg);
+        }
+
+        .gustos-content {
+            padding: 0 14px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            animation: gustosIn 0.28s cubic-bezier(.34, 1.3, .64, 1) both;
+        }
+
+        @keyframes gustosIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .gustos-interests {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .gustos-chip {
+            background: linear-gradient(135deg, rgba(247, 198, 217, 0.50), rgba(205, 232, 200, 0.50));
+            border: 1px solid rgba(123, 174, 127, 0.28);
+            border-radius: 50px;
+            padding: 5px 13px;
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 700;
+            color: var(--deep-green);
+        }
+
+        .gustos-sizes {
+            display: flex;
+            gap: 8px;
+        }
+
+        .gustos-size-item {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.82);
+            border-radius: 12px;
+            border: 1px solid rgba(74, 124, 89, 0.12);
+            padding: 9px 11px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .gustos-size-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .gustos-size-label {
+            font-family: var(--font-body);
+            font-size: 9.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #aaa;
+            line-height: 1.2;
+        }
+
+        .gustos-size-value {
+            font-family: var(--font-body);
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--deep-green);
+            line-height: 1.2;
+        }
+
+        /* ── SWIPE HINT ── */
+        .swipe-hint {
+            position: fixed;
+            right: max(16px, calc(50% - 192px));
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 30;
+            pointer-events: none;
+            opacity: 1;
+            transition: opacity 0.6s ease;
+        }
+
+        .swipe-hint-bubble {
+            width: 84px;
+            height: 84px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .swipe-hand {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+            filter: brightness(0) invert(1) drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
+            animation: swipeUpHint 3.6s ease-in-out infinite;
+            transform-origin: center bottom;
+        }
+
+        @keyframes swipeUpHint {
+            0% {
+                transform: translateY(0);
+                opacity: 0.95;
+            }
+
+            26% {
+                transform: translateY(-28px);
+                opacity: 0.5;
+            }
+
+            34% {
+                transform: translateY(-36px);
+                opacity: 0;
+            }
+
+            35% {
+                transform: translateY(6px);
+                opacity: 0;
+            }
+
+            50% {
+                transform: translateY(0);
+                opacity: 0.95;
+            }
+
+            100% {
+                transform: translateY(0);
+                opacity: 0.95;
+            }
+        }
+
+        /* ── LOADING SCREEN ── */
+        #loadingScreen {
+            position: fixed;
+            inset: 0;
+            background: linear-gradient(160deg, #fce4ef 0%, #fff5f9 45%, #f0ede8 100%);
+            z-index: 200;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            touch-action: none;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        #loadingScreen::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse at 20% 20%, rgba(247, 198, 217, .55) 0%, transparent 52%),
+                radial-gradient(ellipse at 80% 75%, rgba(205, 232, 200, .40) 0%, transparent 52%),
+                radial-gradient(ellipse at 60% 10%, rgba(168, 216, 240, .28) 0%, transparent 45%);
+            pointer-events: none;
+        }
+
+        .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 14px;
+            transition: opacity 0.4s ease;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+            padding: 0 32px;
+        }
+
+        .loading-state img {
+            width: min(72vw, 180px);
+            filter: drop-shadow(0 4px 18px rgba(160, 60, 90, .18));
+        }
+
+        .loading-name {
+            font-family: var(--font-title);
+            font-size: 46px;
+            color: var(--deep-green);
+            line-height: 1;
+            text-shadow: 0 2px 18px rgba(74, 124, 89, .18);
+            letter-spacing: -0.5px;
+            margin-top: 2px;
+        }
+
+        .loading-text {
+            font-family: var(--font-elegant);
+            font-style: italic;
+            font-size: 15px;
+            color: rgba(120, 70, 90, .72);
+            letter-spacing: 0.3px;
+        }
+
+        .loading-dots {
+            display: flex;
+            gap: 7px;
+            margin-top: 2px;
+        }
+
+        .loading-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(247, 198, 217, .5);
+            animation: ldotPulse 1.5s ease-in-out infinite;
+        }
+
+        .loading-dot:nth-child(2) {
+            animation-delay: 0.22s;
+        }
+
+        .loading-dot:nth-child(3) {
+            animation-delay: 0.44s;
+        }
+
+        @keyframes ldotPulse {
+
+            0%,
+            100% {
+                transform: scale(1);
+                opacity: .5;
+                background: rgba(247, 198, 217, .5);
+            }
+
+            50% {
+                transform: scale(1.55);
+                opacity: 1;
+                background: var(--pink);
+            }
+        }
+
+        .loading-ready {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 22px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+            padding: 0 24px;
+        }
+
+        .loading-ready.visible {
+            display: flex;
+        }
+
+        .loading-ready-title {
+            font-family: var(--font-title);
+            font-size: 38px;
+            color: var(--deep-green);
+            text-shadow: 0 2px 18px rgba(74, 124, 89, .15);
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        .loading-tips-row {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            align-items: stretch;
+            width: 100%;
+            max-width: 400px;
+            box-sizing: border-box;
+        }
+
+        .loading-tip-box {
+            flex: 1;
+            min-width: 0;
+            background: rgba(255, 255, 255, .58);
+            border: 1px solid rgba(247, 198, 217, .55);
+            border-radius: 20px;
+            padding: 16px 12px;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(200, 120, 150, .10);
+        }
+
+        .loading-tip-left {
+            animation: ltipFloat 4s ease-in-out infinite;
+        }
+
+        .loading-tip-right {
+            animation: ltipFloat 4s ease-in-out infinite 0.9s;
+        }
+
+        @keyframes ltipFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+        }
+
+        .loading-tip-icon {
+            font-size: 26px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .loading-tip-text {
+            font-family: var(--font-body);
+            font-size: 12.5px;
+            color: var(--deep-green);
+            line-height: 1.5;
+            font-weight: 600;
+        }
+
+        .loading-swipe-cta {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .swipe-hint-bubble-loading {
+            width: 68px;
+            height: 68px;
+            background: var(--deep-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 22px rgba(74, 124, 89, .30);
+        }
+
+        .swipe-hand-loading {
+            width: 46px;
+            height: 46px;
+            object-fit: contain;
+            filter: brightness(0) invert(1) drop-shadow(0 1px 4px rgba(0, 0, 0, 0.3));
+            animation: swipeUpHint 3.6s ease-in-out infinite;
+            transform-origin: center bottom;
+        }
+
+        .loading-swipe-label {
+            font-family: var(--font-body);
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.8px;
+            color: rgba(74, 124, 89, .50);
+        }
+
+        /* ── HOLD ALL CARD ANIMATIONS UNTIL APP-READY ── */
+        .card-1-photo,
+        .card-1-photo-wrap::before,
+        .card-2-sofi-slide,
+        .card-3-balloon,
+        .card-9-rhene,
+        .card-9-heart {
+            animation-play-state: paused;
+        }
+
+        body.app-ready .card-1-photo,
+        body.app-ready .card-1-photo-wrap::before,
+        body.app-ready .card-2-sofi-slide,
+        body.app-ready .card-3-balloon,
+        body.app-ready .card-9-rhene,
+        body.app-ready .card-9-heart {
+            animation-play-state: running;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Landscape block overlay -->
+    <div id="rotateOverlay">
+        <div class="rotate-icon">📱</div>
+        <div class="rotate-title">Gira tu dispositivo</div>
+        <div class="rotate-msg">Esta invitación está diseñada<br>para verse en modo vertical.</div>
+    </div>
+
+    <!-- Loading Screen -->
+    <div id="loadingScreen">
+        <div class="loading-state" id="loadingState">
+            <img src="./resources/loading.svg" alt="" draggable="false">
+            <div class="loading-name">Ángela Sofía</div>
+            <div class="loading-text">Preparando todo...</div>
+            <div class="loading-dots">
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+                <div class="loading-dot"></div>
+            </div>
+        </div>
+        <div class="loading-ready" id="loadingReady">
+            <div class="loading-ready-title">¡Todo listo!</div>
+            <div class="loading-tips-row">
+                <div class="loading-tip-box loading-tip-left">
+                    <span class="loading-tip-icon">👆</span>
+                    <div class="loading-tip-text">Desliza hacia arriba para avanzar</div>
+                </div>
+                <div class="loading-tip-box loading-tip-right">
+                    <span class="loading-tip-icon">🎵</span>
+                    <div class="loading-tip-text">Ajusta el volumen de tu dispositivo, para escuchar la canci&oacute;n
+                    </div>
+                </div>
+            </div>
+            <div class="loading-swipe-cta">
+                <div class="swipe-hint-bubble-loading">
+                    <img class="swipe-hand-loading" src="./resources/hand.svg" alt="" draggable="false">
+                </div>
+                <div class="loading-swipe-label">Desliza para entrar</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="deck-container">
+        <div class="deck-stack" id="deckStack">
+
+            <!-- CARTA 9 – Cierre -->
+            <div class="card card-9" data-card="9">
+                <div class="card-inner">
+                    <div class="card-bg"></div>
+                    <div class="card-overlay"></div>
+                    <div class="card-body">
+                        <div class="card-9-title">Ángela Sofía<br>te espera</div>
+                        <img class="card-9-rhene" src="./resources/rana_jump.png" alt="" draggable="false">
+                        <div class="card-9-footer">
+                            <div class="card-9-love">Con amor,<br>Familia Ram&iacute;rez Montes</div>
+                            <div class="card-9-heart">💚</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARTA 7 – Mesa de Regalos -->
+            <div class="card card-7" data-card="7">
+                <div class="card-inner">
+                    <div class="card-bg"></div>
+                    <div class="card-overlay"></div>
+                    <div class="card-body">
+
+                        <div class="gifts-registry-title">
+                            <img class="gifts-title-icon" src="./resources/rana_gift.png" alt="" draggable="false">
+                            Mesa de regalos
+                        </div>
+
+                        <div class="gifts-phrase">
+                            Aquí encontrarás algunas ideas si no sabes qué regalarme.
+                        </div>
+
+                        <button class="gifts-view-btn" onclick="openGiftsModal()">
+                            <span class="gifts-view-btn-icon">🎁</span> Mira opciones de regalo
+                        </button>
+
+                        <div class="gifts-phrase">
+                            Si prefieres apoyarme con un detalle, te invito a sumar un granito de arena a mi cuenta de
+                            ahorros:
+                        </div>
+
+                        <!-- Cuenta para depósito -->
+                        <div class="gifts-deposit">
+
+                            <div class="gifts-deposit-header">💳 Cuenta Cetes Niños de Sof&iacute;a</div>
+                            <div class="deposit-row">
+                                <span class="deposit-label">CLABE</span>
+                                <div style="display:flex;align-items:center;gap:5px;flex:1;justify-content:flex-end;">
+                                    <span class="deposit-value" id="giftsClabe">1351 8033 0029 499 788</span>
+                                    <button class="copy-btn" id="copyBtn" onclick="copyClabe(event)">Copiar</button>
+                                </div>
+                            </div>
+                            <div class="deposit-row">
+                                <span class="deposit-label">Banco</span>
+                                <span class="deposit-value">NAFIN</span>
+                            </div>
+                            <div class="deposit-row">
+                                <span class="deposit-label">A nombre de</span>
+                                <span class="deposit-value">Angela Sofia</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARTA 5 – Cuenta regresiva -->
+            <div class="card card-5" data-card="5">
+                <div class="card-inner">
+                    <div class="card-bg"></div>
+                    <div class="card-overlay"></div>
+                    <div class="card-body">
+                        <div class="card-cd-eyebrow">¡Nos vemos en&hellip;</div>
+                        <div class="card-cd-days-wrap">
+                            <div class="card-cd-days-num" id="card-cd-days">--</div>
+                            <div class="card-cd-days-lbl">días</div>
+                        </div>
+                        <div class="card-cd-hms-row">
+                            <div class="card-cd-hms-unit">
+                                <div class="card-cd-hms-num" id="card-cd-hours">--</div>
+                                <div class="card-cd-hms-lbl">horas</div>
+                            </div>
+                            <div class="card-cd-sep">:</div>
+                            <div class="card-cd-hms-unit">
+                                <div class="card-cd-hms-num" id="card-cd-mins">--</div>
+                                <div class="card-cd-hms-lbl">minutos</div>
+                            </div>
+                            <div class="card-cd-sep">:</div>
+                            <div class="card-cd-hms-unit">
+                                <div class="card-cd-hms-num" id="card-cd-secs">--</div>
+                                <div class="card-cd-hms-lbl">segundos</div>
+                            </div>
+                        </div>
+                        <div class="card-cd-footer">11 de julio de 2026 &middot; 1:00 p.m.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARTA 3 – Fecha & Lugar -->
+            <div class="card card-3" data-card="3">
+                <div class="card-inner">
+                    <div class="card-bg"></div>
+                    <div class="card-overlay"></div>
+                    <div class="card-3-balloons">
+                        <img class="card-3-balloon b1" src="./resources/globos_2.png" alt="" draggable="false">
+                        <img class="card-3-balloon b2" src="./resources/globo_3.png" alt="" draggable="false">
+                        <img class="card-3-balloon b3" src="./resources/globos_2.png" alt="" draggable="false">
+                        <img class="card-3-balloon b4" src="./resources/globo_3.png" alt="" draggable="false">
+                        <img class="card-3-balloon b5" src="./resources/globos_2.png" alt="" draggable="false">
+                        <img class="card-3-balloon b6" src="./resources/globo_3.png" alt="" draggable="false">
+                        <img class="card-3-balloon b7" src="./resources/globos_2.png" alt="" draggable="false">
+                        <img class="card-3-balloon b8" src="./resources/globo_3.png" alt="" draggable="false">
+                        <img class="card-3-balloon b9" src="./resources/globos_2.png" alt="" draggable="false">
+                        <img class="card-3-balloon b10" src="./resources/globo_3.png" alt="" draggable="false">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-3-date-wrap">
+                            <div class="card-3-pre">¡Te esperamos el</div>
+                            <div class="card-3-day">11</div>
+                            <div class="card-3-month">de julio</div>
+                            <div class="card-3-year">2026</div>
+                        </div>
+                        <div class="card-3-time-wrap">
+                            <div class="card-3-time-connector">
+                                <div class="card-3-time-rule"></div>
+                                <div class="card-3-time-label">a partir de las</div>
+                                <div class="card-3-time-rule"></div>
+                            </div>
+                            <div class="card-3-time">1:00 p.m.</div>
+                        </div>
+                        <div class="card-3-location">
+                            <div class="card-3-address">
+                                📍 Sagrada Familia 141<br>Fracc. Rinconadas de Santa Fe, Hgo.
+                            </div>
+                            <a href="https://maps.app.goo.gl/NSsh535NDvUMKebM8" target="_blank" class="card-3-map-btn">
+                                🗺️ C&oacute;mo llegar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARTA 2 – Cumpleaños -->
+            <div class="card card-2" data-card="2">
+                <div class="card-inner">
+                    <div class="card-bg"></div>
+                    <div class="card-overlay"></div>
+                    <canvas class="card-2-confetti-canvas" id="card2Canvas"></canvas>
+                    <img class="card-2-sofi-slide" src="./resources/img_sofi.png" alt="Sofía" draggable="false">
+                    <div class="card-body">
+                        <div class="card-2-top">
+                            Mis pap&aacute;s y yo queremos invitarte a celebrar mis
+                        </div>
+                        <div class="card-2-number-section">
+                            <div class="card-2-big-number">2</div>
+                            <div class="card-2-anitos">a&ntilde;itos</div>
+                        </div>
+                        <div class="card-2-bottom">
+                            y compartir juntos una tarde llena de alegr&iacute;a y diversi&oacute;n.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARTA 1 – Portada -->
+            <div class="card card-1" data-card="1">
+                <div class="card-inner">
+                    <div class="card-bg"></div>
+                    <div class="card-overlay"></div>
+                    <div class="rhene-peek-wrap" id="rhenePeekWrap">
+                        <img id="rhenePeek" class="rhene-peek" src="./resources/rana.png" alt="rhene" draggable="false">
+                    </div>
+                    <div class="card-body">
+                        <div class="card-1-top">
+                            <div class="card-1-name">Ángela<br>Sofía</div>
+                            <div class="card-1-subtitle">tiene una invitación<br>muy especial para ti…</div>
+                        </div>
+                        <div class="card-1-photo-wrap">
+                            <img class="card-1-photo" src="./resources/sofi.png" alt="Ángela Sofía" draggable="false">
+                        </div>
+                        <div class="card-1-bottom">
+                            <div class="card-1-deco-line"></div>
+                            <div class="card-1-invite-big">Quiere que seas parte de este d&iacute;a</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <nav class="icon-nav" id="iconNav"></nav>
+
+    <!-- Swipe hint -->
+    <div class="swipe-hint" id="swipeHint">
+        <div class="swipe-hint-bubble">
+            <img class="swipe-hand" src="./resources/hand.svg" alt="" draggable="false">
+        </div>
+    </div>
+
+    <!-- Modal carrusel de regalos -->
+    <div class="gifts-registry-modal" id="giftsRegistryModal">
+        <div class="gifts-registry-modal-sheet">
+            <div class="gifts-registry-modal-header">
+                <div class="gifts-registry-modal-title">
+                    Ideas de regalo
+                </div>
+                <button class="gifts-registry-modal-close" onclick="closeGiftsModal()">✕</button>
+            </div>
+            <!-- Mis gustos -->
+            <div class="gustos-section">
+                <button class="gustos-toggle" onclick="toggleGustos()" id="gustosToggle">
+                    <span class="gustos-toggle-left">¿Qué me gusta?</span>
+                    <span class="gustos-chevron" id="gustosChevron">›</span>
+                </button>
+                <div class="gustos-content" id="gustosContent" style="display:none;">
+                    <div class="gustos-interests">
+                        <div class="gustos-chip">🎨 Pintar</div>
+                        <div class="gustos-chip">🎵 Cantar</div>
+                        <div class="gustos-chip">📸 Tomar fotos</div>
+                        <div class="gustos-chip">📖 Leer cuentos</div>
+                        <div class="gustos-chip">🕹️ Jugar en las maquinas de peluches</div>
+                    </div>
+                    <div class="gustos-sizes">
+                        <div class="gustos-size-item">
+                            <span class="gustos-size-icon">👗</span>
+                            <div>
+                                <div class="gustos-size-label">Ropa</div>
+                                <div class="gustos-size-value">Talla 3 años</div>
+                            </div>
+                        </div>
+                        <div class="gustos-size-item">
+                            <span class="gustos-size-icon">👟</span>
+                            <div>
+                                <div class="gustos-size-label">Zapatos</div>
+                                <div class="gustos-size-value">Número 13.5 - 14</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="gifts-registry">
+                <div class="gift-slide" id="giftSlide"><!-- filled by JS --></div>
+                <div class="gifts-nav-row">
+                    <button class="gifts-nav-btn" onclick="giftPrev()">‹</button>
+                    <div class="gifts-dots" id="giftsDots"></div>
+                    <button class="gifts-nav-btn" onclick="giftNext()">›</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal confirmación regalo comprado -->
+    <div class="gift-confirm-modal" id="giftConfirmModal">
+        <div class="gift-confirm-content">
+            <div class="gift-confirm-icon">🎁</div>
+            <div class="gift-confirm-title">¿Marcar como comprado?</div>
+            <div class="gift-confirm-msg">Una vez marcado el regalo como comprado se quitar&aacute; de la lista y no se
+                podr&aacute; ver como opci&oacute;n de regalo. &iquest;Est&aacute;s seguro?</div>
+            <div class="gift-confirm-actions">
+                <button class="gift-confirm-cancel" onclick="closeGiftModal()">Cancelar</button>
+                <button class="gift-confirm-ok" onclick="confirmGiftBought()">S&iacute;, marcar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js';
+        import { getDatabase, ref, get, update, increment } from 'https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js';
+
+        /* ═══════════ FIREBASE ═══════════ */
+        const firebaseConfig = {
+            apiKey: "AIzaSyC6Xrc9EqMyXKH_gNFaOGuAX-ItudzZAVs",
+            authDomain: "bautizo-sofia.firebaseapp.com",
+            databaseURL: "https://bautizo-sofia-default-rtdb.firebaseio.com",
+            projectId: "bautizo-sofia",
+            storageBucket: "bautizo-sofia.firebasestorage.app",
+            messagingSenderId: "981839514602",
+            appId: "1:981839514602:web:981d3b9a4dcde418c84093",
+            measurementId: "G-TVQSGB0FWT"
+        };
+        let db;
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getDatabase(app);
+            console.log('[Firebase] ✅ App y Realtime Database inicializados, projectId:', firebaseConfig.projectId);
+        } catch (e) {
+            console.error('[Firebase] ❌ Error al inicializar Firebase:', e);
+        }
+
+        /* ═══════════ DATA ═══════════ */
+        const CARD_META = [
+            { svgSrc: './resources/icon1.svg', label: 'Portada', navLabel: 'Inicio', cardIndex: 0 },
+            { svgSrc: './resources/icon2.svg', label: 'Fecha', navLabel: 'Fecha y ubicación', cardIndex: 2 },
+            { svgSrc: './resources/icon3.svg', label: 'Regalos', navLabel: 'Mesa de regalos', cardIndex: 4 },
+        ];
+        let TOTAL_CARDS = 6;
+        let currentCardIndex = 0;
+        let animating = false;
+
+        /* ═══════════ ICON NAV ═══════════ */
+        function buildNav() {
+            const nav = document.getElementById('iconNav');
+            nav.innerHTML = '';
+            CARD_META.forEach((meta) => {
+                const btn = document.createElement('button');
+                btn.className = 'nav-item';
+                btn.setAttribute('aria-label', meta.label);
+                btn.innerHTML = `<span class="nav-dot"></span><img class="nav-icon" src="${meta.svgSrc}" alt="${meta.label}" draggable="false"><span class="nav-label">${meta.navLabel}</span>`;
+                btn.addEventListener('click', () => jumpTo(meta.cardIndex));
+                nav.appendChild(btn);
+            });
+        }
+
+        function updateNav() {
+            const items = document.querySelectorAll('.nav-item');
+            items.forEach((el, i) => {
+                el.classList.remove('active', 'done');
+                const start = CARD_META[i].cardIndex;
+                const end = i + 1 < CARD_META.length ? CARD_META[i + 1].cardIndex : TOTAL_CARDS;
+                if (currentCardIndex >= end) el.classList.add('done');
+                else if (currentCardIndex >= start) el.classList.add('active');
+            });
+            if (currentCardIndex === 0) startRheneAnim();
+            else stopRheneAnim();
+            if (currentCardIndex === 1) Card2Confetti.start();
+            else Card2Confetti.stop();
+            updateHint();
+            updateMusic();
+        }
+
+        /* ═══════════ MUSIC ═══════════ */
+        function updateMusic() {
+            if (document.hidden) return;
+            const onLast = currentCardIndex === TOTAL_CARDS - 1;
+            if (onLast) {
+                if (window._music1) window._music1.pause();
+                if (!window._music2) {
+                    window._music2 = new Audio('./resources/music_2.mp3');
+                    window._music2.volume = 0.7;
+                    window._music2._plays = 0;
+                    window._music2.addEventListener('ended', () => {
+                        window._music2._plays++;
+                        if (window._music2._plays < 3) {
+                            window._music2.currentTime = 0;
+                            window._music2.play().catch(() => { });
+                        }
+                    });
+                }
+                if (window._music2._plays < 3 && window._music2.paused) {
+                    window._music2.play().catch(() => { });
+                }
+            } else {
+                if (window._music2) window._music2.pause();
+                if (window._music1 && !window._music1._ended) {
+                    window._music1.play().catch(() => { });
+                }
+            }
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                if (window._music1) window._music1.pause();
+                if (window._music2) window._music2.pause();
+            } else {
+                updateMusic();
+            }
+        });
+
+        /* ═══════════ RHENE PEEK ═══════════ */
+        let rheneTimeout = null;
+        let rheneActive = false;
+
+        const RHENE_SPOTS = [
+            { hiddenStyle: { top: '10%', right: '-31rem', bottom: 'auto', left: 'auto', transform: 'rotate(-35deg)' }, visibleStyle: { top: '10%', right: '-15rem', bottom: 'auto', left: 'auto', transform: 'rotate(-35deg)' } },
+            { hiddenStyle: { bottom: '10%', right: '-31rem', top: 'auto', left: 'auto', transform: 'rotate(-35deg)' }, visibleStyle: { bottom: '10%', right: '-15rem', top: 'auto', left: 'auto', transform: 'rotate(-35deg)' } },
+            { hiddenStyle: { top: '10%', left: '-31rem', bottom: 'auto', right: 'auto', transform: 'rotate(35deg)' }, visibleStyle: { top: '10%', left: '-15rem', bottom: 'auto', right: 'auto', transform: 'rotate(35deg)' } },
+            { hiddenStyle: { bottom: '10%', left: '-31rem', top: 'auto', right: 'auto', transform: 'rotate(35deg)' }, visibleStyle: { bottom: '10%', left: '-15rem', top: 'auto', right: 'auto', transform: 'rotate(35deg)' } },
+            { hiddenStyle: { top: '-31rem', left: '10%', bottom: 'auto', right: 'auto', transform: 'rotate(180deg)' }, visibleStyle: { top: '-15rem', left: '10%', bottom: 'auto', right: 'auto', transform: 'rotate(180deg)' } },
+            { hiddenStyle: { top: '-31rem', right: '10%', bottom: 'auto', left: 'auto', transform: 'rotate(180deg)' }, visibleStyle: { top: '-15rem', right: '10%', bottom: 'auto', left: 'auto', transform: 'rotate(180deg)' } },
+            { hiddenStyle: { bottom: '-31rem', left: '10%', top: 'auto', right: 'auto', transform: 'rotate(0deg)' }, visibleStyle: { bottom: '-15rem', left: '10%', top: 'auto', right: 'auto', transform: 'rotate(0deg)' } },
+            { hiddenStyle: { bottom: '-31rem', right: '10%', top: 'auto', left: 'auto', transform: 'rotate(0deg)' }, visibleStyle: { bottom: '-15rem', right: '10%', top: 'auto', left: 'auto', transform: 'rotate(0deg)' } },
+        ];
+
+        let lastSpotIdx = -1;
+
+        function applyStyle(el, s) {
+            el.style.top = s.top || 'auto';
+            el.style.bottom = s.bottom || 'auto';
+            el.style.left = s.left || 'auto';
+            el.style.right = s.right || 'auto';
+            el.style.transform = s.transform || 'rotate(0deg)';
+        }
+
+        function pickRandomSpot() {
+            let idx;
+            do { idx = Math.floor(Math.random() * RHENE_SPOTS.length); }
+            while (idx === lastSpotIdx && RHENE_SPOTS.length > 1);
+            lastSpotIdx = idx;
+            return RHENE_SPOTS[idx];
+        }
+
+        function rheneLoop() {
+            if (!rheneActive) return;
+            const img = document.getElementById('rhenePeek');
+            const spot = pickRandomSpot();
+            img.style.transition = 'none';
+            img.style.opacity = '0';
+            applyStyle(img, spot.hiddenStyle);
+            img.getBoundingClientRect();
+            img.style.transition = 'all 0.6s cubic-bezier(0.34,1.4,0.64,1), opacity 0.4s ease';
+            img.style.opacity = '1';
+            applyStyle(img, spot.visibleStyle);
+            rheneTimeout = setTimeout(() => {
+                if (!rheneActive) return;
+                img.style.transition = 'all 0.5s cubic-bezier(0.4,0,0.6,1), opacity 0.4s ease';
+                img.style.opacity = '0';
+                applyStyle(img, spot.hiddenStyle);
+                rheneTimeout = setTimeout(() => { if (rheneActive) rheneLoop(); }, 3000);
+            }, 2000);
+        }
+
+        function startRheneAnim() {
+            if (rheneActive) return;
+            rheneActive = true;
+            rheneTimeout = setTimeout(rheneLoop, 1200);
+        }
+
+        function stopRheneAnim() {
+            rheneActive = false;
+            clearTimeout(rheneTimeout);
+            rheneTimeout = null;
+            const img = document.getElementById('rhenePeek');
+            if (img) { img.style.transition = 'opacity 0.3s ease'; img.style.opacity = '0'; }
+        }
+
+        /* ═══════════ DECK LAYOUT ═══════════ */
+        function slotTransform(slot) {
+            if (slot === 0) return { tx: 0, ty: 0, scale: 1, rot: 0, opacity: 1 };
+            if (slot === 1) return { tx: 18, ty: 14, scale: 0.93, rot: 5, opacity: 0.82 };
+            if (slot === 2) return { tx: -18, ty: 24, scale: 0.87, rot: -5, opacity: 0.68 };
+            if (slot === 3) return { tx: 10, ty: 33, scale: 0.81, rot: 3, opacity: 0.50 };
+            return { tx: 0, ty: 40, scale: 0.78, rot: 0, opacity: 0 };
+        }
+
+        function applySlot(card, slot, animated) {
+            const { tx, ty, scale, rot, opacity } = slotTransform(slot);
+            card.style.transition = animated ? 'transform .42s cubic-bezier(.34,1.3,.64,1), opacity .38s ease' : 'none';
+            card.style.transform = `translate(${tx}px,${ty}px) scale(${scale}) rotate(${rot}deg)`;
+            card.style.opacity = String(opacity);
+            card.style.zIndex = String(22 - slot);
+            card.style.display = '';
+        }
+
+        function getAllCards() {
+            return Array.from(document.getElementById('deckStack').querySelectorAll('.card')).reverse();
+        }
+
+        function positionCards(animated = true) {
+            getAllCards().forEach((card, idx) => {
+                const slot = idx - currentCardIndex;
+                if (slot < 0) card.style.display = 'none';
+                else applySlot(card, slot, animated);
+            });
+        }
+
+        /* ═══════════ NAVIGATION ═══════════ */
+        function goNext() {
+            if (animating) return;
+            if (currentCardIndex === TOTAL_CARDS - 1) { resetDeck(); return; }
+            animating = true;
+            const all = getAllCards();
+            const top = all[currentCardIndex];
+            top.style.transition = 'transform .46s cubic-bezier(.4,0,.6,1), opacity .36s ease';
+            top.style.transform = 'translateY(-130%) rotate(-8deg) scale(.85)';
+            top.style.opacity = '0';
+            const nextIdx = currentCardIndex + 1;
+            const hintEl = document.getElementById('swipeHint');
+            if (hintEl) hintEl.style.opacity = (hintEnabled && nextIdx < 2) ? '1' : '0';
+            setTimeout(() => {
+                top.style.display = 'none';
+                currentCardIndex++;
+                updateNav();
+                positionCards(true);
+                animating = false;
+            }, 440);
+        }
+
+        function goBack() {
+            if (animating || currentCardIndex <= 0) return;
+            animating = true;
+            currentCardIndex--;
+            const all = getAllCards();
+            const returning = all[currentCardIndex];
+            returning.style.transition = 'none';
+            returning.style.transform = 'translateY(-130%) rotate(-5deg) scale(.85)';
+            returning.style.opacity = '0';
+            returning.style.display = '';
+            returning.style.zIndex = '25';
+            returning.getBoundingClientRect();
+            returning.style.transition = 'transform .46s cubic-bezier(.34,1.3,.64,1), opacity .4s ease';
+            const { tx, ty, scale, rot } = slotTransform(0);
+            returning.style.transform = `translate(${tx}px,${ty}px) scale(${scale}) rotate(${rot}deg)`;
+            returning.style.opacity = '1';
+            all.forEach((card, idx) => {
+                if (idx === currentCardIndex) return;
+                const slot = idx - currentCardIndex;
+                if (slot >= 0) applySlot(card, slot, true);
+            });
+            setTimeout(() => { updateNav(); positionCards(false); animating = false; }, 480);
+        }
+
+        function jumpTo(targetIdx) {
+            if (animating || targetIdx === currentCardIndex) return;
+            animating = true;
+            const all = getAllCards();
+            const forward = targetIdx > currentCardIndex;
+            all.forEach((card, idx) => {
+                const slot = idx - targetIdx;
+                if (slot < 0) {
+                    card.style.transition = 'none';
+                    card.style.display = 'none';
+                } else if (idx === targetIdx) {
+                    card.style.transition = 'none';
+                    card.style.display = '';
+                    card.style.opacity = '0';
+                    card.style.zIndex = '25';
+                    card.style.transform = forward ? 'translateY(-100%) scale(.88)' : 'translateY(60%) scale(.88)';
+                    card.getBoundingClientRect();
+                    card.style.transition = 'transform .44s cubic-bezier(.34,1.3,.64,1), opacity .38s ease';
+                    const { tx, ty, scale, rot } = slotTransform(0);
+                    card.style.transform = `translate(${tx}px,${ty}px) scale(${scale}) rotate(${rot}deg)`;
+                    card.style.opacity = '1';
+                } else {
+                    applySlot(card, slot, true);
+                }
+            });
+            currentCardIndex = targetIdx;
+            setTimeout(() => { updateNav(); positionCards(false); animating = false; }, 460);
+        }
+
+        function resetDeck() {
+            animating = true;
+            const all = getAllCards();
+            all.forEach((card, idx) => {
+                card.style.transition = 'none';
+                card.style.display = '';
+                card.style.transform = `translateY(0) scale(${1 - idx * 0.03}) rotate(0deg)`;
+                card.style.opacity = idx === 0 ? '1' : String(Math.max(0, 1 - idx * 0.15));
+                card.style.zIndex = String(TOTAL_CARDS - idx);
+            });
+            all[0].getBoundingClientRect();
+            setTimeout(() => {
+                currentCardIndex = 0;
+                updateNav();
+                positionCards(true);
+                setTimeout(() => { animating = false; }, 460);
+            }, 80);
+        }
+
+        /* ═══════════ REVEAL DECK (on loading dismiss) ═══════════ */
+        /*
+         * FIX 1: Animación de entrada más suave y lenta.
+         * – Cada carta entra alternando desde arriba (slot impar) y desde abajo (slot par).
+         * – Delay escalonado: 160ms por slot (antes 90ms).
+         * – Duración de transición: 0.9s transform + 0.7s opacity (antes 0.65s / 0.5s).
+         * – Easing más suave: cubic-bezier(.34,1.12,.64,1) para reducir el rebote.
+         */
+        function revealDeck() {
+            document.getElementById('deckStack').style.visibility = 'visible';
+
+            const nav = document.querySelector('.icon-nav');
+            if (nav) {
+                nav.classList.add('reveal');
+            }   
+
+            const all = getAllCards();
+            // Posicionar cada carta fuera de pantalla, alternando arriba/abajo
+            all.forEach((card, idx) => {
+                const slot = idx - currentCardIndex;
+                if (slot < 0) { card.style.display = 'none'; return; }
+                const { tx, scale, rot } = slotTransform(slot);
+                // slot 0 → desde abajo, slot 1 → desde arriba, slot 2 → desde abajo…
+                const fromAbove = slot % 2 === 1;
+                card.style.transition = 'none';
+                card.style.display = '';
+                card.style.zIndex = String(22 - slot);
+                card.style.opacity = '0';
+                card.style.transform = fromAbove
+                    ? `translate(${tx}px, -120%) scale(${scale}) rotate(${rot}deg)`
+                    : `translate(${tx}px,  120%) scale(${scale}) rotate(${rot}deg)`;
+            });
+            // Forzar reflow antes de iniciar transiciones
+            document.getElementById('deckStack').getBoundingClientRect();
+            // Animar cada carta a su posición final con escalonado más largo
+            all.forEach((card, idx) => {
+                const slot = idx - currentCardIndex;
+                if (slot < 0) return;
+                const { tx, ty, scale, rot, opacity } = slotTransform(slot);
+                const delay = slot * 360; // ← 160ms entre carta y carta (antes 90ms)
+                card.style.transition =
+                    `transform 0.9s cubic-bezier(.34,1.12,.64,1) ${delay}ms, ` +
+                    `opacity   0.7s ease                          ${delay}ms`;
+                card.style.transform = `translate(${tx}px,${ty}px) scale(${scale}) rotate(${rot}deg)`;
+                card.style.opacity = String(opacity);
+            });
+        }
+
+        /* ═══════════ DRAG ═══════════ */
+        function setupDrag() {
+            const stack = document.getElementById('deckStack');
+            let sx = 0, sy = 0, dragging = false, activeCard = null;
+            const THRESHOLD = 65;
+
+            function onStart(e) {
+                if (animating) return;
+                const tag = e.target.tagName;
+                if (['INPUT', 'BUTTON', 'A', 'SELECT', 'TEXTAREA'].includes(tag)) return;
+                const all = getAllCards();
+                activeCard = all[currentCardIndex] || null;
+                if (!activeCard) return;
+                const p = e.touches ? e.touches[0] : e;
+                sx = p.clientX; sy = p.clientY;
+                dragging = true;
+                activeCard.style.transition = 'none';
+            }
+
+            function onMove(e) {
+                if (!dragging || !activeCard) return;
+                const p = e.touches ? e.touches[0] : e;
+                const dx = p.clientX - sx;
+                let dy = p.clientY - sy;
+                if (currentCardIndex === 0 && dy > 0) dy = 0;
+                if (currentCardIndex === TOTAL_CARDS - 1 && dy < 0) dy = 0;
+                activeCard.style.transform = `translate(${dx * .28}px,${dy}px) rotate(${dx * .04}deg)`;
+                const fade = Math.min(Math.abs(dy) / 180, 1);
+                activeCard.style.opacity = String(Math.max(.2, 1 - fade * .8));
+                if (e.cancelable) e.preventDefault();
+            }
+
+            function onEnd(e) {
+                if (!dragging) return;
+                dragging = false;
+                if (!activeCard) return;
+                const p = e.changedTouches ? e.changedTouches[0] : e;
+                const dy = p.clientY - sy;
+                activeCard = null;
+                if (dy < -THRESHOLD) goNext();
+                else if (dy > THRESHOLD) goBack();
+                else positionCards(true);
+            }
+
+            stack.addEventListener('touchstart', onStart, { passive: true });
+            stack.addEventListener('touchmove', onMove, { passive: false });
+            stack.addEventListener('touchend', onEnd, { passive: true });
+            stack.addEventListener('mousedown', onStart);
+            window.addEventListener('mousemove', onMove);
+            window.addEventListener('mouseup', onEnd);
+        }
+
+        /* ═══════════ SWIPE HINT ═══════════ */
+        const HINT_KEY = 'sofi_hint_v';
+        let hintEnabled = false;
+
+        function initHint() {
+            const visits = parseInt(localStorage.getItem(HINT_KEY) || '0', 10) + 1;
+            localStorage.setItem(HINT_KEY, String(visits));
+            hintEnabled = visits <= 2;
+        }
+
+        function updateHint() {
+            const el = document.getElementById('swipeHint');
+            if (!el) return;
+            el.style.opacity = (hintEnabled && currentCardIndex < 2) ? '1' : '0';
+        }
+
+        /* ═══════════ COUNTDOWN ═══════════ */
+        function updateCountdown() {
+            const diff = new Date('2026-07-11T13:00:00') - new Date();
+            if (diff < 0) {
+                ['days', 'hours', 'mins', 'secs'].forEach(k => {
+                    const el = document.getElementById('card-cd-' + k);
+                    if (el) el.textContent = '00';
+                });
+                return;
+            }
+            const d = Math.floor(diff / 86400000),
+                h = Math.floor(diff % 86400000 / 3600000),
+                m = Math.floor(diff % 3600000 / 60000),
+                s = Math.floor(diff % 60000 / 1000);
+            [['days', d], ['hours', h], ['mins', m], ['secs', s]].forEach(([k, v]) => {
+                const el = document.getElementById('card-cd-' + k);
+                if (el) el.textContent = String(v).padStart(2, '0');
+            });
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        /* ═══════════ GIFT REGISTRY ═══════════ */
+        let GIFTS = [];
+        let giftIdx = 0;
+
+        async function loadGiftsFromFirebase() {
+            console.log('[Firebase] 🎁 Cargando regalos de contadoresSofi/regalos...');
+            const snap = await get(ref(db, 'contadoresSofi/regalos'));
+            if (!snap.exists()) {
+                console.warn('[Firebase] ⚠️ Nodo contadoresSofi/regalos no existe');
+                return [];
+            }
+            const data = snap.val();
+            console.log('[Firebase] 📦 Datos crudos de regalos:', data);
+            const result = [];
+            Object.keys(data).sort((a, b) => Number(a) - Number(b)).forEach(k => {
+                const parts = String(data[k]).split('|');
+                if (parts.length < 5) {
+                    console.warn(`[Firebase] ⚠️ Regalo "${k}" tiene formato incorrecto (esperados 5 campos separados por |):`, data[k]);
+                    return;
+                }
+                const [bought, name, desc, imageUrl, link] = parts;
+                if (bought === '1') {
+                    console.log(`[Firebase] 🛒 Regalo "${k}" (${name}) ya comprado, omitido`);
+                    return;
+                }
+                result.push({ id: k, name, desc, imageUrl, link });
+            });
+            console.log(`[Firebase] ✅ ${result.length} regalo(s) disponibles cargados`);
+            return result;
+        }
+
+        function renderGift() {
+            const slide = document.getElementById('giftSlide');
+            if (!slide) return;
+            if (GIFTS.length === 0) {
+                slide.innerHTML = '<div class="gift-empty">¡Todos los regalos han sido marcados como comprados!</div>';
+                return;
+            }
+            giftIdx = Math.min(giftIdx, GIFTS.length - 1);
+            const g = GIFTS[giftIdx];
+            slide.innerHTML = `
+                <div class="gift-emoji-wrap">
+                    ${g.imageUrl ? `<img src="${g.imageUrl}" style="width:80px;height:80px;object-fit:cover;border-radius:12px;" alt="${g.name}">` : '<span>🎁</span>'}
+                </div>
+                <div class="gift-name">${g.name}</div>
+                <div class="gift-desc">${g.desc}</div>
+                <div class="gift-actions">
+                    <a href="${g.link}" target="_blank" class="gift-buy-btn">🛍️ Ver regalo</a>
+                    <button class="gift-mark-btn" onclick="toggleGiftBought('${g.id}')">Marcar comprado</button>
+                </div>`;
+            document.querySelectorAll('#giftsDots .gifts-dot').forEach((d, i) => {
+                d.classList.toggle('active', i === giftIdx);
+            });
+        }
+
+        function initGiftsDots() {
+            const el = document.getElementById('giftsDots');
+            if (!el) return;
+            el.innerHTML = '';
+            GIFTS.forEach((_, i) => {
+                const d = document.createElement('div');
+                d.className = 'gifts-dot' + (i === 0 ? ' active' : '');
+                el.appendChild(d);
+            });
+        }
+
+        function giftNext() { if (GIFTS.length) { giftIdx = (giftIdx + 1) % GIFTS.length; renderGift(); } }
+        function giftPrev() { if (GIFTS.length) { giftIdx = (giftIdx - 1 + GIFTS.length) % GIFTS.length; renderGift(); } }
+
+        let pendingBoughtId = null;
+
+        function toggleGiftBought(id) {
+            pendingBoughtId = id;
+            document.getElementById('giftConfirmModal').classList.add('open');
+        }
+
+        function closeGiftModal() {
+            document.getElementById('giftConfirmModal').classList.remove('open');
+            pendingBoughtId = null;
+        }
+
+        async function confirmGiftBought() {
+            if (!pendingBoughtId) return;
+            const g = GIFTS.find(g => g.id === pendingBoughtId);
+            if (g) {
+                try {
+                    console.log(`[Firebase] 🛒 Marcando regalo "${g.id}" como comprado...`);
+                    const regalosRef = ref(db, 'contadoresSofi/regalos');
+                    const snap = await get(regalosRef);
+                    if (snap.exists()) {
+                        const val = String(snap.val()[g.id] || '');
+                        await update(regalosRef, { [g.id]: '1' + val.slice(1) });
+                        console.log(`[Firebase] ✅ Regalo "${g.id}" marcado como comprado`);
+                    }
+                } catch (e) { console.error('Error actualizando regalo:', e); }
+            }
+            const idx = GIFTS.findIndex(g => g.id === pendingBoughtId);
+            if (idx !== -1) GIFTS.splice(idx, 1);
+            giftIdx = Math.max(0, Math.min(giftIdx, GIFTS.length - 1));
+            closeGiftModal();
+            initGiftsDots();
+            renderGift();
+        }
+
+        async function openGiftsModal() {
+            const modal = document.getElementById('giftsRegistryModal');
+            if (modal) modal.classList.add('open');
+            const slide = document.getElementById('giftSlide');
+            if (slide) slide.innerHTML = '<div class="gift-empty">Cargando regalos...</div>';
+            try {
+                GIFTS = await loadGiftsFromFirebase();
+                giftIdx = 0;
+                initGiftsDots();
+                renderGift();
+            } catch (e) {
+                console.error('Error cargando regalos:', e);
+                if (slide) slide.innerHTML = '<div class="gift-empty">No se pudieron cargar los regalos.</div>';
+            }
+        }
+
+        function closeGiftsModal() {
+            const modal = document.getElementById('giftsRegistryModal');
+            if (modal) modal.classList.remove('open');
+        }
+
+        document.addEventListener('click', e => {
+            const modal = document.getElementById('giftsRegistryModal');
+            if (modal && modal.classList.contains('open') && e.target === modal) closeGiftsModal();
+        });
+
+        function copyClabe(e) {
+            const el = document.getElementById('giftsClabe');
+            const btn = document.getElementById('copyBtn');
+            if (!el || !btn) return;
+            const text = el.textContent.trim();
+            const done = () => {
+                btn.textContent = '¡Copiado!';
+                setTimeout(() => { btn.textContent = 'Copiar'; }, 2200);
+            };
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(text).then(done).catch(() => {
+                    const r = document.createRange();
+                    r.selectNode(el);
+                    window.getSelection().removeAllRanges();
+                    window.getSelection().addRange(r);
+                    document.execCommand('copy');
+                    window.getSelection().removeAllRanges();
+                    done();
+                });
+            } else {
+                const r = document.createRange();
+                r.selectNode(el);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(r);
+                document.execCommand('copy');
+                window.getSelection().removeAllRanges();
+                done();
+            }
+        }
+
+        /* ═══════════ CARD-2 CONFETTI ═══════════ */
+        const Card2Confetti = (function () {
+            const BURST_MS = 2500, WAIT_MS = 3000, RIGHT_DELAY = 700;
+            const COLORS = ['#7BAE7F', '#F7C6D9', '#A8D8F0', '#CDE8C8', '#FFD700', '#FF8CA0', '#4A7C59', '#E8B4C8'];
+            let canvas = null, ctx = null, particles = [];
+            let rafId = null, t2 = null, tCycle = null;
+            let running = false, lastTs = null;
+
+            function spawnBurst(side) {
+                if (!canvas) return;
+                const W = canvas.width, H = canvas.height, cy = H * 0.74;
+                for (let i = 0; i < 22; i++) {
+                    const isRight = side === 'right';
+                    const angle = (isRight ? Math.PI : 0) + (Math.random() - 0.5) * Math.PI * 0.55;
+                    const speed = 130 + Math.random() * 190;
+                    particles.push({
+                        x: isRight ? W + 2 : -2, y: cy + (Math.random() - 0.5) * H * 0.28,
+                        vx: Math.cos(angle) * speed, vy: Math.sin(angle) * speed - 55,
+                        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+                        size: 5 + Math.random() * 6, rect: Math.random() > 0.45,
+                        rot: Math.random() * Math.PI * 2, rotV: (Math.random() - 0.5) * 9,
+                        born: performance.now(),
+                    });
+                }
+            }
+
+            function tick(ts) {
+                if (!running) return;
+                const dt = lastTs ? Math.min((ts - lastTs) / 1000, 0.05) : 0;
+                lastTs = ts;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles = particles.filter(p => {
+                    const elapsed = ts - p.born;
+                    if (elapsed >= BURST_MS) return false;
+                    const t = elapsed / BURST_MS;
+                    const a = t < 0.10 ? t / 0.10 : t > 0.65 ? 1 - (t - 0.65) / 0.35 : 1;
+                    p.x += p.vx * dt; p.y += p.vy * dt;
+                    p.vy += 240 * dt; p.rot += p.rotV * dt;
+                    ctx.save();
+                    ctx.globalAlpha = Math.max(0, a);
+                    ctx.fillStyle = p.color;
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rot);
+                    if (p.rect) ctx.fillRect(-p.size / 2, -p.size * 0.3, p.size, p.size * 0.6);
+                    else { ctx.beginPath(); ctx.arc(0, 0, p.size * 0.5, 0, Math.PI * 2); ctx.fill(); }
+                    ctx.restore();
+                    return true;
+                });
+                rafId = requestAnimationFrame(tick);
+            }
+
+            function fireCycle() {
+                if (!running) return;
+                spawnBurst('left');
+                t2 = setTimeout(() => { if (running) spawnBurst('right'); }, RIGHT_DELAY);
+                tCycle = setTimeout(fireCycle, RIGHT_DELAY + BURST_MS + WAIT_MS);
+            }
+
+            function start() {
+                if (running) return;
+                canvas = document.getElementById('card2Canvas');
+                if (!canvas) return;
+                ctx = canvas.getContext('2d');
+                const inner = document.querySelector('.card-2 .card-inner');
+                if (inner) { canvas.width = inner.offsetWidth; canvas.height = inner.offsetHeight; }
+                running = true; lastTs = null; particles = [];
+                rafId = requestAnimationFrame(tick);
+                fireCycle();
+            }
+
+            function stop() {
+                running = false;
+                clearTimeout(t2); clearTimeout(tCycle);
+                if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+                if (ctx && canvas) ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles = []; lastTs = null;
+            }
+
+            return { start, stop };
+        })();
+
+        /* ═══════════ BOOT ═══════════ */
+        function boot() {
+            if (new Date() >= new Date('2026-07-11T13:00:00')) {
+                const cdCard = document.querySelector('.card-5');
+                if (cdCard) cdCard.remove();
+                TOTAL_CARDS--;
+                CARD_META.forEach(m => { if (m.cardIndex > 3) m.cardIndex--; });
+            }
+            const VISIT_KEY = 'sofi_visited';
+            if (!localStorage.getItem(VISIT_KEY)) {
+                localStorage.setItem(VISIT_KEY, '1');
+                console.log('[Firebase] 📊 Primera visita, registrando en Firestore...');
+                update(ref(db, 'contadoresSofi/visitas'), { count: increment(1) })
+                    .then(() => console.log('[Firebase] ✅ Visita registrada en contadoresSofi/visitas'))
+                    .catch(e => console.error('[Firebase] ❌ Error al registrar visita:', e.code, e.message));
+            } else {
+                console.log('[Firebase] ℹ️ Visita ya registrada (localStorage)');
+            }
+            //initHint();
+            buildNav();
+            updateNav();
+            positionCards(false);
+            setupDrag();
+            initGiftsDots();
+            renderGift();
+            startRheneAnim();
+        }
+
+        /* ═══════════ EXPONER FUNCIONES AL HTML (onclick) ═══════════ */
+        document.addEventListener('contextmenu', e => { if (e.target.tagName === 'IMG') e.preventDefault(); });
+
+        function toggleGustos() {
+            const content = document.getElementById('gustosContent');
+            const chevron = document.getElementById('gustosChevron');
+            if (!content || !chevron) return;
+            const isOpen = content.style.display !== 'none';
+            if (isOpen) {
+                content.style.display = 'none';
+                chevron.classList.remove('open');
+            } else {
+                content.style.display = 'flex';
+                chevron.classList.add('open');
+            }
+        }
+
+        window.openGiftsModal = openGiftsModal;
+        window.closeGiftsModal = closeGiftsModal;
+        window.giftNext = giftNext;
+        window.giftPrev = giftPrev;
+        window.toggleGiftBought = toggleGiftBought;
+        window.closeGiftModal = closeGiftModal;
+        window.confirmGiftBought = confirmGiftBought;
+        window.copyClabe = copyClabe;
+        window.toggleGustos = toggleGustos;
+
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
+        else setTimeout(boot, 0);
+
+        /* ═══════════ LOADING SCREEN ═══════════ */
+        (function () {
+            const screen = document.getElementById('loadingScreen');
+            const loadingState = document.getElementById('loadingState');
+            const readyState = document.getElementById('loadingReady');
+            let dismissed = false;
+            let lsDragging = false, lsStartY = 0;
+            const DISMISS_THRESHOLD = 60;
+
+            function showReady() {
+                loadingState.style.opacity = '0';
+                setTimeout(() => {
+                    loadingState.style.display = 'none';
+                    readyState.classList.add('visible');
+                }, 400);
+            }
+
+            /*
+             * FIX 2: revealDeck() se llama DESPUÉS de que el loading screen
+             * haya salido completamente de pantalla, con 300 ms adicionales
+             * de margen para que el usuario vea las animaciones de entrada
+             * de las cartas desde el principio.
+             *
+             * Flujo:
+             *   1. dismiss() → inicia transición del loading (550 ms)
+             *   2. transitionend → oculta el screen, espera 300 ms
+             *   3. revealDeck() → las cartas aparecen alternando arriba/abajo
+             */
+            function dismiss() {
+                if (dismissed) return;
+                dismissed = true;
+                document.body.classList.add('app-ready');
+
+                // Música arranca inmediatamente (no depende de que las cartas sean visibles)
+                window._music1 = new Audio('./resources/music_1.mp3');
+                window._music1.volume = 0.7;
+                window._music1._ended = false;
+                window._music1.addEventListener('ended', () => { window._music1._ended = true; });
+                window._music1.play().catch(() => { });
+
+                // Deslizar el loading screen hacia arriba
+                screen.style.transition = 'transform 0.55s cubic-bezier(0.4,0,0.6,1)';
+                screen.style.transform = 'translateY(-100%)';
+
+                // Una vez completada la transición → ocultar + esperar 300 ms → revelar cartas
+                screen.addEventListener('transitionend', () => {
+                    screen.style.display = 'none';
+                    setTimeout(revealDeck, 300);
+                }, { once: true });
+            }
+
+            if (document.readyState === 'complete') showReady();
+            else window.addEventListener('load', showReady, { once: true });
+
+            screen.addEventListener('touchstart', e => {
+                if (dismissed || !readyState.classList.contains('visible')) return;
+                lsStartY = e.touches[0].clientY;
+                lsDragging = true;
+                screen.style.transition = 'none';
+            }, { passive: true });
+
+            screen.addEventListener('touchmove', e => {
+                if (!lsDragging || dismissed) return;
+                const dy = e.touches[0].clientY - lsStartY;
+                if (dy < 0) screen.style.transform = `translateY(${dy}px)`;
+                if (e.cancelable) e.preventDefault();
+            }, { passive: false });
+
+            screen.addEventListener('touchend', e => {
+                if (!lsDragging || dismissed) return;
+                lsDragging = false;
+                const dy = e.changedTouches[0].clientY - lsStartY;
+                if (dy < -DISMISS_THRESHOLD) {
+                    dismiss();
+                } else {
+                    screen.style.transition = 'transform 0.35s ease';
+                    screen.style.transform = 'translateY(0)';
+                }
+            }, { passive: true });
+
+            screen.addEventListener('mousedown', e => {
+                if (dismissed || !readyState.classList.contains('visible')) return;
+                lsStartY = e.clientY;
+                lsDragging = true;
+                screen.style.transition = 'none';
+            });
+
+            window.addEventListener('mousemove', e => {
+                if (!lsDragging || dismissed) return;
+                const dy = e.clientY - lsStartY;
+                if (dy < 0) screen.style.transform = `translateY(${dy}px)`;
+            });
+
+            window.addEventListener('mouseup', e => {
+                if (!lsDragging || dismissed) return;
+                lsDragging = false;
+                const dy = e.clientY - lsStartY;
+                if (dy < -DISMISS_THRESHOLD) {
+                    dismiss();
+                } else {
+                    screen.style.transition = 'transform 0.35s ease';
+                    screen.style.transform = 'translateY(0)';
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>
