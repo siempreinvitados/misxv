@@ -30,6 +30,60 @@
             --font-body: 'Quicksand', sans-serif;
             --font-elegant: 'Playfair Display', serif;
             --font-fun: 'Fredoka One', cursive;
+
+            /* --- RESPONSIVE VARIABLES --- */
+            /* Card Body Paddings */
+            --card-padding-v: 28px;
+            --card-padding-h: 24px;
+
+            /* Card 1 (Portada) */
+            --c1-name-fs: 68px;
+            --c1-subtitle-fs: 1.3rem;
+            --c1-invite-fs: 22px;
+            --c1-photo-w: min(220px, 58%);
+            --c1-halo-w: min(260px, 68%);
+
+            /* Card 2 (Cumpleaños) */
+            --c2-top-fs: 1.5rem;
+            --c2-number-fs: 168px;
+            --c2-anitos-fs: 1.7rem;
+            --c2-bottom-fs: 1.5rem;
+            --c2-num-margin: 5rem;
+
+            /* Card 3 (Fecha y Ubicación) */
+            --c3-pre-fs: 1.3rem;
+            --c3-day-fs: 132px;
+            --c3-month-fs: 54px;
+            --c3-year-fs: 15px;
+            --c3-time-lbl-fs: 15px;
+            --c3-time-fs: 52px;
+            --c3-address-fs: 16px;
+            --c3-map-btn-fs: 13px;
+            --c3-gap: 10px;
+
+            /* Card 5 (Cuenta Regresiva) */
+            --c5-eyebrow-fs: 17px;
+            --c5-days-num-fs: 124px;
+            --c5-days-lbl-fs: 13px;
+            --c5-hms-num-fs: 56px;
+            --c5-hms-lbl-fs: 9px;
+            --c5-sep-fs: 44px;
+
+            /* Card 7 (Regalos) */
+            --c7-title-fs: 32px;
+            --c7-phrase-fs: 1.1rem;
+            --c7-btn-fs: 14px;
+            --c7-dep-header-fs: 14px;
+            --c7-dep-val-fs: 14px;
+            --c7-dep-lbl-fs: 12px;
+            --c7-copy-btn-fs: 12px;
+            --c7-deposit-padding: 12px 14px;
+
+            /* Card 9 (Cierre) */
+            --c9-title-fs: 46px;
+            --c9-love-fs: 1.2rem;
+            --c9-heart-fs: 36px;
+            --c9-rhene-w: min(230px, 60%);
         }
 
         * {
@@ -304,7 +358,7 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 28px 24px;
+            padding: var(--card-padding-v, 28px) var(--card-padding-h, 24px);
             overflow-y: auto;
             scrollbar-width: none;
         }
@@ -340,6 +394,7 @@
         /* ══ CARD 1 – Portada ══ */
         .card-1 .card-bg {
             background-image: url('./resources/bg_1.png');
+            opacity: 0.4;
         }
 
         .card-1 .card-overlay {
@@ -364,7 +419,7 @@
 
         .card-1-name {
             font-family: var(--font-title);
-            font-size: 68px;
+            font-size: var(--c1-name-fs, 68px);
             color: white;
             line-height: 0.95;
             text-shadow: 0 4px 30px rgba(0, 0, 0, .5), 0 0 80px rgba(168, 216, 240, .2);
@@ -373,9 +428,11 @@
 
         .card-1-subtitle {
             font-family: var(--font-elegant);
+            margin-top: 10px;
+            font-size: var(--c1-subtitle-fs, 1.3rem);
             font-style: italic;
-            font-size: 19px;
-            color: rgba(255, 255, 255, 0.88);
+            font-weight: 500;
+            color: rgba(255, 255, 255);
             line-height: 1.5;
             text-shadow: 0 2px 16px rgba(0, 0, 0, .45);
             max-width: 260px;
@@ -393,7 +450,7 @@
         }
 
         .card-1-photo {
-            width: min(220px, 58%);
+            width: var(--c1-photo-w, min(220px, 58%));
             aspect-ratio: 1 / 1;
             object-fit: cover;
             border-radius: 50%;
@@ -433,7 +490,7 @@
         .card-1-photo-wrap::before {
             content: '';
             position: absolute;
-            width: min(260px, 68%);
+            width: var(--c1-halo-w, min(260px, 68%));
             aspect-ratio: 1;
             border-radius: 50%;
             background: radial-gradient(circle, rgba(168, 216, 240, .18) 0%, transparent 70%);
@@ -464,7 +521,7 @@
         .card-1-invite-big {
             font-family: var(--font-elegant);
             font-style: italic;
-            font-size: 22px;
+            font-size: var(--c1-invite-fs, 22px);
             color: white;
             line-height: 1.45;
             text-shadow: 0 2px 20px rgba(0, 0, 0, .5);
@@ -513,7 +570,7 @@
             justify-content: space-between;
             align-items: center;
             text-align: center;
-            padding: 36px 28px 32px;
+            padding: var(--card-padding-v, 36px) var(--card-padding-h, 28px) var(--card-padding-v, 32px);
         }
 
         .card-2-confetti-canvas {
@@ -526,7 +583,8 @@
         .card-2-top {
             font-family: var(--font-elegant);
             font-style: italic;
-            font-size: 22px;
+            font-size: var(--c2-top-fs, 1.5rem);
+            font-weight: 500;
             color: var(--deep-green);
             line-height: 1.62;
             max-width: 270px;
@@ -537,12 +595,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-bottom: 5rem;
+            margin-bottom: var(--c2-num-margin, 5rem);
         }
 
         .card-2-big-number {
             font-family: var(--font-fun);
-            font-size: 168px;
+            font-size: var(--c2-number-fs, 168px);
             color: var(--deep-green);
             line-height: 0.9;
             text-shadow: 0 6px 0 rgba(74, 124, 89, .18), 0 12px 32px rgba(74, 124, 89, .22), 0 0 60px rgba(205, 232, 200, .5);
@@ -550,7 +608,7 @@
 
         .card-2-anitos {
             font-family: var(--font-fun);
-            font-size: 20px;
+            font-size: var(--c2-anitos-fs, 1.7rem);
             color: var(--green-forest);
             letter-spacing: 3px;
             margin-top: 2px;
@@ -559,7 +617,7 @@
         .card-2-bottom {
             font-family: var(--font-elegant);
             font-style: italic;
-            font-size: 20px;
+            font-size: var(--c2-bottom-fs, 1.5rem);
             color: var(--deep-green);
             line-height: 1.6;
             max-width: 260px;
@@ -611,7 +669,7 @@
             justify-content: space-between;
             align-items: center;
             text-align: center;
-            padding: 38px 28px 36px;
+            padding: var(--card-padding-v, 38px) var(--card-padding-h, 28px) var(--card-padding-v, 36px);
         }
 
         .card-3-date-wrap {
@@ -624,7 +682,7 @@
         .card-3-pre {
             font-family: var(--font-elegant);
             font-style: italic;
-            font-size: 17px;
+            font-size: var(--c3-pre-fs, 1.3rem);
             color: rgba(205, 232, 200, .88);
             letter-spacing: .5px;
             margin-bottom: 2px;
@@ -632,7 +690,7 @@
 
         .card-3-day {
             font-family: var(--font-fun);
-            font-size: 132px;
+            font-size: var(--c3-day-fs, 132px);
             color: white;
             line-height: .82;
             text-shadow: 0 4px 0 rgba(74, 124, 89, .45), 0 10px 36px rgba(0, 0, 0, .45);
@@ -640,7 +698,7 @@
 
         .card-3-month {
             font-family: var(--font-title);
-            font-size: 54px;
+            font-size: var(--c3-month-fs, 54px);
             color: var(--green-soft);
             line-height: 1.05;
             text-shadow: 0 3px 14px rgba(0, 0, 0, .4);
@@ -648,7 +706,7 @@
 
         .card-3-year {
             font-family: var(--font-body);
-            font-size: 15px;
+            font-size: var(--c3-year-fs, 15px);
             font-weight: 700;
             letter-spacing: 7px;
             text-transform: uppercase;
@@ -679,14 +737,14 @@
         .card-3-time-label {
             font-family: var(--font-elegant);
             font-style: italic;
-            font-size: 15px;
+            font-size: var(--c3-time-lbl-fs, 15px);
             color: rgba(255, 255, 255, .72);
             white-space: nowrap;
         }
 
         .card-3-time {
             font-family: var(--font-fun);
-            font-size: 52px;
+            font-size: var(--c3-time-fs, 52px);
             color: white;
             line-height: 1.1;
             text-shadow: 0 4px 20px rgba(0, 0, 0, .4);
@@ -696,12 +754,12 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: var(--c3-gap, 10px);
         }
 
         .card-3-address {
             font-family: var(--font-body);
-            font-size: 16px;
+            font-size: var(--c3-address-fs, 16px);
             font-weight: 600;
             color: rgba(255, 255, 255, .88);
             line-height: 1.6;
@@ -720,7 +778,7 @@
             border-radius: 50px;
             padding: 10px 24px;
             font-family: var(--font-body);
-            font-size: 13px;
+            font-size: var(--c3-map-btn-fs, 13px);
             font-weight: 700;
             cursor: pointer;
             text-decoration: none;
@@ -757,7 +815,7 @@
             }
 
             4% {
-                opacity: 0.42;
+                opacity: 0.10;
             }
 
             46% {
@@ -787,7 +845,7 @@
             }
 
             4% {
-                opacity: 0.42;
+                opacity: 0.10;
             }
 
             46% {
@@ -817,7 +875,7 @@
             }
 
             4% {
-                opacity: 0.42;
+                opacity: 0.10;
             }
 
             46% {
@@ -847,7 +905,7 @@
             }
 
             4% {
-                opacity: 0.42;
+                opacity: 0.10;
             }
 
             46% {
@@ -948,7 +1006,7 @@
         .card-cd-eyebrow {
             font-family: var(--font-elegant);
             font-style: italic;
-            font-size: 17px;
+            font-size: var(--c5-eyebrow-fs, 17px);
             color: rgba(205, 232, 200, .9);
         }
 
@@ -960,7 +1018,7 @@
 
         .card-cd-days-num {
             font-family: var(--font-fun);
-            font-size: 124px;
+            font-size: var(--c5-days-num-fs, 124px);
             color: white;
             line-height: .82;
             text-shadow: 0 0 50px rgba(168, 216, 240, .45), 0 8px 32px rgba(0, 0, 0, .45);
@@ -968,7 +1026,7 @@
 
         .card-cd-days-lbl {
             font-family: var(--font-body);
-            font-size: 13px;
+            font-size: var(--c5-days-lbl-fs, 13px);
             font-weight: 700;
             letter-spacing: 5px;
             text-transform: uppercase;
@@ -992,7 +1050,7 @@
 
         .card-cd-hms-num {
             font-family: var(--font-fun);
-            font-size: 56px;
+            font-size: var(--c5-hms-num-fs, 56px);
             color: white;
             line-height: .88;
             text-shadow: 0 4px 20px rgba(0, 0, 0, .38);
@@ -1000,7 +1058,7 @@
 
         .card-cd-hms-lbl {
             font-family: var(--font-body);
-            font-size: 9px;
+            font-size: var(--c5-hms-lbl-fs, 9px);
             font-weight: 700;
             letter-spacing: 2px;
             text-transform: uppercase;
@@ -1010,7 +1068,7 @@
 
         .card-cd-sep {
             font-family: var(--font-fun);
-            font-size: 44px;
+            font-size: var(--c5-sep-fs, 44px);
             color: rgba(255, 255, 255, .28);
             line-height: .88;
         }
@@ -1038,11 +1096,11 @@
         .card-7 .card-body {
             justify-content: space-evenly;
             gap: 0;
-            padding: 32px 24px 28px;
+            padding: var(--card-padding-v, 32px) var(--card-padding-h, 24px) var(--card-padding-v, 28px);
         }
 
         .gifts-title-icon {
-            width: 3rem;
+            width: 2.5rem;
             object-fit: contain;
             filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.14));
         }
@@ -1058,12 +1116,11 @@
 
         .gifts-phrase {
             font-family: var(--font-elegant);
-            font-style: italic;
-            font-size: 15px;
+            font-size: var(--c7-phrase-fs, 1.1rem);
+            font-weight: 500;
             color: var(--deep-green);
             text-align: center;
             line-height: 1.6;
-            opacity: 0.9;
         }
 
         .gifts-deposit {
@@ -1071,14 +1128,14 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border-radius: 16px;
-            padding: 12px 14px;
+            padding: var(--c7-deposit-padding, 12px 14px);
             border: 1px solid rgba(74, 124, 89, 0.18);
             box-shadow: 0 3px 14px rgba(0, 0, 0, 0.07);
         }
 
         .gifts-deposit-header {
             font-family: var(--font-fun);
-            font-size: 14px;
+            font-size: var(--c7-dep-header-fs, 14px);
             color: var(--deep-green);
             margin-bottom: 8px;
             padding-bottom: 6px;
@@ -1100,7 +1157,7 @@
 
         .deposit-label {
             font-family: var(--font-body);
-            font-size: 12px;
+            font-size: var(--c7-dep-lbl-fs, 12px);
             font-weight: 700;
             color: #aaa;
             text-transform: uppercase;
@@ -1111,7 +1168,7 @@
 
         .deposit-value {
             font-family: var(--font-body);
-            font-size: 14px;
+            font-size: var(--c7-dep-val-fs, 14px);
             font-weight: 700;
             color: var(--deep-green);
         }
@@ -1121,7 +1178,7 @@
             border: none;
             border-radius: 7px;
             padding: 4px 10px;
-            font-size: 12px;
+            font-size: var(--c7-copy-btn-fs, 12px);
             cursor: pointer;
             color: var(--deep-green);
             font-weight: 700;
@@ -1143,7 +1200,7 @@
 
         .gifts-registry-title {
             font-family: var(--font-title);
-            font-size: 32px;
+            font-size: var(--c7-title-fs, 32px);
             color: var(--deep-green);
             display: flex;
             align-items: center;
@@ -1327,19 +1384,19 @@
             justify-content: space-between;
             align-items: center;
             text-align: center;
-            padding: 52px 28px 48px;
+            padding: var(--card-padding-v, 52px) var(--card-padding-h, 28px) var(--card-padding-v, 48px);
         }
 
         .card-9-title {
             font-family: var(--font-title);
-            font-size: 46px;
+            font-size: var(--c9-title-fs, 46px);
             color: white;
             line-height: 1.15;
             text-shadow: 0 4px 30px rgba(0, 0, 0, .55), 0 0 60px rgba(168, 216, 240, .18);
         }
 
         .card-9-rhene {
-            width: min(230px, 60%);
+            width: var(--c9-rhene-w, min(230px, 60%));
             object-fit: contain;
             filter: drop-shadow(0 10px 32px rgba(0, 0, 0, .45));
             animation: rheneJump 1.4s ease-in-out infinite;
@@ -1367,14 +1424,15 @@
         .card-9-love {
             font-family: var(--font-elegant);
             font-style: italic;
-            font-size: 17px;
+            font-size: var(--c9-love-fs, 1.2rem);
+            font-weight: 500;
             color: rgba(255, 255, 255, 0.90);
             text-shadow: 0 2px 14px rgba(0, 0, 0, .45);
             line-height: 1.55;
         }
 
         .card-9-heart {
-            font-size: 36px;
+            font-size: var(--c9-heart-fs, 36px);
             animation: heartbeat 1.5s ease-in-out infinite;
         }
 
@@ -1513,7 +1571,7 @@
             border-radius: 50px;
             padding: 13px 28px;
             font-family: var(--font-body);
-            font-size: 14px;
+            font-size: var(--c7-btn-fs, 14px);
             font-weight: 700;
             cursor: pointer;
             box-shadow: 0 6px 20px rgba(74, 124, 89, .30);
@@ -1693,6 +1751,7 @@
             display: flex;
             gap: 7px;
             flex-wrap: wrap;
+            margin-bottom: 10px;
         }
 
         .gustos-chip {
@@ -1922,7 +1981,7 @@
 
         .loading-ready-title {
             font-family: var(--font-title);
-            font-size: 38px;
+            font-size: 4rem;
             color: var(--deep-green);
             text-shadow: 0 2px 18px rgba(74, 124, 89, .15);
             text-align: center;
@@ -1980,7 +2039,8 @@
 
         .loading-tip-text {
             font-family: var(--font-body);
-            font-size: 12.5px;
+            font-size: 0.9rem;
+            font-weight: 700;
             color: var(--deep-green);
             line-height: 1.5;
             font-weight: 600;
@@ -2015,7 +2075,7 @@
 
         .loading-swipe-label {
             font-family: var(--font-body);
-            font-size: 10px;
+            font-size: 1rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1.8px;
@@ -2023,6 +2083,7 @@
         }
 
         /* ── HOLD ALL CARD ANIMATIONS UNTIL APP-READY ── */
+        /* Por defecto, todas pausadas */
         .card-1-photo,
         .card-1-photo-wrap::before,
         .card-2-sofi-slide,
@@ -2032,13 +2093,205 @@
             animation-play-state: paused;
         }
 
-        body.app-ready .card-1-photo,
-        body.app-ready .card-1-photo-wrap::before,
-        body.app-ready .card-2-sofi-slide,
-        body.app-ready .card-3-balloon,
-        body.app-ready .card-9-rhene,
-        body.app-ready .card-9-heart {
+        /* Activar solo en la carta correspondiente */
+        body.app-ready.card-visible-1 .card-1-photo,
+        body.app-ready.card-visible-1 .card-1-photo-wrap::before {
             animation-play-state: running;
+        }
+
+        body.app-ready.card-visible-2 .card-2-sofi-slide {
+            animation-play-state: running;
+            will-change: transform;
+        }
+
+        body.app-ready.card-visible-3 .card-3-balloon {
+            animation-play-state: running;
+            will-change: transform, opacity;
+            /* capas GPU solo cuando se necesitan */
+        }
+
+        body.app-ready.card-visible-9 .card-9-rhene,
+        body.app-ready.card-visible-9 .card-9-heart {
+            animation-play-state: running;
+        }
+
+        /* Usuarios que prefieren reducir movimiento */
+        @media (prefers-reduced-motion: reduce) {
+            .card-1-photo {
+                animation: none !important;
+                transform: scaleX(-1);
+            }
+
+            .card-1-photo-wrap::before {
+                animation: none !important;
+            }
+
+            .card-2-sofi-slide {
+                display: none;
+            }
+
+            .card-3-balloon {
+                display: none;
+            }
+
+            .card-9-rhene {
+                animation: none !important;
+            }
+
+            .card-9-heart {
+                animation: none !important;
+            }
+        }
+
+        /* --- MEDIA QUERIES PARA DISEÑO RESPONSIVO (ALTURA DEL VIEWPORT) --- */
+        @media (max-height: 760px) {
+            :root {
+                --card-padding-v: 20px;
+                --card-padding-h: 18px;
+
+                --c1-name-fs: 56px;
+                --c1-subtitle-fs: 1.15rem;
+                --c1-invite-fs: 18px;
+                --c1-photo-w: min(180px, 50%);
+                --c1-halo-w: min(210px, 60%);
+
+                --c2-top-fs: 1.25rem;
+                --c2-number-fs: 130px;
+                --c2-anitos-fs: 1.4rem;
+                --c2-bottom-fs: 1.25rem;
+                --c2-num-margin: 2.5rem;
+
+                --c3-pre-fs: 1.15rem;
+                --c3-day-fs: 100px;
+                --c3-month-fs: 42px;
+                --c3-year-fs: 13px;
+                --c3-time-lbl-fs: 13px;
+                --c3-time-fs: 40px;
+                --c3-address-fs: 14px;
+                --c3-map-btn-fs: 12px;
+                --c3-gap: 6px;
+
+                --c5-eyebrow-fs: 15px;
+                --c5-days-num-fs: 100px;
+                --c5-days-lbl-fs: 11px;
+                --c5-hms-num-fs: 46px;
+                --c5-hms-lbl-fs: 8px;
+                --c5-sep-fs: 36px;
+
+                --c7-title-fs: 26px;
+                --c7-phrase-fs: 0.95rem;
+                --c7-btn-fs: 12px;
+                --c7-dep-header-fs: 12px;
+                --c7-dep-val-fs: 12px;
+                --c7-dep-lbl-fs: 10px;
+                --c7-copy-btn-fs: 11px;
+                --c7-deposit-padding: 8px 10px;
+
+                --c9-title-fs: 38px;
+                --c9-love-fs: 1.05rem;
+                --c9-heart-fs: 30px;
+                --c9-rhene-w: min(180px, 50%);
+            }
+        }
+
+        @media (max-height: 660px) {
+            :root {
+                --card-padding-v: 14px;
+                --card-padding-h: 12px;
+
+                --c1-name-fs: 46px;
+                --c1-subtitle-fs: 1.0rem;
+                --c1-invite-fs: 16px;
+                --c1-photo-w: min(150px, 45%);
+                --c1-halo-w: min(175px, 55%);
+
+                --c2-top-fs: 1.1rem;
+                --c2-number-fs: 100px;
+                --c2-anitos-fs: 1.2rem;
+                --c2-bottom-fs: 1.1rem;
+                --c2-num-margin: 1.5rem;
+
+                --c3-pre-fs: 1.0rem;
+                --c3-day-fs: 80px;
+                --c3-month-fs: 32px;
+                --c3-year-fs: 12px;
+                --c3-time-lbl-fs: 12px;
+                --c3-time-fs: 32px;
+                --c3-address-fs: 12.5px;
+                --c3-map-btn-fs: 11px;
+                --c3-gap: 4px;
+
+                --c5-eyebrow-fs: 13px;
+                --c5-days-num-fs: 80px;
+                --c5-days-lbl-fs: 10px;
+                --c5-hms-num-fs: 36px;
+                --c5-hms-lbl-fs: 7.5px;
+                --c5-sep-fs: 28px;
+
+                --c7-title-fs: 22px;
+                --c7-phrase-fs: 0.85rem;
+                --c7-btn-fs: 11px;
+                --c7-dep-header-fs: 11px;
+                --c7-dep-val-fs: 11px;
+                --c7-dep-lbl-fs: 9px;
+                --c7-copy-btn-fs: 10px;
+                --c7-deposit-padding: 6px 8px;
+
+                --c9-title-fs: 30px;
+                --c9-love-fs: 0.95rem;
+                --c9-heart-fs: 26px;
+                --c9-rhene-w: min(150px, 45%);
+            }
+        }
+
+        @media (max-height: 560px) {
+            :root {
+                --card-padding-v: 8px;
+                --card-padding-h: 8px;
+
+                --c1-name-fs: 36px;
+                --c1-subtitle-fs: 0.85rem;
+                --c1-invite-fs: 14px;
+                --c1-photo-w: min(120px, 35%);
+                --c1-halo-w: min(140px, 45%);
+
+                --c2-top-fs: 0.95rem;
+                --c2-number-fs: 80px;
+                --c2-anitos-fs: 1.0rem;
+                --c2-bottom-fs: 0.95rem;
+                --c2-num-margin: 0.8rem;
+
+                --c3-pre-fs: 0.9rem;
+                --c3-day-fs: 60px;
+                --c3-month-fs: 26px;
+                --c3-year-fs: 11px;
+                --c3-time-lbl-fs: 11px;
+                --c3-time-fs: 26px;
+                --c3-address-fs: 11px;
+                --c3-map-btn-fs: 10px;
+                --c3-gap: 2px;
+
+                --c5-eyebrow-fs: 12px;
+                --c5-days-num-fs: 60px;
+                --c5-days-lbl-fs: 9px;
+                --c5-hms-num-fs: 28px;
+                --c5-hms-lbl-fs: 7px;
+                --c5-sep-fs: 22px;
+
+                --c7-title-fs: 18px;
+                --c7-phrase-fs: 0.78rem;
+                --c7-btn-fs: 10px;
+                --c7-dep-header-fs: 10px;
+                --c7-dep-val-fs: 10px;
+                --c7-dep-lbl-fs: 8px;
+                --c7-copy-btn-fs: 9px;
+                --c7-deposit-padding: 4px 6px;
+
+                --c9-title-fs: 24px;
+                --c9-love-fs: 0.85rem;
+                --c9-heart-fs: 22px;
+                --c9-rhene-w: min(120px, 35%);
+            }
         }
     </style>
 </head>
@@ -2095,7 +2348,7 @@
                     <div class="card-bg"></div>
                     <div class="card-overlay"></div>
                     <div class="card-body">
-                        <div class="card-9-title">Ángela Sofía<br>te espera</div>
+                        <div class="card-9-title">¡Te esperamos!</div>
                         <img class="card-9-rhene" src="./resources/rana_jump.png" alt="" draggable="false">
                         <div class="card-9-footer">
                             <div class="card-9-love">Con amor,<br>Familia Ram&iacute;rez Montes</div>
@@ -2110,7 +2363,7 @@
                 <div class="card-inner">
                     <div class="card-bg"></div>
                     <div class="card-overlay"></div>
-                    <div class="card-body">
+                    <div class="card-body" style="padding: 10px 12px;">
 
                         <div class="gifts-registry-title">
                             <img class="gifts-title-icon" src="./resources/rana_gift.png" alt="" draggable="false">
@@ -2182,7 +2435,7 @@
                                 <div class="card-cd-hms-lbl">segundos</div>
                             </div>
                         </div>
-                        <div class="card-cd-footer">11 de julio de 2026 &middot; 1:00 p.m.</div>
+
                     </div>
                 </div>
             </div>
@@ -2196,15 +2449,12 @@
                         <img class="card-3-balloon b1" src="./resources/globos_2.png" alt="" draggable="false">
                         <img class="card-3-balloon b2" src="./resources/globo_3.png" alt="" draggable="false">
                         <img class="card-3-balloon b3" src="./resources/globos_2.png" alt="" draggable="false">
-                        <img class="card-3-balloon b4" src="./resources/globo_3.png" alt="" draggable="false">
-                        <img class="card-3-balloon b5" src="./resources/globos_2.png" alt="" draggable="false">
-                        <img class="card-3-balloon b6" src="./resources/globo_3.png" alt="" draggable="false">
-                        <img class="card-3-balloon b7" src="./resources/globos_2.png" alt="" draggable="false">
+
                         <img class="card-3-balloon b8" src="./resources/globo_3.png" alt="" draggable="false">
                         <img class="card-3-balloon b9" src="./resources/globos_2.png" alt="" draggable="false">
                         <img class="card-3-balloon b10" src="./resources/globo_3.png" alt="" draggable="false">
                     </div>
-                    <div class="card-body">
+                    <div class="card-body" style="padding-top: 12px;">
                         <div class="card-3-date-wrap">
                             <div class="card-3-pre">¡Te esperamos el</div>
                             <div class="card-3-day">11</div>
@@ -2214,14 +2464,15 @@
                         <div class="card-3-time-wrap">
                             <div class="card-3-time-connector">
                                 <div class="card-3-time-rule"></div>
-                                <div class="card-3-time-label">a partir de las</div>
+                                <div class="card-3-time-label">a partir de la</div>
                                 <div class="card-3-time-rule"></div>
                             </div>
                             <div class="card-3-time">1:00 p.m.</div>
                         </div>
                         <div class="card-3-location">
                             <div class="card-3-address">
-                                📍 Sagrada Familia 141<br>Fracc. Rinconadas de Santa Fe, Hgo.
+                                En la casa de mis papas, ubicada en: <br><br>Sagrada Familia 141<br>Fracc. Rinconadas de
+                                Santa Fe, Mineral de la Reforma Hidalgo.
                             </div>
                             <a href="https://maps.app.goo.gl/NSsh535NDvUMKebM8" target="_blank" class="card-3-map-btn">
                                 🗺️ C&oacute;mo llegar
@@ -2267,7 +2518,8 @@
                             <div class="card-1-subtitle">tiene una invitación<br>muy especial para ti…</div>
                         </div>
                         <div class="card-1-photo-wrap">
-                            <img class="card-1-photo" src="./resources/sofi_img.png" alt="Ángela Sofía" draggable="false">
+                            <img class="card-1-photo" src="./resources/sofi_img.png" alt="Ángela Sofía"
+                                draggable="false">
                         </div>
                         <div class="card-1-bottom">
                             <div class="card-1-deco-line"></div>
@@ -2304,7 +2556,7 @@
                     <span class="gustos-toggle-left">¿Qué me gusta?</span>
                     <span class="gustos-chevron" id="gustosChevron">›</span>
                 </button>
-                <div class="gustos-content" id="gustosContent" style="display:none;">
+                <div class="gustos-content" id="gustosContent" style="display:block;">
                     <div class="gustos-interests">
                         <div class="gustos-chip">🎨 Pintar</div>
                         <div class="gustos-chip">🎵 Cantar</div>
@@ -2405,6 +2657,14 @@
         }
 
         function updateNav() {
+
+            document.body.className = document.body.className
+                .replace(/\bcard-visible-\S+/g, '').trim();
+            const visibleCard = getAllCards()[currentCardIndex];
+            if (visibleCard) {
+                document.body.classList.add('card-visible-' + visibleCard.getAttribute('data-card'));
+            }
+
             const items = document.querySelectorAll('.nav-item');
             items.forEach((el, i) => {
                 el.classList.remove('active', 'done');
@@ -2664,7 +2924,7 @@
             const nav = document.querySelector('.icon-nav');
             if (nav) {
                 nav.classList.add('reveal');
-            }   
+            }
 
             const all = getAllCards();
             // Posicionar cada carta fuera de pantalla, alternando arriba/abajo
@@ -2768,6 +3028,9 @@
 
         /* ═══════════ COUNTDOWN ═══════════ */
         function updateCountdown() {
+            if (!document.querySelector('.card-5') ||
+                document.querySelector('.card-5').style.display === 'none') return;
+
             const diff = new Date('2026-07-11T13:00:00') - new Date();
             if (diff < 0) {
                 ['days', 'hours', 'mins', 'secs'].forEach(k => {
@@ -2959,7 +3222,7 @@
             function spawnBurst(side) {
                 if (!canvas) return;
                 const W = canvas.width, H = canvas.height, cy = H * 0.74;
-                for (let i = 0; i < 22; i++) {
+                for (let i = 0; i < 10; i++) {
                     const isRight = side === 'right';
                     const angle = (isRight ? Math.PI : 0) + (Math.random() - 0.5) * Math.PI * 0.55;
                     const speed = 130 + Math.random() * 190;
