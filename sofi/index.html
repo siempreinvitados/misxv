@@ -1817,20 +1817,46 @@
         }
 
         .swipe-hint-bubble {
-            width: 84px;
-            height: 84px;
+            width: 110px;
+            height: 110px;
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
         .swipe-hand {
-            width: 65px;
-            height: 65px;
+            width: 85px;
+            height: 85px;
             object-fit: contain;
             filter: brightness(0) invert(1) drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
             animation: swipeUpHint 3.6s ease-in-out infinite;
             transform-origin: center bottom;
+        }
+
+        .swipe-hint-label {
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-top: 6px;
+            font-family: var(--font-body);
+            font-size: 11.5px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            text-align: center;
+            pointer-events: none;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .swipe-hint-label.visible {
+            opacity: 1;
+            visibility: visible;
         }
 
         @keyframes swipeUpHint {
@@ -1840,17 +1866,17 @@
             }
 
             26% {
-                transform: translateY(-28px);
+                transform: translateY(-36px);
                 opacity: 0.5;
             }
 
             34% {
-                transform: translateY(-36px);
+                transform: translateY(-46px);
                 opacity: 0;
             }
 
             35% {
-                transform: translateY(6px);
+                transform: translateY(8px);
                 opacity: 0;
             }
 
@@ -2400,7 +2426,7 @@
                             </div>
                             <div class="deposit-row">
                                 <span class="deposit-label">A nombre de</span>
-                                <span class="deposit-value">Angela Sofia</span>
+                                <span class="deposit-value">Angela Sofia Ramirez Montes</span>
                             </div>
                         </div>
 
@@ -2539,6 +2565,7 @@
         <div class="swipe-hint-bubble">
             <img class="swipe-hand" src="./resources/hand.svg" alt="" draggable="false">
         </div>
+        <div class="swipe-hint-label" id="swipeHintLabel">desliza hacia arriba</div>
     </div>
 
     <!-- Modal carrusel de regalos -->
@@ -2829,6 +2856,8 @@
             const nextIdx = currentCardIndex + 1;
             const hintEl = document.getElementById('swipeHint');
             if (hintEl) hintEl.style.opacity = (hintEnabled && nextIdx < 2) ? '1' : '0';
+            const labelEl = document.getElementById('swipeHintLabel');
+            if (labelEl) labelEl.classList.toggle('visible', showSwipeText && nextIdx === 0);
             setTimeout(() => {
                 top.style.display = 'none';
                 currentCardIndex++;
@@ -2842,6 +2871,10 @@
             if (animating || currentCardIndex <= 0) return;
             animating = true;
             currentCardIndex--;
+            const hintEl = document.getElementById('swipeHint');
+            if (hintEl) hintEl.style.opacity = (hintEnabled && currentCardIndex < 2) ? '1' : '0';
+            const labelEl = document.getElementById('swipeHintLabel');
+            if (labelEl) labelEl.classList.toggle('visible', showSwipeText && currentCardIndex === 0);
             const all = getAllCards();
             const returning = all[currentCardIndex];
             returning.style.transition = 'none';
@@ -2888,6 +2921,10 @@
                 }
             });
             currentCardIndex = targetIdx;
+            const hintEl = document.getElementById('swipeHint');
+            if (hintEl) hintEl.style.opacity = (hintEnabled && targetIdx < 2) ? '1' : '0';
+            const labelEl = document.getElementById('swipeHintLabel');
+            if (labelEl) labelEl.classList.toggle('visible', showSwipeText && targetIdx === 0);
             setTimeout(() => { updateNav(); positionCards(false); animating = false; }, 460);
         }
 
@@ -3012,18 +3049,29 @@
 
         /* ═══════════ SWIPE HINT ═══════════ */
         const HINT_KEY = 'sofi_hint_v';
-        let hintEnabled = false;
+        const SWIPE_TEXT_KEY = 'sofi_swipe_text_v';
+        let hintEnabled = true;
+        let showSwipeText = false;
 
         function initHint() {
-            const visits = parseInt(localStorage.getItem(HINT_KEY) || '0', 10) + 1;
-            localStorage.setItem(HINT_KEY, String(visits));
-            hintEnabled = visits <= 2;
+            hintEnabled = true;
+        }
+
+        function initSwipeText() {
+            const visits = parseInt(localStorage.getItem(SWIPE_TEXT_KEY) || '0', 10) + 1;
+            localStorage.setItem(SWIPE_TEXT_KEY, String(visits));
+            showSwipeText = visits <= 3;
         }
 
         function updateHint() {
             const el = document.getElementById('swipeHint');
             if (!el) return;
             el.style.opacity = (hintEnabled && currentCardIndex < 2) ? '1' : '0';
+
+            const labelEl = document.getElementById('swipeHintLabel');
+            if (labelEl) {
+                labelEl.classList.toggle('visible', showSwipeText && currentCardIndex === 0);
+            }
         }
 
         /* ═══════════ COUNTDOWN ═══════════ */
@@ -3311,6 +3359,7 @@
                 console.log('[Firebase] ℹ️ Visita ya registrada (localStorage)');
             }
             //initHint();
+            initSwipeText();
             buildNav();
             updateNav();
             positionCards(false);
