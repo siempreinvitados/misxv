@@ -1155,6 +1155,89 @@
             border-bottom: none;
         }
 
+        .deposit-notice {
+            margin-top: 10px;
+            padding: 8px 10px;
+            background: rgba(255, 200, 80, 0.15);
+            border-left: 3px solid rgba(200, 140, 0, 0.5);
+            border-radius: 8px;
+            font-family: var(--font-elegant);
+            font-size: 11px;
+            color: #7a5700;
+            line-height: 1.5;
+        }
+
+        .clabe-copied-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 220;
+            background: rgba(0, 0, 0, 0.60);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            align-items: center;
+            justify-content: center;
+            padding: 28px;
+        }
+
+        .clabe-copied-modal.open {
+            display: flex;
+        }
+
+        .clabe-copied-content {
+            background: white;
+            border-radius: 22px;
+            padding: 28px 24px 22px;
+            max-width: 310px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.32);
+            animation: modalIn 0.3s cubic-bezier(0.34, 1.4, 0.64, 1) both;
+        }
+
+        .clabe-copied-icon {
+            font-size: 42px;
+            margin-bottom: 8px;
+        }
+
+        .clabe-copied-title {
+            font-family: var(--font-fun);
+            font-size: 17px;
+            color: var(--deep-green);
+            margin-bottom: 12px;
+        }
+
+        .clabe-copied-notice {
+            background: rgba(255, 200, 80, 0.15);
+            border-left: 3px solid rgba(200, 140, 0, 0.5);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-family: var(--font-elegant);
+            font-size: 12px;
+            color: #7a5700;
+            line-height: 1.55;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .clabe-copied-ok {
+            width: 100%;
+            background: var(--deep-green);
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            color: white;
+            transition: all 0.2s;
+        }
+
+        .clabe-copied-ok:hover {
+            background: var(--green-forest);
+        }
+
         .deposit-label {
             font-family: var(--font-body);
             font-size: var(--c7-dep-lbl-fs, 12px);
@@ -2428,6 +2511,9 @@
                                 <span class="deposit-label">A nombre de</span>
                                 <span class="deposit-value">Angela Sofia Ramirez Montes</span>
                             </div>
+                            <div class="deposit-notice">
+                                ⚠️ Si realizas la transferencia, recuerda hacerla solo de <strong>lunes a viernes de 9 a.m. a 5 p.m.</strong> En caso contrario, la transferencia será reembolsada a tu cuenta.
+                            </div>
                         </div>
 
                     </div>
@@ -2618,6 +2704,18 @@
                     <button class="gifts-nav-btn" onclick="giftNext()">›</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Modal CLABE copiada -->
+    <div class="clabe-copied-modal" id="clabeCopiedModal">
+        <div class="clabe-copied-content">
+            <div class="clabe-copied-icon">✅</div>
+            <div class="clabe-copied-title">¡CLABE copiada!</div>
+            <div class="clabe-copied-notice">
+                ⚠️ Recuerda realizar la transferencia solo de <strong>lunes a viernes de 9 a.m. a 5 p.m.</strong> En caso contrario, la transferencia será reembolsada a tu cuenta.
+            </div>
+            <button class="clabe-copied-ok" onclick="closeClabeCopiedModal()">Aceptar</button>
         </div>
     </div>
 
@@ -3237,6 +3335,8 @@
             const done = () => {
                 btn.textContent = '¡Copiado!';
                 setTimeout(() => { btn.textContent = 'Copiar'; }, 2200);
+                const modal = document.getElementById('clabeCopiedModal');
+                if (modal) modal.classList.add('open');
             };
             if (navigator.clipboard) {
                 navigator.clipboard.writeText(text).then(done).catch(() => {
@@ -3257,6 +3357,11 @@
                 window.getSelection().removeAllRanges();
                 done();
             }
+        }
+
+        function closeClabeCopiedModal() {
+            const modal = document.getElementById('clabeCopiedModal');
+            if (modal) modal.classList.remove('open');
         }
 
         /* ═══════════ CARD-2 CONFETTI ═══════════ */
@@ -3394,6 +3499,7 @@
         window.closeGiftModal = closeGiftModal;
         window.confirmGiftBought = confirmGiftBought;
         window.copyClabe = copyClabe;
+        window.closeClabeCopiedModal = closeClabeCopiedModal;
         window.toggleGustos = toggleGustos;
 
         if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
