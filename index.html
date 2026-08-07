@@ -3,14 +3,385 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=./gali/">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis XV Años — Daymi Galilea</title>
-    <script>window.location.replace('./gali/');</script>
+
+    <meta property="og:title" content="Mis XV Años">
+    <meta property="og:description" content="Te invito a compartir este día tan especial conmigo.">
+    <meta property="og:image" content="https://siempreinvitados.github.io/misxv/gali/resources/caratula.png">
+    <meta property="og:url" content="MisXV Gali">
+    <meta property="og:type" content="website">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=1.9">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
 </head>
 
 <body>
-    <p>Redirigiendo a la invitación... si no eres redirigido automáticamente, <a href="./gali/">haz clic aquí</a>.</p>
+    <canvas id="bg-canvas"></canvas>
+    <div class="butterfly"
+        style="--dur:11s;--delay:2s;--tx:95px;--ty:-120px;--rot:18deg;--tx2:160px;--ty2:-240px;--rot2:-8deg;left:8%;top:20%">
+        🦋
+    </div>
+
+    <div class="butterfly"
+        style="--dur:13s;--delay:4s;--tx:-85px;--ty:-95px;--rot:-22deg;--tx2:-150px;--ty2:-210px;--rot2:12deg;right:10%;top:28%">
+        🦋
+    </div>
+
+    <div class="butterfly"
+        style="--dur:8s;--delay:5s;--tx:60px;--ty:-80px;--rot:30deg;--tx2:120px;--ty2:-170px;--rot2:-12deg;left:40%;top:18%">
+        🦋
+    </div>
+
+    <div class="butterfly"
+        style="--dur:14s;--delay:1s;--tx:-70px;--ty:-130px;--rot:-10deg;--tx2:-130px;--ty2:-250px;--rot2:5deg;right:25%;top:72%">
+        🦋
+    </div>
+
+    <div class="butterfly"
+        style="--dur:9s;--delay:7s;--tx:75px;--ty:-90px;--rot:15deg;--tx2:145px;--ty2:-185px;--rot2:-3deg;left:55%;top:58%">
+        🦋
+    </div>
+
+    <div class="butterfly"
+        style="--dur:12s;--delay:2s;--tx:-50px;--ty:-110px;--rot:-28deg;--tx2:-95px;--ty2:-220px;--rot2:18deg;right:35%;top:38%">
+        🦋
+    </div>
+
+    <div class="butterfly"
+        style="--dur:10s;--delay:8s;--tx:110px;--ty:-140px;--rot:22deg;--tx2:180px;--ty2:-260px;--rot2:-15deg;left:70%;top:75%">
+        🦋
+    </div>
+    <audio id="bgAudio" src="resources/music.mp3" loop preload="auto"></audio>
+
+    <div class="page-wrap">
+        <img id="frame-top" src="resources/border.png" alt="borde">
+        <img id="flower" src="resources/flower.png" alt="flores">
+        <img id="dress" src="resources/dress.png" alt="Vestido">
+
+        <section id="hero">
+            <div class="hero-content">
+                <p class="eyebrow">Tengo el honor de invitarte a compartir la celebración de</p>
+                <h1 class="hero-title">Mis XV</h1>
+                <p class="hero-name">Daymi Galilea</p>
+                <div class="divider-line"></div>
+                <p class="hero-phrase">Hay momentos que se graban para siempre en el corazón. Este d&iacute;a es uno de
+                    ellos.</p>
+                <div class="families">
+                    <p>Con el amor de mis padres</p>
+                    <p><strong>Perla Alejandra Montes Torres  <br> Diego Gómez Téllez</strong></p>
+                    <br>
+                    <p>Y el apoyo de mis padrinos</p>
+                    <p><strong>Evelyn Larisa Juárez Figueroa <br>Rigoberto Téllez Gómez</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="musica">
+            <p class="section-phrase">Escucha mi canción favorita</p>
+            <div class="music-player-container" id="musicPlayerContainer">
+                <div class="music-player" id="musicPlayer">
+                    <button class="player-btn" id="playBtn" onclick="togglePlay(this)"></button>
+                    <div class="player-info">
+                        <div class="player-song">Summertime Sadness</div>
+                        <div class="player-artist">Lana del Rey</div>
+                    </div>
+                    <div class="player-bars" id="playerBars">
+                        <div class="bar-stick"></div>
+                        <div class="bar-stick"></div>
+                        <div class="bar-stick"></div>
+                        <div class="bar-stick"></div>
+                        <div class="bar-stick"></div>
+                    </div>
+                    <div class="lyrics-inline" id="lyricsInline">
+                        <div class="lyric-current" id="lyricCurrent"></div>
+                        <span class="lyrics-line" id="lyric-0" data-duration="4">Kiss me hard before you go<span
+                                class="lyric-translation">Bésame fuerte antes de irte</span></span>
+                        <span class="lyrics-line" id="lyric-1" data-duration="4">Summertime sadness<span
+                                class="lyric-translation">Tristeza de verano</span></span>
+                        <span class="lyrics-line" id="lyric-2" data-duration="5">I just wanted you to know<span
+                                class="lyric-translation">Solo quería que supieras</span></span>
+                        <span class="lyrics-line" id="lyric-3" data-duration="3">That, baby, you the best<span
+                                class="lyric-translation">Que, cariño, eres el mejor</span></span>
+                        <span class="lyrics-line" id="lyric-4" data-duration="4">I got my red dress on tonight<span
+                                class="lyric-translation">Me puse mi vestido rojo esta noche</span></span>
+                        <span class="lyrics-line" id="lyric-5" data-duration="4">Dancin' in the dark, in the pale
+                            moonlight<span class="lyric-translation">Bailando en la oscuridad bajo la pálida luz de la
+                                luna</span></span>
+                        <span class="lyrics-line" id="lyric-6" data-duration="5">Done my hair up real big, beauty queen
+                            style<span class="lyric-translation">Mi cabello muy grande, estilo reina de la
+                                belleza</span></span>
+                        <span class="lyrics-line" id="lyric-7" data-duration="4">High heels off, I'm feelin' alive
+                            ...<span class="lyric-translation">Quitándome los tacones, me siento viva ...</span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="evento">
+            <p class="section-title">La celebración</p>
+            <h2 class="section-heading">Dónde & Cuándo</h2>
+            <p class="evento-date">Sábado 8 de agosto de 2026</p>
+            <div class="evento-timeline">
+                <div class="evento-card left">
+                    <img class="ev-bg-img" src="./resources/iglesia.png" alt="Iglesia" loading="lazy">
+                    <div class="ev-gradient"></div>
+                    <div class="ev-content">
+                        <div class="ev-badge">Ceremonia Religiosa</div>
+                        <div class="ev-name">Parroquia del Sr de Zelontla</div>
+                        <div class="ev-time">Sábado · 2:00 PM</div>
+                        <div class="ev-addr">Av. Hidalgo, San Ignacio, 42133 Mineral del Monte, Hgo.</div>
+                        <a class="btn-maps" href="https://maps.app.goo.gl/ERFRqPfEZkdnpnkt8" target="_blank">Ver
+                            ubicaci&oacute;n</a>
+                    </div>
+                </div>
+                <div class="evento-card right">
+                    <img class="ev-bg-img" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=600&q=80"
+                        alt="Salón de fiestas" loading="lazy">
+                    <div class="ev-gradient"></div>
+                    <div class="ev-content">
+                        <div class="ev-badge">Recepción</div>
+                        <div class="ev-name">Casa de la familia Gómez Montes</div>
+                        <div class="ev-time">Sábado · 3:30 PM</div>
+                        <div class="ev-addr">San Pedro Huixotitla. Real del Monte, Hidalgo</div>
+                        <a class="btn-maps" href="https://maps.app.goo.gl/yWWcWuquwRW3PCACA" target="_blank">Ver
+                            ubicaci&oacute;n</a>
+                    </div>
+                </div>
+            </div>
+            <div class="countdown-wrap">
+                <div class="countdown-title">Faltan</div>
+                <div class="countdown-grid">
+                    <div class="cd-unit"><span class="cd-num" id="cd-d">--</span>
+                        <div class="cd-label">días</div>
+                    </div>
+                    <div class="cd-sep">·</div>
+                    <div class="cd-unit"><span class="cd-num" id="cd-h">--</span>
+                        <div class="cd-label">horas</div>
+                    </div>
+                    <div class="cd-sep">·</div>
+                    <div class="cd-unit"><span class="cd-num" id="cd-m">--</span>
+                        <div class="cd-label">minutos</div>
+                    </div>
+                    <div class="cd-sep">·</div>
+                    <div class="cd-unit"><span class="cd-num" id="cd-s">--</span>
+                        <div class="cd-label">segundos</div>
+                    </div>
+                </div>
+            </div>
+            <button class="btn-calendar" onclick="addToCalendar()">Guardar en mi calendario</button>
+        </section>
+
+        <section id="regalos">
+            <h2 class="section-heading">Detalles especiales</h2>
+            <div class="gift-cards"></div>
+            <div class="envelope-card">
+                <canvas class="envelope-rain-canvas" id="envelopeCanvas"></canvas>
+                <div class="envelope-card-content">
+                    <span class="envelope-icon">💌</span>
+                    <div class="envelope-title">Lluvia de Sobres</div>
+                    <p class="envelope-text">Tu presencia en este día tan especial es el mejor regalo para mi.<br><br>
+                        Sin embargo, <strong>si deseas tener un detalle especial y no sabes qué obsequiarme</strong>, en
+                        la mesa de regalos el día del evento encontrarás una caja destinada para sobres, donde con mucho
+                        cariño podrás depositar tu regalo en efectivo.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="dresscode">
+            <p class="section-title">Para el gran d&iacute;a</p>
+            <h2 class="section-heading">Dress Code</h2>
+            <div class="dresscode-photos">
+                <img class="dresscode-photo" src="./resources/dress_code.PNG" alt="Dama formal" loading="lazy">
+            </div>
+            <p style="font-size:.9rem;color:var(--text-mid);margin-bottom:1rem">Lo más importante para mi es que te
+                sientas cómodo(a) y luzcas espectacular, así que eres libre de venir como mejor lo prefieras. </p>
+            <div class="dresscode-note">
+                <p style="font-weight:700;">Solo una restricción, por favor evitar el color</p>
+                <div class="palette-row" style="margin:1rem 0 .5rem">
+                    <div class="color-swatch avoid-swatch">
+                        <div class="swatch-circle" style="background:#f2c4ce"></div>
+                        <div style="font-weight:700;" class="swatch-label">Rosa</div>
+                    </div>
+                </div>
+                <p style="font-size:.8rem;color:var(--text-light);font-weight:700;">Este tono está reservado para la
+                    quinceañera</p>
+            </div>
+        </section>
+
+        <section id="galeria">
+            <p class="section-title">Momentos</p>
+            <h2 class="section-heading">Galería</h2>
+            <div class="carousel-track-wrap">
+                <div class="carousel-track" id="track1"></div>
+            </div>
+            <div class="carousel-track-wrap">
+                <div class="carousel-track carousel-track2" id="track2"></div>
+            </div>
+        </section>
+
+        <section id="rsvp">
+            <p class="section-title">Confirmación</p>
+            <h2 class="section-heading" style="margin-bottom: 2rem;">¿Nos acompañas?</h2>
+
+            <div id="rsvpAlreadyConfirmed" class="rsvp-already-confirmed" style="display:none; margin-top: 1rem;">
+                <div class="rsvp-ac-title">¡Ya confirmaste tu respuesta!</div>
+                <p class="rsvp-ac-sub">Gracias por hacernos saber.<br>Te esperamos con mucho cariño.</p>
+            </div>
+
+            <div class="rsvp-stepper" id="rsvpStepper">
+                <div class="rsvp-step active" id="step0">
+                    <p
+                        style="font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--text-light);margin-bottom:1.5rem">
+                        Por favor confirma tu asistencia</p>
+                    <div class="attend-cards">
+                        <div class="attend-option" id="opt-si" onclick="selectAttend('si')">
+                            <span class="ao-label">Sí asistiré</span>
+                            <span class="ao-sub">¡Allá estaré!</span>
+                        </div>
+                        <div class="attend-option" id="opt-no" onclick="selectAttend('no')">
+                            <span class="ao-label">No podré ir</span>
+                            <span class="ao-sub">Lo siento mucho</span>
+                        </div>
+                    </div>
+                    <div class="stepper-nav">
+                        <div class="step-dot active" id="dot0"></div>
+                        <div class="step-dot" id="dot1"></div>
+                        <div class="step-dot" id="dot2"></div>
+                    </div>
+                    <div class="step-btns">
+                        <button class="btn-next" onclick="goStep(1)">Continuar →</button>
+                    </div>
+                </div>
+
+                <div class="rsvp-step" id="step1">
+                    <div class="rsvp-form-fields">
+                        <div class="form-group">
+                            <label class="form-label">Nombre o familia</label>
+                            <input class="form-input" type="text" placeholder="Tu nombre o el de tu familia"
+                                id="rsvpName">
+                            <label class="anon-label">
+                                <input type="checkbox" id="rsvpAnon" onchange="toggleAnon(this)">
+                                <span>Prefiero ser anónimo(a)</span>
+                            </label>
+                        </div>
+                        <div class="form-group" id="guestGroup">
+                            <label class="form-label">¿Cuántos serán?</label>
+                            <div class="guest-counter">
+                                <button class="counter-btn" onclick="changeGuests(-1)">−</button>
+                                <span class="counter-num" id="guestNum">1</span>
+                                <span class="counter-label">personas</span>
+                                <button class="counter-btn" onclick="changeGuests(1)">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="step-btns">
+                        <button class="btn-back" onclick="goStep(0)">← Atrás</button>
+                        <button class="btn-next" onclick="goStep(2)">Revisar →</button>
+                    </div>
+                </div>
+
+                <div class="rsvp-step" id="step2">
+                    <div class="confirm-summary" id="confirmSummary"></div>
+                    <button class="btn-confirm" onclick="submitRSVP()">Confirmar Asistencia</button>
+                    <div class="step-btns" style="margin-top:.8rem">
+                        <button class="btn-back" onclick="goStep(1)">← Editar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-msg" id="successMsg">
+                <div class="success-inner">
+                    <div class="success-title">¡Gracias, <span id="successName"></span>!</div>
+                    <p class="success-sub" id="successSub">Tu confirmación fue registrada.<br>Mi familia y yo te
+                        esperamos para celebrar juntos este gran día.</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="closing-phrase">
+            <div class="closing-divider"></div>
+            <p class="closing-phrase-text">"Será un honor contar con tu presencia, te esperamos"</p>
+            <div class="closing-divider"></div>
+        </div>
+    </div>
+
+    <!-- Calendar Modal -->
+    <div class="cal-overlay" id="calModal" onclick="handleCalOverlayClick(event)">
+        <div class="cal-modal-box">
+            <button class="cal-close" onclick="closeCalModal()">×</button>
+            <p class="cal-modal-title">Guardar recordatorio</p>
+            <p class="cal-modal-sub">Se añadirá un recordatorio 7 días antes del evento para que no te pierdas este gran
+                día.</p>
+            <div class="cal-device-instructions">
+                <div class="cal-device-row">
+                    <div class="cal-device-icon android">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zm-2.5-9c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5S5 18.33 5 17.5v-7C5 9.67 4.33 9 3.5 9zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zM15.53 2.16l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48C13.85 1.23 12.95 1 12 1c-.96 0-1.86.23-2.66.63L7.85.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31C6.97 3.26 6 5.01 6 7h12c0-1.99-.97-3.75-2.47-4.84zM10 5H9V4h1v1zm5 0h-1V4h1v1z"
+                                fill="#2E7D32" />
+                        </svg>
+                    </div>
+                    <div class="cal-device-text">
+                        <span class="cal-device-label">Android</span>
+                        <span class="cal-device-desc">Se abrirá Google Calendar automáticamente para que guardes el
+                            evento con un solo toque.</span>
+                    </div>
+                </div>
+                <div class="cal-device-row">
+                    <div class="cal-device-icon iphone">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.7 9.05 7.4c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.39-1.32 2.76-2.53 3.99zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"
+                                fill="#6A1B9A" />
+                        </svg>
+                    </div>
+                    <div class="cal-device-text">
+                        <span class="cal-device-label">iPhone</span>
+                        <span class="cal-device-desc">Se descargará un archivo de calendario. Solo ábrelo y confirma
+                            para agregar el evento automáticamente.</span>
+                    </div>
+                </div>
+            </div>
+            <button class="cal-confirm-btn" onclick="confirmCalendar()">Agregar al calendario</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>¿Quieres una invitación asi para tu evento?, <a class="contact-link" href="#"
+                onclick="openContactModal(); return false;">contactame</a></p>
+    </footer>
+
+    <!-- Contact Modal -->
+    <div class="contact-overlay" id="contactModal" onclick="handleContactOverlayClick(event)">
+        <div class="contact-modal-box">
+            <button class="contact-close" onclick="closeContactModal()">×</button>
+            <span class="contact-modal-icon">✨</span>
+            <p class="contact-modal-title">Crea invitaciones para tu evento</p>
+            <p class="contact-modal-sub">Diseños únicos y personalizados para que tu celebración sea
+                inolvidable.<br>Escríbenos y cuéntanos sobre tu evento.</p>
+            <a class="btn-whatsapp"
+                href="https://wa.me/5215658936778?text=Hola%2C%20me%20ayudas%20a%20crear%20una%20invitaci%C3%B3n%20para%20mi%20evento."
+                target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+                </svg>
+                Escríbenos por WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <script src="app.js?v=1.9"></script>
 </body>
 
 </html>
