@@ -17,6 +17,7 @@ jobs:
       # 2. Generar archivo de entorno para producción
       - name: Generate firebaseConfig.json
         run: |
+          mkdir -p ./assets
           echo '{
             "projectId": "${{ secrets.PROJECT_ID }}",
             "databaseURL": "${{ secrets.DATABASEURL }}",
