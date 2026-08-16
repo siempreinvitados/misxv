@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Bautizo — Nombre de la Bebé</title>
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Mi Bautizo — Nombre de la Bebé">
+    <meta property="og:description" content="Acompáñanos a celebrar este día tan especial.">
+
+    <link rel="icon"
+        href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%B8%3C/text%3E%3C/svg%3E">
+
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+</head>
+
+<body>
+
+    <div class="scroll-hint" id="scrollHint" aria-hidden="true">
+        <span class="scroll-hint-arrow">↑</span>
+        <span class="scroll-hint-label">Desliza</span>
+    </div>
+
+    <div id="snap-container">
+
+        <!-- ══ PANTALLA 1 · PORTADA ══ -->
+        <section class="screen screen-portada" id="screen-portada">
+            <img class="deco-corner corner-tl" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-corner corner-tr" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-corner corner-bl" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-corner corner-br" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-bow bow-top" src="resources/imgs/ribbon-bow.svg" alt="" aria-hidden="true">
+            <img class="deco-butterfly bfly-1a" src="resources/imgs/butterfly.svg" alt="" aria-hidden="true">
+            <img class="deco-butterfly bfly-1b" src="resources/imgs/butterfly.svg" alt="" aria-hidden="true">
+
+            <div class="p1-content">
+                <p class="p1-eyebrow">ACOMPÁÑANOS A CELEBRAR EL</p>
+                <h1 class="p1-title">BAUTIZO</h1>
+                <p class="p1-subtitle">&amp; PRIMER AÑITO</p>
+                <p class="p1-daughter">DE NUESTRA HIJA</p>
+                <p class="p1-name">Nombre de la Bebé</p>
+            </div>
+
+            <img class="p1-mascot" src="resources/imgs/oso.png" alt="Osito" aria-hidden="true">
+        </section>
+
+        <!-- ══ PANTALLA 2 · DEDICATORIA ══ -->
+        <section class="screen screen-dedicatoria" id="screen-dedicatoria">
+            <img class="deco-corner corner-tl" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-corner corner-tr" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-corner corner-bl" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-corner corner-br" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-bow bow-top bow-small" src="resources/imgs/ribbon-bow.svg" alt="" aria-hidden="true">
+
+            <div class="p2-content">
+                <p class="ded-line">DOY GRACIAS<br><span class="accent">A DIOS NUESTRO SEÑOR</span><br>POR DARME EL
+                    DON DE LA VIDA</p>
+                <p class="ded-line"><span class="accent">A MIS PADRES</span><br>POR ESPERARME CON AMOR Y<br>RECIBIRME
+                    CON ALEGRÍA</p>
+                <p class="ded-line"><span class="accent">A MIS PADRINOS</span><br>POR GUIARME EN EL CAMINO DE LA VIDA
+                </p>
+                <p class="ded-line">Y <span class="accent">A TI</span> POR ACOMPAÑARME EN EL DÍA MÁS<br>IMPORTANTE DE
+                    MI VIDA</p>
+            </div>
+
+            <img class="p2-mascot" src="resources/imgs/oso.png" alt="Osito" aria-hidden="true">
+        </section>
+
+        <!-- ══ PANTALLA 3 · EVENTO ══ -->
+        <section class="screen screen-evento" id="screen-evento">
+            <img class="deco-corner corner-tl" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-corner corner-tr" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-corner corner-bl" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-corner corner-br" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <span class="silver-line line-a" aria-hidden="true"></span>
+            <span class="silver-line line-b" aria-hidden="true"></span>
+
+            <div class="p3-content">
+                <div class="ev3-reveal icon-dove-chalice">
+                    <img src="resources/imgs/dove.svg" class="icon-dove" alt="" aria-hidden="true">
+                    <img src="resources/imgs/chalice.svg" class="icon-chalice" alt="" aria-hidden="true">
+                </div>
+                <p class="ev3-reveal ev3-intro">ACOMPÁÑANOS A FESTEJAR EL DÍA</p>
+                <p class="ev3-reveal ev3-month">Enero</p>
+                <div class="ev3-reveal ev3-daterow">
+                    <span class="ev3-day-name">SÁBADO</span>
+                    <span class="ev3-day-num">10</span>
+                    <span class="ev3-year">2026</span>
+                </div>
+                <div class="ev3-reveal ev3-block">
+                    <p class="ev3-label">MISA</p>
+                    <p class="ev3-venue">Nombre de la Parroquia</p>
+                    <p class="ev3-time">11:00 AM</p>
+                </div>
+                <div class="ev3-reveal ev3-block">
+                    <p class="ev3-label">RECEPCIÓN</p>
+                    <p class="ev3-venue">Nombre del Salón</p>
+                    <p class="ev3-time">1:00 PM</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ══ PANTALLA 4 · GALERÍA ══ -->
+        <section class="screen screen-galeria" id="screen-galeria">
+            <p class="p4-heading ev3-reveal">NUESTROS MOMENTOS</p>
+            <div class="gallery-grid" id="galleryGrid"></div>
+        </section>
+
+        <!-- ══ PANTALLA 5 · DESPEDIDA ══ -->
+        <section class="screen screen-despedida" id="screen-despedida">
+            <img class="deco-corner corner-tl" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-corner corner-tr" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-corner corner-bl" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-corner corner-br" src="resources/imgs/corner-flourish.svg" alt="" aria-hidden="true">
+            <img class="deco-butterfly bfly-5a" src="resources/imgs/butterfly.svg" alt="" aria-hidden="true">
+
+            <img class="p5-mascot" src="resources/imgs/oso.png" alt="Osito" aria-hidden="true">
+            <p class="p5-title">¡Los Esperamos!</p>
+            <img class="deco-bow bow-bottom bow-small" src="resources/imgs/ribbon-bow.svg" alt="" aria-hidden="true">
+        </section>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

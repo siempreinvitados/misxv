@@ -1,0 +1,736 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+/* ── Fuentes auto-alojadas (copiadas de bautizo/, sin CDN externo) ── */
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('resources/fonts/PlayfairDisplay-Regular.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('resources/fonts/PlayfairDisplay-SemiBold.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('resources/fonts/PlayfairDisplay-Bold.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url('resources/fonts/PlayfairDisplay-Italic.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: italic;
+    font-weight: 600;
+    font-display: swap;
+    src: url('resources/fonts/PlayfairDisplay-SemiBoldItalic.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Alex Brush';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('resources/fonts/AlexBrush-Regular.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url('resources/fonts/Quicksand-Light.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('resources/fonts/Quicksand-Regular.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('resources/fonts/Quicksand-Medium.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('resources/fonts/Quicksand-SemiBold.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('resources/fonts/Quicksand-Bold.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Baloo 2';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('resources/fonts/Baloo2-Regular.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Baloo 2';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('resources/fonts/Baloo2-Medium.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Baloo 2';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('resources/fonts/Baloo2-SemiBold.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Baloo 2';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('resources/fonts/Baloo2-Bold.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Baloo 2';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url('resources/fonts/Baloo2-ExtraBold.woff2') format('woff2')
+}
+
+/* ── Paleta (misma base azul/plateada que bautizo/, + 2 acentos metálicos nuevos) ── */
+:root {
+    --blue: #3f6fa8;
+    --blue-deep: #1f3f66;
+    --blue-light: #bcd6ef;
+    --powder: #dce9f7;
+    --cream: #f8fafc;
+    --pearl: #eef2f7;
+    --silver: #c7ccd6;
+    --silver-deep: #8992a3;
+    --silver-shine: #eef1f5;
+    --silver-line: #a9b0bd;
+    --text-dark: #23324a;
+    --text-mid: #5b6b85;
+    --text-light: #93a0b8;
+    --glow: rgba(63, 111, 168, .28);
+    --glow-silver: rgba(180, 190, 205, .35);
+}
+
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+    background: var(--cream);
+    color: var(--text-dark);
+    font-family: 'Quicksand', sans-serif;
+    -webkit-tap-highlight-color: transparent;
+}
+
+img {
+    -webkit-user-drag: none;
+    user-select: none;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   SCROLL-SNAP · una pantalla completa a la vez
+   ══════════════════════════════════════════════════════════════ */
+#snap-container {
+    height: 100svh;
+    overflow-y: scroll;
+    scroll-snap-type: y mandatory;
+    overscroll-behavior-y: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.screen {
+    height: 100svh;
+    width: 100%;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    padding: clamp(1.2rem, 6vh, 2.5rem) clamp(1.2rem, 6vw, 2.5rem);
+    background: linear-gradient(180deg, var(--cream), var(--pearl));
+}
+
+.screen-galeria {
+    background: linear-gradient(180deg, var(--pearl), var(--powder));
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PISTA DE DESLIZAR (solo pantalla 1, se oculta al primer scroll)
+   ══════════════════════════════════════════════════════════════ */
+.scroll-hint {
+    position: fixed;
+    left: 50%;
+    bottom: clamp(1.2rem, 4vh, 2rem);
+    transform: translateX(-50%);
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .15rem;
+    color: var(--blue-deep);
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: .8rem;
+    letter-spacing: .12em;
+    pointer-events: none;
+    opacity: .85;
+    transition: opacity .6s ease;
+    animation: hintBob 1.8s ease-in-out infinite;
+}
+
+.scroll-hint.is-hidden {
+    opacity: 0;
+}
+
+.scroll-hint-arrow {
+    font-size: 1.3rem;
+    line-height: 1;
+}
+
+@keyframes hintBob {
+
+    0%,
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    50% {
+        transform: translateX(-50%) translateY(-8px);
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DECORACIONES COMPARTIDAS · marcos florales, moño, mariposas
+   ══════════════════════════════════════════════════════════════ */
+.deco-corner {
+    position: absolute;
+    width: clamp(64px, 20vw, 128px);
+    height: auto;
+    opacity: .85;
+    z-index: 1;
+}
+
+.corner-tl {
+    top: 0;
+    left: 0;
+}
+
+.corner-tr {
+    top: 0;
+    right: 0;
+    transform: scaleX(-1);
+}
+
+.corner-bl {
+    bottom: 0;
+    left: 0;
+    transform: scaleY(-1);
+}
+
+.corner-br {
+    bottom: 0;
+    right: 0;
+    transform: scale(-1, -1);
+}
+
+.deco-bow {
+    position: absolute;
+    width: clamp(70px, 18vw, 110px);
+    height: auto;
+    z-index: 2;
+}
+
+.bow-top {
+    top: clamp(.6rem, 3vh, 1.6rem);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bow-bottom {
+    bottom: clamp(.6rem, 3vh, 1.6rem);
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.bow-small {
+    width: clamp(52px, 13vw, 78px);
+}
+
+.deco-butterfly {
+    position: absolute;
+    width: clamp(24px, 6vw, 38px);
+    height: auto;
+    z-index: 1;
+    opacity: .8;
+}
+
+.bfly-1a {
+    left: 8%;
+    top: 22%;
+    --dur: 7s;
+    --delay: .5s;
+    --tx: 14px;
+    --ty: -18px;
+    --rot: 10deg;
+    animation: flutter var(--dur) ease-in-out var(--delay) infinite;
+}
+
+.bfly-1b {
+    right: 10%;
+    top: 40%;
+    --dur: 8.5s;
+    --delay: 1.4s;
+    --tx: -12px;
+    --ty: -16px;
+    --rot: -8deg;
+    animation: flutter var(--dur) ease-in-out var(--delay) infinite;
+}
+
+.bfly-5a {
+    right: 12%;
+    top: 18%;
+    --dur: 7.6s;
+    --delay: .8s;
+    --tx: -14px;
+    --ty: -20px;
+    --rot: 9deg;
+    animation: flutter var(--dur) ease-in-out var(--delay) infinite;
+}
+
+@keyframes flutter {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(var(--tx), var(--ty)) rotate(var(--rot));
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .deco-butterfly,
+    .scroll-hint {
+        animation: none;
+    }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PANTALLA 1 · PORTADA
+   ══════════════════════════════════════════════════════════════ */
+.p1-content {
+    position: relative;
+    z-index: 3;
+    max-width: 420px;
+}
+
+.p1-eyebrow {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    letter-spacing: .1em;
+    font-size: clamp(.72rem, 2.6vw, .88rem);
+    color: var(--text-mid);
+    margin-bottom: .6rem;
+}
+
+.p1-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 12vw, 3.8rem);
+    color: var(--blue-deep);
+    line-height: 1;
+    margin-bottom: .3rem;
+}
+
+.p1-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    letter-spacing: .08em;
+    font-size: clamp(1.1rem, 4.6vw, 1.5rem);
+    color: var(--blue);
+    margin-bottom: .2rem;
+}
+
+.p1-daughter {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    letter-spacing: .1em;
+    font-size: clamp(.75rem, 2.8vw, .9rem);
+    color: var(--text-mid);
+    margin-bottom: .7rem;
+}
+
+.p1-name {
+    font-family: 'Alex Brush', cursive;
+    font-weight: 400;
+    font-size: clamp(2.6rem, 11vw, 4rem);
+    background: linear-gradient(135deg, var(--blue), var(--blue-deep), var(--silver-deep), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 4px 18px rgba(248, 250, 252, .9));
+}
+
+.word {
+    display: inline-block;
+    white-space: nowrap;
+}
+
+.char {
+    display: inline-block;
+}
+
+.p1-mascot {
+    position: relative;
+    z-index: 2;
+    width: clamp(120px, 34vw, 190px);
+    margin-top: clamp(.8rem, 4vh, 1.6rem);
+    filter: drop-shadow(0 10px 20px var(--glow));
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PANTALLA 2 · DEDICATORIA
+   ══════════════════════════════════════════════════════════════ */
+.p2-content {
+    position: relative;
+    z-index: 3;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1rem, 4vh, 1.6rem);
+}
+
+.ded-line {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    letter-spacing: .04em;
+    font-size: clamp(.85rem, 3.4vw, 1rem);
+    line-height: 1.5;
+    color: var(--text-dark);
+}
+
+.ded-line .accent {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--blue);
+    letter-spacing: .01em;
+}
+
+.p2-mascot {
+    position: relative;
+    z-index: 2;
+    width: clamp(90px, 24vw, 130px);
+    margin-top: clamp(.8rem, 3vh, 1.2rem);
+    filter: drop-shadow(0 10px 18px var(--glow));
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PANTALLA 3 · EVENTO
+   ══════════════════════════════════════════════════════════════ */
+.p3-content {
+    position: relative;
+    z-index: 3;
+    max-width: 380px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(.55rem, 2.2vh, .9rem);
+}
+
+.icon-dove-chalice {
+    position: relative;
+    width: clamp(70px, 20vw, 96px);
+    height: clamp(84px, 24vw, 116px);
+    margin-bottom: .2rem;
+}
+
+.icon-dove {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 62%;
+}
+
+.icon-chalice {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 46%;
+}
+
+.ev3-intro {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    letter-spacing: .08em;
+    font-size: clamp(.75rem, 2.8vw, .88rem);
+    color: var(--text-mid);
+}
+
+.ev3-month {
+    font-family: 'Alex Brush', cursive;
+    font-size: clamp(2rem, 8vw, 2.7rem);
+    color: var(--blue);
+    line-height: 1;
+    margin: -.2rem 0;
+}
+
+.ev3-daterow {
+    display: flex;
+    align-items: center;
+    gap: clamp(.6rem, 3vw, 1.1rem);
+    margin: .3rem 0;
+}
+
+.ev3-day-name,
+.ev3-year {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    letter-spacing: .06em;
+    font-size: clamp(.8rem, 3vw, .95rem);
+    color: var(--text-mid);
+    border-top: 1px solid var(--silver-line);
+    border-bottom: 1px solid var(--silver-line);
+    padding: .3rem 0;
+}
+
+.ev3-day-num {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 9vw, 3rem);
+    color: var(--blue-deep);
+    line-height: 1;
+}
+
+.ev3-block {
+    margin-top: .4rem;
+}
+
+.ev3-label {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    letter-spacing: .12em;
+    font-size: clamp(.85rem, 3.2vw, 1rem);
+    color: var(--blue);
+    margin-bottom: .15rem;
+}
+
+.ev3-venue {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    font-size: clamp(.85rem, 3.2vw, .98rem);
+    color: var(--text-dark);
+}
+
+.ev3-time {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 400;
+    font-size: clamp(.78rem, 2.8vw, .88rem);
+    color: var(--text-light);
+}
+
+/* Líneas geométricas plateadas (reemplazan el dorado del original) */
+.silver-line {
+    position: absolute;
+    z-index: 1;
+    background: linear-gradient(90deg, transparent, var(--silver-line), transparent);
+    pointer-events: none;
+}
+
+.line-a {
+    top: 14%;
+    left: -6%;
+    width: 46%;
+    height: 1px;
+    transform: rotate(-18deg);
+}
+
+.line-b {
+    bottom: 12%;
+    right: -6%;
+    width: 46%;
+    height: 1px;
+    transform: rotate(-18deg);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PANTALLA 4 · GALERÍA
+   ══════════════════════════════════════════════════════════════ */
+.p4-heading {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    letter-spacing: .14em;
+    font-size: clamp(1rem, 4vw, 1.3rem);
+    color: var(--blue-deep);
+    margin-bottom: clamp(1rem, 4vh, 1.6rem);
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(.55rem, 2vw, .9rem);
+    max-width: 420px;
+    width: 100%;
+    overflow-y: auto;
+    max-height: 70svh;
+}
+
+.gal-cell {
+    aspect-ratio: 3 / 4;
+    border-radius: 16px;
+    overflow: hidden;
+    background: linear-gradient(135deg, var(--powder), var(--pearl));
+    box-shadow: 0 6px 16px rgba(63, 111, 168, .12);
+}
+
+.gal-cell img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.gal-cell-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: clamp(1.6rem, 7vw, 2.2rem);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PANTALLA 5 · DESPEDIDA
+   ══════════════════════════════════════════════════════════════ */
+.p5-mascot {
+    position: relative;
+    z-index: 2;
+    width: clamp(130px, 36vw, 200px);
+    filter: drop-shadow(0 10px 20px var(--glow));
+    margin-bottom: clamp(.6rem, 3vh, 1.2rem);
+}
+
+.p5-title {
+    position: relative;
+    z-index: 3;
+    font-family: 'Alex Brush', cursive;
+    font-size: clamp(2.8rem, 12vw, 4.2rem);
+    background: linear-gradient(135deg, var(--blue), var(--blue-deep), var(--silver-deep), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 4px 18px rgba(248, 250, 252, .9));
+}
+
+/* ══════════════════════════════════════════════════════════════
+   RESPONSIVE · ajustes para pantallas bajas (misma técnica que sofi/)
+   ══════════════════════════════════════════════════════════════ */
+@media (max-height: 700px) {
+    .p1-mascot {
+        width: clamp(90px, 26vw, 140px);
+        margin-top: .6rem;
+    }
+
+    .p1-title {
+        font-size: clamp(2.1rem, 10vw, 3rem);
+    }
+
+    .p1-name {
+        font-size: clamp(2.1rem, 9vw, 3.2rem);
+    }
+
+    .p2-content {
+        gap: clamp(.6rem, 2.4vh, 1rem);
+    }
+
+    .p2-mascot {
+        width: clamp(70px, 18vw, 100px);
+    }
+
+    .p3-content {
+        gap: .4rem;
+    }
+
+    .p5-mascot {
+        width: clamp(95px, 26vw, 140px);
+    }
+
+    .p5-title {
+        font-size: clamp(2.1rem, 10vw, 3rem);
+    }
+}
+
+@media (max-height: 560px) {
+    .deco-corner {
+        width: clamp(48px, 15vw, 90px);
+    }
+
+    .ded-line {
+        font-size: .8rem;
+    }
+
+    .p2-content {
+        gap: .5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .deco-bow {
+        width: clamp(58px, 20vw, 90px);
+    }
+
+    .icon-dove-chalice {
+        width: clamp(60px, 22vw, 84px);
+        height: clamp(72px, 26vw, 100px);
+    }
+}

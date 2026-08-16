@@ -1,0 +1,1893 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0
+}
+
+/* ── Fuentes auto-alojadas (sin CDN externo) ── */
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('resources/fonts/PlayfairDisplay-Regular.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('resources/fonts/PlayfairDisplay-SemiBold.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('resources/fonts/PlayfairDisplay-Bold.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url('resources/fonts/PlayfairDisplay-Italic.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    font-style: italic;
+    font-weight: 600;
+    font-display: swap;
+    src: url('resources/fonts/PlayfairDisplay-SemiBoldItalic.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Alex Brush';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('resources/fonts/AlexBrush-Regular.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src: url('resources/fonts/Quicksand-Light.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('resources/fonts/Quicksand-Regular.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('resources/fonts/Quicksand-Medium.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('resources/fonts/Quicksand-SemiBold.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Quicksand';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('resources/fonts/Quicksand-Bold.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Baloo 2';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('resources/fonts/Baloo2-Regular.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Baloo 2';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('resources/fonts/Baloo2-Medium.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Baloo 2';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('resources/fonts/Baloo2-SemiBold.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Baloo 2';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('resources/fonts/Baloo2-Bold.woff2') format('woff2')
+}
+
+@font-face {
+    font-family: 'Baloo 2';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src: url('resources/fonts/Baloo2-ExtraBold.woff2') format('woff2')
+}
+
+:root {
+    --blue: #3f6fa8;
+    --blue-deep: #1f3f66;
+    --blue-light: #bcd6ef;
+    --powder: #dce9f7;
+    --cream: #f8fafc;
+    --pearl: #eef2f7;
+    --silver: #c7ccd6;
+    --silver-deep: #8992a3;
+    --text-dark: #23324a;
+    --text-mid: #5b6b85;
+    --text-light: #93a0b8;
+    --glow: rgba(63, 111, 168, .28);
+    --glow-silver: rgba(180, 190, 205, .35);
+
+    --onesie-fill: #dce9f7;
+    --onesie-stroke: #3f6fa8;
+}
+
+html {
+    overflow-x: hidden
+}
+
+body {
+    background: var(--cream);
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 400;
+    color: var(--text-dark);
+    overflow-x: hidden;
+    font-size: clamp(0.95rem, 1.5vw, 1.05rem)
+}
+
+/* ── Fondo: canvas de estrellas/partículas ── */
+#bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: .6
+}
+
+/* ── Nubes estáticas ── */
+.cloud {
+    position: fixed;
+    opacity: .3;
+    z-index: 0;
+    pointer-events: none;
+    width: clamp(160px, 26vw, 320px);
+    height: auto
+}
+
+.cloud-1 {
+    top: 6vh;
+    left: -4vw
+}
+
+.cloud-2 {
+    top: 34vh;
+    right: -6vw;
+    width: clamp(140px, 22vw, 260px)
+}
+
+.cloud-3 {
+    top: 68vh;
+    left: 55vw;
+    width: clamp(120px, 18vw, 220px)
+}
+
+/* ── Globo aerostático gigante: cruza lento de un lado a otro, detrás de
+   todo el contenido, durante todo el scroll de la página (eje X). Además
+   sube en el eje Y un poco antes de llegar a #evento, para revelar más
+   globo justo ahí (ver ambos tweens en app.js) — parte siempre de esta
+   base (abajo, "más abajo" según pedido). ── */
+.mega-balloon {
+    position: fixed;
+    bottom: -40vh;
+    left: -65vw;
+    width: clamp(380px, 60vw, 850px);
+    height: auto;
+    opacity: 0.7;
+    z-index: 0;
+    pointer-events: none;
+    will-change: transform
+}
+
+/* ── Cielo del hero: globo al centro, una nube a cada lado (imágenes PNG).
+   Hijas de #hero (position:absolute, no fixed) para que se desvanezcan y
+   suban junto con él en su animación de salida por scroll — así solo se ven
+   en el hero, sin necesidad de un ScrollTrigger propio. Puro CSS aparte de
+   eso: la deriva de las nubes y el balanceo del globo corren solos. ── */
+.hero-cloud {
+    position: absolute;
+    top: 2vh;
+    left: 50%;
+    width: clamp(100px, 16vw, 200px);
+    height: auto;
+    opacity: .7;
+    pointer-events: none;
+    z-index: 1
+}
+
+.hero-cloud-left {
+    animation: heroCloudDriftLeft 30s ease-in-out infinite
+}
+
+.hero-cloud-right {
+    animation: heroCloudDriftRight 26s ease-in-out infinite
+}
+
+/* Nube fija a la izquierda del globo (que se queda siempre al centro, en 0),
+   con un leve vaivén alrededor de esa posición — no cruza el centro.
+   El offset usa clamp() (no solo vw) para que en pantallas angostas el hueco
+   respecto al globo no se cierre: con vw puro, el ancho en px de la nube
+   (que tiene piso propio en px) se comía el margen y llegaban a tocarse. */
+@keyframes heroCloudDriftLeft {
+
+    0%,
+    100% {
+        transform: translateX(calc(-50% - clamp(170px, 36vw, 360px)))
+    }
+
+    50% {
+        transform: translateX(calc(-50% - clamp(140px, 29vw, 280px)))
+    }
+}
+
+/* Nube fija a la derecha del globo, mismo vaivén en espejo. */
+@keyframes heroCloudDriftRight {
+
+    0%,
+    100% {
+        transform: translateX(calc(-50% + clamp(140px, 29vw, 280px)))
+    }
+
+    50% {
+        transform: translateX(calc(-50% + clamp(170px, 36vw, 360px)))
+    }
+}
+
+.hero-balloon-a {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: clamp(90px, 13vw, 170px);
+    height: auto;
+    pointer-events: none;
+    z-index: 2;
+    animation: heroBalloonBob 7s ease-in-out infinite
+}
+
+/* Bob vertical + vaivén horizontal lento + leve rotación: da el efecto de
+   "salir flotando al centro, tambaleándose, de derecha a izquierda". */
+@keyframes heroBalloonBob {
+
+    0%,
+    100% {
+        transform: translateX(calc(-50% - 1.4vw)) translateY(0) rotate(-3deg)
+    }
+
+    50% {
+        transform: translateX(calc(-50% + 1.4vw)) translateY(-14px) rotate(3deg)
+    }
+}
+
+/* ── Osito del hero: decorativo, abajo a la derecha, semitransparente.
+   Hijo de #hero igual que las nubes/el globo, así se desvanece con él. ── */
+/* Grande, como un fondo visual: el offset es siempre 1/4 del width en cada
+   breakpoint (mismos números del clamp de width, a un cuarto), para que
+   quede siempre 75% visible / 25% recortado por el borde, sin importar el
+   tamaño de viewport. */
+.hero-bear {
+    position: absolute;
+    bottom: calc(-1 * clamp(110px, 15.5vw, 175px));
+    right: calc(-1 * clamp(110px, 15.5vw, 175px));
+    width: clamp(440px, 62vw, 700px);
+    height: auto;
+    opacity: .5;
+    pointer-events: none;
+    z-index: 1
+}
+
+/* ── Osito del cierre: mismo tamaño/opacidad que .hero-bear, pero más
+   esquinado — el offset es 1/3 del width (no 1/4) para que quede más
+   metido en la esquina inferior izquierda, mostrando solo ~3/4. ── */
+.closing-bear {
+    position: absolute;
+    bottom: calc(-1 * clamp(140px, 20vw, 220px));
+    left: calc(-1 * clamp(147px, 20.7vw, 233px));
+    width: clamp(440px, 62vw, 700px);
+    height: auto;
+    opacity: .5;
+    pointer-events: none;
+    z-index: 0
+}
+
+/* ── Destellos ambientales (mismo mecanismo que .butterfly de gali) ── */
+.sparkle {
+    position: fixed;
+    pointer-events: none;
+    z-index: 4;
+    width: 16px;
+    height: 16px;
+    color: var(--silver-deep);
+    opacity: 0;
+    animation: flutter var(--dur, 8s) ease-in-out var(--delay, 0s) infinite
+}
+
+.sparkle svg {
+    width: 100%;
+    height: 100%;
+    display: block
+}
+
+@keyframes flutter {
+    0% {
+        opacity: 0;
+        transform: translate(0, 0) rotate(0deg) scale(.6)
+    }
+
+    10% {
+        opacity: .8
+    }
+
+    50% {
+        transform: translate(var(--tx, 60px), var(--ty, -80px)) rotate(var(--rot, 15deg)) scale(1)
+    }
+
+    90% {
+        opacity: .5
+    }
+
+    100% {
+        opacity: 0;
+        transform: translate(var(--tx2, 120px), var(--ty2, -160px)) rotate(var(--rot2, -10deg)) scale(.6)
+    }
+}
+
+/* ── Reduce motion ── */
+@media (prefers-reduced-motion: reduce) {
+
+    .sparkle {
+        animation: none !important
+    }
+}
+
+.page-wrap {
+    position: relative;
+    z-index: 2
+}
+
+/* Columna de contenido centrada dentro de una sección full-bleed: el fondo
+   de la sección ahora ocupa todo el ancho del viewport (.page-wrap ya no lo
+   limita), esto solo centra lo de adentro donde hace falta. */
+.section-inner {
+    max-width: 768px;
+    margin: 0 auto;
+    position: relative
+}
+
+section {
+    padding: 5rem 2rem;
+    position: relative
+}
+
+/* ── Glow orbs ── */
+#hero::before,
+#evento::before,
+#rsvp::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    width: 60vw;
+    max-width: 520px;
+    aspect-ratio: 1;
+    transform: translateX(-50%);
+    background: radial-gradient(circle, var(--glow) 0%, transparent 70%);
+    filter: blur(50px);
+    z-index: -1;
+    pointer-events: none
+}
+
+#evento::before {
+    background: radial-gradient(circle, var(--glow-silver) 0%, transparent 70%)
+}
+
+/* ── Franjas de fondo por sección ── */
+#hero,
+#simbolo {
+    background: var(--cream)
+}
+
+/* A partir de aquí se alterna sección con fondo sólido / sin fondo, para
+   que el globo gigante (detrás de todo) se alcance a ver de verdad en las
+   secciones sin fondo, no solo a través de las tarjetas translúcidas. */
+#evento {
+    background: transparent
+}
+
+#cuenta-regresiva {
+    background: var(--powder);
+    text-align: center
+}
+
+#dresscode {
+    background: var(--pearl)
+}
+
+#galeria {
+    background: transparent
+}
+
+#rsvp {
+    background: var(--cream)
+}
+
+#despedida {
+    background: transparent
+}
+
+/* ── Hero: pantalla completa fija, sale deslizándose hacia arriba por scroll ── */
+#hero-spacer {
+    height: 100svh
+}
+
+#hero {
+    position: fixed;
+    inset: 0;
+    height: 100svh;
+    z-index: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem clamp(1rem, 4vw, 2.5rem)
+}
+
+.hero-content {
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: clamp(1.5rem, 5vh, 3rem);
+    z-index: 2;
+    max-height: 100%;
+    overflow-y: auto
+}
+
+.hero-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center
+}
+
+@media (min-width: 768px) {
+    .hero-content {
+        max-width: 560px
+    }
+}
+
+@media (min-width: 1024px) {
+    .hero-content {
+        max-width: 620px
+    }
+}
+
+/* Solo móvil: el bloque ocupa 90% de la pantalla y su contenido (eyebrow /
+   bloque central / familias) se reparte con space-evenly en vez de agruparse
+   en el centro. No afecta tablet/desktop. */
+@media (max-width: 767px) {
+    .hero-content {
+        width: 90%;
+        height: 90%;
+        justify-content: space-evenly;
+        gap: 0
+    }
+
+    .hero-title {
+        font-size: clamp(3rem, 11vw, 4.2rem)
+    }
+
+    .hero-name {
+        font-size: clamp(3.8rem, 16vw, 5.8rem)
+    }
+
+    .hero-phrase {
+        font-size: clamp(1.15rem, 4vw, 1.4rem)
+    }
+
+    .families {
+        font-size: 1.05rem
+    }
+}
+
+/* #hero es fixed+height:100svh (ya no min-height), así que en pantallas bajas
+   (teléfonos pequeños/antiguos) el contenido no puede empujar la sección hacia
+   abajo como antes — si el 90% no alcanza, .hero-content cae al overflow-y:auto
+   ya definido arriba; aquí solo compactamos lo interno de .hero-main. */
+@media (max-height: 700px) {
+    #hero {
+        padding-top: 1rem;
+        padding-bottom: 1rem
+    }
+
+    .hero-title {
+        margin-bottom: .3rem
+    }
+
+    .hero-name {
+        margin-bottom: .4rem
+    }
+
+    .divider-line {
+        margin: 0 0 .7rem
+    }
+
+    .families {
+        line-height: 1.6
+    }
+}
+
+.eyebrow {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(.68rem, .9vw, .82rem);
+    letter-spacing: .15em;
+    color: var(--text-mid);
+    text-shadow: 0 2px 18px rgba(248, 250, 252, .9), 0 1px 3px rgba(248, 250, 252, .9)
+}
+
+.divider-line {
+    width: 50px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    box-shadow: 0 0 12px rgba(248, 250, 252, .9);
+    margin: 0 0 1.4rem
+}
+
+.hero-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: clamp(2.6rem, 7vw, 4.2rem);
+    line-height: 1;
+    color: var(--blue-deep);
+    text-shadow: 0 4px 26px rgba(248, 250, 252, .95), 0 1px 4px rgba(248, 250, 252, .9);
+    margin-bottom: .6rem
+}
+
+.hero-name {
+    font-family: 'Alex Brush', cursive;
+    font-weight: 400;
+    font-size: clamp(3.3rem, 11vw, 5.8rem);
+    background: linear-gradient(135deg, var(--blue), var(--blue-deep), var(--silver-deep), var(--blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 4px 22px rgba(248, 250, 252, .9));
+    line-height: 1.1;
+    margin-bottom: .8rem
+}
+
+.hero-phrase {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.05rem, 1.7vw, 1.25rem);
+    color: var(--text-mid);
+    text-shadow: 0 2px 20px rgba(248, 250, 252, .95), 0 1px 3px rgba(248, 250, 252, .9);
+    line-height: 1.7
+}
+
+.families {
+    font-family: 'Quicksand', sans-serif;
+    font-size: .9rem;
+    color: var(--text-mid);
+    text-shadow: 0 2px 16px rgba(248, 250, 252, .95), 0 1px 3px rgba(248, 250, 252, .9);
+    letter-spacing: .04em;
+    line-height: 2
+}
+
+.families strong {
+    color: var(--blue-deep);
+    font-weight: 600
+}
+
+/* ── Título / heading genérico ── */
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(.7rem, 1vw, .85rem);
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    text-align: center
+}
+
+.section-heading {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: clamp(2.1rem, 5.2vw, 3.2rem);
+    color: var(--blue-deep);
+    text-align: center;
+    margin-bottom: 2rem
+}
+
+/* ── Símbolo del bautizo ── */
+#simbolo {
+    text-align: center
+}
+
+/* Globos que ascienden por scroll al inicio de #simbolo, como si siguieran
+   subiendo al cielo tras el globo del hero. El wrapper recibe el ascenso
+   (GSAP, ligado al scroll) y el <img> hijo el vaivén continuo por CSS —
+   dos elementos, cada uno dueño de su propio transform, sin pelearse. */
+.rising-balloon-wrap {
+    position: absolute;
+    top: var(--top, 6vh);
+    left: var(--left, 50%);
+    z-index: 1;
+    pointer-events: none;
+    will-change: transform
+}
+
+.rising-balloon {
+    display: block;
+    width: clamp(85px, 13vw, 175px);
+    height: auto;
+    animation: risingSway var(--dur, 6s) ease-in-out infinite;
+    animation-delay: var(--delay, 0s)
+}
+
+@keyframes risingSway {
+
+    0%,
+    100% {
+        transform: translateX(0) rotate(var(--rot, -4deg))
+    }
+
+    50% {
+        transform: translateX(var(--tx, 16px)) rotate(calc(var(--rot, -4deg) * -1))
+    }
+}
+
+.simbolo-card {
+    background: rgba(255, 255, 255, .6);
+    border: 1px solid rgba(63, 111, 168, .2);
+    border-radius: 20px;
+    padding: 2.2rem 1.8rem;
+    max-width: 520px;
+    margin: 0 auto;
+    box-shadow: 0 6px 30px rgba(63, 111, 168, .08)
+}
+
+.simbolo-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2.6vw, 1.4rem);
+    color: var(--blue-deep);
+    line-height: 1.6;
+    margin-bottom: .7rem
+}
+
+.simbolo-ref {
+    font-size: .72rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--silver-deep);
+    margin-bottom: 1.4rem
+}
+
+.simbolo-text {
+    font-size: .95rem;
+    color: var(--text-mid);
+    line-height: 1.8
+}
+
+
+/* ── Evento ── */
+#evento {
+    padding-top: 5rem;
+    text-align: center
+}
+
+.evento-date {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: var(--text-mid);
+    margin-bottom: 2rem;
+    font-weight: 400
+}
+
+/* Línea de tiempo alineada a la izquierda: misma construcción (línea +
+   punto) en cualquier ancho, fluida por defecto — no depende de una media
+   query que la apague en mobile (ahí fallaba antes). */
+.evento-timeline {
+    max-width: 480px;
+    margin: 0 auto 3rem;
+    text-align: left
+}
+
+.evento-step {
+    position: relative;
+    padding-left: 2.6rem;
+    padding-bottom: 2.2rem
+}
+
+.evento-step:last-child {
+    padding-bottom: 0
+}
+
+.evento-step::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 24px;
+    bottom: -2px;
+    width: 2px;
+    background: linear-gradient(180deg, var(--blue), var(--silver-deep))
+}
+
+.evento-step:last-child::before {
+    display: none
+}
+
+.evento-dot {
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 0 4px rgba(63, 111, 168, .22);
+    z-index: 2
+}
+
+.evento-card {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 6px 32px rgba(63, 111, 168, .16);
+    transition: transform .3s, box-shadow .3s;
+    background: linear-gradient(160deg, rgba(255, 255, 255, .6), rgba(220, 233, 247, .6))
+}
+
+.evento-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 44px rgba(63, 111, 168, .26)
+}
+
+.ev-gradient {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 0;
+    background: radial-gradient(circle at 85% 15%, var(--glow-silver) 0%, transparent 60%)
+}
+
+.ev-content {
+    position: relative;
+    z-index: 2;
+    padding: 1.4rem 1.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left
+}
+
+.ev-badge {
+    display: block;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: .68rem;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: .9rem
+}
+
+.ev-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--blue-deep);
+    margin-bottom: .25rem;
+    line-height: 1.3
+}
+
+.ev-time {
+    font-size: .75rem;
+    color: var(--blue);
+    font-weight: 700;
+    margin-bottom: .3rem
+}
+
+.ev-addr {
+    font-size: .7rem;
+    color: var(--text-mid);
+    line-height: 1.6;
+    margin-bottom: .9rem
+}
+
+.btn-maps {
+    display: inline-block;
+    padding: .4rem 1.1rem;
+    border: 1px solid rgba(63, 111, 168, .5);
+    border-radius: 30px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: .72rem;
+    letter-spacing: .06em;
+    color: var(--blue);
+    text-decoration: none;
+    transition: background .3s, color .3s;
+    background: rgba(255, 255, 255, .7);
+    backdrop-filter: blur(6px);
+    cursor: pointer
+}
+
+.btn-maps:hover {
+    background: var(--blue);
+    color: white;
+    border-color: var(--blue)
+}
+
+.countdown-wrap {
+    background: rgba(255, 255, 255, .6);
+    border: 1px solid rgba(63, 111, 168, .2);
+    border-radius: 20px;
+    padding: 2rem 1rem;
+    max-width: 460px;
+    margin: 0 auto 1.5rem
+}
+
+.countdown-grid {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(.5rem, 2.5vw, 1.6rem);
+    flex-wrap: nowrap
+}
+
+.cd-unit {
+    text-align: center;
+    flex-shrink: 0
+}
+
+.cd-num {
+    font-family: 'Baloo 2', cursive;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 5.5vw, 3.2rem);
+    color: var(--blue-deep);
+    line-height: 1;
+    display: block
+}
+
+.cd-label {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: clamp(.52rem, 1.3vw, .65rem);
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-top: .35rem;
+    white-space: nowrap
+}
+
+.cd-sep {
+    font-family: 'Baloo 2', cursive;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--silver-deep);
+    flex-shrink: 0;
+    line-height: 1;
+    padding-bottom: .4rem
+}
+
+.btn-calendar {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .85rem 2.2rem;
+    border: 1px solid rgba(63, 111, 168, .5);
+    border-radius: 30px;
+    background: transparent;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: .85rem;
+    letter-spacing: .06em;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all .3s
+}
+
+.btn-calendar:hover {
+    background: var(--powder);
+    border-color: var(--blue);
+    color: var(--blue-deep)
+}
+
+/* ── Dresscode ── */
+#dresscode {
+    text-align: center
+}
+
+.dresscode-visual {
+    width: clamp(140px, 18vw, 200px);
+    height: clamp(140px, 18vw, 200px);
+    margin: 0 auto 1.8rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, .6) 0%, rgba(220, 233, 247, .3) 70%, transparent 100%);
+    box-shadow: 0 8px 32px rgba(63, 111, 168, .12);
+    display: flex;
+    align-items: center;
+    justify-content: center
+}
+
+.onesie-deco {
+    width: clamp(70px, 9vw, 100px);
+    height: auto;
+    display: block
+}
+
+.dresscode-intro {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(.95rem, 2vw, 1.1rem);
+    color: var(--text-mid);
+    line-height: 1.6;
+    max-width: 480px;
+    margin: 0 auto
+}
+
+/* ── Galería ── */
+#galeria {
+    text-align: center;
+    overflow: hidden;
+    padding-top: 1rem
+}
+
+.carousel-track-wrap {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    margin-top: 2rem;
+    padding: 1rem 0
+}
+
+.carousel-track {
+    display: flex;
+    gap: 1rem;
+    width: max-content;
+    animation: scrollCarousel 30s linear infinite
+}
+
+.carousel-track:hover {
+    animation-play-state: paused
+}
+
+.carousel-track2 {
+    animation: scrollCarousel2 35s linear infinite;
+    margin-top: .8rem
+}
+
+.carousel-track2:hover {
+    animation-play-state: paused
+}
+
+@keyframes scrollCarousel {
+    0% {
+        transform: translateX(0)
+    }
+
+    100% {
+        transform: translateX(-50%)
+    }
+}
+
+@keyframes scrollCarousel2 {
+    0% {
+        transform: translateX(-50%)
+    }
+
+    100% {
+        transform: translateX(0)
+    }
+}
+
+.car-item {
+    flex-shrink: 0;
+    width: clamp(140px, 32vw, 200px);
+    aspect-ratio: 3/4;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(63, 111, 168, .2);
+    box-shadow: 0 6px 24px rgba(63, 111, 168, .1);
+    position: relative;
+    background: linear-gradient(135deg, var(--powder), var(--pearl));
+    cursor: pointer;
+    transition: transform .3s, box-shadow .3s;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-touch-callout: none
+}
+
+.car-item:hover {
+    transform: scale(1.04);
+    box-shadow: 0 12px 36px rgba(63, 111, 168, .2)
+}
+
+.car-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    -webkit-user-drag: none;
+    user-drag: none;
+    pointer-events: none
+}
+
+.car-item-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.4rem;
+    opacity: .45
+}
+
+.car-item.wide {
+    width: clamp(200px, 45vw, 280px);
+    aspect-ratio: 4/3
+}
+
+/* ── RSVP ── */
+#rsvp {
+    text-align: center;
+    padding-bottom: 4rem
+}
+
+.rsvp-stepper {
+    max-width: 420px;
+    margin: 0 auto
+}
+
+.stepper-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: .5rem;
+    margin-bottom: 2rem
+}
+
+.step-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(63, 111, 168, .25);
+    transition: all .3s
+}
+
+.step-dot.active {
+    width: 24px;
+    border-radius: 4px;
+    background: var(--blue)
+}
+
+.step-dot.done {
+    background: var(--blue);
+    opacity: .5
+}
+
+.rsvp-step {
+    display: none;
+    animation: stepIn .4s ease
+}
+
+.rsvp-step.active {
+    display: block
+}
+
+@keyframes stepIn {
+    from {
+        opacity: 0;
+        transform: translateY(16px)
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0)
+    }
+}
+
+.attend-cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.5rem
+}
+
+.attend-option {
+    background: rgba(255, 255, 255, .65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 2px solid rgba(63, 111, 168, .2);
+    border-radius: 18px;
+    padding: 2rem 1rem;
+    cursor: pointer;
+    transition: all .3s;
+    text-align: center
+}
+
+.attend-option:hover {
+    border-color: var(--blue);
+    background: rgba(255, 255, 255, .9);
+    transform: translateY(-2px)
+}
+
+.attend-option.selected {
+    border-color: var(--blue);
+    background: var(--powder)
+}
+
+.attend-option .ao-label {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: var(--blue-deep);
+    display: block;
+    margin-bottom: .2rem
+}
+
+.attend-option .ao-sub {
+    font-size: .68rem;
+    color: var(--text-light);
+    letter-spacing: .04em
+}
+
+.rsvp-form-fields {
+    display: flex;
+    flex-direction: column;
+    gap: .9rem
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: .35rem;
+    text-align: left
+}
+
+.form-label {
+    font-size: .65rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: var(--text-light)
+}
+
+.form-input {
+    background: rgba(255, 255, 255, .75);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(63, 111, 168, .25);
+    border-radius: 12px;
+    padding: .9rem 1.1rem;
+    font-family: 'Quicksand', sans-serif;
+    font-size: .95rem;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color .3s, box-shadow .3s, opacity .3s;
+    width: 100%
+}
+
+.form-input:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(63, 111, 168, .15)
+}
+
+.form-input:disabled {
+    opacity: .38;
+    cursor: not-allowed
+}
+
+.anon-label {
+    display: flex;
+    align-items: center;
+    gap: .55rem;
+    margin-top: .3rem;
+    cursor: pointer;
+    width: fit-content
+}
+
+.anon-label input[type="checkbox"] {
+    accent-color: var(--blue);
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+    flex-shrink: 0
+}
+
+.anon-label span {
+    font-size: .78rem;
+    color: var(--text-light);
+    letter-spacing: .03em;
+    transition: color .2s
+}
+
+.anon-label:hover span {
+    color: var(--text-mid)
+}
+
+.guest-counter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid rgba(63, 111, 168, .25);
+    border-radius: 12px;
+    padding: .6rem 1.1rem
+}
+
+.counter-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(63, 111, 168, .4);
+    background: transparent;
+    color: var(--blue);
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background .2s;
+    line-height: 1
+}
+
+.counter-btn:hover {
+    background: var(--powder)
+}
+
+.counter-num {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.4rem;
+    color: var(--blue-deep);
+    min-width: 24px;
+    text-align: center;
+    flex: 1
+}
+
+.counter-label {
+    font-size: .7rem;
+    color: var(--text-light)
+}
+
+.confirm-summary {
+    background: rgba(255, 255, 255, .75);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(63, 111, 168, .25);
+    border-radius: 18px;
+    padding: 1.8rem 1.5rem;
+    margin-bottom: 1.5rem;
+    text-align: left
+}
+
+.confirm-row {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    padding: .6rem 0;
+    border-bottom: 1px solid rgba(63, 111, 168, .1)
+}
+
+.confirm-row:last-child {
+    border-bottom: none
+}
+
+.confirm-row-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0
+}
+
+.confirm-row-text {
+    flex: 1
+}
+
+.confirm-row-label {
+    font-size: .6rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-light)
+}
+
+.confirm-row-val {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 1rem;
+    color: var(--blue-deep)
+}
+
+.step-btns {
+    display: flex;
+    gap: .8rem;
+    justify-content: center;
+    margin-top: 1.2rem
+}
+
+.btn-back {
+    padding: .85rem 1.9rem;
+    background: transparent;
+    border: 1px solid rgba(63, 111, 168, .35);
+    border-radius: 30px;
+    color: var(--text-mid);
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 600;
+    font-size: .85rem;
+    letter-spacing: .04em;
+    cursor: pointer;
+    transition: all .3s
+}
+
+.btn-back:hover {
+    background: var(--powder)
+}
+
+.btn-next {
+    padding: .85rem 2.4rem;
+    background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-family: 'Quicksand', sans-serif;
+    font-size: .85rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 6px 20px rgba(63, 111, 168, .3);
+    transition: transform .2s, box-shadow .2s
+}
+
+.btn-next:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(63, 111, 168, .4)
+}
+
+.btn-confirm {
+    width: 100%;
+    padding: 1.1rem 2rem;
+    background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-family: 'Quicksand', sans-serif;
+    font-size: .88rem;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    cursor: pointer;
+    font-weight: 700;
+    box-shadow: 0 8px 24px rgba(63, 111, 168, .3);
+    transition: transform .3s, box-shadow .3s
+}
+
+.btn-confirm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(63, 111, 168, .4)
+}
+
+.success-msg {
+    display: none;
+    padding: 2rem 1rem
+}
+
+.success-inner {
+    background: rgba(255, 255, 255, .8);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(63, 111, 168, .25);
+    border-radius: 24px;
+    padding: 3rem 2rem;
+    max-width: 460px;
+    margin: 0 auto
+}
+
+.success-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 2rem;
+    color: var(--blue-deep);
+    margin-bottom: .9rem
+}
+
+.success-sub {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    color: var(--text-mid);
+    line-height: 1.7
+}
+
+/* ── Cierre ── */
+.closing-phrase {
+    text-align: center;
+    padding: 3rem 2rem 5rem;
+    position: relative;
+    overflow: hidden
+}
+
+.closing-phrase-text {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.4rem, 3.6vw, 2rem);
+    color: var(--text-mid);
+    line-height: 1.6;
+    max-width: 480px;
+    margin: 0 auto 1.5rem
+}
+
+.closing-divider {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    margin: 0 auto 1.2rem
+}
+
+/* ── Footer ── */
+footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: .72rem;
+    letter-spacing: .06em;
+    color: var(--text-light);
+    background: transparent;
+    position: relative;
+    z-index: 2
+}
+
+footer a.contact-link {
+    color: var(--blue);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(63, 111, 168, .45);
+    transition: color .2s, border-color .2s;
+    cursor: pointer
+}
+
+footer a.contact-link:hover {
+    color: var(--blue-deep);
+    border-color: var(--blue-deep)
+}
+
+/* ── Modal: calendario ── */
+.cal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(35, 50, 74, 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+    padding: 1rem
+}
+
+.cal-overlay.visible {
+    opacity: 1;
+    pointer-events: all
+}
+
+.cal-modal-box {
+    background: rgba(248, 250, 252, .98);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(63, 111, 168, .3);
+    border-radius: 26px;
+    padding: 2.2rem 2rem 2rem;
+    max-width: 360px;
+    width: 100%;
+    box-shadow: 0 24px 70px rgba(35, 50, 74, .22);
+    position: relative;
+    transform: translateY(22px) scale(.96);
+    transition: transform .38s cubic-bezier(.34, 1.56, .64, 1)
+}
+
+.cal-overlay.visible .cal-modal-box {
+    transform: translateY(0) scale(1)
+}
+
+.cal-close,
+.contact-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-light);
+    cursor: pointer;
+    line-height: 1;
+    transition: color .2s, transform .2s;
+    padding: .2rem
+}
+
+.cal-close:hover,
+.contact-close:hover {
+    color: var(--blue-deep);
+    transform: rotate(90deg)
+}
+
+.cal-modal-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: var(--blue-deep);
+    margin-bottom: .4rem;
+    line-height: 1.2
+}
+
+.cal-modal-sub {
+    font-size: .83rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+    margin-bottom: 1.4rem
+}
+
+.cal-device-instructions {
+    display: flex;
+    flex-direction: column;
+    gap: .65rem;
+    margin-bottom: 1.6rem
+}
+
+.cal-device-row {
+    display: flex;
+    align-items: flex-start;
+    gap: .75rem;
+    background: rgba(255, 255, 255, .7);
+    border: 1px solid rgba(63, 111, 168, .15);
+    border-radius: 14px;
+    padding: .85rem 1rem;
+    backdrop-filter: blur(6px)
+}
+
+.cal-device-icon {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.25rem
+}
+
+.cal-device-icon.android {
+    background: linear-gradient(135deg, #e8f5e9, #c8e6c9)
+}
+
+.cal-device-icon.iphone {
+    background: linear-gradient(135deg, #eef2f7, var(--silver))
+}
+
+.cal-device-text {
+    flex: 1;
+    min-width: 0
+}
+
+.cal-device-label {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: .62rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--text-light);
+    display: block;
+    margin-bottom: .2rem
+}
+
+.cal-device-desc {
+    font-size: .8rem;
+    color: var(--text-mid);
+    line-height: 1.5
+}
+
+.cal-confirm-btn {
+    width: 100%;
+    padding: .95rem;
+    background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+    border: none;
+    border-radius: 30px;
+    color: white;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: .85rem;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    box-shadow: 0 6px 22px rgba(63, 111, 168, .3);
+    transition: transform .22s, box-shadow .22s;
+    margin-top: .2rem
+}
+
+.cal-confirm-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(63, 111, 168, .4)
+}
+
+/* ── Modal: contacto ── */
+.contact-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(35, 50, 74, 0.45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease
+}
+
+.contact-overlay.visible {
+    opacity: 1;
+    pointer-events: all
+}
+
+.contact-modal-box {
+    background: rgba(248, 250, 252, 0.98);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(63, 111, 168, .3);
+    border-radius: 26px;
+    padding: 2.5rem 2rem 2rem;
+    max-width: 360px;
+    width: 100%;
+    box-shadow: 0 24px 70px rgba(35, 50, 74, .22);
+    position: relative;
+    text-align: center;
+    transform: translateY(22px) scale(.96);
+    transition: transform .38s cubic-bezier(.34, 1.56, .64, 1)
+}
+
+.contact-overlay.visible .contact-modal-box {
+    transform: translateY(0) scale(1)
+}
+
+.contact-modal-icon {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: .8rem
+}
+
+.contact-modal-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 1.55rem;
+    color: var(--blue-deep);
+    line-height: 1.3;
+    margin-bottom: .6rem
+}
+
+.contact-modal-sub {
+    font-size: .88rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+    margin-bottom: 1.8rem
+}
+
+.btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    padding: .9rem 1.8rem;
+    background: #25D366;
+    border: none;
+    border-radius: 30px;
+    color: #fff;
+    font-family: 'Quicksand', sans-serif;
+    font-size: .88rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, .35);
+    transition: transform .22s, box-shadow .22s
+}
+
+.btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(37, 211, 102, .45)
+}
+
+.btn-whatsapp svg {
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+    flex-shrink: 0
+}
+
+/* ── Responsive: bloque general móvil (como gali) ── */
+@media(max-width:767px) {
+    body {
+        font-size: 1.05rem;
+        line-height: 1.65
+    }
+
+    section {
+        padding: 4.5rem 1.35rem
+    }
+
+    .eyebrow {
+        font-size: .82rem
+    }
+
+    .hero-phrase {
+        font-size: 1.08rem;
+        line-height: 1.8;
+        max-width: 95%
+    }
+
+    .families {
+        font-size: 1rem;
+        line-height: 2.1
+    }
+
+    .section-title {
+        font-size: .82rem;
+        letter-spacing: .16em
+    }
+
+    .section-heading {
+        font-size: clamp(2.3rem, 8vw, 3rem);
+        line-height: 1.15
+    }
+
+    .simbolo-quote {
+        font-size: 1.25rem
+    }
+
+    .simbolo-text {
+        font-size: 1rem
+    }
+
+    .evento-date {
+        font-size: 1.45rem;
+        line-height: 1.5
+    }
+
+    .ev-badge {
+        font-size: .7rem
+    }
+
+    .ev-name {
+        font-size: 1.3rem;
+        line-height: 1.35
+    }
+
+    .ev-time {
+        font-size: .92rem
+    }
+
+    .ev-addr {
+        font-size: .9rem;
+        line-height: 1.7
+    }
+
+    .btn-maps {
+        font-size: .82rem;
+        padding: .55rem 1.2rem
+    }
+
+    .cd-num {
+        font-size: 2.3rem
+    }
+
+    .cd-label {
+        font-size: .72rem
+    }
+
+    .ao-label {
+        font-size: 1.25rem
+    }
+
+    .ao-sub {
+        font-size: .82rem
+    }
+
+    .form-label {
+        font-size: .78rem;
+        letter-spacing: .1em
+    }
+
+    .form-input {
+        font-size: 1rem;
+        padding: 1rem
+    }
+
+    .counter-num {
+        font-size: 1.7rem
+    }
+
+    .counter-label {
+        font-size: .85rem
+    }
+
+    .confirm-row-label {
+        font-size: .72rem
+    }
+
+    .confirm-row-val {
+        font-size: 1.08rem
+    }
+
+    .btn-next,
+    .btn-back,
+    .btn-confirm,
+    .btn-calendar {
+        font-size: .92rem;
+        min-height: 48px
+    }
+
+    footer {
+        font-size: .82rem;
+        line-height: 1.7
+    }
+
+    .closing-phrase-text {
+        font-size: 1.7rem;
+        line-height: 1.7
+    }
+
+    .cal-modal-box {
+        padding: 2rem 1.5rem 1.8rem
+    }
+
+    .cal-modal-title {
+        font-size: 1.4rem
+    }
+}
