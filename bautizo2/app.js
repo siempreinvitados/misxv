@@ -4,15 +4,26 @@
    vive directamente en index.html — busca "EDITA" en ese archivo.
    ══════════════════════════════════════════════════════════════ */
 
-/* Galería: agrega tus fotos en resources/gallery/ con estos mismos nombres.
-   Mientras el archivo no exista, se muestra un emoji de reemplazo. */
+/* Fecha y hora del evento (usada por la cuenta regresiva y el calendario) */
+const EVENT_DATE = new Date('2026-01-10T11:00:00');
+const EVENT_TITLE = 'Bautizo de Nombre de la Bebé';
+const EVENT_LOCATION = 'Nombre de la Parroquia';
+
+/* Número de WhatsApp de la FAMILIA que recibe las confirmaciones de RSVP.
+   Formato: código de país + número, sin signos ni espacios (ej. 521XXXXXXXXXX).
+   *** EDITA este valor antes de publicar la invitación *** */
+const FAMILY_WHATSAPP = '521XXXXXXXXXX';
+
+/* Galería: foto1-5 son de muestra (bebés en exteriores, uso libre, para
+   que el borrador se vea completo) — reemplázalas con las reales cuando
+   las tengas, mismos nombres de archivo. Mientras un archivo no exista,
+   se muestra el emoji de reemplazo. */
 const galleryImages = [
     { url: './resources/gallery/foto1.jpg', emoji: '🧸' },
     { url: './resources/gallery/foto2.jpg', emoji: '🤍' },
     { url: './resources/gallery/foto3.jpg', emoji: '🩵' },
     { url: './resources/gallery/foto4.jpg', emoji: '⭐' },
     { url: './resources/gallery/foto5.jpg', emoji: '✨' },
-    { url: './resources/gallery/foto6.jpg', emoji: '🦋' },
 ];
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -67,35 +78,57 @@ function splitToChars(el) {
 /* ══════════════════════════════════════════════════════════════
    ANIMACIONES POR PANTALLA (GSAP, con respaldo si el CDN falla)
    ══════════════════════════════════════════════════════════════ */
-let playScreen1, playScreen2, playScreen3, playScreen4, playScreen5;
+let playScreen1, playScreen2, playScreen3, playScreenCD, playScreenRSVP, playScreen4, playScreen5;
 
 try {
     if (typeof gsap === 'undefined') throw new Error('GSAP no disponible');
 
+    /* marco_a/marco_b de portada: a diferencia de todo lo demás en esta
+       pantalla (que se repite cada vez que se vuelve a ver), los marcos
+       solo deben animar la PRIMERA vez que se muestra la portada */
+    let portadaMarcoPlayed = false;
+    /* referencia a la timeline de la galería, para poder matarla si el
+       usuario vuelve a entrar a screen-galeria mientras aún corre */
+    let galleryTl = null;
+
     playScreen1 = function (section) {
         if (reduceMotion) { gsap.set(section.querySelectorAll('*'), { opacity: 1, scale: 1 }); return; }
-        const lines = ['.p1-eyebrow', '.p1-title', '.p1-subtitle', '.p1-daughter']
+        const lines = ['.p1-eyebrow', '.p1-title', '.p1-subtitle']
             .map(sel => splitToChars(section.querySelector(sel)));
+        const marco = section.querySelectorAll('.deco-marco');
+        const bow = section.querySelector('.deco-bow');
         gsap.set([].concat(...lines.map(l => [...l])), { opacity: 0, scale: .3 });
         gsap.set(section.querySelector('.p1-name'), { opacity: 0, scale: .6 });
-        gsap.set(section.querySelectorAll('.deco-corner, .deco-bow'), { opacity: 0, scale: .8 });
+        gsap.set(bow, { opacity: 0, scale: .8 });
         gsap.set(section.querySelector('.p1-mascot'), { opacity: 0, scale: .7 });
+        if (!portadaMarcoPlayed) gsap.set(marco, { opacity: 0, scale: .8 });
 
         const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-        tl.to(section.querySelectorAll('.deco-corner, .deco-bow'),
-            { opacity: .85, scale: 1, duration: 1, stagger: .15 }, 0)
+        if (!portadaMarcoPlayed) {
+            tl.to(marco, { opacity: .85, scale: 1, duration: .9, stagger: .12 }, 0);
+            portadaMarcoPlayed = true;
+        }
+        tl.to(bow, { opacity: .85, scale: 1, duration: .9 }, 0)
             .to(section.querySelector('.p1-mascot'),
-                { opacity: 1, scale: 1, duration: 1 }, .2);
+                { opacity: 1, scale: 1, duration: .9 }, .15);
+
+        /* el texto arranca mientras decos/oso aún terminan de aparecer (no
+           espera a que acaben) y cada bloque usa una posición absoluta en
+           vez de encadenarse "+=" al anterior, para que 4 bloques de texto
+           letra-por-letra no se sumen a 5-6s de animación total */
+        let cursor = .3;
+        const lineDur = .34, lineStagger = .018, groupGap = .04;
         lines.forEach(chars => {
-            tl.to(chars, { opacity: 1, scale: 1, duration: .45, stagger: .032, ease: 'back.out(1.6)' }, '+=0.05');
+            tl.to(chars, { opacity: 1, scale: 1, duration: lineDur, stagger: lineStagger, ease: 'back.out(1.6)' }, cursor);
+            cursor += lineDur + lineStagger * Math.max(chars.length - 1, 0) + groupGap;
         });
         tl.to(section.querySelector('.p1-name'),
-            { opacity: 1, scale: 1, duration: .8, ease: 'back.out(1.4)' }, '+=0.1');
+            { opacity: 1, scale: 1, duration: .55, ease: 'back.out(1.4)' }, cursor + groupGap);
     };
 
     playScreen2 = function (section) {
         const lines = section.querySelectorAll('.ded-line');
-        const decos = section.querySelectorAll('.deco-corner, .deco-bow');
+        const decos = section.querySelectorAll('.deco-bow');
         const mascot = section.querySelector('.p2-mascot');
         if (reduceMotion) { gsap.set([...lines, ...decos, mascot], { opacity: 1, x: 0, scale: 1 }); return; }
         gsap.set(lines, { opacity: 0, x: -60 });
@@ -109,41 +142,77 @@ try {
 
     playScreen3 = function (section) {
         const items = section.querySelectorAll('.ev3-reveal');
-        const decos = section.querySelectorAll('.deco-corner');
         const lines = section.querySelectorAll('.silver-line');
-        if (reduceMotion) { gsap.set([...items, ...decos, ...lines], { opacity: 1, y: 0, scale: 1, scaleX: 1 }); return; }
+        if (reduceMotion) { gsap.set([...items, ...lines], { opacity: 1, y: 0, scale: 1, scaleX: 1 }); return; }
         gsap.set(items, { opacity: 0, y: 40 });
-        gsap.set(decos, { opacity: 0, scale: .85 });
         gsap.set(lines, { opacity: 0, scaleX: 0 });
         gsap.timeline({ defaults: { ease: 'power2.out' } })
-            .to(decos, { opacity: .85, scale: 1, duration: 1, stagger: .15 }, 0)
             .to(lines, { opacity: 1, scaleX: 1, duration: 1 }, .1)
+            .to(items, { opacity: 1, y: 0, duration: .8, stagger: .22 }, .2);
+    };
+
+    playScreenCD = function (section) {
+        const items = section.querySelectorAll('.cd-reveal');
+        if (reduceMotion) { gsap.set(items, { opacity: 1, y: 0, scale: 1 }); return; }
+        gsap.set(items, { opacity: 0, y: 40 });
+        gsap.timeline({ defaults: { ease: 'power2.out' } })
+            .to(items, { opacity: 1, y: 0, duration: .8, stagger: .22 }, .2);
+    };
+
+    playScreenRSVP = function (section) {
+        const items = section.querySelectorAll('.rsvp-reveal');
+        if (reduceMotion) { gsap.set(items, { opacity: 1, y: 0, scale: 1 }); return; }
+        gsap.set(items, { opacity: 0, y: 40 });
+        gsap.timeline({ defaults: { ease: 'power2.out' } })
             .to(items, { opacity: 1, y: 0, duration: .8, stagger: .22 }, .2);
     };
 
     playScreen4 = function (section) {
         const heading = section.querySelector('.p4-heading');
         const cells = section.querySelectorAll('.gal-cell');
-        if (reduceMotion) { gsap.set([heading, ...cells], { opacity: 1, y: 0 }); return; }
+        const replayBtn = section.querySelector('.btn-replay');
+        /* si la secuencia anterior (de una visita previa a esta pantalla)
+           seguía corriendo, hay que matarla antes de resetear — si no,
+           la timeline vieja sigue tocando .opacity/.scale de las mismas
+           celdas al mismo tiempo que la nueva, y se pisan entre sí */
+        if (galleryTl) galleryTl.kill();
+        replayBtn?.classList.remove('is-visible');
+        /* la rotación/desplazamiento de reposo de cada foto vive en CSS
+           (.gal-cell:nth-child), no aquí — así se preservan siempre,
+           tanto con reduceMotion como durante la animación normal */
+        if (reduceMotion) {
+            gsap.set(heading, { opacity: 1, y: 0 });
+            gsap.set(cells, { opacity: 1, scale: 1 });
+            replayBtn?.classList.add('is-visible');
+            return;
+        }
         gsap.set(heading, { opacity: 0, y: 30 });
-        gsap.set(cells, { opacity: 0, y: 30 });
-        gsap.timeline({ defaults: { ease: 'power2.out' } })
+        /* todas arrancan grandes, invisibles y en el centro (GSAP
+           decompone el transform que ya puso el CSS la primera vez que
+           toca el elemento, así que cada rotación/desplazamiento propio
+           se mantiene intacto mientras solo animamos scale+opacity);
+           el stagger hace que se vayan "apilando" una tras otra */
+        gsap.set(cells, { opacity: 0, scale: 2.2 });
+        /* el onComplete va en la timeline (no en el .to(cells,...) de
+           adentro): un onComplete puesto directo en una tween con
+           stagger se dispara una vez POR CADA elemento, no al final */
+        galleryTl = gsap.timeline({
+            defaults: { ease: 'power2.out' },
+            onComplete: () => replayBtn?.classList.add('is-visible'),
+        })
             .to(heading, { opacity: 1, y: 0, duration: .8 }, 0)
-            .to(cells, { opacity: 1, y: 0, duration: .6, stagger: .08 }, .3);
+            .to(cells, { opacity: 1, scale: 1, duration: 1.6, stagger: 2, ease: 'power3.out' }, .3);
     };
 
     playScreen5 = function (section) {
-        const decos = section.querySelectorAll('.deco-corner');
         const mascot = section.querySelector('.p5-mascot');
         const title = section.querySelector('.p5-title');
         const bow = section.querySelector('.bow-bottom');
-        if (reduceMotion) { gsap.set([...decos, mascot, title, bow], { opacity: 1, scale: 1 }); return; }
-        gsap.set(decos, { opacity: 0, scale: .85 });
+        if (reduceMotion) { gsap.set([mascot, title, bow], { opacity: 1, scale: 1 }); return; }
         gsap.set(mascot, { opacity: 0, scale: .8 });
         gsap.set(title, { opacity: 0, scale: .7 });
         gsap.set(bow, { opacity: 0, scale: .8 });
         gsap.timeline({ defaults: { ease: 'power2.out' } })
-            .to(decos, { opacity: .85, scale: 1, duration: 1, stagger: .15 }, 0)
             .to(mascot, { opacity: 1, scale: 1, duration: .9 }, .2)
             .to(title, { opacity: 1, scale: 1, duration: .9, ease: 'back.out(1.4)' }, .6)
             .to(bow, { opacity: 1, scale: 1, duration: .7 }, .9);
@@ -151,32 +220,35 @@ try {
 } catch (e) {
     /* Respaldo: si GSAP no carga, deja todo el contenido visible sin animar */
     const fallback = fn => (section) => {
-        section.querySelectorAll('.p1-eyebrow,.p1-title,.p1-subtitle,.p1-daughter,.p1-name,.ded-line,.ev3-reveal,.gal-cell,.p4-heading,.p5-title,.deco-corner,.deco-bow,.p1-mascot,.p2-mascot,.p5-mascot,.silver-line')
+        section.querySelectorAll('.p1-eyebrow,.p1-title,.p1-subtitle,.p1-name,.ded-line,.ev3-reveal,.cd-reveal,.rsvp-reveal,.gal-cell,.p4-heading,.p5-title,.deco-marco,.deco-bow,.p1-mascot,.p2-mascot,.p5-mascot,.silver-line')
             .forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
     };
-    playScreen1 = playScreen2 = playScreen3 = playScreen4 = playScreen5 = fallback();
+    playScreen1 = playScreen2 = playScreen3 = playScreenCD = playScreenRSVP = playScreen4 = playScreen5 = fallback();
 }
 
 /* ══════════════════════════════════════════════════════════════
-   OBSERVADOR DE PANTALLAS — dispara cada animación una sola vez
+   OBSERVADOR DE PANTALLAS — dispara cada animación cada vez que la
+   pantalla vuelve a quedar visible (no solo la primera vez); como
+   IntersectionObserver solo llama al callback al CRUZAR el umbral,
+   esto ya alcanza para detectar cada "entrada" sin necesitar un
+   Set de control ni unobserve()
    ══════════════════════════════════════════════════════════════ */
 const screenPlayers = {
     'screen-portada': () => playScreen1(document.getElementById('screen-portada')),
     'screen-dedicatoria': () => playScreen2(document.getElementById('screen-dedicatoria')),
     'screen-evento': () => playScreen3(document.getElementById('screen-evento')),
+    'screen-cuenta': () => playScreenCD(document.getElementById('screen-cuenta')),
     'screen-galeria': () => playScreen4(document.getElementById('screen-galeria')),
+    'screen-rsvp': () => playScreenRSVP(document.getElementById('screen-rsvp')),
     'screen-despedida': () => playScreen5(document.getElementById('screen-despedida')),
 };
 
-const seenScreens = new Set();
 const snapContainer = document.getElementById('snap-container');
 
 const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.5 && !seenScreens.has(entry.target.id)) {
-            seenScreens.add(entry.target.id);
+        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
             screenPlayers[entry.target.id]?.();
-            io.unobserve(entry.target);
         }
     });
 }, { root: snapContainer, threshold: 0.5 });
@@ -195,3 +267,121 @@ function dismissHint() {
 }
 snapContainer.addEventListener('scroll', dismissHint, { once: true, passive: true });
 setTimeout(dismissHint, 4500);
+
+/* ══════════════════════════════════════════════════════════════
+   CUENTA REGRESIVA — corre siempre desde que carga la página, sin
+   esperar a que la pantalla sea visible ni depender de GSAP
+   ══════════════════════════════════════════════════════════════ */
+function updateCd() {
+    const now = new Date();
+    let diff = Math.max(0, EVENT_DATE - now);
+    const d = Math.floor(diff / 864e5); diff %= 864e5;
+    const h = Math.floor(diff / 36e5); diff %= 36e5;
+    const m = Math.floor(diff / 6e4); diff %= 6e4;
+    const s = Math.floor(diff / 1e3);
+    document.getElementById('cd-d').textContent = String(d).padStart(2, '0');
+    document.getElementById('cd-h').textContent = String(h).padStart(2, '0');
+    document.getElementById('cd-m').textContent = String(m).padStart(2, '0');
+    document.getElementById('cd-s').textContent = String(s).padStart(2, '0');
+}
+updateCd();
+setInterval(updateCd, 1000);
+
+/* ══════════════════════════════════════════════════════════════
+   GALERÍA — botón "ver otra vez": vuelve a correr playScreen4 desde
+   cero, sin depender de scroll ni del observador
+   ══════════════════════════════════════════════════════════════ */
+function replayGallery() {
+    playScreen4(document.getElementById('screen-galeria'));
+}
+
+/* ══════════════════════════════════════════════════════════════
+   CALENDARIO (modal + ICS / Google Calendar) — DOM puro, no depende
+   de GSAP
+   ══════════════════════════════════════════════════════════════ */
+function addToCalendar() { document.getElementById('calModal').classList.add('visible'); document.body.style.overflow = 'hidden'; }
+function closeCalModal() { document.getElementById('calModal').classList.remove('visible'); document.body.style.overflow = ''; }
+function handleCalOverlayClick(e) { if (e.target === document.getElementById('calModal')) closeCalModal(); }
+function padN(n) { return String(n).padStart(2, '0'); }
+function toICSLocal(d) { return `${d.getFullYear()}${padN(d.getMonth() + 1)}${padN(d.getDate())}T${padN(d.getHours())}${padN(d.getMinutes())}00`; }
+
+function confirmCalendar() {
+    const isAndroid = /Android/i.test(navigator.userAgent);
+    const reminderDate = new Date(EVENT_DATE);
+    reminderDate.setDate(reminderDate.getDate() - 7);
+    reminderDate.setHours(9, 0, 0, 0);
+    const endDate = new Date(reminderDate); endDate.setHours(endDate.getHours() + 1);
+
+    if (isAndroid) {
+        const googleUrl = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent(EVENT_TITLE) + '&dates=' + toICSLocal(reminderDate) + '/' + toICSLocal(endDate) + '&details=' + encodeURIComponent('Recordatorio: ' + EVENT_TITLE) + '&location=' + encodeURIComponent(EVENT_LOCATION);
+        window.open(googleUrl, '_blank');
+    } else {
+        const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Bautizo2//ES', 'BEGIN:VEVENT', `UID:recordatorio-bautizo-${Date.now()}`, `SUMMARY:Recordatorio: ${EVENT_TITLE}`, `DTSTART:${toICSLocal(reminderDate)}`, `DTEND:${toICSLocal(endDate)}`, `DESCRIPTION:Recordatorio del bautizo.`, `LOCATION:${EVENT_LOCATION}`, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
+        const blob = new Blob([ics], { type: 'text/calendar;charset=utf-8' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'bautizo.ics'; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    }
+    closeCalModal();
+}
+
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCalModal(); });
+
+/* ══════════════════════════════════════════════════════════════
+   RSVP — sin backend. El botón final abre WhatsApp con el mensaje
+   ya redactado hacia el número de la familia (FAMILY_WHATSAPP).
+   ══════════════════════════════════════════════════════════════ */
+let rsvpChoice = null, guestCount = 1, currentStep = 0;
+
+function selectAttend(val) {
+    rsvpChoice = val;
+    document.getElementById('opt-si').classList.toggle('selected', val === 'si');
+    document.getElementById('opt-no').classList.toggle('selected', val === 'no');
+    document.getElementById('guestGroup').style.display = val === 'no' ? 'none' : '';
+}
+function changeGuests(delta) { guestCount = Math.max(1, Math.min(10, guestCount + delta)); document.getElementById('guestNum').textContent = guestCount; }
+function toggleAnon(cb) { const nameInput = document.getElementById('rsvpName'); if (cb.checked) { nameInput.value = ''; nameInput.disabled = true; } else { nameInput.disabled = false; nameInput.focus(); } }
+
+function goStep(n) {
+    if (n === 1 && currentStep === 0) { if (!rsvpChoice) { shake('step0'); return; } }
+    if (n === 2 && currentStep === 1) { buildSummary(); }
+    document.getElementById('step' + currentStep).classList.remove('active');
+    document.getElementById('dot' + currentStep).classList.remove('active');
+    document.getElementById('dot' + currentStep).classList.add('done');
+    currentStep = n;
+    document.getElementById('step' + currentStep).classList.add('active');
+    for (let i = 0; i < 3; i++) { const dot = document.getElementById('dot' + i); dot.classList.remove('active', 'done'); if (i < currentStep) dot.classList.add('done'); else if (i === currentStep) dot.classList.add('active'); }
+}
+
+function buildSummary() {
+    const isAnon = document.getElementById('rsvpAnon').checked;
+    const name = isAnon ? 'Anónimo(a)' : (document.getElementById('rsvpName').value.trim() || 'Invitado(a)');
+    const asiste = rsvpChoice === 'si';
+    let html = `<div class="confirm-row"><span class="confirm-row-icon">${asiste ? '🧸' : '💙'}</span><div class="confirm-row-text"><div class="confirm-row-label">Asistencia</div><div class="confirm-row-val">${asiste ? 'Sí asistiré' : 'No podré ir'}</div></div></div><div class="confirm-row"><span class="confirm-row-icon">👤</span><div class="confirm-row-text"><div class="confirm-row-label">Nombre</div><div class="confirm-row-val">${name}</div></div></div>`;
+    if (asiste) html += `<div class="confirm-row"><span class="confirm-row-icon">🎈</span><div class="confirm-row-text"><div class="confirm-row-label">Invitados</div><div class="confirm-row-val">${guestCount} ${guestCount === 1 ? 'persona' : 'personas'}</div></div></div>`;
+    document.getElementById('confirmSummary').innerHTML = html;
+}
+
+function shake(id) {
+    const el = document.getElementById(id); if (!el) return;
+    el.style.animation = 'none'; el.offsetHeight; el.style.animation = 'stepIn .3s ease';
+    if (typeof gsap !== 'undefined') gsap.fromTo(el, { x: -8 }, { x: 0, duration: .4, ease: 'elastic.out(1,0.3)' });
+}
+
+function submitRSVP() {
+    const isAnon = document.getElementById('rsvpAnon').checked;
+    const rawName = document.getElementById('rsvpName').value.trim();
+    const name = isAnon || !rawName ? 'Anónimo(a)' : rawName;
+    const asiste = rsvpChoice === 'si';
+
+    const lines = [`Hola, soy ${name}.`];
+    lines.push(asiste ? `Confirmo que SÍ asistiré al bautizo (${guestCount} ${guestCount === 1 ? 'persona' : 'personas'}). 🧸🎈` : 'Lamento informarles que no podré asistir al bautizo. 💙');
+    const waText = encodeURIComponent(lines.join(' '));
+    window.open(`https://wa.me/${FAMILY_WHATSAPP}?text=${waText}`, '_blank');
+
+    document.getElementById('rsvpStepper').style.display = 'none';
+    document.getElementById('successName').textContent = name;
+    document.getElementById('successSub').innerHTML = asiste
+        ? 'Abrimos WhatsApp con tu mensaje de confirmación listo para enviar a la familia.<br>¡Nos vemos en este día tan especial!'
+        : 'Abrimos WhatsApp con tu mensaje listo para enviar a la familia.<br>Gracias por avisarnos, te extrañaremos.';
+    document.getElementById('successMsg').style.display = 'block';
+    if (typeof gsap !== 'undefined') gsap.fromTo('#successMsg', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .8, ease: 'power2.out' });
+}
