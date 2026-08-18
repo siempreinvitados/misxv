@@ -12,24 +12,15 @@ const EVENT_DATE = new Date('2026-10-17T13:30:00');
 const EVENT_TITLE = 'Bautizo de Miguel Sebastián';
 const EVENT_LOCATION = 'Finca Santa Isabel, Tepotzotlán';
 
-/* Número de WhatsApp de la FAMILIA que recibe las confirmaciones de RSVP.
-   Formato: código de país + número, sin signos ni espacios (ej. 521XXXXXXXXXX).
-   *** EDITA este valor antes de publicar la invitación *** */
-const FAMILY_WHATSAPP = '521XXXXXXXXXX';
-
-const INVITATION_ID = 'miguel-sebastian';
-/* NOTA: falta agregar el resto del bloque de Firebase (init de db,
-   contador de visitas, escritura de RSVP) — copia el patrón de
-   bautizo2/app.js o bautizo/app.js y ajusta INVITATION_ID. */
-
 /* ══════════════════════════════════════════════════════════════
    FIREBASE — contador de visitas + registro de confirmaciones RSVP
    Mecánica igual a gali/app.js (SDK compat, transactions), estructura
    de datos nueva de README.md: invitations/{id}/contadores/...
-   El config (proyecto "siempre-invitados", propio de bautizo2) viene
-   de shared/firebase-config.js — ver README.md para el porqué de
+   El config (proyecto "siempre-invitados") viene de
+   shared/firebase-config.js — ver README.md para el porqué de
    window.firebaseConfig en vez de un objeto inline aquí.
    ══════════════════════════════════════════════════════════════ */
+const INVITATION_ID = '5vu4o';
 let db = null;
 try {
     if (typeof firebase !== 'undefined' && typeof window.firebaseConfig !== 'undefined') {
@@ -47,8 +38,8 @@ try {
    comparte entre ellos; sin el prefijo, alguien que ya visitó gali nunca
    contaría aquí) */
 (function () {
-    if (db && !localStorage.getItem('visita_bautizo2')) {
-        localStorage.setItem('visita_bautizo2', '1');
+    if (db && !localStorage.getItem('visita_5vu4o')) {
+        localStorage.setItem('visita_5vu4o', '1');
         db.ref(`invitations/${INVITATION_ID}/contadores/visitas`).transaction(c => (c || 0) + 1);
     }
 })();
@@ -380,10 +371,36 @@ function handleContactOverlayClick(e) { if (e.target === document.getElementById
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeCalModal(); closeContactModal(); } });
 
 /* ══════════════════════════════════════════════════════════════
-   RSVP — sin backend. El botón final abre WhatsApp con el mensaje
-   ya redactado hacia el número de la familia (FAMILY_WHATSAPP).
+   RSVP — se registra directo en Firebase (invitations/{id}/contadores),
+   sin WhatsApp de por medio. Una sola respuesta por navegador: RSVP_KEY
+   guarda el registro completo, y si ya existe al cargar la página se
+   oculta el formulario y se muestra el detalle de esa confirmación.
    ══════════════════════════════════════════════════════════════ */
+const RSVP_KEY = 'rsvp_5vu4o_data';
 let rsvpChoice = null, guestCount = 1, currentStep = 0;
+
+(function () {
+    const raw = localStorage.getItem(RSVP_KEY);
+    if (!raw) return;
+    try {
+        renderAlreadyConfirmed(JSON.parse(raw));
+    } catch (e) { /* dato corrupto — se ignora, se deja ver el formulario de nuevo */ }
+})();
+
+function renderAlreadyConfirmed(data) {
+    const stepper = document.getElementById('rsvpStepper');
+    const already = document.getElementById('rsvpAlreadyConfirmed');
+    if (stepper) stepper.style.display = 'none';
+    if (!already) return;
+    const asiste = Number(data.asiste) === 1;
+    const detail = document.getElementById('rsvpAcDetail');
+    if (detail) {
+        detail.textContent = asiste
+            ? `${data.nombre} confirmó el ${data.date} que sí asistirá, con ${data.personas} ${data.personas === 1 ? 'persona' : 'personas'}.`
+            : `${data.nombre} confirmó el ${data.date} que no podrá asistir.`;
+    }
+    already.style.display = 'block';
+}
 
 function selectAttend(val) {
     rsvpChoice = val;
@@ -392,7 +409,7 @@ function selectAttend(val) {
     document.getElementById('guestGroup').style.display = val === 'no' ? 'none' : '';
     document.getElementById('rsvpNextBtn').classList.add('is-visible');
 }
-function changeGuests(delta) { guestCount = Math.max(1, Math.min(10, guestCount + delta)); document.getElementById('guestNum').textContent = guestCount; }
+function changeGuests(delta) { guestCount = Math.max(1, Math.min(20, guestCount + delta)); document.getElementById('guestNum').textContent = guestCount; }
 function toggleAnon(cb) { const nameInput = document.getElementById('rsvpName'); if (cb.checked) { nameInput.value = ''; nameInput.disabled = true; } else { nameInput.disabled = false; nameInput.focus(); } }
 
 function goStep(n) {
@@ -427,37 +444,37 @@ function submitRSVP() {
     const name = isAnon || !rawName ? 'Anónimo(a)' : rawName;
     const asiste = rsvpChoice === 'si';
 
-    /* registro en Firebase — misma mecánica que gali/app.js (transactions,
-       asiste 0/1, fecha DD/MM/YYYY HH:mm armada a mano); bandera propia en
-       localStorage para no inflar los contadores si alguien recarga la
-       pantalla de éxito o vuelve a enviar el mismo formulario */
-    if (db && !localStorage.getItem('rsvp_bautizo2_confirmed')) {
+    /* Una sola respuesta por navegador: RSVP_KEY se guarda siempre (haya
+       o no Firebase disponible) para bloquear reenvíos; el registro en
+       Firebase (transactions, asiste 0/1, fecha DD/MM/YYYY HH:mm armada
+       a mano — misma mecánica que gali/app.js) solo ocurre si db existe. */
+    if (!localStorage.getItem(RSVP_KEY)) {
         const now = new Date();
         const formattedDate = `${padN(now.getDate())}/${padN(now.getMonth() + 1)}/${now.getFullYear()} ${padN(now.getHours())}:${padN(now.getMinutes())}`;
-        const base = db.ref(`invitations/${INVITATION_ID}/contadores`);
-        base.child('asistentes').transaction(c => {
-            const arr = Array.isArray(c) ? c : [];
-            arr.push({ nombre: name, personas: guestCount, date: formattedDate, asiste: asiste ? 1 : 0 });
-            return arr;
-        });
-        if (asiste) {
-            base.child('confirmados').transaction(c => (c || 0) + guestCount);
-        } else {
-            base.child('noConfirmados').transaction(c => (c || 0) + 1);
-        }
-        localStorage.setItem('rsvp_bautizo2_confirmed', '1');
-    }
+        const record = { nombre: name, personas: guestCount, date: formattedDate, asiste: asiste ? 1 : 0 };
 
-    const lines = [`Hola, soy ${name}.`];
-    lines.push(asiste ? `Confirmo que SÍ asistiré al bautizo (${guestCount} ${guestCount === 1 ? 'persona' : 'personas'}). 🧸🎈` : 'Lamento informarles que no podré asistir al bautizo. 💙');
-    const waText = encodeURIComponent(lines.join(' '));
-    window.open(`https://wa.me/${FAMILY_WHATSAPP}?text=${waText}`, '_blank');
+        if (db) {
+            const base = db.ref(`invitations/${INVITATION_ID}/contadores`);
+            base.child('asistentes').transaction(c => {
+                const arr = Array.isArray(c) ? c : [];
+                arr.push(record);
+                return arr;
+            });
+            if (asiste) {
+                base.child('confirmados').transaction(c => (c || 0) + guestCount);
+            } else {
+                base.child('noConfirmados').transaction(c => (c || 0) + 1);
+            }
+        }
+
+        try { localStorage.setItem(RSVP_KEY, JSON.stringify(record)); } catch (e) { /* localStorage lleno/bloqueado — el registro en Firebase ya se hizo, solo no persiste el aviso local */ }
+    }
 
     document.getElementById('rsvpStepper').style.display = 'none';
     document.getElementById('successName').textContent = name;
     document.getElementById('successSub').innerHTML = asiste
-        ? 'Abrimos WhatsApp con tu mensaje de confirmación listo para enviar a la familia.<br>¡Nos vemos en este día tan especial!'
-        : 'Abrimos WhatsApp con tu mensaje listo para enviar a la familia.<br>Gracias por avisarnos, te extrañaremos.';
+        ? 'Tu confirmación fue registrada.<br>Mi familia y yo te esperamos para celebrar juntos este gran día.'
+        : 'Lamentamos que no puedas acompañarnos.<br>Gracias por avisarnos, te extrañaremos.';
     document.getElementById('successMsg').style.display = 'block';
     if (typeof gsap !== 'undefined') gsap.fromTo('#successMsg', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: .8, ease: 'power2.out' });
 }

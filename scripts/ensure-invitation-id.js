@@ -54,10 +54,18 @@ function main() {
     const id = generateId(findAllUsedIds());
     const constLine = `const INVITATION_ID = '${id}';`;
 
-    const firebaseBlockRe = /\/\* ── Firebase[\s\S]*?── \*\/\n/;
+    // Ancla en "let db = null;" (línea literal, presente en todo bloque de
+    // Firebase ya wireado) en vez de intentar reconocer el estilo del
+    // comentario que lo precede — los distintos app.js usan headers de
+    // comentario distintos (una línea vs. caja de "═"), y matchear el
+    // comentario en vez del código es frágil.
+    const dbInitWithCommentRe = /\/\*(?:(?!\*\/)[\s\S])*\*\/\n(?=let db = null;)/;
+    const dbInitRe = /^let db = null;/m;
     let updated;
-    if (firebaseBlockRe.test(content)) {
-        updated = content.replace(firebaseBlockRe, match => `${constLine}\n\n${match}`);
+    if (dbInitWithCommentRe.test(content)) {
+        updated = content.replace(dbInitWithCommentRe, match => `${constLine}\n\n${match}`);
+    } else if (dbInitRe.test(content)) {
+        updated = content.replace(dbInitRe, match => `${constLine}\n${match}`);
     } else if (content.includes('FAMILY_WHATSAPP')) {
         updated = content.replace(
             /(const FAMILY_WHATSAPP = [^\n]*\n)/,

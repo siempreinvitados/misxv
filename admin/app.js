@@ -8,20 +8,24 @@ import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/12.14.
 const firebaseApp = initializeApp(window.firebaseConfigLegacy);
 const db = getDatabase(firebaseApp);
 
-/* ── Firebase de bautizo2/bautizo (proyecto nuevo "siempre-invitados",
-   DISTINTO del de arriba — config compartido en shared/firebase-config.js,
-   cargado como window.firebaseConfig igual que el de arriba). Nombre único
-   como 2do argumento de initializeApp() para que coexista con la app
-   principal. ── */
+/* ── Firebase del proyecto nuevo "siempre-invitados" (DISTINTO del de
+   arriba — config compartido en shared/firebase-config.js, cargado como
+   window.firebaseConfig igual que el de arriba). Todas las invitaciones
+   que siguen el esquema nuevo (invitations/{id}/..., ver README.md) viven
+   acá — bautizo (v1, registrado a mano abajo) y cualquier otra descubierta
+   dinámicamente (ej. miguel-sebastian). Nombre único como 2do argumento de
+   initializeApp() para que coexista con la app principal. ── */
 const bautizo2App = initializeApp(window.firebaseConfig, 'bautizo2');
 const bautizo2Db = getDatabase(bautizo2App);
 
 /* ══════════════════════════════════════════════════════════════
    REGISTRO LOCAL DE INVITACIONES — EDITA AQUÍ
-   Solo para las 4 invitaciones "legacy", que no siguen el esquema
-   nuevo de Firebase (ver más abajo). Cualquier invitación NUEVA no
-   necesita entrada aquí: el admin la descubre sola leyendo
-   invitations/{id} en Firebase.
+   Solo para las invitaciones "legacy" que no siguen el esquema nuevo de
+   Firebase (ver más abajo) o que por algún motivo necesitan overrides
+   fijos. Cualquier invitación NUEVA no necesita entrada aquí: el admin
+   la descubre sola leyendo invitations/{id} en Firebase (en cualquiera
+   de los dos proyectos, ver loadFirebaseInvitations()/resolveInvitation()
+   más abajo).
    "paths" apunta a nodos reales de Firebase Realtime DB; usa null
    cuando esa invitación NO tiene ese dato (el dashboard mostrará
    "no disponible", nunca un 0 falso ni un error). "shapes" solo se
@@ -59,29 +63,6 @@ const INVITATIONS = {
         },
         shapes: { visitas: 'count-object' },
         branding: { primary: '#3f6fa8', primaryDark: '#1f3f66', accent: '#dce9f7', logoUrl: null, initials: 'S' },
-    },
-
-    bautizo2: {
-        label: 'Bautizo — Miguel Sebastián',
-        siteUrl: 'https://siempreinvitados.github.io/misxv/bautizo2/',
-        eventDate: new Date('2026-10-17T13:30:00'),
-        // proyecto de Firebase distinto al resto (siempre-invitados, no
-        // bautizo-sofia) — ver bautizo2App/bautizo2Db arriba
-        db: bautizo2Db,
-        paths: {
-            // bautizo2/app.js ya escribe aquí (contador de visitas +
-            // registro de RSVP), siguiendo el esquema nuevo de README.md
-            // (invitations/{id}/contadores/...), no el legacy de gali.
-            visitas: 'invitations/bautizo2/contadores/visitas',
-            confirmados: 'invitations/bautizo2/contadores/confirmados',
-            noConfirmados: 'invitations/bautizo2/contadores/noConfirmados',
-            asistentes: 'invitations/bautizo2/contadores/asistentes',
-            // sin nodo de password -> login no disponible para este id
-            // (bautizo2 no escribe una contraseña desde el cliente)
-            password: null,
-        },
-        shapes: {},
-        branding: { primary: '#c9a659', primaryDark: '#a3803a', accent: '#f3ead9', logoUrl: null, initials: 'M' },
     },
 
     bautizo: {
@@ -195,12 +176,13 @@ function parseEventDate(value) {
     return isNaN(d.getTime()) ? null : d;
 }
 
-function normalizeFirebaseInvitation(id, raw) {
+function normalizeFirebaseInvitation(id, raw, dbRef) {
     if (!raw) return null;
     const branding = raw.branding || {};
     return {
         source: 'firebase',
         id,
+        db: dbRef,
         label: raw.nombre || id,
         siteUrl: null, // el esquema nuevo no define un link propio a la invitación
         eventDate: parseEventDate(raw.fecha),
@@ -222,22 +204,32 @@ function normalizeFirebaseInvitation(id, raw) {
     };
 }
 
+/* Ambos proyectos de Firebase se revisan al buscar invitaciones dinámicas
+   — no alcanza con "db" (el viejo, "bautizo-sofia"): las invitaciones
+   nuevas (bautizo, miguel-sebastian, ...) viven en "bautizo2Db" (el
+   proyecto "siempre-invitados"). Si un mismo id existiera en los dos
+   (no se espera en la práctica), gana el primero de la lista (el viejo). */
+const FIREBASE_PROJECTS = [db, bautizo2Db];
+
 /** null mientras no ha cargado; {} u objeto de descriptores una vez lista. */
 let firebaseInvitationsCache = null;
 
 async function loadFirebaseInvitations() {
-    try {
-        const raw = await readRaw('invitations');
-        const entries = raw ? Object.entries(raw) : [];
-        firebaseInvitationsCache = Object.fromEntries(
-            entries
-                .map(([id, data]) => [id, normalizeFirebaseInvitation(id, data)])
-                .filter(([, inv]) => inv != null)
-        );
-    } catch (err) {
-        console.error(err);
-        firebaseInvitationsCache = {};
+    const merged = {};
+    for (const dbRef of FIREBASE_PROJECTS) {
+        try {
+            const raw = await readRaw('invitations', dbRef);
+            const entries = raw ? Object.entries(raw) : [];
+            for (const [id, data] of entries) {
+                if (merged[id]) continue; // ya encontrado en un proyecto anterior de la lista
+                const inv = normalizeFirebaseInvitation(id, data, dbRef);
+                if (inv) merged[id] = inv;
+            }
+        } catch (err) {
+            console.error(err);
+        }
     }
+    firebaseInvitationsCache = merged;
 }
 
 function localDescriptor(id) {
@@ -269,8 +261,11 @@ async function resolveInvitation(id) {
     const known = getKnownInvitation(id);
     if (known) return known;
     if (!VALID_ID_RE.test(id)) return null;
-    const raw = await readRaw(`invitations/${id}`);
-    return normalizeFirebaseInvitation(id, raw);
+    for (const dbRef of FIREBASE_PROJECTS) {
+        const raw = await readRaw(`invitations/${id}`, dbRef);
+        if (raw) return normalizeFirebaseInvitation(id, raw, dbRef);
+    }
+    return null;
 }
 
 /* ── Auth / sesión (sessionStorage por id: sobrevive un reload en la

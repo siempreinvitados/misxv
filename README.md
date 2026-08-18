@@ -56,18 +56,32 @@ Cada uno expone su config como una propiedad de `window` (`window.firebaseConfig
 
 **Local vs. producción:** como las rutas son relativas (`../shared/firebase-config*.js`), esto funciona igual en GitHub Pages (todo el repo se sirve bajo una misma raíz) y abriendo el HTML directo (`file://`). La única forma de que falle en local es levantar un servidor estático con la carpeta de un proyecto individual como raíz (ej. `cd bautizo2 && python3 -m http.server`) — ahí `../shared/` queda fuera de lo que ese servidor expone. Para probar localmente, levanta el servidor **desde la raíz del repo** y visita `http://localhost:PUERTO/bautizo2/`, así la estructura de rutas queda igual que en producción.
 
-## Dar de alta una invitación nueva: `INVITATION_ID`
+## Dar de alta una invitación nueva
 
-El `{id}` de `invitations/{id}` (usado en los paths de `contadores/...` de cada `app.js`) no se elige a mano — se genera con:
+Dos pasos, en orden, cada uno con su propio script (ninguno pide datos que no estén ya en el `app.js` del proyecto):
+
+**1. Asignar el `INVITATION_ID`** (el `{id}` de `invitations/{id}`, usado en los paths de `contadores/...`):
 
 ```bash
 node scripts/ensure-invitation-id.js <carpeta-de-la-invitacion>
 # ej: node scripts/ensure-invitation-id.js sofi2
 ```
 
-Corre esto **una vez**, después de crear la carpeta del proyecto nuevo con su `app.js` (aunque sea copiado de `bautizo2/` como plantilla) y antes de publicarlo. El script busca `<carpeta>/app.js`, y:
+Corre esto **una vez**, después de crear la carpeta del proyecto nuevo con su `app.js` (aunque sea copiado de otra invitación como plantilla) y antes de publicarlo. El script busca `<carpeta>/app.js`, y:
 
 - Si ya tiene `const INVITATION_ID = '...'`, lo deja tal cual y no hace nada (idempotente — correrlo de nuevo por accidente no rompe nada).
-- Si no lo tiene, genera uno de **5 caracteres** (`a-z0-9`), evitando que choque con los ids que ya usan otros proyectos del repo, y lo inserta en el `app.js` justo antes del bloque de Firebase.
+- Si no lo tiene, genera uno de **5 caracteres** (`a-z0-9`), evitando que choque con los ids que ya usan otros proyectos del repo, y lo inserta en el `app.js` justo antes del bloque de Firebase (`let db = null;`).
 
-Ver `scripts/ensure-invitation-id.js`.
+**2. Provisionar sus metadatos en Firebase**, para que `admin/` la descubra sola en el buscador (ver "Descubrimiento dinámico" abajo):
+
+```bash
+node scripts/provision-invitation-meta.js <carpeta-de-la-invitacion> [--primary '#hex'] [--primaryDark '#hex'] [--accent '#hex']
+```
+
+Lee `INVITATION_ID`/`EVENT_TITLE`/`EVENT_DATE` del `app.js` de la carpeta (ya deben existir — corre primero el paso 1) y escribe `invitations/{id}/{nombre,fecha,branding}` en el proyecto nuevo de Firebase (`shared/firebase-config.js`, real, debe existir en local — ver sección de arriba). Los colores de `branding` son opcionales (si no se pasan, usa un morado genérico de respaldo). Es un `PATCH`, no un `PUT`: si el nodo ya tiene datos (ej. `contadores` reales de visitas del sitio ya en vivo), **los preserva** — solo agrega/actualiza `nombre`/`fecha`/`branding`. Si el nodo ya tiene `nombre` (ya provisionado antes), no hace nada salvo que se pase `--force`.
+
+`caratula`/`password` no los pone este script — se agregan a mano en la consola de Firebase si hacen falta (sin `password`, el panel de esa invitación queda sin login configurado, igual que las demás invitaciones nuevas hasta ahora).
+
+## Descubrimiento dinámico en `admin/`
+
+`admin/app.js` no necesita una entrada por invitación para las que siguen el esquema nuevo (`invitations/{id}/...`, la estructura documentada arriba) — busca directo en Firebase, en **ambos** proyectos (`db`, el viejo, y `bautizo2Db`, el nuevo — ver `FIREBASE_PROJECTS` en `admin/app.js`), vía `loadFirebaseInvitations()`/`resolveInvitation()`. El registro local `INVITATIONS` en ese archivo queda solo para las invitaciones legacy (`gali`, `sofi`, que no siguen el esquema nuevo) o casos que necesiten un override fijo.
