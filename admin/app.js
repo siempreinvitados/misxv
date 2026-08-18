@@ -4,85 +4,28 @@ import { getDatabase, ref, get } from 'https://www.gstatic.com/firebasejs/12.14.
 /* ── Firebase principal (proyecto viejo "bautizo-sofia", usado por gali/sofi
    y por el resto de este admin). Config compartido en
    shared/firebase-config.legacy.js, cargado como window.firebaseConfigLegacy
-   por un <script> clásico antes de este módulo en admin/index.html. ── */
-const firebaseApp = initializeApp(window.firebaseConfigLegacy);
-const db = getDatabase(firebaseApp);
+   por un <script> clásico antes de este módulo en admin/index.html.
+   En try/catch a propósito: algunos despliegues de este panel (ej. el repo
+   de producción) no incluyen ese archivo — sin él, gali/sofi quedan
+   "no disponibles" en vez de romper el panel entero (que se ejecutaría
+   antes de llegar a la conexión de abajo, la que sí es esencial ahí). ── */
+let db = null;
+try {
+    if (typeof window.firebaseConfigLegacy !== 'undefined') {
+        const firebaseApp = initializeApp(window.firebaseConfigLegacy);
+        db = getDatabase(firebaseApp);
+    }
+} catch (e) { /* sin config legacy — gali/sofi no disponibles, el resto del panel sigue funcionando */ }
 
 /* ── Firebase del proyecto nuevo "siempre-invitados" (DISTINTO del de
    arriba — config compartido en shared/firebase-config.js, cargado como
    window.firebaseConfig igual que el de arriba). Todas las invitaciones
    que siguen el esquema nuevo (invitations/{id}/..., ver README.md) viven
-   acá — bautizo (v1, registrado a mano abajo) y cualquier otra descubierta
-   dinámicamente (ej. miguel-sebastian). Nombre único como 2do argumento de
-   initializeApp() para que coexista con la app principal. ── */
+   acá y se descubren solas (bautizo v1, miguel-sebastian, cualquier otra
+   nueva). Nombre único como 2do argumento de initializeApp() para que
+   coexista con la app principal. ── */
 const bautizo2App = initializeApp(window.firebaseConfig, 'bautizo2');
 const bautizo2Db = getDatabase(bautizo2App);
-
-/* ══════════════════════════════════════════════════════════════
-   REGISTRO LOCAL DE INVITACIONES — EDITA AQUÍ
-   Solo para las invitaciones "legacy" que no siguen el esquema nuevo de
-   Firebase (ver más abajo) o que por algún motivo necesitan overrides
-   fijos. Cualquier invitación NUEVA no necesita entrada aquí: el admin
-   la descubre sola leyendo invitations/{id} en Firebase (en cualquiera
-   de los dos proyectos, ver loadFirebaseInvitations()/resolveInvitation()
-   más abajo).
-   "paths" apunta a nodos reales de Firebase Realtime DB; usa null
-   cuando esa invitación NO tiene ese dato (el dashboard mostrará
-   "no disponible", nunca un 0 falso ni un error). "shapes" solo se
-   llena cuando un campo no viene en la forma default (número plano
-   para visitas/confirmados/noConfirmados, array u objeto-con-claves
-   para asistentes, string plano para password).
-   ══════════════════════════════════════════════════════════════ */
-const INVITATIONS = {
-
-    gali: {
-        label: 'XV Años — Gali',
-        siteUrl: 'https://siempreinvitados.github.io/misxv/gali/',
-        eventDate: new Date('2026-08-08T14:00:00'),
-        paths: {
-            visitas: 'contadoresGali/visitas',
-            confirmados: 'contadoresGali/confirmados',
-            noConfirmados: 'contadoresGali/noConfirmados',
-            asistentes: 'contadoresGali/asistentes',
-            password: 'contadoresGali/password',
-        },
-        shapes: {},
-        branding: { primary: '#c67a97', primaryDark: '#a85d78', accent: '#f5d9e3', logoUrl: null, initials: 'G' },
-    },
-
-    sofi: {
-        label: 'Sofi',
-        siteUrl: 'https://siempreinvitados.github.io/misxv/sofi/',
-        eventDate: new Date('2026-07-11T13:00:00'),
-        paths: {
-            visitas: 'contadoresSofi/visitas', // OJO: forma {count:N}, no número plano
-            confirmados: null,   // sofi todavía no persiste confirmaciones en Firebase
-            noConfirmados: null,
-            asistentes: null,
-            password: null,      // sin nodo de password -> login no disponible para este id
-        },
-        shapes: { visitas: 'count-object' },
-        branding: { primary: '#3f6fa8', primaryDark: '#1f3f66', accent: '#dce9f7', logoUrl: null, initials: 'S' },
-    },
-
-    bautizo: {
-        label: 'Bautizo v1',
-        siteUrl: 'https://siempreinvitados.github.io/misxv/bautizo/',
-        eventDate: new Date('2026-11-14T12:00:00'),
-        // mismo proyecto de Firebase que bautizo2 (siempre-invitados) — reusa bautizo2Db
-        db: bautizo2Db,
-        paths: {
-            visitas: 'invitations/bautizo/contadores/visitas',
-            confirmados: 'invitations/bautizo/contadores/confirmados',
-            noConfirmados: 'invitations/bautizo/contadores/noConfirmados',
-            asistentes: 'invitations/bautizo/contadores/asistentes',
-            password: null,
-        },
-        shapes: {},
-        branding: { primary: '#8a8a8a', primaryDark: '#5a5a5a', accent: '#eeeeee', logoUrl: null, initials: 'B' },
-    },
-
-};
 
 /* ══════════════════════════════════════════════════════════════
    ADAPTADOR DE DATOS — normaliza cada campo para que el renderizado
@@ -91,6 +34,12 @@ const INVITATIONS = {
    importa si la invitación es local o descubierta en Firebase.
    ══════════════════════════════════════════════════════════════ */
 async function readRaw(path, dbRef = db) {
+    // dbRef puede llegar null explícito (proyecto legacy sin config, ver
+    // arriba) — el default de arriba solo cubre "undefined", no "null", así
+    // que sin este guard ref(null, path) truena. Tratarlo como "sin datos"
+    // deja que cualquier llamador (loadFirebaseInvitations, resolveInvitation)
+    // simplemente pase al siguiente proyecto, sin try/catch propio.
+    if (!dbRef) return null;
     const snap = await get(ref(dbRef, path));
     return snap.exists() ? snap.val() : null;
 }
@@ -162,6 +111,8 @@ function avatarHtml(branding) {
      invitations/{id}/nombre        -> string, para buscarla
      invitations/{id}/fecha         -> fecha del evento (ISO)
      invitations/{id}/caratula      -> URL de imagen, usada como avatar
+     invitations/{id}/url           -> link al sitio real de la invitación,
+                                        usado por el botón "Ver invitación"
      invitations/{id}/password      -> string plano
      invitations/{id}/branding      -> {primary, primaryDark, accent}
      invitations/{id}/contadores/{visitas,confirmados,noConfirmados,asistentes}
@@ -184,7 +135,7 @@ function normalizeFirebaseInvitation(id, raw, dbRef) {
         id,
         db: dbRef,
         label: raw.nombre || id,
-        siteUrl: null, // el esquema nuevo no define un link propio a la invitación
+        siteUrl: raw.url || null,
         eventDate: parseEventDate(raw.fecha),
         branding: {
             primary: branding.primary || '#6c63ff',
@@ -232,21 +183,16 @@ async function loadFirebaseInvitations() {
     firebaseInvitationsCache = merged;
 }
 
-function localDescriptor(id) {
-    const inv = INVITATIONS[id];
-    return inv ? { source: 'local', id, ...inv } : null;
-}
-
-/** Combina el registro local + lo ya descubierto en Firebase (para el buscador). */
+/** Todo lo que ya se descubrió en Firebase (para el buscador). Sin registro
+    local: cualquier invitación que no siga el esquema nuevo (invitations/{id})
+    simplemente no aparece — no hay overrides manuales. */
 function allKnownInvitations() {
-    const local = Object.keys(INVITATIONS).map(localDescriptor);
-    const fb = firebaseInvitationsCache ? Object.values(firebaseInvitationsCache) : [];
-    return [...local, ...fb];
+    return firebaseInvitationsCache ? Object.values(firebaseInvitationsCache) : [];
 }
 
-/** Búsqueda sin red: local + lo que ya esté en caché de Firebase. */
+/** Búsqueda sin red: lo que ya esté en caché de Firebase. */
 function getKnownInvitation(id) {
-    return localDescriptor(id) || (firebaseInvitationsCache && firebaseInvitationsCache[id]) || null;
+    return (firebaseInvitationsCache && firebaseInvitationsCache[id]) || null;
 }
 
 const VALID_ID_RE = /^[A-Za-z0-9_-]+$/;
@@ -373,7 +319,7 @@ function renderPicker() {
         input.placeholder = 'Cargando invitaciones…';
     } else {
         input.disabled = false;
-        input.placeholder = 'Ej. gali, o “XV Años”…';
+        input.placeholder = 'Buscar por ID o por nombre';
     }
     input.focus();
 }
@@ -385,6 +331,9 @@ function renderLogin(descriptor, branding) {
     showView('login');
     const card = document.getElementById('loginCard');
     const notConfigured = descriptor.paths.password == null;
+    const siteLinkHtml = descriptor.siteUrl
+        ? `<a class="btn-ghost" href="${escapeHtml(descriptor.siteUrl)}" target="_blank" rel="noopener">Ver invitación</a>`
+        : '';
 
     if (notConfigured) {
         const anyPath = Object.values(descriptor.paths).find(p => p != null);
@@ -394,7 +343,10 @@ function renderLogin(descriptor, branding) {
             <h2>${escapeHtml(branding.label)}</h2>
             <p class="login-msg">El acceso a esta invitación aún no está configurado.
                 Agrega una contraseña en Firebase (<code>${escapeHtml(prefix)}/password</code>) para habilitarlo.</p>
-            <a class="btn-secondary" href="index.html">← Volver</a>
+            <div class="login-actions">
+                ${siteLinkHtml}
+                <a class="btn-secondary" href="index.html">← Volver</a>
+            </div>
         `;
         return;
     }
@@ -408,7 +360,10 @@ function renderLogin(descriptor, branding) {
             <button type="submit" class="btn-primary">Entrar</button>
             <div class="login-error hidden" id="loginError"></div>
         </form>
-        <a class="btn-link" href="index.html">← Volver</a>
+        <div class="login-actions">
+            ${siteLinkHtml}
+            <a class="btn-link" href="index.html">← Volver</a>
+        </div>
     `;
 
     const form = document.getElementById('loginForm');
@@ -448,33 +403,31 @@ const STAT_DEFS = [
     { key: 'visitas', label: 'Visitas', icon: '👀' },
     { key: 'confirmados', label: 'Confirmados', icon: '✅' },
     { key: 'noConfirmados', label: 'No Confirmados', icon: '🙁' },
-    { key: 'totalRespuestas', label: 'Total Respuestas', icon: '📋' },
 ];
 
 function renderStatsSkeleton() {
     document.getElementById('statsGrid').innerHTML = STAT_DEFS.map(s => `
         <div class="stat-card">
             <div class="stat-icon">${s.icon}</div>
-            <div class="stat-label">${s.label}</div>
-            <div class="stat-value"><span class="skeleton">&nbsp;</span></div>
+            <div class="stat-body">
+                <div class="stat-label">${s.label}</div>
+                <div class="stat-value"><span class="skeleton">&nbsp;</span></div>
+            </div>
         </div>
     `).join('');
 }
 
 function renderStats(data) {
-    const totalRespuestas = data.asistentes.available
-        ? { available: true, value: data.asistentes.value.length }
-        : { available: false, value: null };
-    const values = { ...data, totalRespuestas };
-
     document.getElementById('statsGrid').innerHTML = STAT_DEFS.map(s => {
-        const field = values[s.key];
+        const field = data[s.key];
         const display = field.available ? field.value : 'No disponible';
         return `
             <div class="stat-card${field.available ? '' : ' stat-unavailable'}">
                 <div class="stat-icon">${s.icon}</div>
-                <div class="stat-label">${s.label}</div>
-                <div class="stat-value">${display}</div>
+                <div class="stat-body">
+                    <div class="stat-label">${s.label}</div>
+                    <div class="stat-value">${display}</div>
+                </div>
             </div>
         `;
     }).join('');
@@ -485,11 +438,9 @@ let currentFilter = 'todos';
 
 function setupTable(asistentesField) {
     const toolbar = document.querySelector('.table-toolbar');
-    const exportBtn = document.getElementById('exportBtn');
 
     if (!asistentesField.available) {
         toolbar.classList.add('hidden');
-        exportBtn.disabled = true;
         currentGuests = [];
         document.getElementById('tableWrap').innerHTML =
             '<div class="empty-state">Esta invitación no registra asistentes en Firebase todavía.</div>';
@@ -498,7 +449,6 @@ function setupTable(asistentesField) {
 
     toolbar.classList.remove('hidden');
     currentGuests = asistentesField.value;
-    exportBtn.disabled = !currentGuests.some(g => Number(g.asiste) === 1);
     renderTable();
 }
 
@@ -537,24 +487,6 @@ function renderTable() {
             </tbody>
         </table>
     `;
-}
-
-function exportCsv(id) {
-    const confirmed = currentGuests.filter(g => Number(g.asiste) === 1);
-    if (confirmed.length === 0) return;
-    const header = ['Nombre', 'Personas', 'Fecha'];
-    const rows = confirmed.map(g => [g.nombre || '', g.personas ?? 0, g.date || '']);
-    const csv = '﻿' + [header, ...rows]
-        .map(row => row.map(cell => `"${String(cell).replace(/"/g, '""')}"`).join(','))
-        .join('\r\n');
-    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `confirmados-${id}.csv`;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(a.href);
 }
 
 async function renderDashboard(descriptor, branding) {
@@ -642,7 +574,7 @@ async function initFirebaseInvitations() {
     const input = document.getElementById('invitationSearch');
     if (document.getElementById('view-picker').classList.contains('hidden')) return;
     input.disabled = false;
-    input.placeholder = 'Ej. gali, o “XV Años”…';
+    input.placeholder = 'Buscar por ID o por nombre';
     if (input.value.trim()) renderSearchResults();
 }
 
@@ -658,7 +590,6 @@ function initDashboardControls() {
         currentFilter = btn.dataset.filter;
         renderTable();
     });
-    document.getElementById('exportBtn').addEventListener('click', () => exportCsv(getInvitationIdFromUrl()));
     document.getElementById('logoutBtn').addEventListener('click', () => logout(getInvitationIdFromUrl()));
     document.getElementById('retryBtn').addEventListener('click', () => route());
 }

@@ -8,6 +8,8 @@ invitations/{id}/
   fecha         -> fecha/hora del evento (ISO), usada para ordenar resultados de búsqueda
   caratula      -> URL de la imagen de portada; también sirve de avatar en los
                     resultados de búsqueda del admin (no hace falta un logo aparte)
+  url           -> link al sitio real de la invitación; alimenta el botón
+                    "Ver invitación" del admin (login y dashboard)
   password      -> string plano, se compara en el cliente — barrera ligera,
                     no seguridad real
   branding: {
@@ -25,6 +27,7 @@ invitations/{id}/
 - **nombre**: nombre de la invitación, el que se busca/lista en el admin.
 - **fecha**: fecha y hora del evento; determina el orden de los resultados de búsqueda.
 - **caratula**: imagen de portada de la invitación; el admin la reutiliza como avatar, sin necesidad de un logo separado.
+- **url**: link al sitio real de la invitación; el admin lo usa para el botón "Ver invitación" (en la pantalla de contraseña y en el dashboard).
 - **password**: contraseña de acceso al panel de esa invitación.
 - **branding**: colores con los que el admin se personaliza al cargar esa invitación.
 - **contadores.visitas**: número de visitas a la invitación.
@@ -80,8 +83,34 @@ node scripts/provision-invitation-meta.js <carpeta-de-la-invitacion> [--primary 
 
 Lee `INVITATION_ID`/`EVENT_TITLE`/`EVENT_DATE` del `app.js` de la carpeta (ya deben existir — corre primero el paso 1) y escribe `invitations/{id}/{nombre,fecha,branding}` en el proyecto nuevo de Firebase (`shared/firebase-config.js`, real, debe existir en local — ver sección de arriba). Los colores de `branding` son opcionales (si no se pasan, usa un morado genérico de respaldo). Es un `PATCH`, no un `PUT`: si el nodo ya tiene datos (ej. `contadores` reales de visitas del sitio ya en vivo), **los preserva** — solo agrega/actualiza `nombre`/`fecha`/`branding`. Si el nodo ya tiene `nombre` (ya provisionado antes), no hace nada salvo que se pase `--force`.
 
-`caratula`/`password` no los pone este script — se agregan a mano en la consola de Firebase si hacen falta (sin `password`, el panel de esa invitación queda sin login configurado, igual que las demás invitaciones nuevas hasta ahora).
+`caratula`/`url`/`password` no los pone este script — se agregan a mano en la consola de Firebase si hacen falta (sin `password`, el panel de esa invitación queda sin login configurado, igual que las demás invitaciones nuevas hasta ahora; sin `url`, el botón "Ver invitación" simplemente no aparece).
 
 ## Descubrimiento dinámico en `admin/`
 
-`admin/app.js` no necesita una entrada por invitación para las que siguen el esquema nuevo (`invitations/{id}/...`, la estructura documentada arriba) — busca directo en Firebase, en **ambos** proyectos (`db`, el viejo, y `bautizo2Db`, el nuevo — ver `FIREBASE_PROJECTS` en `admin/app.js`), vía `loadFirebaseInvitations()`/`resolveInvitation()`. El registro local `INVITATIONS` en ese archivo queda solo para las invitaciones legacy (`gali`, `sofi`, que no siguen el esquema nuevo) o casos que necesiten un override fijo.
+`admin/app.js` no tiene ningún registro local de invitaciones — busca directo en Firebase, en **ambos** proyectos (`db`, el viejo, y `bautizo2Db`, el nuevo — ver `FIREBASE_PROJECTS` en `admin/app.js`), vía `loadFirebaseInvitations()`/`resolveInvitation()`, y muestra lo que encuentre bajo `invitations/{id}` en cualquiera de los dos. `gali`/`sofi` **no aparecen** — nunca tuvieron ese nodo (usan el esquema viejo, `contadoresGali/...`/`contadoresSofi/...`), así que no hay nada que descubrir ahí; no es una limitación de código, es que esos datos nunca se migraron a la estructura nueva.
+
+`readRaw(path, dbRef)` trata un `dbRef` nulo o `undefined` como "sin datos" (no revienta) — así, si algún despliegue de este panel no incluye `shared/firebase-config.legacy.js` (ver más abajo, el repo productivo es el caso), la conexión al proyecto viejo queda en `null` y el panel sigue funcionando normal con el proyecto nuevo, sin excepciones a medio capturar.
+
+## Pasar cambios al repo productivo (`siempreinvitados/siempreinvitados-eventos`)
+
+Este repo (`bautizo-sofia`) es el de desarrollo — todo se prueba en local aquí. El deploy real pasa por otro repo, `siempreinvitados/siempreinvitados-eventos` (solo rama `main`, conectado a Cloudflare Pages vía `wrangler.toml`: cualquier push a `main` ahí dispara un build/deploy automático). **Ahí no se prueba nada en local, nunca** — el config real de Firebase no existe como archivo en ese repo, se genera en cada build a partir de las variables de entorno configuradas en el dashboard de Cloudflare (Settings → Environment variables del proyecto).
+
+La estructura no es idéntica entre los dos repos:
+
+| `bautizo-sofia` (dev)  | `siempreinvitados-eventos` (prod)     |
+|-------------------------|-----------------------------------------|
+| `<invitación>/`         | `mi-bautizo/<invitación>/`             |
+| `shared/`                | `mi-bautizo/shared/`                    |
+| `admin/`                 | `admin/` (igual, en la raíz)            |
+
+Por ese cambio de profundidad, cualquier `index.html` que se copie a producción necesita su `<script src="../shared/firebase-config*.js">` ajustado a `<script src="../mi-bautizo/shared/firebase-config*.js">` (un nivel extra). Los `app.js` no necesitan tocarse — nunca referencian `shared/` directamente, solo leen `window.firebaseConfig*` ya cargado por esos `<script>`.
+
+**Pasos para pasar una invitación (o `admin/`) a producción:**
+
+1. Copia la carpeta tal cual: `rsync -a --exclude='orig_imgs' --exclude='.DS_Store' <invitación>/ <ruta-del-repo-prod>/mi-bautizo/<invitación>/` (`orig_imgs/` son fuentes de diseño, no hacen falta en producción).
+2. Ajusta la ruta de `shared/` en el `index.html` copiado (paso anterior) — solo hace falta la primera vez, ya que después sigue como diff normal.
+3. **Nunca copies el archivo real** `shared/firebase-config.js` ni `firebase-config.legacy.js` al repo productivo — ahí se generan solos en el build (o de plano no existen, como el legacy, que este repo productivo no incluye a propósito).
+4. Verifica que no falte ninguna invitación/rama de código nueva comparando ambos repos (`diff -rq` entre carpetas equivalentes es suficiente).
+5. `git add -A && git commit && git push` **en el repo productivo** — eso dispara el deploy. Confirma contra la URL real (`https://www.siempreinvitados.com/...`), nunca con un servidor local ahí.
+
+`gali/`, `sofi/` y `bautizo/` (v1) no se pasan a este repo productivo — siguen viviendo únicamente en `bautizo-sofia`, en su despliegue de GitHub Pages de siempre.
