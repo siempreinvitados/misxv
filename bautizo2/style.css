@@ -479,7 +479,9 @@ img {
     font-weight: 600;
     letter-spacing: .08em;
     font-size: clamp(1.1rem, 4.6vw, 1.5rem);
-    color: var(--gold-deep);
+    /* azul (no gold-deep): así no queda del mismo color que .p1-name
+       justo debajo, que es el que debe destacar como el dorado "hero" */
+    color: var(--blue);
     margin-bottom: clamp(.5rem, 2vh, 1rem);
 }
 
@@ -1739,7 +1741,7 @@ img {
 
 .btn-next {
     padding: .75rem 2rem;
-    background: linear-gradient(135deg, var(--blue-deep), var(--gold-deep));
+    background: var(--gold-deep);
     border: none;
     border-radius: 30px;
     color: #fff;
