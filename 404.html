@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Página no encontrada</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f4f5fb;
+            color: #23232b;
+            text-align: center;
+            padding: 24px;
+        }
+
+        p {
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: #6c63ff;
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <p>Página no encontrada.</p>
+        <p><a href="https://siempreinvitados.github.io/misxv/">Volver al inicio</a></p>
+    </div>
+
+    <script>
+        /* Truco estándar para rutas tipo path en GitHub Pages (100% estático,
+           sin rewrites de servidor): si la ruta pedida es .../admin/<id>,
+           la reescribimos como .../admin/?id=<id> antes de que cargue nada —
+           así admin/gali funciona como acceso directo, igual que admin/?id=gali. */
+        (function () {
+            var m = location.pathname.match(/^(.*\/admin)\/([^\/]+)\/?$/);
+            if (m) {
+                location.replace(m[1] + '/?id=' + encodeURIComponent(m[2]));
+            }
+        })();
+    </script>
+</body>
+
+</html>

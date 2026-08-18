@@ -12,6 +12,24 @@ const EVENT_LOCATION = 'Nombre de la Parroquia, Ciudad';
    *** EDITA este valor antes de publicar la invitación *** */
 const FAMILY_WHATSAPP = '521XXXXXXXXXX';
 
+/* ── Firebase (config compartido en ../shared/firebase-config.js, ver README.md) ── */
+let db = null;
+try {
+    if (typeof firebase !== 'undefined' && typeof window.firebaseConfig !== 'undefined') {
+        firebase.initializeApp(window.firebaseConfig);
+        db = firebase.database();
+    }
+} catch (e) { /* sin Firebase, el RSVP sigue funcionando solo por WhatsApp */ }
+
+const INVITATION_ID = 'bautizo';
+
+(function () {
+    if (db && !localStorage.getItem('visita_bautizo')) {
+        localStorage.setItem('visita_bautizo', '1');
+        db.ref(`invitations/${INVITATION_ID}/contadores/visitas`).transaction(c => (c || 0) + 1);
+    }
+})();
+
 /* Galería: agrega tus fotos en resources/gallery/ y actualiza las rutas.
    Mientras no exista el archivo, se muestra un emoji de reemplazo. */
 const galleryImages = [
@@ -266,6 +284,23 @@ function submitRSVP() {
     const rawName = document.getElementById('rsvpName').value.trim();
     const name = isAnon || !rawName ? 'Anónimo(a)' : rawName;
     const asiste = rsvpChoice === 'si';
+
+    if (db && !localStorage.getItem('rsvp_bautizo_confirmed')) {
+        const now = new Date();
+        const formattedDate = `${padN(now.getDate())}/${padN(now.getMonth() + 1)}/${now.getFullYear()} ${padN(now.getHours())}:${padN(now.getMinutes())}`;
+        const base = db.ref(`invitations/${INVITATION_ID}/contadores`);
+        base.child('asistentes').transaction(c => {
+            const arr = Array.isArray(c) ? c : [];
+            arr.push({ nombre: name, personas: guestCount, date: formattedDate, asiste: asiste ? 1 : 0 });
+            return arr;
+        });
+        if (asiste) {
+            base.child('confirmados').transaction(c => (c || 0) + guestCount);
+        } else {
+            base.child('noConfirmados').transaction(c => (c || 0) + 1);
+        }
+        localStorage.setItem('rsvp_bautizo_confirmed', '1');
+    }
 
     const lines = [`Hola, soy ${name}.`];
     lines.push(asiste ? `Confirmo que SÍ asistiré al bautizo (${guestCount} ${guestCount === 1 ? 'persona' : 'personas'}). 🧸🎈` : 'Lamento informarles que no podré asistir al bautizo. 💙');

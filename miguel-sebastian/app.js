@@ -17,6 +17,42 @@ const EVENT_LOCATION = 'Finca Santa Isabel, Tepotzotlán';
    *** EDITA este valor antes de publicar la invitación *** */
 const FAMILY_WHATSAPP = '521XXXXXXXXXX';
 
+const INVITATION_ID = 'miguel-sebastian';
+/* NOTA: falta agregar el resto del bloque de Firebase (init de db,
+   contador de visitas, escritura de RSVP) — copia el patrón de
+   bautizo2/app.js o bautizo/app.js y ajusta INVITATION_ID. */
+
+/* ══════════════════════════════════════════════════════════════
+   FIREBASE — contador de visitas + registro de confirmaciones RSVP
+   Mecánica igual a gali/app.js (SDK compat, transactions), estructura
+   de datos nueva de README.md: invitations/{id}/contadores/...
+   El config (proyecto "siempre-invitados", propio de bautizo2) viene
+   de shared/firebase-config.js — ver README.md para el porqué de
+   window.firebaseConfig en vez de un objeto inline aquí.
+   ══════════════════════════════════════════════════════════════ */
+let db = null;
+try {
+    if (typeof firebase !== 'undefined' && typeof window.firebaseConfig !== 'undefined') {
+        firebase.initializeApp(window.firebaseConfig);
+        db = firebase.database();
+    }
+} catch (e) { /* sin Firebase (shared/firebase-config.js no cargó, CDN bloqueado, etc.) — el sitio sigue funcionando, solo sin persistencia */ }
+
+
+
+/* Contador de visitas: una sola vez por navegador (bandera propia en
+   localStorage, con prefijo del sitio — gali usa la clave 'visita' sin
+   prefijo, y como todos los sitios comparten origen en GitHub Pages
+   (siempreinvitados.github.io, solo cambia la subruta), localStorage se
+   comparte entre ellos; sin el prefijo, alguien que ya visitó gali nunca
+   contaría aquí) */
+(function () {
+    if (db && !localStorage.getItem('visita_bautizo2')) {
+        localStorage.setItem('visita_bautizo2', '1');
+        db.ref(`invitations/${INVITATION_ID}/contadores/visitas`).transaction(c => (c || 0) + 1);
+    }
+})();
+
 /* Galería: foto1-5 son de muestra (bebés en exteriores, uso libre, para
    que el borrador se vea completo) — reemplázalas con las reales cuando
    las tengas, mismos nombres de archivo. Mientras un archivo no exista,
@@ -26,6 +62,7 @@ const galleryImages = [
     { url: './resources/gallery/foto2.jpg', emoji: '🤍' },
     { url: './resources/gallery/foto3.jpg', emoji: '🩵' },
     { url: './resources/gallery/foto4.jpg', emoji: '⭐' },
+    { url: './resources/gallery/foto5.jpg', emoji: '⭐' },
 ];
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -389,6 +426,27 @@ function submitRSVP() {
     const rawName = document.getElementById('rsvpName').value.trim();
     const name = isAnon || !rawName ? 'Anónimo(a)' : rawName;
     const asiste = rsvpChoice === 'si';
+
+    /* registro en Firebase — misma mecánica que gali/app.js (transactions,
+       asiste 0/1, fecha DD/MM/YYYY HH:mm armada a mano); bandera propia en
+       localStorage para no inflar los contadores si alguien recarga la
+       pantalla de éxito o vuelve a enviar el mismo formulario */
+    if (db && !localStorage.getItem('rsvp_bautizo2_confirmed')) {
+        const now = new Date();
+        const formattedDate = `${padN(now.getDate())}/${padN(now.getMonth() + 1)}/${now.getFullYear()} ${padN(now.getHours())}:${padN(now.getMinutes())}`;
+        const base = db.ref(`invitations/${INVITATION_ID}/contadores`);
+        base.child('asistentes').transaction(c => {
+            const arr = Array.isArray(c) ? c : [];
+            arr.push({ nombre: name, personas: guestCount, date: formattedDate, asiste: asiste ? 1 : 0 });
+            return arr;
+        });
+        if (asiste) {
+            base.child('confirmados').transaction(c => (c || 0) + guestCount);
+        } else {
+            base.child('noConfirmados').transaction(c => (c || 0) + 1);
+        }
+        localStorage.setItem('rsvp_bautizo2_confirmed', '1');
+    }
 
     const lines = [`Hola, soy ${name}.`];
     lines.push(asiste ? `Confirmo que SÍ asistiré al bautizo (${guestCount} ${guestCount === 1 ? 'persona' : 'personas'}). 🧸🎈` : 'Lamento informarles que no podré asistir al bautizo. 💙');

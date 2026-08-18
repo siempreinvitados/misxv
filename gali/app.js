@@ -1,7 +1,6 @@
-/* ── Firebase ── */
-const firebaseConfig = { apiKey: "AIzaSyC6Xrc9EqMyXKH_gNFaOGuAX-ItudzZAVs", authDomain: "bautizo-sofia.firebaseapp.com", databaseURL: "https://bautizo-sofia-default-rtdb.firebaseio.com", projectId: "bautizo-sofia", storageBucket: "bautizo-sofia.firebasestorage.app", messagingSenderId: "981839514602", appId: "1:981839514602:web:981d3b9a4dcde418c84093", measurementId: "G-TVQSGB0FWT" };
+/* ── Firebase (config compartido en ../shared/firebase-config.legacy.js, ver README.md) ── */
 let db = null;
-try { firebase.initializeApp(firebaseConfig); db = firebase.database(); } catch(e) {}
+try { firebase.initializeApp(window.firebaseConfigLegacy); db = firebase.database(); } catch(e) {}
 
 /* ── Visit counter ── */
 (function () { if (db && !localStorage.getItem('visita')) { localStorage.setItem('visita', '1'); db.ref('contadoresGali/visitas').transaction(c => (c || 0) + 1); } })();

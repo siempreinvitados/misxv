@@ -2733,21 +2733,14 @@
         </div>
     </div>
 
+    <!-- config de Firebase compartido (proyecto viejo "bautizo-sofia") — ver README.md -->
+    <script src="../shared/firebase-config.legacy.js"></script>
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.14.0/firebase-app.js';
         import { getDatabase, ref, get, update, increment } from 'https://www.gstatic.com/firebasejs/12.14.0/firebase-database.js';
 
-        /* ═══════════ FIREBASE ═══════════ */
-        const firebaseConfig = {
-            apiKey: "AIzaSyC6Xrc9EqMyXKH_gNFaOGuAX-ItudzZAVs",
-            authDomain: "bautizo-sofia.firebaseapp.com",
-            databaseURL: "https://bautizo-sofia-default-rtdb.firebaseio.com",
-            projectId: "bautizo-sofia",
-            storageBucket: "bautizo-sofia.firebasestorage.app",
-            messagingSenderId: "981839514602",
-            appId: "1:981839514602:web:981d3b9a4dcde418c84093",
-            measurementId: "G-TVQSGB0FWT"
-        };
+        /* ═══════════ FIREBASE (config en ../shared/firebase-config.legacy.js) ═══════════ */
+        const firebaseConfig = window.firebaseConfigLegacy;
         let db;
         try {
             const app = initializeApp(firebaseConfig);
