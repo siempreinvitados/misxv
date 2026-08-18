@@ -147,18 +147,33 @@
     --silver-deep: #8992a3;
     --silver-shine: #eef1f5;
     --silver-line: #a9b0bd;
+    /* acentos dorado/beige — pedidos para darle más presencia a esa
+       combinación en toda la invitación, sin tocar el sistema azul/
+       plata ya afinado (se usan como detalle puntual, no como base) */
+    --gold: #c9a659;
+    --gold-deep: #a3803a;
+    --beige: #f3ead9;
+    --beige-deep: #e6d5ae;
     --text-dark: #23324a;
     --text-mid: #5b6b85;
     --text-light: #93a0b8;
     --glow: rgba(63, 111, 168, .28);
     --glow-silver: rgba(180, 190, 205, .35);
+    --glow-gold: rgba(201, 166, 89, .32);
 }
 
 html,
 body {
     height: 100%;
     overflow: hidden;
-    background: linear-gradient(160deg, var(--powder), var(--pearl) 55%, var(--silver-deep));
+    /* dos luces radiales suaves (reusan --glow/--glow-silver, ya
+       semitransparentes así se funden limpio a "transparent") sobre el
+       degradado de siempre, para dar algo de profundidad ambiental al
+       marco que rodea la tarjeta en viewports anchos */
+    background:
+        radial-gradient(circle at 15% 10%, var(--glow), transparent 55%),
+        radial-gradient(circle at 85% 90%, var(--glow-gold), transparent 55%),
+        linear-gradient(160deg, var(--powder), var(--beige) 55%, var(--silver-deep));
     color: var(--text-dark);
     font-family: 'Quicksand', sans-serif;
     -webkit-tap-highlight-color: transparent;
@@ -183,6 +198,12 @@ img {
    SCROLL-SNAP · una pantalla completa a la vez
    ══════════════════════════════════════════════════════════════ */
 #snap-container {
+    /* vh primero como respaldo: en navegadores sin soporte de svh
+       (previos a ~2022) esta segunda declaración se ignora y se queda
+       con la primera, en vez de dejar height:auto (que colapsaría todo
+       el layout de scroll-snap, ya que .screen mide su alto con 100%
+       contra este contenedor) */
+    height: 100vh;
     height: 100svh;
     max-width: 560px;
     /* mismo criterio que max-width: tope de "tablet estándar" en alto,
@@ -214,11 +235,16 @@ img {
     overflow: hidden;
     text-align: center;
     padding: clamp(1.2rem, 6vh, 2.5rem) clamp(1.2rem, 6vw, 2.5rem);
-    background: linear-gradient(180deg, var(--cream), var(--pearl));
+    /* degradado con blue-light en AMBOS extremos (antes solo abajo) y
+       el tono claro propio de cada pantalla en medio, donde vive el
+       texto — se asoma en el espacio transparente de los marcos
+       florales de arriba/abajo, y ese mismo azul en los 2 bordes de
+       las 7 pantallas es lo que une visualmente toda la invitación */
+    background: linear-gradient(180deg, var(--blue-light) 0%, var(--cream) 18%, var(--beige) 55%, var(--blue-light) 100%);
 }
 
 .screen-galeria {
-    background: linear-gradient(180deg, var(--pearl), var(--powder));
+    background: linear-gradient(180deg, var(--blue-light) 0%, var(--beige) 18%, var(--powder) 55%, var(--blue-light) 100%);
 }
 
 /* .p1-mascot ya no vive en el flujo (ver regla más abajo) — se reserva
@@ -236,8 +262,15 @@ img {
 /* ══════════════════════════════════════════════════════════════
    PISTA DE DESLIZAR (solo pantalla 1, se oculta al primer scroll)
    ══════════════════════════════════════════════════════════════ */
+/* absolute (no fixed) y ahora vive DENTRO de .screen-portada: con
+   fixed se posicionaba contra el VIEWPORT real, no contra la tarjeta
+   ya capada/centrada (#snap-container tope 560x1024) — en cualquier
+   pantalla donde la tarjeta no llena el viewport (tablet/desktop)
+   terminaba mostrándose fuera de la tarjeta, invisible. Moverlo al
+   flujo de .screen-portada (position:relative) resuelve lo mismo que
+   ya se hizo con .p1-mascot/.p5-footer */
 .scroll-hint {
-    position: fixed;
+    position: absolute;
     left: 50%;
     bottom: clamp(1.2rem, 4vh, 2rem);
     transform: translateX(-50%);
@@ -246,6 +279,13 @@ img {
     flex-direction: column;
     align-items: center;
     gap: .15rem;
+    /* misma pastilla de fondo que .p5-footer: esta zona se solapa con
+       el oso (p1-mascot) y con el borde del degradado, así que sin un
+       fondo propio se pierde detrás de lo que haya ahí */
+    padding: .35rem .8rem .4rem;
+    border-radius: 20px;
+    background: rgba(248, 250, 252, .85);
+    box-shadow: 0 4px 14px rgba(63, 111, 168, .12);
     color: var(--blue-deep);
     font-family: 'Quicksand', sans-serif;
     font-weight: 600;
@@ -254,27 +294,44 @@ img {
     pointer-events: none;
     opacity: .85;
     transition: opacity .6s ease;
-    animation: hintBob 1.8s ease-in-out infinite;
 }
 
 .scroll-hint.is-hidden {
     opacity: 0;
 }
 
-.scroll-hint-arrow {
-    font-size: 1.3rem;
-    line-height: 1;
+/* la mano hace el gesto de "swipe" (sube + fade in/out) — el texto
+   "Desliza" se queda quieto, solo esto anima. El salto de vuelta a la
+   posición inicial ocurre justo cuando opacity ya es 0 en ambos
+   extremos (100%→0% del siguiente loop), así no se nota.
+   width:44px (no 22px): el arte de hand.svg es de trazo delgado con
+   mucho espacio vacío alrededor dentro de su viewBox — comprobado con
+   captura de pantalla que a 22px el trazo se antialiasea a casi nada
+   contra la pastilla clara y queda invisible; a 44px se ve con claridad */
+.scroll-hint-hand {
+    width: 44px;
+    height: auto;
+    animation: handSwipe 1.6s ease-in-out infinite;
 }
 
-@keyframes hintBob {
-
-    0%,
-    100% {
-        transform: translateX(-50%) translateY(0);
+@keyframes handSwipe {
+    0% {
+        transform: translateY(6px);
+        opacity: 0;
     }
 
-    50% {
-        transform: translateX(-50%) translateY(-8px);
+    25% {
+        opacity: 1;
+    }
+
+    65% {
+        transform: translateY(-14px);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(-14px);
+        opacity: 0;
     }
 }
 
@@ -380,8 +437,10 @@ img {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .scroll-hint {
+    .scroll-hint-hand {
         animation: none;
+        opacity: 1;
+        transform: none;
     }
 }
 
@@ -420,7 +479,7 @@ img {
     font-weight: 600;
     letter-spacing: .08em;
     font-size: clamp(1.1rem, 4.6vw, 1.5rem);
-    color: var(--blue);
+    color: var(--gold-deep);
     margin-bottom: clamp(.5rem, 2vh, 1rem);
 }
 
@@ -428,10 +487,7 @@ img {
     font-family: 'Alex Brush', cursive;
     font-weight: 400;
     font-size: clamp(2.6rem, 11vw, 4rem);
-    background: linear-gradient(135deg, var(--blue), var(--blue-deep), var(--silver-deep), var(--blue));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--gold-deep);
     filter: drop-shadow(0 4px 18px rgba(248, 250, 252, .9));
 }
 
@@ -525,7 +581,7 @@ img {
        de ancho y de ahí en adelante — mobile grande Y toda la franja
        de tablet — el texto queda exactamente en el mismo tamaño, sin
        necesitar un breakpoint de tablet aparte */
-    font-size: clamp(1rem, calc(min(100vw, 560px) * 0.048), 1.25rem);
+    font-size: clamp(.85rem, calc(min(100vw, 560px) * 0.041), 1.05rem);
     line-height: 1.5;
     color: var(--text-dark);
 }
@@ -536,6 +592,23 @@ img {
     font-style: italic;
     color: var(--blue);
     letter-spacing: .01em;
+}
+
+/* nombres de padres/padrinos: son el dato importante, así que van MÁS
+   grandes y con más peso que la frase del poema (en em, relativa al
+   font-size ya fluido de .ded-line, así no necesita breakpoints
+   propios — sigue escalando aunque .ded-line se achique) */
+.ded-line .ded-names {
+    display: block;
+    margin-top: .4em;
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: 1.3em;
+    letter-spacing: .01em;
+    /* dorado (antes blue-deep): el .accent de arriba se queda azul, así
+       el poema mantiene el ritmo azul→dorado en vez de un bloque del
+       mismo color */
+    color: var(--gold-deep);
 }
 
 .p2-mascot {
@@ -559,27 +632,18 @@ img {
     gap: clamp(.7rem, 2.8vh, 1.1rem);
 }
 
+/* solo queda la paloma (se quitó chalice.svg) — ya no hace falta la
+   caja alta con 2 iconos apilados en position:absolute, ahora es un
+   solo ícono centrado con su propia proporción (dove.svg es ~1:1) */
 .icon-dove-chalice {
-    position: relative;
-    width: clamp(70px, 20vw, 96px);
-    height: clamp(84px, 24vw, 116px);
+    width: clamp(66px, 20vw, 92px);
     margin-bottom: .4rem;
 }
 
 .icon-dove {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 62%;
-}
-
-.icon-chalice {
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 46%;
+    display: block;
+    width: 100%;
+    height: auto;
 }
 
 .ev3-intro {
@@ -596,7 +660,7 @@ img {
 .ev3-month {
     font-family: 'Alex Brush', cursive;
     font-size: clamp(2.3rem, calc(min(100vw, 560px) * 0.119), 3.2rem);
-    color: var(--blue);
+    color: var(--gold-deep);
     line-height: 1;
     margin: -.2rem 0;
 }
@@ -628,8 +692,23 @@ img {
     line-height: 1;
 }
 
-.ev3-block {
-    margin-top: .6rem;
+/* RECEPCIÓN y MISA en una sola fila (antes eran 2 bloques apilados
+   con el nombre del lugar repetido en cada uno) — ahora ese nombre
+   solo vive una vez, en la tarjeta .ev3-location de abajo, así que
+   aquí solo queda label+hora por lado y se ahorra el alto que antes
+   ocupaban los 2 bloques apilados */
+.ev3-schedule {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1rem, 5vw, 1.6rem);
+}
+
+.ev3-schedule-sep {
+    font-family: 'Baloo 2', sans-serif;
+    font-size: 1.3rem;
+    line-height: 1;
+    color: var(--gold);
 }
 
 .ev3-label {
@@ -641,18 +720,75 @@ img {
     margin-bottom: .15rem;
 }
 
-.ev3-venue {
-    font-family: 'Quicksand', sans-serif;
-    font-weight: 500;
-    font-size: clamp(1rem, calc(min(100vw, 560px) * 0.042), 1.12rem);
-    color: var(--text-dark);
-}
-
 .ev3-time {
     font-family: 'Quicksand', sans-serif;
     font-weight: 400;
     font-size: clamp(.92rem, calc(min(100vw, 560px) * 0.038), 1.02rem);
     color: var(--text-light);
+}
+
+/* tarjeta de ubicación: toda la tarjeta es el link a Google Maps.
+   Mismo lenguaje visual que .gal-cell (radio grande, sombra suave) y
+   que .btn-calendar (botón píldora), para que combine con el resto */
+.ev3-location {
+    display: block;
+    width: 100%;
+    max-width: 300px;
+    border-radius: 18px;
+    overflow: hidden;
+    background: var(--beige);
+    box-shadow: 0 10px 24px rgba(63, 111, 168, .2);
+    text-decoration: none;
+}
+
+.ev3-location-img {
+    width: 100%;
+    aspect-ratio: 5 / 2;
+    object-fit: cover;
+    display: block;
+}
+
+.ev3-location-body {
+    padding: .65rem .9rem .8rem;
+    text-align: center;
+}
+
+.ev3-location-name {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: clamp(.98rem, calc(min(100vw, 560px) * 0.041), 1.1rem);
+    color: var(--blue-deep);
+    margin-bottom: .15rem;
+}
+
+.ev3-location-addr {
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    font-size: clamp(.75rem, calc(min(100vw, 560px) * 0.031), .85rem);
+    line-height: 1.35;
+    color: var(--text-mid);
+    margin-bottom: .55rem;
+}
+
+.ev3-location-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .4rem;
+    padding: .45rem 1.1rem;
+    border: 1px solid rgba(201, 166, 89, .55);
+    border-radius: 30px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: clamp(.72rem, calc(min(100vw, 560px) * 0.029), .82rem);
+    letter-spacing: .04em;
+    color: var(--gold-deep);
+    transition: all .3s;
+}
+
+.ev3-location:hover .ev3-location-btn,
+.ev3-location:active .ev3-location-btn {
+    background: var(--beige);
+    border-color: var(--gold);
 }
 
 /* Mobile (≤480px, mismo corte que ya usa .icon-dove-chalice): tablet
@@ -687,20 +823,30 @@ img {
         font-size: clamp(1.15rem, 5.3vw, 1.3rem);
     }
 
-    .ev3-venue {
-        font-size: clamp(1.12rem, 5.3vw, 1.28rem);
-    }
-
     .ev3-time {
         font-size: clamp(1.02rem, 4.7vw, 1.15rem);
     }
+
+    .ev3-location-name {
+        font-size: clamp(1.1rem, 5.1vw, 1.25rem);
+    }
+
+    .ev3-location-addr {
+        font-size: clamp(.85rem, 4vw, .96rem);
+    }
+
+    .ev3-location-btn {
+        font-size: clamp(.82rem, 3.8vw, .92rem);
+    }
 }
 
-/* Líneas geométricas plateadas (reemplazan el dorado del original) */
+/* Líneas geométricas doradas — se habían cambiado a plata al inicio del
+   proyecto para simplificar la paleta a azul/plata; ahora que piden más
+   presencia de dorado, vuelven a su color original */
 .silver-line {
     position: absolute;
     z-index: 1;
-    background: linear-gradient(90deg, transparent, var(--silver-line), transparent);
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
     pointer-events: none;
 }
 
@@ -724,7 +870,7 @@ img {
    PANTALLA 3.5 · CUENTA REGRESIVA (basada en bautizo/)
    ══════════════════════════════════════════════════════════════ */
 .screen-cuenta {
-    background: linear-gradient(180deg, var(--pearl), var(--powder));
+    background: linear-gradient(180deg, var(--blue-light) 0%, var(--beige) 18%, var(--powder) 55%, var(--blue-light) 100%);
 }
 
 .pcd-content {
@@ -763,8 +909,8 @@ img {
 }
 
 .countdown-wrap {
-    background: rgba(255, 255, 255, .6);
-    border: 1px solid rgba(63, 111, 168, .2);
+    background: rgba(243, 234, 217, .55);
+    border: 1px solid rgba(201, 166, 89, .3);
     border-radius: 20px;
     padding: clamp(1.2rem, 4vh, 1.8rem) clamp(1rem, 4vw, 1.6rem);
     max-width: 460px;
@@ -807,7 +953,7 @@ img {
 .cd-sep {
     font-family: 'Baloo 2', sans-serif;
     font-size: clamp(1.3rem, calc(min(100vw, 560px) * 0.063), 1.7rem);
-    color: var(--silver-deep);
+    color: var(--gold-deep);
     flex-shrink: 0;
     line-height: 1;
     padding-bottom: .4rem;
@@ -818,7 +964,7 @@ img {
     align-items: center;
     gap: .5rem;
     padding: clamp(.7rem, 3vh, .95rem) clamp(1.6rem, 6vw, 2.4rem);
-    border: 1px solid rgba(63, 111, 168, .5);
+    border: 1px solid rgba(201, 166, 89, .55);
     border-radius: 30px;
     background: transparent;
     font-family: 'Quicksand', sans-serif;
@@ -831,9 +977,9 @@ img {
 }
 
 .btn-calendar:hover {
-    background: var(--powder);
-    border-color: var(--blue);
-    color: var(--blue-deep);
+    background: var(--beige);
+    border-color: var(--gold);
+    color: var(--gold-deep);
 }
 
 /* ── Modal: guardar en calendario (basado en bautizo/, mismas variables
@@ -931,6 +1077,7 @@ img {
     border-radius: 14px;
     padding: .85rem 1rem;
     backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
 }
 
 .cal-device-icon {
@@ -997,6 +1144,120 @@ img {
     box-shadow: 0 10px 30px rgba(63, 111, 168, .4);
 }
 
+/* ── Modal: contacto (basado en bautizo/, mismas variables de color) ── */
+.contact-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: rgba(35, 50, 74, .45);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity .3s ease;
+}
+
+.contact-overlay.visible {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.contact-modal-box {
+    background: rgba(248, 250, 252, .98);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(63, 111, 168, .3);
+    border-radius: 26px;
+    padding: 2.5rem 2rem 2rem;
+    max-width: 360px;
+    width: 100%;
+    box-shadow: 0 24px 70px rgba(35, 50, 74, .22);
+    position: relative;
+    text-align: center;
+    transform: translateY(22px) scale(.96);
+    transition: transform .38s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.contact-overlay.visible .contact-modal-box {
+    transform: translateY(0) scale(1);
+}
+
+.contact-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.2rem;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--text-light);
+    cursor: pointer;
+    line-height: 1;
+    transition: color .2s, transform .2s;
+    padding: .2rem;
+}
+
+.contact-close:hover {
+    color: var(--blue-deep);
+    transform: rotate(90deg);
+}
+
+.contact-modal-icon {
+    font-size: 2.2rem;
+    display: block;
+    margin-bottom: .8rem;
+}
+
+.contact-modal-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 600;
+    font-size: 1.55rem;
+    color: var(--blue-deep);
+    line-height: 1.3;
+    margin-bottom: .6rem;
+}
+
+.contact-modal-sub {
+    font-size: .88rem;
+    color: var(--text-mid);
+    line-height: 1.65;
+    margin-bottom: 1.8rem;
+}
+
+.btn-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: .55rem;
+    padding: .9rem 1.8rem;
+    background: #25d366;
+    border: none;
+    border-radius: 30px;
+    color: #fff;
+    font-family: 'Quicksand', sans-serif;
+    font-size: .88rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    cursor: pointer;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, .35);
+    transition: transform .22s, box-shadow .22s;
+}
+
+.btn-whatsapp:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(37, 211, 102, .45);
+}
+
+.btn-whatsapp svg {
+    width: 20px;
+    height: 20px;
+    fill: #fff;
+    flex-shrink: 0;
+}
+
 /* ══════════════════════════════════════════════════════════════
    PANTALLA 4 · GALERÍA
    ══════════════════════════════════════════════════════════════ */
@@ -1016,7 +1277,7 @@ img {
     font-weight: 600;
     letter-spacing: .14em;
     font-size: clamp(1rem, 4vw, 1.3rem);
-    color: var(--blue-deep);
+    color: var(--gold-deep);
     margin-bottom: clamp(1rem, 4vh, 1.6rem);
 }
 
@@ -1030,6 +1291,12 @@ img {
     position: relative;
     width: min(78vw, 300px);
     aspect-ratio: 3 / 4;
+    /* piso de seguridad: todas las .gal-cell son position:absolute, así
+       que no aportan alto propio — sin soporte de aspect-ratio (previo
+       a ~2021) el contenedor colapsaría a 0 y la galería desaparecería.
+       min-height no interfiere en navegadores modernos porque el alto
+       real (hasta 400px) siempre queda por encima de este piso */
+    min-height: 320px;
     margin: 0 auto;
 }
 
@@ -1038,7 +1305,7 @@ img {
     inset: 0;
     border-radius: 16px;
     overflow: hidden;
-    background: linear-gradient(135deg, var(--powder), var(--pearl));
+    background: linear-gradient(135deg, var(--powder), var(--beige));
     box-shadow: 0 10px 24px rgba(63, 111, 168, .22);
 }
 
@@ -1095,7 +1362,7 @@ img {
     gap: .5rem;
     margin-top: clamp(1.3rem, 5vh, 2.1rem);
     padding: clamp(.65rem, 2.8vh, .85rem) clamp(1.4rem, 5.5vw, 2rem);
-    border: 1px solid rgba(63, 111, 168, .5);
+    border: 1px solid rgba(201, 166, 89, .55);
     border-radius: 30px;
     background: transparent;
     font-family: 'Quicksand', sans-serif;
@@ -1115,16 +1382,16 @@ img {
 }
 
 .btn-replay:hover {
-    background: var(--powder);
-    border-color: var(--blue);
-    color: var(--blue-deep);
+    background: var(--beige);
+    border-color: var(--gold);
+    color: var(--gold-deep);
 }
 
 /* ══════════════════════════════════════════════════════════════
    PANTALLA 4.5 · CONFIRMACIÓN (RSVP, basada en bautizo/)
    ══════════════════════════════════════════════════════════════ */
 .screen-rsvp {
-    background: linear-gradient(180deg, var(--cream), var(--powder));
+    background: linear-gradient(180deg, var(--blue-light) 0%, var(--cream) 18%, var(--beige) 55%, var(--blue-light) 100%);
 }
 
 .prsvp-content {
@@ -1163,8 +1430,19 @@ img {
    sola pantalla en vez de una sección larga con scroll libre */
 .rsvp-stepper {
     width: 100%;
-    max-height: 56vh;
+    /* svh (no vh) + un poco más de margen que antes, para que el
+       cálculo no se quede corto en Safari móvil cuando la barra de
+       herramientas está visible. Sigue siendo una red de seguridad —
+       la barra de scroll queda oculta abajo así que, aunque llegara a
+       activarse, no se ve */
+    max-height: 60vh;
+    max-height: 60svh;
     overflow-y: auto;
+    scrollbar-width: none;
+}
+
+.rsvp-stepper::-webkit-scrollbar {
+    display: none;
 }
 
 .rsvp-step-hint {
@@ -1179,7 +1457,7 @@ img {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: .8rem;
-    margin-bottom: 1.1rem;
+    margin-bottom: .8rem;
 }
 
 .attend-option {
@@ -1194,14 +1472,14 @@ img {
 }
 
 .attend-option:hover {
-    border-color: var(--blue);
+    border-color: var(--gold);
     background: rgba(255, 255, 255, .9);
     transform: translateY(-2px);
 }
 
 .attend-option.selected {
-    border-color: var(--blue);
-    background: var(--powder);
+    border-color: var(--gold);
+    background: var(--beige);
 }
 
 .ao-label {
@@ -1224,7 +1502,7 @@ img {
     justify-content: center;
     align-items: center;
     gap: .5rem;
-    margin-bottom: 1.2rem;
+    margin-bottom: .8rem;
 }
 
 .step-dot {
@@ -1238,11 +1516,11 @@ img {
 .step-dot.active {
     width: 22px;
     border-radius: 4px;
-    background: var(--blue);
+    background: var(--gold);
 }
 
 .step-dot.done {
-    background: var(--blue);
+    background: var(--gold);
     opacity: .5;
 }
 
@@ -1461,7 +1739,7 @@ img {
 
 .btn-next {
     padding: .75rem 2rem;
-    background: linear-gradient(135deg, var(--blue), var(--blue-deep));
+    background: linear-gradient(135deg, var(--blue-deep), var(--gold-deep));
     border: none;
     border-radius: 30px;
     color: #fff;
@@ -1478,6 +1756,18 @@ img {
 .btn-next:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 28px rgba(63, 111, 168, .4);
+}
+
+/* paso 0 del RSVP: "Continuar" no existe hasta que se elige sí/no
+   (selectAttend() agrega .is-visible) — display:none en vez de
+   opacity:0 a propósito, para que también libere el espacio que
+   ocupaba mientras no hace falta */
+#rsvpNextBtn {
+    display: none;
+}
+
+#rsvpNextBtn.is-visible {
+    display: inline-block;
 }
 
 .btn-confirm {
@@ -1549,11 +1839,49 @@ img {
     z-index: 3;
     font-family: 'Alex Brush', cursive;
     font-size: clamp(2.8rem, 12vw, 4.2rem);
-    background: linear-gradient(135deg, var(--blue), var(--blue-deep), var(--silver-deep), var(--blue));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--gold-deep);
     filter: drop-shadow(0 4px 18px rgba(248, 250, 252, .9));
+}
+
+/* enlace "contáctame" (promociona el servicio de invitaciones, basado
+   en bautizo/) — igual que .p1-mascot, anclado por su cuenta al fondo
+   de la pantalla (position:absolute) en vez de vivir en el flujo junto
+   a oso+título, para que quede claramente más abajo que ese grupo en
+   vez de solo agregarse debajo de él dentro del bloque centrado */
+.p5-footer {
+    position: absolute;
+    left: 50%;
+    bottom: clamp(.8rem, 3vh, 1.6rem);
+    transform: translateX(-50%);
+    z-index: 3;
+    width: max-content;
+    max-width: 90%;
+    text-align: center;
+    /* pastilla de fondo: al quedar tan cerca del borde inferior, ahí el
+       degradado ya remata en --blue-light (poco contraste con
+       --text-light) y encima puede coincidir con las flores de
+       marco_b.png — con un fondo propio se lee bien sin importar qué
+       haya detrás */
+    padding: .4rem .9rem;
+    border-radius: 20px;
+    background: rgba(248, 250, 252, .85);
+    box-shadow: 0 4px 14px rgba(63, 111, 168, .12);
+    font-size: clamp(.72rem, calc(min(100vw, 560px) * 0.031), .82rem);
+    letter-spacing: .02em;
+    color: var(--text-mid);
+}
+
+.p5-footer a {
+    color: var(--gold-deep);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(201, 166, 89, .5);
+    cursor: pointer;
+    transition: color .2s, border-color .2s;
+}
+
+.p5-footer a:hover {
+    color: var(--blue-deep);
+    border-color: var(--blue-deep);
 }
 
 /* ══════════════════════════════════════════════════════════════
@@ -1580,7 +1908,7 @@ img {
     }
 
     .ded-line {
-        font-size: 1.05rem;
+        font-size: .88rem;
     }
 
     .p2-mascot {
@@ -1597,6 +1925,14 @@ img {
 
     .ev3-day-num {
         font-size: clamp(2rem, 8vw, 2.7rem);
+    }
+
+    .ev3-location-img {
+        aspect-ratio: 7 / 2;
+    }
+
+    .ev3-location-body {
+        padding: .45rem .8rem .6rem;
     }
 
     .pcd-content {
@@ -1624,7 +1960,8 @@ img {
     }
 
     .rsvp-stepper {
-        max-height: 48vh;
+        max-height: 52vh;
+        max-height: 52svh;
     }
 
     .attend-option {
@@ -1646,7 +1983,17 @@ img {
     }
 
     .ded-line {
-        font-size: .8rem;
+        font-size: .68rem;
+    }
+
+    /* pantallas muy bajas: la dirección en texto ya no cabe cómoda —
+       se quita, la tarjeta sigue llevando a Maps igual con nombre+foto */
+    .ev3-location-addr {
+        display: none;
+    }
+
+    .ev3-location-body {
+        padding: .4rem .8rem .55rem;
     }
 
     .p2-content {
@@ -1656,7 +2003,6 @@ img {
 
 @media (max-width: 480px) {
     .icon-dove-chalice {
-        width: clamp(60px, 22vw, 84px);
-        height: clamp(72px, 26vw, 100px);
+        width: clamp(58px, 22vw, 80px);
     }
 }

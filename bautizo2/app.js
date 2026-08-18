@@ -5,9 +5,12 @@
    ══════════════════════════════════════════════════════════════ */
 
 /* Fecha y hora del evento (usada por la cuenta regresiva y el calendario) */
-const EVENT_DATE = new Date('2026-01-10T11:00:00');
-const EVENT_TITLE = 'Bautizo de Nombre de la Bebé';
-const EVENT_LOCATION = 'Nombre de la Parroquia';
+/* hora de llegada/recepción (1:30 pm) — es la que le importa al
+   invitado para saber cuándo estar ahí; la misa (2:00 pm) es en el
+   mismo lugar, media hora después */
+const EVENT_DATE = new Date('2026-10-17T13:30:00');
+const EVENT_TITLE = 'Bautizo de Miguel Sebastián';
+const EVENT_LOCATION = 'Finca Santa Isabel, Tepotzotlán';
 
 /* Número de WhatsApp de la FAMILIA que recibe las confirmaciones de RSVP.
    Formato: código de país + número, sin signos ni espacios (ej. 521XXXXXXXXXX).
@@ -23,7 +26,6 @@ const galleryImages = [
     { url: './resources/gallery/foto2.jpg', emoji: '🤍' },
     { url: './resources/gallery/foto3.jpg', emoji: '🩵' },
     { url: './resources/gallery/foto4.jpg', emoji: '⭐' },
-    { url: './resources/gallery/foto5.jpg', emoji: '✨' },
 ];
 
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -176,14 +178,14 @@ try {
            la timeline vieja sigue tocando .opacity/.scale de las mismas
            celdas al mismo tiempo que la nueva, y se pisan entre sí */
         if (galleryTl) galleryTl.kill();
-        replayBtn?.classList.remove('is-visible');
+        if (replayBtn) replayBtn.classList.remove('is-visible');
         /* la rotación/desplazamiento de reposo de cada foto vive en CSS
            (.gal-cell:nth-child), no aquí — así se preservan siempre,
            tanto con reduceMotion como durante la animación normal */
         if (reduceMotion) {
             gsap.set(heading, { opacity: 1, y: 0 });
             gsap.set(cells, { opacity: 1, scale: 1 });
-            replayBtn?.classList.add('is-visible');
+            if (replayBtn) replayBtn.classList.add('is-visible');
             return;
         }
         gsap.set(heading, { opacity: 0, y: 30 });
@@ -198,7 +200,7 @@ try {
            stagger se dispara una vez POR CADA elemento, no al final */
         galleryTl = gsap.timeline({
             defaults: { ease: 'power2.out' },
-            onComplete: () => replayBtn?.classList.add('is-visible'),
+            onComplete: () => { if (replayBtn) replayBtn.classList.add('is-visible'); },
         })
             .to(heading, { opacity: 1, y: 0, duration: .8 }, 0)
             .to(cells, { opacity: 1, scale: 1, duration: 1.6, stagger: 2, ease: 'power3.out' }, .3);
@@ -245,18 +247,26 @@ const screenPlayers = {
 
 const snapContainer = document.getElementById('snap-container');
 
-const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
-            screenPlayers[entry.target.id]?.();
-        }
-    });
-}, { root: snapContainer, threshold: 0.5 });
+/* si el navegador no tiene IntersectionObserver (Safari viejo, Android
+   muy viejo/UC Browser/Opera Mini), no hay forma de detectar qué
+   pantalla está visible — en vez de dejar tronar el resto del script,
+   se revela todo de una vez sin animación */
+if (typeof IntersectionObserver !== 'undefined') {
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+                if (screenPlayers[entry.target.id]) screenPlayers[entry.target.id]();
+            }
+        });
+    }, { root: snapContainer, threshold: 0.5 });
 
-document.querySelectorAll('.screen').forEach(el => io.observe(el));
+    document.querySelectorAll('.screen').forEach(el => io.observe(el));
+} else {
+    Object.keys(screenPlayers).forEach(id => screenPlayers[id]());
+}
 
 /* ══════════════════════════════════════════════════════════════
-   PISTA "DESLIZA" — se oculta al primer scroll o tras unos segundos
+   PISTA "DESLIZA" — se oculta únicamente cuando el usuario desliza
    ══════════════════════════════════════════════════════════════ */
 const scrollHint = document.getElementById('scrollHint');
 let hintDismissed = false;
@@ -266,7 +276,6 @@ function dismissHint() {
     scrollHint.classList.add('is-hidden');
 }
 snapContainer.addEventListener('scroll', dismissHint, { once: true, passive: true });
-setTimeout(dismissHint, 4500);
 
 /* ══════════════════════════════════════════════════════════════
    CUENTA REGRESIVA — corre siempre desde que carga la página, sin
@@ -323,7 +332,15 @@ function confirmCalendar() {
     closeCalModal();
 }
 
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeCalModal(); });
+/* ══════════════════════════════════════════════════════════════
+   CONTACTO (modal, promociona el servicio de invitaciones — no tiene
+   relación con el RSVP del bautizo) — DOM puro, no depende de GSAP
+   ══════════════════════════════════════════════════════════════ */
+function openContactModal() { document.getElementById('contactModal').classList.add('visible'); document.body.style.overflow = 'hidden'; }
+function closeContactModal() { document.getElementById('contactModal').classList.remove('visible'); document.body.style.overflow = ''; }
+function handleContactOverlayClick(e) { if (e.target === document.getElementById('contactModal')) closeContactModal(); }
+
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeCalModal(); closeContactModal(); } });
 
 /* ══════════════════════════════════════════════════════════════
    RSVP — sin backend. El botón final abre WhatsApp con el mensaje
@@ -336,6 +353,7 @@ function selectAttend(val) {
     document.getElementById('opt-si').classList.toggle('selected', val === 'si');
     document.getElementById('opt-no').classList.toggle('selected', val === 'no');
     document.getElementById('guestGroup').style.display = val === 'no' ? 'none' : '';
+    document.getElementById('rsvpNextBtn').classList.add('is-visible');
 }
 function changeGuests(delta) { guestCount = Math.max(1, Math.min(10, guestCount + delta)); document.getElementById('guestNum').textContent = guestCount; }
 function toggleAnon(cb) { const nameInput = document.getElementById('rsvpName'); if (cb.checked) { nameInput.value = ''; nameInput.disabled = true; } else { nameInput.disabled = false; nameInput.focus(); } }

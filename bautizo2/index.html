@@ -4,25 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mi Bautizo — Nombre de la Bebé</title>
+    <title>Mi Bautizo — Miguel Sebastián</title>
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Mi Bautizo — Nombre de la Bebé">
+    <meta property="og:title" content="Mi Bautizo — Miguel Sebastián">
     <meta property="og:description" content="Acompáñanos a celebrar este día tan especial.">
 
     <link rel="icon"
         href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%A7%B8%3C/text%3E%3C/svg%3E">
 
     <link rel="stylesheet" href="style.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <!-- auto-hospedado (antes cdnjs): evita bloquear el render en conexiones
+         lentas y quita una dependencia de red externa -->
+    <script src="resources/vendor/gsap.min.js" defer></script>
 </head>
 
 <body>
-
-    <div class="scroll-hint" id="scrollHint" aria-hidden="true">
-        <span class="scroll-hint-arrow">↑</span>
-        <span class="scroll-hint-label">Desliza</span>
-    </div>
 
     <div id="snap-container">
 
@@ -37,10 +34,15 @@
                 <p class="p1-eyebrow">ACOMPÁÑANOS A CELEBRAR EL</p>
                 <h1 class="p1-title">BAUTIZO</h1>
                 <p class="p1-subtitle">&amp; PRIMER AÑITO</p>
-                <p class="p1-name">Nombre de la Bebé</p>
+                <p class="p1-name">Miguel Sebastián</p>
             </div>
 
             <img class="p1-mascot" src="resources/imgs/oso.png" alt="Osito" aria-hidden="true">
+
+            <div class="scroll-hint" id="scrollHint" aria-hidden="true">
+                <img class="scroll-hint-hand" src="resources/imgs/hand.svg" alt="" aria-hidden="true">
+                <span class="scroll-hint-label">Desliza</span>
+            </div>
         </section>
 
         <!-- ══ PANTALLA 2 · DEDICATORIA ══ -->
@@ -54,9 +56,9 @@
                 <p class="ded-line">DOY GRACIAS<br><span class="accent">A DIOS NUESTRO SEÑOR</span><br>POR DARME EL
                     DON DE LA VIDA</p>
                 <p class="ded-line"><span class="accent">A MIS PADRES</span><br>POR ESPERARME CON AMOR Y<br>RECIBIRME
-                    CON ALEGRÍA</p>
+                    CON ALEGRÍA<br><span class="ded-names">Miguel Castañeda &amp; Adilene Fragoso</span></p>
                 <p class="ded-line"><span class="accent">A MIS PADRINOS</span><br>POR GUIARME EN EL CAMINO DE LA VIDA
-                </p>
+                    <br><span class="ded-names">Carlos Castañeda &amp; Silvia Castañeda</span></p>
                 <p class="ded-line">Y <span class="accent">A TI</span> POR ACOMPAÑARME EN EL DÍA MÁS<br>IMPORTANTE DE
                     MI VIDA</p>
             </div>
@@ -75,25 +77,35 @@
             <div class="p3-content">
                 <div class="ev3-reveal icon-dove-chalice">
                     <img src="resources/imgs/dove.svg" class="icon-dove" alt="" aria-hidden="true">
-                    <img src="resources/imgs/chalice.svg" class="icon-chalice" alt="" aria-hidden="true">
                 </div>
                 <p class="ev3-reveal ev3-intro">ACOMPÁÑANOS A FESTEJAR EL DÍA</p>
-                <p class="ev3-reveal ev3-month">Enero</p>
+                <p class="ev3-reveal ev3-month">Octubre</p>
                 <div class="ev3-reveal ev3-daterow">
                     <span class="ev3-day-name">SÁBADO</span>
-                    <span class="ev3-day-num">10</span>
+                    <span class="ev3-day-num">17</span>
                     <span class="ev3-year">2026</span>
                 </div>
-                <div class="ev3-reveal ev3-block">
-                    <p class="ev3-label">MISA</p>
-                    <p class="ev3-venue">Nombre de la Parroquia</p>
-                    <p class="ev3-time">11:00 AM</p>
+                <div class="ev3-schedule">
+                    <div class="ev3-reveal ev3-block">
+                        <p class="ev3-label">RECEPCIÓN</p>
+                        <p class="ev3-time">1:30 PM</p>
+                    </div>
+                    <span class="ev3-schedule-sep" aria-hidden="true">·</span>
+                    <div class="ev3-reveal ev3-block">
+                        <p class="ev3-label">MISA</p>
+                        <p class="ev3-time">2:00 PM</p>
+                    </div>
                 </div>
-                <div class="ev3-reveal ev3-block">
-                    <p class="ev3-label">RECEPCIÓN</p>
-                    <p class="ev3-venue">Nombre del Salón</p>
-                    <p class="ev3-time">1:00 PM</p>
-                </div>
+                <a class="ev3-reveal ev3-location" href="https://maps.app.goo.gl/C8rWD4Tnnm3AY9xX8"
+                    target="_blank" rel="noopener noreferrer"
+                    aria-label="Ver ubicación de Finca Santa Isabel en Google Maps">
+                    <img class="ev3-location-img" src="resources/imgs/img_finca.jpg" alt="Finca Santa Isabel">
+                    <div class="ev3-location-body">
+                        <p class="ev3-location-name">Finca Santa Isabel</p>
+                        <p class="ev3-location-addr">Paseo de las Bugambilias S/N, 54600 San Mateo Xoloc, Méx.</p>
+                        <span class="ev3-location-btn">📍 Ver ubicación</span>
+                    </div>
+                </a>
             </div>
         </section>
 
@@ -172,7 +184,7 @@
                             <div class="step-dot" id="dot2"></div>
                         </div>
                         <div class="step-btns">
-                            <button class="btn-next" onclick="goStep(1)">Continuar →</button>
+                            <button class="btn-next" id="rsvpNextBtn" onclick="goStep(1)">Continuar →</button>
                         </div>
                     </div>
 
@@ -230,7 +242,8 @@
 
             <img class="p5-mascot" src="resources/imgs/oso.png" alt="Osito" aria-hidden="true">
             <p class="p5-title">¡Los Esperamos!</p>
-            <img class="deco-bow bow-bottom bow-small" src="resources/imgs/ribbon-bow.png" alt="" aria-hidden="true">
+            <p class="p5-footer">¿Quieres una invitación así para tu evento?, <a href="#"
+                    onclick="openContactModal(); return false;">contactame</a></p>
         </section>
 
     </div>
@@ -276,7 +289,27 @@
         </div>
     </div>
 
-    <script src="app.js"></script>
+    <!-- Modal: contacto -->
+    <div class="contact-overlay" id="contactModal" onclick="handleContactOverlayClick(event)">
+        <div class="contact-modal-box">
+            <button class="contact-close" onclick="closeContactModal()">×</button>
+            <span class="contact-modal-icon">✨</span>
+            <p class="contact-modal-title">Crea invitaciones para tu evento</p>
+            <p class="contact-modal-sub">Diseños únicos y personalizados para que tu celebración sea
+                inolvidable.<br>Escríbenos y cuéntanos sobre tu evento.</p>
+            <a class="btn-whatsapp"
+                href="https://wa.me/5215658936778?text=Hola%2C%20me%20ayudas%20a%20crear%20una%20invitaci%C3%B3n%20para%20mi%20evento."
+                target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+                </svg>
+                Escríbenos por WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <script src="app.js" defer></script>
 </body>
 
 </html>
